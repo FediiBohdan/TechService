@@ -18,5 +18,5 @@ OrderCreation::~OrderCreation()
 void OrderCreation::openMap()
 {
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;
-    engine->load(QUrl(QStringLiteral("qrc:/Map.qml")));
+    engine->load(QUrl(QStringLiteral("qrc:/mapInteraction.qml")));
 }

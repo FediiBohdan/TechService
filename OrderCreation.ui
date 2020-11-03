@@ -16,9 +16,9 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>790</x>
+     <x>780</x>
      <y>20</y>
-     <width>141</width>
+     <width>151</width>
      <height>28</height>
     </rect>
    </property>
@@ -30,8 +30,14 @@
    <property name="text">
     <string>Открыть карту</string>
    </property>
+   <property name="icon">
+    <iconset resource="qml.qrc">
+     <normaloff>:/mapMarker1.png</normaloff>:/mapMarker1.png</iconset>
+   </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="qml.qrc"/>
+ </resources>
  <connections/>
 </ui>
