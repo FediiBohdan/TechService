@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>946</width>
-    <height>536</height>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,13 +31,34 @@
     <string>Открыть карту</string>
    </property>
    <property name="icon">
-    <iconset resource="qml.qrc">
+    <iconset>
      <normaloff>:/mapMarker1.png</normaloff>:/mapMarker1.png</iconset>
    </property>
   </widget>
+  <widget class="QLCDNumber" name="lcdNumber">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>151</width>
+     <height>61</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="openStaffTable">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>70</y>
+     <width>201</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Открыть таблицу сотрудников</string>
+   </property>
+  </widget>
  </widget>
- <resources>
-  <include location="qml.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

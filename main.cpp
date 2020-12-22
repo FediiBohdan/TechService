@@ -1,12 +1,13 @@
 #include <QApplication>
 #include <OrderCreation.h>
+#include <StartWindow.h>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    OrderCreation orderCreation;
-    orderCreation.show();
+    StartWindow startWindow;
+    startWindow.show();
 
     return app.exec();
 }

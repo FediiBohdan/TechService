@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>mapInteraction.qml</file>
-        <file>mapMarker.png</file>
-        <file>mapMarker1.png</file>
     </qresource>
 </RCC>

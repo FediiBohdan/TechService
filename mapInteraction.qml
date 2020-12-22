@@ -9,18 +9,11 @@ Window {
     width: 1000
     height: 800
 
-    PositionSource {
-        active: true
-        onPositionChanged: {
-            map.center = position.coordinate
-        }
-    }
-
     Map {
         id: map
         anchors.fill: parent
         plugin: mapPlugin
-        center: QtPositioning.coordinate(46.4701, 30.7251)
+        center: QtPositioning.coordinate(46.4701, 30.7251) //59.930243, 10.714635
         zoomLevel: 14
     }
 
@@ -36,14 +29,12 @@ Window {
     }
 
     MapQuickItem {
-            id: marker
-            coordinate:  QtPositioning.coordinate(46.4701, 30.7251)
-            sourceItem: Image{
-                id: image
-                source: "qrc:/mapMarker1.png"
-
-            }
             anchorPoint.x: image.width
             anchorPoint.y: image.height
-        }
+            coordinate:  QtPositioning.coordinate(46.4701, 30.7251)
+            sourceItem: Image {
+                id: image
+                source: "qrc:/mapMarker1.png"
+            }
+    }
 }

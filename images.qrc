@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/mapMarker.png</file>
+        <file>images/catalogue.png</file>
+        <file>images/desktop.png</file>
+        <file>images/orderFormation.png</file>
+        <file>images/statistics.png</file>
+        <file>images/to-do-list.png</file>
+    </qresource>
+</RCC>
