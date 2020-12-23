@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::StartWindow *ui;
+
+private slots:
+    void showTime();
 };
 
 #endif // STARTWINDOW_H
