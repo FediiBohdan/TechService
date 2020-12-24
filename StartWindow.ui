@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>1005</width>
-    <height>841</height>
+    <height>941</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Auto Service</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="images.qrc">
+    <normaloff>:/images/autoService-logo.png</normaloff>:/images/autoService-logo.png</iconset>
   </property>
   <widget class="QScrollArea" name="scrollArea">
    <property name="geometry">
@@ -19,8 +23,11 @@
      <x>11</x>
      <y>11</y>
      <width>151</width>
-     <height>811</height>
+     <height>921</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">*{
@@ -36,23 +43,26 @@ background-color: #f2e7ff;
       <x>0</x>
       <y>0</y>
       <width>149</width>
-      <height>809</height>
+      <height>919</height>
      </rect>
     </property>
     <widget class="QScrollArea" name="scrollArea_2">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>170</y>
+       <y>140</y>
        <width>131</width>
-       <height>140</height>
+       <height>120</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">*{
@@ -68,7 +78,7 @@ background-color: #dbdcf7;
         <x>0</x>
         <y>0</y>
         <width>129</width>
-        <height>138</height>
+        <height>118</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
@@ -91,8 +101,14 @@ background-color: #dbdcf7;
            <property name="tabletTracking">
             <bool>false</bool>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="acceptDrops">
             <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Открыть форму оформления заказа</string>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -149,8 +165,7 @@ QPushButton:default {
             </font>
            </property>
            <property name="text">
-            <string>Оформить
-заказ</string>
+            <string>Заказы</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -166,16 +181,19 @@ QPushButton:default {
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>330</y>
+       <y>400</y>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">*{
@@ -191,7 +209,7 @@ background-color: #dbdcf7;
         <x>0</x>
         <y>0</y>
         <width>128</width>
-        <height>138</height>
+        <height>118</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
@@ -208,8 +226,14 @@ background-color: #dbdcf7;
            <property name="tabletTracking">
             <bool>false</bool>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="acceptDrops">
             <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Открыть список заданий</string>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -259,9 +283,11 @@ QPushButton:default {
              <pointsize>10</pointsize>
             </font>
            </property>
+           <property name="toolTipDuration">
+            <number>-2</number>
+           </property>
            <property name="text">
-            <string>Список
-заданий</string>
+            <string>Задачи</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -277,16 +303,19 @@ QPushButton:default {
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>650</y>
+       <y>660</y>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">*{
@@ -302,7 +331,7 @@ background-color: #dbdcf7;
         <x>0</x>
         <y>0</y>
         <width>128</width>
-        <height>138</height>
+        <height>118</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
@@ -319,8 +348,14 @@ background-color: #dbdcf7;
            <property name="tabletTracking">
             <bool>false</bool>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="acceptDrops">
             <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Открыть статистику по СТО</string>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -371,7 +406,7 @@ QPushButton:default {
             </font>
            </property>
            <property name="text">
-            <string>Статистика</string>
+            <string>Аналитика</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -389,14 +424,17 @@ QPushButton:default {
        <x>10</x>
        <y>10</y>
        <width>133</width>
-       <height>140</height>
+       <height>120</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">*{
@@ -412,7 +450,7 @@ background-color: #dbdcf7;
         <x>0</x>
         <y>0</y>
         <width>131</width>
-        <height>138</height>
+        <height>118</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -429,8 +467,14 @@ background-color: #dbdcf7;
            <property name="tabletTracking">
             <bool>false</bool>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="acceptDrops">
             <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Перейти на начальную страницу</string>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -497,16 +541,19 @@ QPushButton:default {
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>490</y>
+       <y>530</y>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>130</width>
-       <height>140</height>
+       <height>120</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">*{
@@ -522,7 +569,7 @@ background-color: #dbdcf7;
         <x>0</x>
         <y>0</y>
         <width>128</width>
-        <height>138</height>
+        <height>118</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -539,8 +586,14 @@ background-color: #dbdcf7;
            <property name="tabletTracking">
             <bool>false</bool>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
            <property name="acceptDrops">
             <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Открыть доступные каталоги</string>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -603,6 +656,244 @@ QPushButton:default {
       </layout>
      </widget>
     </widget>
+    <widget class="QScrollArea" name="scrollArea_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>270</y>
+       <width>130</width>
+       <height>120</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>130</width>
+       <height>120</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">*{
+background-color: #dbdcf7;
+}</string>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_8">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>128</width>
+        <height>118</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QPushButton" name="clientsButton">
+           <property name="minimumSize">
+            <size>
+             <width>84</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="tabletTracking">
+            <bool>false</bool>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
+           <property name="acceptDrops">
+            <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Открыть статистику по СТО</string>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+    min-width: 80px;
+}
+
+QPushButton:pressed {
+        background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+    border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+    border-color: navy; /* make the default button prominent */
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="images.qrc">
+             <normaloff>:/images/clients.png</normaloff>:/images/clients.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="font">
+            <font>
+             <family>Georgia</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Клиенты</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QScrollArea" name="scrollArea_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>790</y>
+       <width>130</width>
+       <height>120</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>130</width>
+       <height>120</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">*{
+background-color: #dbdcf7;
+}</string>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_9">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>128</width>
+        <height>118</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="QPushButton" name="settingsButton">
+           <property name="minimumSize">
+            <size>
+             <width>84</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="tabletTracking">
+            <bool>false</bool>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
+           <property name="acceptDrops">
+            <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Открыть статистику по СТО</string>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    border: 2px solid #8f8f91;
+    border-radius: 6px;
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #f6f7fa, stop: 1 #dadbde);
+    min-width: 80px;
+}
+
+QPushButton:pressed {
+        background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #dadbde, stop: 1 #f6f7fa);
+}
+
+QPushButton:flat {
+    border: none; /* no border for a flat push button */
+}
+
+QPushButton:default {
+    border-color: navy; /* make the default button prominent */
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="images.qrc">
+             <normaloff>:/images/settings.png</normaloff>:/images/settings.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="font">
+            <font>
+             <family>Georgia</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Настройки</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QLCDNumber" name="lcdNumber">
@@ -613,6 +904,9 @@ QPushButton:default {
      <width>191</width>
      <height>61</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>Таймер рабочего дня</string>
    </property>
    <property name="styleSheet">
     <string notr="true">*{
@@ -636,6 +930,23 @@ background-color: #dbdcf7;
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>desktopButton</tabstop>
+  <tabstop>orderFormationButton</tabstop>
+  <tabstop>clientsButton</tabstop>
+  <tabstop>todolistButton</tabstop>
+  <tabstop>catalogueButton</tabstop>
+  <tabstop>statisticsButton</tabstop>
+  <tabstop>settingsButton</tabstop>
+  <tabstop>scrollArea_6</tabstop>
+  <tabstop>scrollArea_2</tabstop>
+  <tabstop>scrollArea_8</tabstop>
+  <tabstop>scrollArea_3</tabstop>
+  <tabstop>scrollArea_7</tabstop>
+  <tabstop>scrollArea_5</tabstop>
+  <tabstop>scrollArea_9</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

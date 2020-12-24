@@ -16,8 +16,14 @@ StartWindow::StartWindow(QWidget *parent) :
     ui(new Ui::StartWindow)
 {
     ui->setupUi(this);
-    elapsedTimer.start();
 
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
+
+    StartWindow::showNormal();
+    StartWindow::showMaximized();
+
+    elapsedTimer.start();
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
 }

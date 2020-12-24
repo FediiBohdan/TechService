@@ -8,6 +8,13 @@ QT += network
 QT += widgets
 QT += sql
 
+VERSION = 1.0.0.0
+
+win32
+{
+   RC_ICONS = $$PWD/images/autoService-logo.ico
+}
+
 CONFIG += c++11
 
 SOURCES += main.cpp \

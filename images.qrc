@@ -6,5 +6,9 @@
         <file>images/orderFormation.png</file>
         <file>images/statistics.png</file>
         <file>images/to-do-list.png</file>
+        <file>images/autoService-logo.png</file>
+        <file>images/autoService-logo.ico</file>
+        <file>images/settings.png</file>
+        <file>images/clients.png</file>
     </qresource>
 </RCC>
