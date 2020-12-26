@@ -3,6 +3,11 @@
 
 #include <QDialog>
 
+#include <QMessageBox>
+#include <QSqlDatabase>
+#include <QSqlQueryModel>
+#include <QPointer>
+
 namespace Ui {
 class SparePartsTable;
 }
@@ -17,6 +22,14 @@ public:
 
 private:
     Ui::SparePartsTable *ui;
+
+    QSqlDatabase sparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
+
+    QSqlDatabase db;
+    QPointer<QSqlQueryModel> queryModel;
+
+private slots:
+    void loadTable();
 };
 
 #endif // SPAREPARTSTABLE_H

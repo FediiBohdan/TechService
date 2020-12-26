@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "SparePartsTable.h"
+
 namespace Ui {
 class StartWindow;
 }
@@ -18,8 +20,11 @@ public:
 private:
     Ui::StartWindow *ui;
 
+    SparePartsTable* sparePartsTable;
+
 private slots:
     void showTime();
+    void on_catalogueButton_clicked();
 };
 
 #endif // STARTWINDOW_H

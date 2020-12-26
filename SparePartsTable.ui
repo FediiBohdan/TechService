@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>699</width>
-    <height>544</height>
+    <width>1035</width>
+    <height>679</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,39 @@
    <iconset resource="images.qrc">
     <normaloff>:/images/autoService-logo.png</normaloff>:/images/autoService-logo.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QTableView" name="tableView">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
-    <widget class="QTableView" name="tableView"/>
+    <widget class="QFrame" name="frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>60</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">*{
+background-color: #f2e7ff;
+border: 1px solid grey;
+border-radius: 7px;
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

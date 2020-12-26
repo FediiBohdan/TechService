@@ -39,3 +39,10 @@ void StartWindow::showTime(){
     QString timestr = c.toString("hh:mm:ss");
     ui->lcdNumber->display(timestr);
 }
+
+void StartWindow::on_catalogueButton_clicked()
+{
+    sparePartsTable = new SparePartsTable;
+    sparePartsTable->show();
+    sparePartsTable->setAttribute(Qt::WA_DeleteOnClose);
+}

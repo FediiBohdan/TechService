@@ -5,6 +5,7 @@
 #include <QQmlApplicationEngine>
 
 #include "StaffTable.h"
+#include "SparePartsTable.h"
 
 namespace Ui {
 class OrderCreation;
@@ -22,6 +23,7 @@ private:
     Ui::OrderCreation *ui;
 
     StaffTable* staffTable;
+    SparePartsTable* sparePartsTable;
 
 private slots:
     void openMap();
