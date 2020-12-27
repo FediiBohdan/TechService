@@ -47,9 +47,5 @@ HEADERS += \
     StaffTable.h \
     StartWindow.h
 
-DISTFILES += \
-    images/catalogue.png \
-    images/desktop.png \
-    images/orderFormation.png \
-    images/to-do-list.png
+DISTFILES +=
 

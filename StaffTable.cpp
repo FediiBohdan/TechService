@@ -6,9 +6,6 @@
 #include <QSqlQuery>
 #include <QDebug>
 
-#include <QStandardItemModel>
-#include <QStandardItem>
-
 StaffTable::StaffTable(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StaffTable)

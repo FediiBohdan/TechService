@@ -1,11 +1,6 @@
 #include "SparePartsTable.h"
 #include "ui_SparePartsTable.h"
 
-#include <QMessageBox>
-#include <QSqlQueryModel>
-#include <QSqlQuery>
-#include <QDebug>
-
 SparePartsTable::SparePartsTable(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SparePartsTable)

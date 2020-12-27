@@ -1,12 +1,6 @@
 #include "StartWindow.h"
 #include "ui_StartWindow.h"
 
-#include <QTime>
-#include <QDate>
-#include <QTimer>
-#include <QDebug>
-#include <QElapsedTimer>
-
 QElapsedTimer elapsedTimer;
 QTimer* timer = new QTimer();
 auto countdown = QTime(8, 0, 0);
@@ -40,9 +34,64 @@ void StartWindow::showTime(){
     ui->lcdNumber->display(timestr);
 }
 
+void StartWindow::on_orderFormationButton_clicked()
+{
+
+}
+
+void StartWindow::on_clientsButton_clicked()
+{
+
+}
+
+void StartWindow::on_todolistButton_clicked()
+{
+
+}
+
 void StartWindow::on_catalogueButton_clicked()
 {
     sparePartsTable = new SparePartsTable;
     sparePartsTable->show();
     sparePartsTable->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void StartWindow::on_statisticsButton_clicked()
+{
+
+}
+
+void StartWindow::on_settingsButton_clicked()
+{
+
+}
+
+void StartWindow::on_telegramButton_clicked()
+{
+    QString telegramLink = "https://web.telegram.org/";
+    QDesktopServices::openUrl(QUrl(telegramLink));
+}
+
+void StartWindow::on_instagramButton_clicked()
+{
+    QString instagramLink = "https://www.instagram.com/";
+    QDesktopServices::openUrl(QUrl(instagramLink));
+}
+
+void StartWindow::on_facebookButton_clicked()
+{
+    QString facebookLink = "https://www.facebook.com/";
+    QDesktopServices::openUrl(QUrl(facebookLink));
+}
+
+void StartWindow::on_viberButton_clicked()
+{
+    QString viberLink = "https://www.viber.com/";
+    QDesktopServices::openUrl(QUrl(viberLink));
+}
+
+void StartWindow::on_youtubeButton_clicked()
+{
+    QString youtubeLink = "https://www.youtube.com/";
+    QDesktopServices::openUrl(QUrl(youtubeLink));
 }

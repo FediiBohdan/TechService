@@ -10,5 +10,11 @@
         <file>images/autoService-logo.ico</file>
         <file>images/settings.png</file>
         <file>images/clients.png</file>
+        <file>images/facebookLogo.png</file>
+        <file>images/instagramLogo.png</file>
+        <file>images/telegramLogo.png</file>
+        <file>images/viberLogo.png</file>
+        <file>images/youtubeLogo.png</file>
+        <file>images/refresh.png</file>
     </qresource>
 </RCC>

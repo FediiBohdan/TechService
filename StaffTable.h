@@ -5,6 +5,8 @@
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QPointer>
+#include <QStandardItemModel>
+#include <QStandardItem>
 
 namespace Ui {
 class StaffTable;

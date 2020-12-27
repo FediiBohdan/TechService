@@ -2,11 +2,12 @@
 #define SPAREPARTSTABLE_H
 
 #include <QDialog>
-
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QPointer>
+#include <QSqlQuery>
+#include <QDebug>
 
 namespace Ui {
 class SparePartsTable;
