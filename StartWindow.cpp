@@ -60,6 +60,13 @@ void StartWindow::on_clientsButton_clicked()
 
 }
 
+void StartWindow::on_staffButton_clicked()
+{
+    staffTable = new StaffTable();
+    staffTable->show();
+    staffTable->setAttribute(Qt::WA_DeleteOnClose);
+}
+
 void StartWindow::on_todolistButton_clicked()
 {
 

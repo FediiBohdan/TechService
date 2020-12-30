@@ -3,6 +3,7 @@
 
 #include "SparePartsTable.h"
 #include "OrderCreation.h"
+#include "StaffTable.h"
 
 #include <QDialog>
 #include <QDesktopServices>
@@ -32,8 +33,9 @@ public:
 private:
     Ui::StartWindow *ui;
 
-    SparePartsTable* sparePartsTable;
-    OrderCreation* orderCreation;
+    SparePartsTable *sparePartsTable;
+    OrderCreation *orderCreation;
+    StaffTable *staffTable;
 
 private slots:
     void showTime();
@@ -45,10 +47,11 @@ private slots:
     void on_youtubeButton_clicked();
     void on_orderFormationButton_clicked();
     void on_clientsButton_clicked();
+    void on_desktopButton_clicked();
+    void on_staffButton_clicked();
     void on_todolistButton_clicked();
     void on_statisticsButton_clicked();
     void on_settingsButton_clicked();
-    void on_desktopButton_clicked();
 
 signals:
     void closeAllWindowsExceptCurrent(bool close);

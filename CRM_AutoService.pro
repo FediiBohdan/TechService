@@ -18,6 +18,7 @@ win32
 CONFIG += c++11
 
 SOURCES += main.cpp \
+    AddWorker.cpp \
     ClientTable.cpp \
     OrderCreation.cpp \
     SettingsWindow.cpp \
@@ -35,6 +36,7 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 FORMS += \
+    AddWorker.ui \
     ClientTable.ui \
     OrderCreation.ui \
     SettingsWindow.ui \
@@ -43,6 +45,7 @@ FORMS += \
     StartWindow.ui
 
 HEADERS += \
+    AddWorker.h \
     ClientTable.h \
     OrderCreation.h \
     SettingsWindow.h \

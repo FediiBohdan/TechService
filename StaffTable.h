@@ -1,6 +1,8 @@
 #ifndef STAFFTABLE_H
 #define STAFFTABLE_H
 
+#include <AddWorker.h>
+
 #include <QDialog>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -20,6 +22,8 @@ class StaffTable : public QDialog
 private slots:
     void loadTable();
 
+    void on_addWorkerButton_clicked();
+
 public:
     explicit StaffTable(QWidget *parent = nullptr);
     ~StaffTable();
@@ -31,6 +35,8 @@ private:
 
     QSqlDatabase db;
     QPointer<QSqlQueryModel> queryModel;
+
+    AddWorker *addWorker;
 };
 
 #endif // STAFFTABLE_H
