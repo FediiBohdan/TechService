@@ -7,6 +7,7 @@
 #include <QPointer>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QDebug>
 
 namespace Ui {
 class StaffTable;

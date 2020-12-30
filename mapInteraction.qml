@@ -5,7 +5,7 @@ import QtPositioning 5.6
 
 Window {
     visible: true
-    title: qsTr("map")
+    title: qsTr("Карта СТО")
     width: 1000
     height: 800
 
@@ -34,7 +34,7 @@ Window {
             coordinate:  QtPositioning.coordinate(46.4701, 30.7251)
             sourceItem: Image {
                 id: image
-                source: "qrc:/mapMarker1.png"
+                source: "qrc:/images/mapMarker.png"
             }
     }
 }

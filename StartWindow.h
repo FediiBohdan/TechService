@@ -2,6 +2,7 @@
 #define STARTWINDOW_H
 
 #include "SparePartsTable.h"
+#include "OrderCreation.h"
 
 #include <QDialog>
 #include <QDesktopServices>
@@ -11,6 +12,10 @@
 #include <QTimer>
 #include <QDebug>
 #include <QElapsedTimer>
+#include <QApplication>
+
+class SparePartsTable;
+class OrderCreation;
 
 namespace Ui {
 class StartWindow;
@@ -28,6 +33,7 @@ private:
     Ui::StartWindow *ui;
 
     SparePartsTable* sparePartsTable;
+    OrderCreation* orderCreation;
 
 private slots:
     void showTime();
@@ -42,6 +48,10 @@ private slots:
     void on_todolistButton_clicked();
     void on_statisticsButton_clicked();
     void on_settingsButton_clicked();
+    void on_desktopButton_clicked();
+
+signals:
+    void closeAllWindowsExceptCurrent(bool close);
 };
 
 #endif // STARTWINDOW_H

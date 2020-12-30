@@ -13,6 +13,8 @@ SparePartsTable::SparePartsTable(QWidget *parent) :
     ui->tableView->verticalHeader()->setSectionsClickable(false);
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
 
+    //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &SparePartsTable::closeWindow);
+
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     db.open();
@@ -60,4 +62,9 @@ void SparePartsTable::loadTable()
 
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
+}
+
+void SparePartsTable::closeWindow()
+{
+    close();
 }

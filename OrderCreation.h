@@ -1,11 +1,17 @@
 #ifndef ORDERCREATION_H
 #define ORDERCREATION_H
 
-#include <QDialog>
-#include <QQmlApplicationEngine>
-
 #include "StaffTable.h"
 #include "SparePartsTable.h"
+
+#include <QDialog>
+#include <QQmlApplicationEngine>
+#include <QDebug>
+#include <QDate>
+#include <QTime>
+
+class StartWindow;
+class SparePartsTable;
 
 namespace Ui {
 class OrderCreation;
@@ -22,12 +28,15 @@ public:
 private:
     Ui::OrderCreation *ui;
 
-    StaffTable* staffTable;
-    SparePartsTable* sparePartsTable;
+    StaffTable *taffTable;
+    SparePartsTable *sparePartsTable;
 
 private slots:
     void openMap();
-    void on_openStaffTable_clicked();
+    void createOrder();
+
+public slots:
+    void closeWindow();
 };
 
 #endif // ORDERCREATION_H

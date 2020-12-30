@@ -1,9 +1,9 @@
-#include "ClientTable.h"
-#include "ui_ClientTable.h"
+#include "SettingsWindow.h"
+#include "ui_SettingsWindow.h"
 
-ClientTable::ClientTable(QWidget *parent) :
+SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ClientTable)
+    ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
 
@@ -11,7 +11,7 @@ ClientTable::ClientTable(QWidget *parent) :
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 }
 
-ClientTable::~ClientTable()
+SettingsWindow::~SettingsWindow()
 {
     delete ui;
 }

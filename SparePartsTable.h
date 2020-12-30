@@ -1,6 +1,8 @@
 #ifndef SPAREPARTSTABLE_H
 #define SPAREPARTSTABLE_H
 
+#include "StartWindow.h"
+
 #include <QDialog>
 #include <QMessageBox>
 #include <QSqlDatabase>
@@ -8,6 +10,8 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDebug>
+
+class StartWindow;
 
 namespace Ui {
 class SparePartsTable;
@@ -29,8 +33,13 @@ private:
     QSqlDatabase db;
     QPointer<QSqlQueryModel> queryModel;
 
+    StartWindow *startWindow;
+
 private slots:
     void loadTable();
+
+public slots:
+    void closeWindow();
 };
 
 #endif // SPAREPARTSTABLE_H

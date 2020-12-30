@@ -20,6 +20,7 @@ CONFIG += c++11
 SOURCES += main.cpp \
     ClientTable.cpp \
     OrderCreation.cpp \
+    SettingsWindow.cpp \
     SparePartsTable.cpp \
     StaffTable.cpp \
     StartWindow.cpp
@@ -36,6 +37,7 @@ include(deployment.pri)
 FORMS += \
     ClientTable.ui \
     OrderCreation.ui \
+    SettingsWindow.ui \
     SparePartsTable.ui \
     StaffTable.ui \
     StartWindow.ui
@@ -43,6 +45,7 @@ FORMS += \
 HEADERS += \
     ClientTable.h \
     OrderCreation.h \
+    SettingsWindow.h \
     SparePartsTable.h \
     StaffTable.h \
     StartWindow.h

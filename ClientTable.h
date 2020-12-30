@@ -2,6 +2,7 @@
 #define CLIENTTABLE_H
 
 #include <QDialog>
+#include <QDebug>
 
 namespace Ui {
 class ClientTable;

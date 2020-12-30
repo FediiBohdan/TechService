@@ -34,9 +34,25 @@ void StartWindow::showTime(){
     ui->lcdNumber->display(timestr);
 }
 
+void StartWindow::on_desktopButton_clicked()
+{
+    if (sparePartsTable->isVisible())
+    {
+        connect(this, &StartWindow::closeAllWindowsExceptCurrent, sparePartsTable, &SparePartsTable::closeWindow);
+        emit closeAllWindowsExceptCurrent(true);
+    }
+    if (orderCreation->isVisible())
+    {
+        connect(this, &StartWindow::closeAllWindowsExceptCurrent, orderCreation, &OrderCreation::closeWindow);
+        emit closeAllWindowsExceptCurrent(true);
+    }
+}
+
 void StartWindow::on_orderFormationButton_clicked()
 {
-
+    orderCreation = new OrderCreation;
+    orderCreation->show();
+    orderCreation->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_clientsButton_clicked()
