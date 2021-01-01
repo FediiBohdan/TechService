@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <OrderCreation.h>
 #include <StartWindow.h>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {

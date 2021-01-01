@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include <QApplication>
+#include <QTranslator>
 
 class SparePartsTable;
 class OrderCreation;
