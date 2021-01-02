@@ -20,6 +20,7 @@ CONFIG += c++11
 SOURCES += main.cpp \
     AddWorker.cpp \
     ClientTable.cpp \
+    Global.cpp \
     OrderCreation.cpp \
     SettingsWindow.cpp \
     SparePartsTable.cpp \
@@ -29,12 +30,6 @@ SOURCES += main.cpp \
 RESOURCES += qml.qrc \
     images.qrc \
     translations.qrc
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Default rules for deployment.
-include(deployment.pri)
 
 FORMS += \
     AddWorker.ui \
@@ -48,11 +43,11 @@ FORMS += \
 HEADERS += \
     AddWorker.h \
     ClientTable.h \
+    Global.h \
     OrderCreation.h \
     SettingsWindow.h \
     SparePartsTable.h \
     StaffTable.h \
     StartWindow.h
 
-DISTFILES +=
-
+CODECFORSRC = UTF-8

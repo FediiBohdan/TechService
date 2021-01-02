@@ -4,6 +4,7 @@
 #include "SparePartsTable.h"
 #include "OrderCreation.h"
 #include "StaffTable.h"
+#include "SettingsWindow.h"
 
 #include <QDialog>
 #include <QDesktopServices>
@@ -37,6 +38,7 @@ private:
     SparePartsTable *sparePartsTable;
     OrderCreation *orderCreation;
     StaffTable *staffTable;
+    SettingsWindow *settingsWindow;
 
 private slots:
     void showTime();

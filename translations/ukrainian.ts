@@ -128,9 +128,23 @@
 <context>
     <name>SettingsWindow</name>
     <message>
-        <location filename="../SettingsWindow.ui" line="14"/>
         <source>Dialog</source>
-        <translation>Dialog</translation>
+        <translation type="vanished">Dialog</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.ui" line="14"/>
+        <source>Настройки</source>
+        <translation>Налаштування</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.ui" line="26"/>
+        <source>Сохранить</source>
+        <translation>Зберегти</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.ui" line="49"/>
+        <source>Надпись на русском</source>
+        <translation>Надпис українською</translation>
     </message>
 </context>
 <context>
@@ -227,107 +241,107 @@
         <translation>Auto Service</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="85"/>
+        <location filename="../StartWindow.ui" line="242"/>
+        <source>Перейти в YouTube</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../StartWindow.ui" line="416"/>
         <source>Перейти на начальную страницу</source>
         <translation>Перейти на початкову сторінку</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="141"/>
+        <location filename="../StartWindow.ui" line="472"/>
         <source>Рабочий стол</source>
         <translation>Робочий стіл</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="201"/>
+        <location filename="../StartWindow.ui" line="532"/>
         <source>Открыть форму оформления заказа</source>
         <translation>Відкрити форму оформлення замовлення</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="263"/>
+        <location filename="../StartWindow.ui" line="594"/>
         <source>Заказы</source>
         <translation>Замовлення</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="317"/>
-        <location filename="../StartWindow.ui" line="427"/>
-        <location filename="../StartWindow.ui" line="766"/>
-        <location filename="../StartWindow.ui" line="876"/>
+        <location filename="../StartWindow.ui" line="648"/>
+        <location filename="../StartWindow.ui" line="758"/>
+        <location filename="../StartWindow.ui" line="1097"/>
+        <location filename="../StartWindow.ui" line="1207"/>
         <source>Открыть статистику по СТО</source>
         <translation>Відкрити статистику по СТО</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="373"/>
+        <location filename="../StartWindow.ui" line="704"/>
         <source>Клиенты</source>
         <translation>Клієнти</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="489"/>
+        <location filename="../StartWindow.ui" line="820"/>
         <source>Сотрудники</source>
         <translation>Співробітники</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="543"/>
+        <location filename="../StartWindow.ui" line="874"/>
         <source>Открыть доступные каталоги</source>
         <translation>Відкрити доступні каталоги</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="599"/>
+        <location filename="../StartWindow.ui" line="930"/>
         <source>Каталоги</source>
         <translation>Каталоги</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="653"/>
+        <location filename="../StartWindow.ui" line="984"/>
         <source>Открыть список заданий</source>
         <translation>Відкрити список завдань</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="712"/>
+        <location filename="../StartWindow.ui" line="1043"/>
         <source>Задачи</source>
         <translation>Задачі</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="822"/>
+        <location filename="../StartWindow.ui" line="1153"/>
         <source>Аналитика</source>
         <translation>Аналітика</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="932"/>
+        <location filename="../StartWindow.ui" line="1263"/>
         <source>Настройки</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="969"/>
+        <location filename="../StartWindow.ui" line="313"/>
         <source>Таймер рабочего дня</source>
         <translation>Таймер робочого дня</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="1047"/>
+        <location filename="../StartWindow.ui" line="60"/>
         <source>(066) 325-12-32</source>
         <translation>(066) 325-12-32</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="1068"/>
+        <location filename="../StartWindow.ui" line="81"/>
         <source>Перейти в Telegram</source>
         <translation>Перейти в Telegram</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="1106"/>
+        <location filename="../StartWindow.ui" line="119"/>
         <source>Перейти в Instagram</source>
         <translation>Перейти в Instagram</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="1146"/>
+        <location filename="../StartWindow.ui" line="159"/>
         <source>Перейти в Facebook</source>
         <translation>Перейти в Facebook</translation>
     </message>
     <message>
-        <location filename="../StartWindow.ui" line="1185"/>
+        <location filename="../StartWindow.ui" line="198"/>
         <source>Перейти в Viber</source>
         <translation>Перейти в Viber</translation>
-    </message>
-    <message>
-        <location filename="../StartWindow.ui" line="1229"/>
-        <source>Перейти YouTube</source>
-        <translation></translation>
     </message>
 </context>
 <context>

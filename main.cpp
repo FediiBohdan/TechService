@@ -1,15 +1,38 @@
+#include "OrderCreation.h"
+#include "StartWindow.h"
+#include "Global.h"
+
 #include <QApplication>
-#include <OrderCreation.h>
-#include <StartWindow.h>
 #include <QTranslator>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    app.setApplicationName("CRM AutoService");
+    app.setApplicationName("TechService CRM");
     app.setOrganizationName("TechService");
     app.setApplicationVersion("1.0.0.0");
+
+    // подключение переводов
+    QString registerLanguage = global::getSettingsValue("language", "settings").toString();
+    QTranslator translator;
+    QTranslator contextTranslator;
+
+    if (registerLanguage == "Русский")
+    {
+        translator.load(":/translations/russian.qm");
+        app.installTranslator(&translator);
+    }
+    else if (registerLanguage == "Українська")
+    {
+        translator.load(":/translations/ukrainian.qm");
+        app.installTranslator(&translator);
+    }
+    else if (registerLanguage == "English")
+    {
+        translator.load(":/translations/english.qm");
+        app.installTranslator(&translator);
+    }
 
     StartWindow startWindow;
     startWindow.show();
