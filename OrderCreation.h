@@ -9,9 +9,15 @@
 #include <QDebug>
 #include <QDate>
 #include <QTime>
+#include <QMessageBox>
+#include <QSqlDatabase>
+#include <QSqlQueryModel>
+#include <QPointer>
+#include <QSqlQuery>
 
 class StartWindow;
 class SparePartsTable;
+class OrdersHistory;
 
 namespace Ui {
 class OrderCreation;
@@ -28,12 +34,17 @@ public:
 private:
     Ui::OrderCreation *ui;
 
-    StaffTable *taffTable;
     SparePartsTable *sparePartsTable;
+
+    QSqlDatabase ordersHistory = QSqlDatabase::database("OrdersHistory");
+    QSqlDatabase ordersHistoryDB;
+    QPointer<QSqlQueryModel> queryModel;
 
 private slots:
     void openMap();
-    void createOrder();
+    void setDateAndTime();
+
+    void on_createOrderButton_clicked();
 
 public slots:
     void closeWindow();

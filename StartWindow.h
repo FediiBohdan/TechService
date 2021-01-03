@@ -5,6 +5,7 @@
 #include "OrderCreation.h"
 #include "StaffTable.h"
 #include "SettingsWindow.h"
+#include "OrdersHistory.h"
 
 #include <QDialog>
 #include <QDesktopServices>
@@ -19,6 +20,7 @@
 
 class SparePartsTable;
 class OrderCreation;
+class OrdersHistory;
 
 namespace Ui {
 class StartWindow;
@@ -39,6 +41,7 @@ private:
     OrderCreation *orderCreation;
     StaffTable *staffTable;
     SettingsWindow *settingsWindow;
+    OrdersHistory *ordersHistory;
 
 private slots:
     void showTime();

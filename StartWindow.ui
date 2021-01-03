@@ -515,7 +515,7 @@ border:none;
              </property>
              <property name="maximumSize">
               <size>
-               <width>104</width>
+               <width>16777215</width>
                <height>16777215</height>
               </size>
              </property>

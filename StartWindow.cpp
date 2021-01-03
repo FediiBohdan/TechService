@@ -50,9 +50,9 @@ void StartWindow::on_desktopButton_clicked()
 
 void StartWindow::on_orderFormationButton_clicked()
 {
-    orderCreation = new OrderCreation;
-    orderCreation->show();
-    orderCreation->setAttribute(Qt::WA_DeleteOnClose);
+    ordersHistory = new OrdersHistory;
+    ordersHistory->show();
+    ordersHistory->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_clientsButton_clicked()

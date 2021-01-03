@@ -2,7 +2,6 @@
 #define ADDWORKER_H
 
 #include <QDialog>
-#include <QDialog>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>

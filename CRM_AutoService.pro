@@ -22,6 +22,7 @@ SOURCES += main.cpp \
     ClientTable.cpp \
     Global.cpp \
     OrderCreation.cpp \
+    OrdersHistory.cpp \
     SettingsWindow.cpp \
     SparePartsTable.cpp \
     StaffTable.cpp \
@@ -35,6 +36,7 @@ FORMS += \
     AddWorker.ui \
     ClientTable.ui \
     OrderCreation.ui \
+    OrdersHistory.ui \
     SettingsWindow.ui \
     SparePartsTable.ui \
     StaffTable.ui \
@@ -45,6 +47,7 @@ HEADERS += \
     ClientTable.h \
     Global.h \
     OrderCreation.h \
+    OrdersHistory.h \
     SettingsWindow.h \
     SparePartsTable.h \
     StaffTable.h \
