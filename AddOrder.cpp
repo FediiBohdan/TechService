@@ -1,16 +1,16 @@
-#include "OrderCreation.h"
-#include "ui_OrderCreation.h"
+#include "AddOrder.h"
+#include "ui_AddOrder.h"
 
-OrderCreation::OrderCreation(QWidget *parent) :
+AddOrder::AddOrder(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::OrderCreation)
+    ui(new Ui::AddOrder)
 {
     ui->setupUi(this);
 
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    connect(ui->pushButton, &QAbstractButton::clicked, this, &OrderCreation::openMap);
+    connect(ui->pushButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
 
     ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
     ordersHistoryDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
@@ -19,23 +19,23 @@ OrderCreation::OrderCreation(QWidget *parent) :
     setDateAndTime();
 }
 
-OrderCreation::~OrderCreation()
+AddOrder::~AddOrder()
 {
     delete ui;
 }
 
-void OrderCreation::openMap()
+void AddOrder::openMap()
 {
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;
     engine->load(QUrl(QStringLiteral("qrc:/mapInteraction.qml")));
 }
 
-void OrderCreation::closeWindow()
+void AddOrder::closeWindow()
 {
     close();
 }
 
-void OrderCreation::setDateAndTime()
+void AddOrder::setDateAndTime()
 {
     QDate currentDate = QDate::currentDate();
     QTime currentTime = QTime::currentTime();
@@ -43,7 +43,7 @@ void OrderCreation::setDateAndTime()
     ui->timeLine->setText(currentTime.toString(Qt::SystemLocaleDate));
 }
 
-void OrderCreation::on_createOrderButton_clicked()
+void AddOrder::on_createOrderButton_clicked()
 {
     QSqlQuery query(ordersHistoryDB);
 
@@ -62,7 +62,7 @@ void OrderCreation::on_createOrderButton_clicked()
     QString price = ui->priceLine->text();
     QString feedback = ui->feedbackLine->text();
 
-    qDebug() << __LINE__ << query.prepare("INSERT INTO OrdersHistory (client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback)"
+    qDebug() << __LINE__ << query.prepare("INSERT INTO ListOrders (client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback)"
                   "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     query.addBindValue(client);

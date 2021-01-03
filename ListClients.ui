@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>StaffTable</class>
- <widget class="QDialog" name="StaffTable">
+ <class>ListClients</class>
+ <widget class="QDialog" name="ListClients">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>880</width>
-    <height>544</height>
+    <width>768</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Список сотрудников</string>
-  </property>
-  <property name="windowIcon">
-   <iconset resource="images.qrc">
-    <normaloff>:/images/autoService-logo.png</normaloff>:/images/autoService-logo.png</iconset>
+   <string>Список клиентов</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -48,8 +44,11 @@ border-radius: 7px;
           <height>40</height>
          </size>
         </property>
-        <property name="statusTip">
+        <property name="toolTip">
          <string>Обновить</string>
+        </property>
+        <property name="statusTip">
+         <string/>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
@@ -83,15 +82,18 @@ QPushButton:pressed {
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="addWorkerButton">
+       <widget class="QPushButton" name="addClientButton">
         <property name="minimumSize">
          <size>
           <width>40</width>
           <height>40</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Добавить клиента</string>
+        </property>
         <property name="statusTip">
-         <string>Добавить работника СТО</string>
+         <string/>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {

@@ -1,5 +1,5 @@
-#ifndef SPAREPARTSTABLE_H
-#define SPAREPARTSTABLE_H
+#ifndef ListSpareParts_H
+#define ListSpareParts_H
 
 #include "StartWindow.h"
 
@@ -14,23 +14,23 @@
 class StartWindow;
 
 namespace Ui {
-class SparePartsTable;
+class ListSparePart;
 }
 
-class SparePartsTable : public QDialog
+class ListSparePart : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SparePartsTable(QWidget *parent = nullptr);
-    ~SparePartsTable();
+    explicit ListSparePart(QWidget *parent = nullptr);
+    ~ListSparePart();
 
 private:
-    Ui::SparePartsTable *ui;
+    Ui::ListSparePart *ui;
 
-    QSqlDatabase sparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
+    QSqlDatabase listSpareParts = QSqlDatabase::database("SparePartsCatalogue");
 
-    QSqlDatabase db;
+    QSqlDatabase listSparePartsDB;
     QPointer<QSqlQueryModel> queryModel;
 
     StartWindow *startWindow;
@@ -42,4 +42,4 @@ public slots:
     void closeWindow();
 };
 
-#endif // SPAREPARTSTABLE_H
+#endif // ListSpareParts_H

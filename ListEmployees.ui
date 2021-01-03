@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SparePartsTable</class>
- <widget class="QDialog" name="SparePartsTable">
+ <class>ListEmployees</class>
+ <widget class="QDialog" name="ListEmployees">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1035</width>
-    <height>679</height>
+    <width>880</width>
+    <height>544</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Список запчастей</string>
+   <string>Список сотрудников</string>
   </property>
   <property name="windowIcon">
    <iconset resource="images.qrc">
     <normaloff>:/images/autoService-logo.png</normaloff>:/images/autoService-logo.png</iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QTableView" name="tableView">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
@@ -49,29 +39,20 @@ border-radius: 7px;
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="placeholderText">
-         <string>Поиск</string>
-        </property>
-       </widget>
-      </item>
+     <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="2">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="updateButton">
         <property name="minimumSize">
          <size>
           <width>40</width>
           <height>40</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Обновить</string>
+        </property>
+        <property name="statusTip">
+         <string/>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
@@ -105,6 +86,51 @@ QPushButton:pressed {
        </widget>
       </item>
       <item row="0" column="1">
+       <widget class="QPushButton" name="addWorkerButton">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Добавить работника СТО</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="images.qrc">
+          <normaloff>:/images/addWorker.png</normaloff>:/images/addWorker.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>33</width>
+          <height>33</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -120,13 +146,11 @@ QPushButton:pressed {
      </layout>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QTableView" name="tableView"/>
+   </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>tableView</tabstop>
- </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

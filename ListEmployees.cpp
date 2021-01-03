@@ -1,14 +1,14 @@
-#include "StaffTable.h"
-#include "ui_StaffTable.h"
+#include "ListEmployees.h"
+#include "ui_ListEmployees.h"
 
 #include <QMessageBox>
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 #include <QDebug>
 
-StaffTable::StaffTable(QWidget *parent) :
+ListEmployees::ListEmployees(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::StaffTable)
+    ui(new Ui::ListEmployees)
 {
     ui->setupUi(this);
 
@@ -18,27 +18,27 @@ StaffTable::StaffTable(QWidget *parent) :
     ui->tableView->verticalHeader()->setSectionsClickable(false);
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
 
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
-    db.open();
+    employeesDB = QSqlDatabase::addDatabase("QSQLITE");
+    employeesDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    employeesDB.open();
 
     loadTable();
 }
 
-StaffTable::~StaffTable()
+ListEmployees::~ListEmployees()
 {
     delete ui;
 }
 
-void StaffTable::loadTable()
+void ListEmployees::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
     QString queryString;
 
-    queryString = "SELECT id_staff, staff_FML_name, staff_position, service_number FROM StaffTable";
+    queryString = "SELECT id_employee, employee_FML_name, employee_position, service_number FROM EmployeesTable";
 
-    queryModel->setQuery(queryString, staffTable);
+    queryModel->setQuery(queryString, employeesTable);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->setHeaderData(1, Qt::Horizontal, tr("ФИО работников"));
@@ -49,21 +49,21 @@ void StaffTable::loadTable()
 
     for (qint32 row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
     {
-        QString id_staff = queryModel->data(queryModel->index(row_index, 0)).toString();
+        QString id_employee = queryModel->data(queryModel->index(row_index, 0)).toString();
         QString employeePersonalInfo = queryModel->data(queryModel->index(row_index, 1)).toString();
         QString employeePosition = queryModel->data(queryModel->index(row_index, 2)).toString();
         QString workPlace = queryModel->data(queryModel->index(row_index, 3)).toString();
 
-        QSqlQuery query(db);
+        QSqlQuery query(employeesDB);
     }
 
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }
 
-void StaffTable::on_addWorkerButton_clicked()
+void ListEmployees::on_addWorkerButton_clicked()
 {
-    addWorker = new AddWorker();
-    addWorker->show();
-    addWorker->setAttribute(Qt::WA_DeleteOnClose);
+    addEmployee = new AddEmployee();
+    addEmployee->show();
+    addEmployee->setAttribute(Qt::WA_DeleteOnClose);
 }

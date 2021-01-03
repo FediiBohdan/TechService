@@ -1,17 +1,17 @@
-#include "OrdersHistory.h"
-#include "ui_OrdersHistory.h"
+#include "ListOrders.h"
+#include "ui_ListOrders.h"
 
-OrdersHistory::OrdersHistory(QWidget *parent) :
+ListOrders::ListOrders(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::OrdersHistory)
+    ui(new Ui::ListOrders)
 {
     ui->setupUi(this);
 
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    OrdersHistory::showNormal();
-    OrdersHistory::showMaximized();
+    ListOrders::showNormal();
+    ListOrders::showMaximized();
 
     ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
     ordersHistoryDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
@@ -20,18 +20,18 @@ OrdersHistory::OrdersHistory(QWidget *parent) :
     loadTable();
 }
 
-OrdersHistory::~OrdersHistory()
+ListOrders::~ListOrders()
 {
     delete ui;
 }
 
-void OrdersHistory::loadTable()
+void ListOrders::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
     QString queryString;
 
-    queryString = "SELECT client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback FROM OrdersHistory";
+    queryString = "SELECT client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback, ready_or_not FROM ListOrders";
 
     queryModel->setQuery(queryString, ordersHistoryTable);
 
@@ -50,6 +50,7 @@ void OrdersHistory::loadTable()
     queryModel->setHeaderData(11, Qt::Horizontal, tr("Список запчастей"));
     queryModel->setHeaderData(12, Qt::Horizontal, tr("Цена"));
     queryModel->setHeaderData(13, Qt::Horizontal, tr("Отзыв"));
+    queryModel->setHeaderData(14, Qt::Horizontal, tr("Готовность"));
 
     ui->tableView->setModel(queryModel);
 
@@ -67,9 +68,10 @@ void OrdersHistory::loadTable()
         QString autoLicensePlate = queryModel->data(queryModel->index(row_index, 8)).toString();
         QString staffTeam = queryModel->data(queryModel->index(row_index, 9)).toString();
         QString worksList = queryModel->data(queryModel->index(row_index, 10)).toString();
-        QString sparePartsList = queryModel->data(queryModel->index(row_index, 11)).toString();
+        QString listSpareParts = queryModel->data(queryModel->index(row_index, 11)).toString();
         QString price = queryModel->data(queryModel->index(row_index, 12)).toString();
         QString feedback = queryModel->data(queryModel->index(row_index, 13)).toString();
+        QString readiness = queryModel->data(queryModel->index(row_index, 14)).toString();
 
         QSqlQuery query(ordersHistoryDB);
     }
@@ -78,9 +80,9 @@ void OrdersHistory::loadTable()
     ui->tableView->resizeColumnsToContents();
 }
 
-void OrdersHistory::on_orderCreationButton_clicked()
+void ListOrders::on_orderCreationButton_clicked()
 {
-    orderCreation = new OrderCreation;
-    orderCreation->show();
-    orderCreation->setAttribute(Qt::WA_DeleteOnClose);
+    addOrder = new AddOrder;
+    addOrder->show();
+    addOrder->setAttribute(Qt::WA_DeleteOnClose);
 }

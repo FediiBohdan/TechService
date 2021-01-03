@@ -2,126 +2,126 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_GB" sourcelanguage="ru_UA">
 <context>
-    <name>AddWorker</name>
+    <name>AddEmployee</name>
     <message>
-        <location filename="../AddWorker.ui" line="14"/>
+        <location filename="../AddEmployee.ui" line="14"/>
         <source>Добавление сотрудника</source>
         <translation>Add employee</translation>
     </message>
     <message>
-        <location filename="../AddWorker.ui" line="26"/>
+        <location filename="../AddEmployee.ui" line="26"/>
         <source>Почасовая оплата</source>
         <translation>Hourly payment</translation>
     </message>
     <message>
-        <location filename="../AddWorker.ui" line="53"/>
+        <location filename="../AddEmployee.ui" line="53"/>
         <source>ФИО сотрудника</source>
         <translation>Employee&apos;s ffirst, middle and last name</translation>
     </message>
     <message>
-        <location filename="../AddWorker.ui" line="60"/>
+        <location filename="../AddEmployee.ui" line="60"/>
         <source>Должность</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../AddWorker.ui" line="67"/>
+        <location filename="../AddEmployee.ui" line="67"/>
         <source>Номер СТО</source>
         <translation>Service number</translation>
     </message>
     <message>
-        <location filename="../AddWorker.ui" line="160"/>
+        <location filename="../AddEmployee.ui" line="160"/>
         <source>Save</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../AddWorker.cpp" line="43"/>
+        <location filename="../AddEmployee.cpp" line="43"/>
         <source>Уведомление</source>
         <translation>Notification</translation>
     </message>
     <message>
-        <location filename="../AddWorker.cpp" line="43"/>
+        <location filename="../AddEmployee.cpp" line="43"/>
         <source>Сотрудник успешно добавлен!</source>
         <translation>Employee added successfully!</translation>
     </message>
 </context>
 <context>
-    <name>ClientTable</name>
+    <name>ListClients</name>
     <message>
-        <location filename="../ClientTable.ui" line="14"/>
+        <location filename="../ListClients.ui" line="14"/>
         <source>Список клиентов</source>
         <translatorcomment>Client list</translatorcomment>
         <translation></translation>
     </message>
 </context>
 <context>
-    <name>OrderCreation</name>
+    <name>AddOrder</name>
     <message>
-        <location filename="../OrderCreation.ui" line="14"/>
+        <location filename="../AddOrder.ui" line="14"/>
         <source>Окно оформления заказа</source>
         <translation>Order creation dialog</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="118"/>
+        <location filename="../AddOrder.ui" line="118"/>
         <source>Дата</source>
         <translation>Date</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="140"/>
+        <location filename="../AddOrder.ui" line="140"/>
         <source>Клиент</source>
         <translation>Client</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="147"/>
+        <location filename="../AddOrder.ui" line="147"/>
         <source>Контактный номер</source>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="203"/>
+        <location filename="../AddOrder.ui" line="203"/>
         <source>Марка автомобиля</source>
         <translation>Car model</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="210"/>
+        <location filename="../AddOrder.ui" line="210"/>
         <source>Год выпуска</source>
         <translation>Production year</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="217"/>
+        <location filename="../AddOrder.ui" line="217"/>
         <source>VIN-номер</source>
         <translation>VIN-number</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="224"/>
+        <location filename="../AddOrder.ui" line="224"/>
         <source>Скидки</source>
         <translation>Discounts</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="318"/>
+        <location filename="../AddOrder.ui" line="318"/>
         <source>Запчасти</source>
         <translation>Spare parts</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="332"/>
+        <location filename="../AddOrder.ui" line="332"/>
         <source>Список работ</source>
         <translation>Work list</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="346"/>
+        <location filename="../AddOrder.ui" line="346"/>
         <source>Работники</source>
         <translation>Workers team</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="369"/>
+        <location filename="../AddOrder.ui" line="369"/>
         <source>Отзыв клиента</source>
         <translation>Client feedback</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="381"/>
+        <location filename="../AddOrder.ui" line="381"/>
         <source>Открыть карту</source>
         <translation>Open the map</translation>
     </message>
     <message>
-        <location filename="../OrderCreation.ui" line="392"/>
+        <location filename="../AddOrder.ui" line="392"/>
         <source>Стоимость ремонта</source>
         <translation>Repair cost</translation>
     </message>
@@ -149,87 +149,87 @@
     </message>
 </context>
 <context>
-    <name>SparePartsTable</name>
+    <name>ListSparePart</name>
     <message>
-        <location filename="../SparePartsTable.ui" line="14"/>
+        <location filename="../ListSparePart.ui" line="14"/>
         <source>Список запчастей</source>
         <translation>Spare parts list</translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.ui" line="64"/>
+        <location filename="../ListSparePart.ui" line="64"/>
         <source>Поиск</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.cpp" line="40"/>
+        <location filename="../ListSparePart.cpp" line="40"/>
         <source>id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.cpp" line="41"/>
+        <location filename="../ListSparePart.cpp" line="41"/>
         <source>Название</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.cpp" line="42"/>
+        <location filename="../ListSparePart.cpp" line="42"/>
         <source>Производитель</source>
         <translation>Manufacturer</translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.cpp" line="43"/>
+        <location filename="../ListSparePart.cpp" line="43"/>
         <source>Количество в наличии</source>
         <translation>Quantity in stock</translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.cpp" line="44"/>
+        <location filename="../ListSparePart.cpp" line="44"/>
         <source>Совместимость с моделями</source>
         <translation>Model compatibility</translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.cpp" line="45"/>
+        <location filename="../ListSparePart.cpp" line="45"/>
         <source>Оригинал</source>
         <translation>Original</translation>
     </message>
     <message>
-        <location filename="../SparePartsTable.cpp" line="46"/>
+        <location filename="../ListSparePart.cpp" line="46"/>
         <source>Цена</source>
         <translation>Cost</translation>
     </message>
 </context>
 <context>
-    <name>StaffTable</name>
+    <name>ListEmployees</name>
     <message>
-        <location filename="../StaffTable.ui" line="14"/>
+        <location filename="../ListEmployees.ui" line="14"/>
         <source>Список сотрудников</source>
         <translation>Employee&apos;s list</translation>
     </message>
     <message>
-        <location filename="../StaffTable.ui" line="52"/>
+        <location filename="../ListEmployees.ui" line="52"/>
         <source>Обновить</source>
         <translation>Update</translation>
     </message>
     <message>
-        <location filename="../StaffTable.ui" line="94"/>
+        <location filename="../ListEmployees.ui" line="94"/>
         <source>Добавить работника СТО</source>
         <translation>Add service employee</translation>
     </message>
     <message>
-        <location filename="../StaffTable.cpp" line="43"/>
+        <location filename="../ListEmployees.cpp" line="43"/>
         <source>id</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../StaffTable.cpp" line="44"/>
+        <location filename="../ListEmployees.cpp" line="44"/>
         <source>ФИО работников</source>
         <translation>Employees&apos;s first, middle and last name</translation>
     </message>
     <message>
-        <location filename="../StaffTable.cpp" line="45"/>
+        <location filename="../ListEmployees.cpp" line="45"/>
         <source>Должность</source>
         <translation>Position</translation>
     </message>
     <message>
-        <location filename="../StaffTable.cpp" line="46"/>
+        <location filename="../ListEmployees.cpp" line="46"/>
         <source>Место работы</source>
         <translation>Work place</translation>
     </message>

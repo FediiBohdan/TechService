@@ -1,11 +1,12 @@
 #ifndef STARTWINDOW_H
 #define STARTWINDOW_H
 
-#include "SparePartsTable.h"
-#include "OrderCreation.h"
-#include "StaffTable.h"
+#include "ListSpareParts.h"
+#include "AddOrder.h"
+#include "ListEmployees.h"
 #include "SettingsWindow.h"
-#include "OrdersHistory.h"
+#include "ListOrders.h"
+#include "ListClients.h"
 
 #include <QDialog>
 #include <QDesktopServices>
@@ -18,9 +19,9 @@
 #include <QApplication>
 #include <QTranslator>
 
-class SparePartsTable;
-class OrderCreation;
-class OrdersHistory;
+class ListSparePart;
+class AddOrder;
+class ListOrders;
 
 namespace Ui {
 class StartWindow;
@@ -37,11 +38,12 @@ public:
 private:
     Ui::StartWindow *ui;
 
-    SparePartsTable *sparePartsTable;
-    OrderCreation *orderCreation;
-    StaffTable *staffTable;
+    ListSparePart *sparePartsTable;
+    AddOrder *addOrder;
+    ListEmployees *listEmployees;
     SettingsWindow *settingsWindow;
-    OrdersHistory *ordersHistory;
+    ListOrders *listOrders;
+    ListClients *listClients;
 
 private slots:
     void showTime();

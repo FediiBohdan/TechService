@@ -2,7 +2,7 @@
 #include "ui_StartWindow.h"
 
 QElapsedTimer elapsedTimer;
-QTimer* timer = new QTimer();
+QTimer *timer = new QTimer();
 auto countdown = QTime(8, 0, 0);
 
 StartWindow::StartWindow(QWidget *parent) :
@@ -38,33 +38,35 @@ void StartWindow::on_desktopButton_clicked()
 {
     if (sparePartsTable->isVisible())
     {
-        connect(this, &StartWindow::closeAllWindowsExceptCurrent, sparePartsTable, &SparePartsTable::closeWindow);
+        connect(this, &StartWindow::closeAllWindowsExceptCurrent, sparePartsTable, &ListSparePart::closeWindow);
         emit closeAllWindowsExceptCurrent(true);
     }
-    if (orderCreation->isVisible())
+    if (addOrder->isVisible())
     {
-        connect(this, &StartWindow::closeAllWindowsExceptCurrent, orderCreation, &OrderCreation::closeWindow);
+        connect(this, &StartWindow::closeAllWindowsExceptCurrent, addOrder, &AddOrder::closeWindow);
         emit closeAllWindowsExceptCurrent(true);
     }
 }
 
 void StartWindow::on_orderFormationButton_clicked()
 {
-    ordersHistory = new OrdersHistory;
-    ordersHistory->show();
-    ordersHistory->setAttribute(Qt::WA_DeleteOnClose);
+    listOrders = new ListOrders;
+    listOrders->show();
+    listOrders->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_clientsButton_clicked()
 {
-
+    listClients = new ListClients;
+    listClients->show();
+    listClients->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_staffButton_clicked()
 {
-    staffTable = new StaffTable;
-    staffTable->show();
-    staffTable->setAttribute(Qt::WA_DeleteOnClose);
+    listEmployees = new ListEmployees;
+    listEmployees->show();
+    listEmployees->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_todolistButton_clicked()
@@ -74,7 +76,7 @@ void StartWindow::on_todolistButton_clicked()
 
 void StartWindow::on_catalogueButton_clicked()
 {
-    sparePartsTable = new SparePartsTable;
+    sparePartsTable = new ListSparePart;
     sparePartsTable->show();
     sparePartsTable->setAttribute(Qt::WA_DeleteOnClose);
 }

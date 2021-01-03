@@ -16,8 +16,10 @@
         <file>images/viberLogo.png</file>
         <file>images/youtubeLogo.png</file>
         <file>images/refresh.png</file>
-        <file>images/addWorker.png</file>
         <file>images/serviceWorker.png</file>
         <file>images/addOrder.png</file>
+        <file>images/addWorker.png</file>
+        <file>images/save.png</file>
+        <file>images/addSparePart.png</file>
     </qresource>
 </RCC>

@@ -1,9 +1,9 @@
-#include "SparePartsTable.h"
-#include "ui_SparePartsTable.h"
+#include "ListSpareParts.h"
+#include "ui_ListSpareParts.h"
 
-SparePartsTable::SparePartsTable(QWidget *parent) :
+ListSparePart::ListSparePart(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::SparePartsTable)
+    ui(new Ui::ListSparePart)
 {
     ui->setupUi(this);
 
@@ -13,21 +13,21 @@ SparePartsTable::SparePartsTable(QWidget *parent) :
     ui->tableView->verticalHeader()->setSectionsClickable(false);
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
 
-    //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &SparePartsTable::closeWindow);
+    //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &ListSparePart::closeWindow);
 
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
-    db.open();
+    listSparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
+    listSparePartsDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    listSparePartsDB.open();
 
     loadTable();
 }
 
-SparePartsTable::~SparePartsTable()
+ListSparePart::~ListSparePart()
 {
     delete ui;
 }
 
-void SparePartsTable::loadTable()
+void ListSparePart::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
@@ -35,7 +35,7 @@ void SparePartsTable::loadTable()
 
     queryString = "SELECT id_spare_part, spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price FROM SparePartsCatalogue";
 
-    queryModel->setQuery(queryString, sparePartsTable);
+    queryModel->setQuery(queryString, listSpareParts);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Название"));
@@ -57,14 +57,14 @@ void SparePartsTable::loadTable()
         QString original = queryModel->data(queryModel->index(row_index, 5)).toString();
         QString price = queryModel->data(queryModel->index(row_index, 6)).toString();
 
-        QSqlQuery query(db);
+        QSqlQuery query(listSparePartsDB);
     }
 
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }
 
-void SparePartsTable::closeWindow()
+void ListSparePart::closeWindow()
 {
     close();
 }

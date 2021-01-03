@@ -1,8 +1,8 @@
-#ifndef ORDERCREATION_H
-#define ORDERCREATION_H
+#ifndef ADDORDER_H
+#define ADDORDER_H
 
-#include "StaffTable.h"
-#include "SparePartsTable.h"
+#include "ListEmployees.h"
+#include "ListSpareParts.h"
 
 #include <QDialog>
 #include <QQmlApplicationEngine>
@@ -16,27 +16,27 @@
 #include <QSqlQuery>
 
 class StartWindow;
-class SparePartsTable;
-class OrdersHistory;
+class ListSparePart;
+class ListOrders;
 
 namespace Ui {
-class OrderCreation;
+class AddOrder;
 }
 
-class OrderCreation : public QDialog
+class AddOrder : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit OrderCreation(QWidget *parent = nullptr);
-    ~OrderCreation();
+    explicit AddOrder(QWidget *parent = nullptr);
+    ~AddOrder();
 
 private:
-    Ui::OrderCreation *ui;
+    Ui::AddOrder *ui;
 
-    SparePartsTable *sparePartsTable;
+    ListSparePart *sparePartsTable;
 
-    QSqlDatabase ordersHistory = QSqlDatabase::database("OrdersHistory");
+    QSqlDatabase listOrders = QSqlDatabase::database("ListOrders");
     QSqlDatabase ordersHistoryDB;
     QPointer<QSqlQueryModel> queryModel;
 
@@ -50,4 +50,4 @@ public slots:
     void closeWindow();
 };
 
-#endif // ORDERCREATION_H
+#endif // ADDORDER_H
