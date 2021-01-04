@@ -2,6 +2,54 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_UA" sourcelanguage="ru_UA">
 <context>
+    <name>AddClient</name>
+    <message>
+        <location filename="../AddClient.ui" line="14"/>
+        <source>Добавление клиента</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AddClient.ui" line="94"/>
+        <source>VIN-номер</source>
+        <translation>VIN-номер</translation>
+    </message>
+    <message>
+        <location filename="../AddClient.ui" line="101"/>
+        <source>Госномер</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AddClient.ui" line="128"/>
+        <source>Контакты</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AddClient.ui" line="135"/>
+        <source>Год выпуска</source>
+        <translation>Год выпуска</translation>
+    </message>
+    <message>
+        <location filename="../AddClient.ui" line="162"/>
+        <source>Модель авто</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AddClient.ui" line="209"/>
+        <source>ФИО клиента</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AddClient.cpp" line="47"/>
+        <source>Уведомление</source>
+        <translation>Уведомление</translation>
+    </message>
+    <message>
+        <location filename="../AddClient.cpp" line="47"/>
+        <source>Клиент успешно добавлен!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AddEmployee</name>
     <message>
         <location filename="../AddEmployee.ui" line="14"/>
@@ -29,9 +77,8 @@
         <translation>Номер СТО</translation>
     </message>
     <message>
-        <location filename="../AddEmployee.ui" line="160"/>
         <source>Save</source>
-        <translation>Save</translation>
+        <translation type="vanished">Save</translation>
     </message>
     <message>
         <location filename="../AddEmployee.cpp" line="43"/>
@@ -45,14 +92,6 @@
     </message>
 </context>
 <context>
-    <name>ListClients</name>
-    <message>
-        <location filename="../ListClients.ui" line="14"/>
-        <source>Список клиентов</source>
-        <translation>Список клиентов</translation>
-    </message>
-</context>
-<context>
     <name>AddOrder</name>
     <message>
         <location filename="../AddOrder.ui" line="14"/>
@@ -60,139 +99,142 @@
         <translation>Окно оформления заказа</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="118"/>
+        <location filename="../AddOrder.ui" line="511"/>
         <source>Дата</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="140"/>
+        <location filename="../AddOrder.ui" line="78"/>
         <source>Клиент</source>
         <translation>Клиент</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="147"/>
+        <location filename="../AddOrder.ui" line="192"/>
         <source>Контактный номер</source>
         <translation>Контактный номер</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="203"/>
+        <location filename="../AddOrder.ui" line="425"/>
         <source>Марка автомобиля</source>
         <translation>Марка автомобиля</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="210"/>
+        <location filename="../AddOrder.ui" line="85"/>
         <source>Год выпуска</source>
         <translation>Год выпуска</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="217"/>
+        <location filename="../AddOrder.ui" line="149"/>
         <source>VIN-номер</source>
         <translation>VIN-номер</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="224"/>
+        <location filename="../AddOrder.ui" line="118"/>
         <source>Скидки</source>
         <translation>Скидки</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="318"/>
+        <location filename="../AddOrder.ui" line="125"/>
+        <source>Сервис</source>
+        <translation>Сервис</translation>
+    </message>
+    <message>
+        <location filename="../AddOrder.ui" line="203"/>
         <source>Запчасти</source>
         <translation>Запчасти</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="332"/>
+        <location filename="../AddOrder.ui" line="220"/>
         <source>Список работ</source>
         <translation>Список работ</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="346"/>
+        <location filename="../AddOrder.ui" line="237"/>
         <source>Работники</source>
         <translation>Работники</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="369"/>
+        <location filename="../AddOrder.ui" line="332"/>
+        <source>Госномер</source>
+        <translation>Госномер</translation>
+    </message>
+    <message>
+        <location filename="../AddOrder.ui" line="545"/>
         <source>Отзыв клиента</source>
         <translation>Отзыв клиента</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="381"/>
+        <location filename="../AddOrder.ui" line="295"/>
         <source>Открыть карту</source>
         <translation>Открыть карту</translation>
     </message>
     <message>
-        <location filename="../AddOrder.ui" line="392"/>
+        <location filename="../AddOrder.ui" line="254"/>
         <source>Стоимость ремонта</source>
         <translation>Стоимость ремонта</translation>
     </message>
-</context>
-<context>
-    <name>SettingsWindow</name>
     <message>
-        <source>Dialog</source>
-        <translation type="vanished">Dialog</translation>
+        <location filename="../AddOrder.cpp" line="110"/>
+        <source>Уведомление</source>
+        <translation>Уведомление</translation>
     </message>
     <message>
-        <location filename="../SettingsWindow.ui" line="14"/>
-        <source>Настройки</source>
-        <translation>Настройки</translation>
-    </message>
-    <message>
-        <location filename="../SettingsWindow.ui" line="26"/>
-        <source>Сохранить</source>
-        <translation>Сохранить</translation>
-    </message>
-    <message>
-        <location filename="../SettingsWindow.ui" line="49"/>
-        <source>Надпись на русском</source>
-        <translation>Надпись на русском</translation>
+        <location filename="../AddOrder.cpp" line="110"/>
+        <source>Заказ успешно создан!</source>
+        <translation>Заказ успешно создан!</translation>
     </message>
 </context>
 <context>
-    <name>ListSparePart</name>
+    <name>ListClients</name>
     <message>
-        <location filename="../ListSparePart.ui" line="14"/>
-        <source>Список запчастей</source>
-        <translation>Список запчастей</translation>
+        <location filename="../ListClients.ui" line="14"/>
+        <source>Список клиентов</source>
+        <translation>Список клиентов</translation>
     </message>
     <message>
-        <location filename="../ListSparePart.ui" line="64"/>
-        <source>Поиск</source>
-        <translation>Поиск</translation>
+        <location filename="../ListClients.ui" line="48"/>
+        <source>Обновить</source>
+        <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../ListSparePart.cpp" line="40"/>
+        <location filename="../ListClients.ui" line="93"/>
+        <source>Добавить клиента</source>
+        <translation>Добавить клиента</translation>
+    </message>
+    <message>
+        <location filename="../ListClients.cpp" line="39"/>
         <source>id</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ListSparePart.cpp" line="41"/>
-        <source>Название</source>
-        <translation>Название</translation>
+        <location filename="../ListClients.cpp" line="40"/>
+        <source>ФИО клиента</source>
+        <translation>ФИО клиента</translation>
     </message>
     <message>
-        <location filename="../ListSparePart.cpp" line="42"/>
-        <source>Производитель</source>
-        <translation>Производитель</translation>
+        <location filename="../ListClients.cpp" line="41"/>
+        <source>Контакты</source>
+        <translation>Контакты</translation>
     </message>
     <message>
-        <location filename="../ListSparePart.cpp" line="43"/>
-        <source>Количество в наличии</source>
-        <translation>Количество в наличии</translation>
+        <location filename="../ListClients.cpp" line="42"/>
+        <source>Модель авто</source>
+        <translation>Модель авто</translation>
     </message>
     <message>
-        <location filename="../ListSparePart.cpp" line="44"/>
-        <source>Совместимость с моделями</source>
-        <translation>Совместимость с моделями</translation>
+        <location filename="../ListClients.cpp" line="43"/>
+        <source>Госномер</source>
+        <translation>Госномер</translation>
     </message>
     <message>
-        <location filename="../ListSparePart.cpp" line="45"/>
-        <source>Оригинал</source>
-        <translation>Оригинал</translation>
+        <location filename="../ListClients.cpp" line="44"/>
+        <source>Год производства</source>
+        <translation>Год производства</translation>
     </message>
     <message>
-        <location filename="../ListSparePart.cpp" line="46"/>
-        <source>Цена</source>
-        <translation>Цена</translation>
+        <location filename="../ListClients.cpp" line="45"/>
+        <source>VIN-номер</source>
+        <translation>VIN-номер</translation>
     </message>
 </context>
 <context>
@@ -208,7 +250,7 @@
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../ListEmployees.ui" line="94"/>
+        <location filename="../ListEmployees.ui" line="97"/>
         <source>Добавить работника СТО</source>
         <translation>Добавить работника СТО</translation>
     </message>
@@ -234,6 +276,208 @@
     </message>
 </context>
 <context>
+    <name>ListOrders</name>
+    <message>
+        <location filename="../ListOrders.ui" line="14"/>
+        <source>Список заказов</source>
+        <translation>Список заказов</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.ui" line="50"/>
+        <source>Поиск</source>
+        <translation>Поиск</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.ui" line="76"/>
+        <source>Создать заказ</source>
+        <translation>Создать заказ</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.ui" line="118"/>
+        <source>Обновить</source>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="40"/>
+        <source>ФИО клиента</source>
+        <translation>ФИО клиента</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="41"/>
+        <source>Дата</source>
+        <translation>Дата</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="42"/>
+        <source>Контакты</source>
+        <translation>Контакты</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="43"/>
+        <source>Модель авто</source>
+        <translation>Модель авто</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="44"/>
+        <source>Год выпуска</source>
+        <translation>Год выпуска</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="45"/>
+        <source>VIN</source>
+        <translation>VIN</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="46"/>
+        <source>Скидки</source>
+        <translation>Скидки</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="47"/>
+        <source>Сервис</source>
+        <translation>Сервис</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="48"/>
+        <source>Гос. номер</source>
+        <translation>Гос. номер</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="49"/>
+        <source>Работники</source>
+        <translation>Работники</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="50"/>
+        <source>Список работ</source>
+        <translation>Список работ</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="51"/>
+        <source>Список запчастей</source>
+        <translation>Список запчастей</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="52"/>
+        <source>Цена</source>
+        <translation>Цена</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="53"/>
+        <source>Отзыв</source>
+        <translation>Отзыв</translation>
+    </message>
+    <message>
+        <location filename="../ListOrders.cpp" line="54"/>
+        <source>Готовность</source>
+        <translation>Готовность</translation>
+    </message>
+</context>
+<context>
+    <name>ListSparePart</name>
+    <message>
+        <location filename="../ListSpareParts.ui" line="14"/>
+        <source>Список запчастей</source>
+        <translation>Список запчастей</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.ui" line="57"/>
+        <source>Поиск</source>
+        <translation>Поиск</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.ui" line="83"/>
+        <source>Обновить</source>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.ui" line="125"/>
+        <source>Добавить запчасть</source>
+        <translation>Добавить запчасть</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.cpp" line="41"/>
+        <source>id</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.cpp" line="42"/>
+        <source>Название</source>
+        <translation>Название</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.cpp" line="43"/>
+        <source>Производитель</source>
+        <translation>Производитель</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.cpp" line="44"/>
+        <source>Количество в наличии</source>
+        <translation>Количество в наличии</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.cpp" line="45"/>
+        <source>Совместимость с моделями</source>
+        <translation>Совместимость с моделями</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.cpp" line="46"/>
+        <source>Оригинал</source>
+        <translation>Оригинал</translation>
+    </message>
+    <message>
+        <location filename="../ListSpareParts.cpp" line="47"/>
+        <source>Цена</source>
+        <translation>Цена</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWindow</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="vanished">Dialog</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.ui" line="14"/>
+        <source>Настройки</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.ui" line="26"/>
+        <source>Сохранить настройки</source>
+        <translation>Сохранить настройки</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.ui" line="29"/>
+        <source>Сохранить</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Надпись на русском</source>
+        <translation type="vanished">Надпись на русском</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.cpp" line="122"/>
+        <source>Применение настроек</source>
+        <translation>Применение настроек</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.cpp" line="123"/>
+        <source>Для применения настроек необходимо перезагрузить приложение. Перезагрузить сейчас?</source>
+        <translation>Для применения настроек необходимо перезагрузить приложение. Перезагрузить сейчас?</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.cpp" line="125"/>
+        <source>Да</source>
+        <translation>Да</translation>
+    </message>
+    <message>
+        <location filename="../SettingsWindow.cpp" line="126"/>
+        <source>Нет</source>
+        <translation>Нет</translation>
+    </message>
+</context>
+<context>
     <name>StartWindow</name>
     <message>
         <location filename="../StartWindow.ui" line="14"/>
@@ -243,7 +487,7 @@
     <message>
         <location filename="../StartWindow.ui" line="242"/>
         <source>Перейти в YouTube</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти в YouTube</translation>
     </message>
     <message>
         <location filename="../StartWindow.ui" line="416"/>

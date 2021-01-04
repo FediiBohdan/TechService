@@ -22,6 +22,7 @@
 class ListSparePart;
 class AddOrder;
 class ListOrders;
+class SettingsWindow;
 
 namespace Ui {
 class StartWindow;
@@ -44,6 +45,14 @@ private:
     SettingsWindow *settingsWindow;
     ListOrders *listOrders;
     ListClients *listClients;
+
+    QTranslator translator;
+
+protected:
+    void changeEvent(QEvent * event) override;
+
+public slots:
+    void translateUI(int translate);
 
 private slots:
     void showTime();

@@ -36,8 +36,9 @@ private:
 
     ListSparePart *sparePartsTable;
 
-    QSqlDatabase listOrders = QSqlDatabase::database("ListOrders");
+    QSqlDatabase listOrders = QSqlDatabase::database("OrdersHistory");
     QSqlDatabase ordersHistoryDB;
+    QSqlDatabase clientsDB;
     QPointer<QSqlQueryModel> queryModel;
 
 private slots:

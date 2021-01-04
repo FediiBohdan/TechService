@@ -19,17 +19,50 @@ SettingsWindow::~SettingsWindow()
     delete ui;
 }
 
-//void SettingsWindow::changeEvent(QEvent *event)
-//{
-//    // В случае получения события изменения языка приложения
-//    if (event->type() == QEvent::LanguageChange) {
-//        ui->retranslateUi(this);    // переведём окно заново
-//    }
-//}
+void SettingsWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+}
 
 void SettingsWindow::setLanguage()
 {
+    startWindow = new StartWindow;
+    startWindow->close();
+
     ui->languageSelection->addItems(QStringList() << "Русский" << "Українська" << "English");
+
+    connect(ui->languageSelection, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentTextChanged), [=]
+    {
+        if (ui->languageSelection->currentIndex() == 0)
+        {
+           translator.load(":/translations/russian.qm");
+           qApp->installTranslator(&translator);
+           saveSettings();
+
+           // pass translation parameter to classes for simultaneous dynamic translation changes
+           connect(this, &SettingsWindow::translate, startWindow, &StartWindow::translateUI);
+           emit translate(0);
+        }
+        else if (ui->languageSelection->currentIndex() == 1)
+        {
+           translator.load(":/translations/ukrainian.qm");
+           qApp->installTranslator(&translator);
+           saveSettings();
+
+           connect(this, &SettingsWindow::translate, startWindow, &StartWindow::translateUI);
+           emit translate(1);
+        }
+        else if (ui->languageSelection->currentIndex() == 2)
+        {
+           translator.load(":/translations/english.qm");
+           qApp->installTranslator(&translator);
+           saveSettings();
+
+           connect(this, &SettingsWindow::translate, startWindow, &StartWindow::translateUI);
+           emit translate(2);
+        }
+    });
 
     QString registerLanguage = global::getSettingsValue("language", "settings").toString();
 
@@ -51,28 +84,29 @@ void SettingsWindow::saveSettings()
 
 void SettingsWindow::on_saveSettingsButton_clicked()
 {
-    QMessageBox msgBox;
-    msgBox.setWindowTitle(tr("Применение настроек"));
-    msgBox.setText(tr("Для применения настроек необходимо перезагрузить приложение. Перезагрузить сейчас?"));
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setButtonText(QMessageBox::Yes, tr("Да"));
-    msgBox.setButtonText(QMessageBox::No, tr("Нет"));
-    qint32 reply = msgBox.exec();
+    ui->saveSettingsButton->hide();
+//    QMessageBox msgBox;
+//    msgBox.setWindowTitle(tr("Применение настроек"));
+//    msgBox.setText(tr("Для применения настроек необходимо перезагрузить приложение. Перезагрузить сейчас?"));
+//    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+//    msgBox.setButtonText(QMessageBox::Yes, tr("Да"));
+//    msgBox.setButtonText(QMessageBox::No, tr("Нет"));
+//    qint32 reply = msgBox.exec();
 
-    switch (reply)
-    {
-    case QMessageBox::Yes:
-        saveSettings();
+//    switch (reply)
+//    {
+//    case QMessageBox::Yes:
+//        saveSettings();
 
-        qApp->closeAllWindows();
-        qApp->quit();
+//        qApp->closeAllWindows();
+//        qApp->quit();
 
-        QProcess::startDetached(qApp->arguments()[0], QStringList() << "restart");
-        break;
-    case QMessageBox::No:
-        msgBox.close();
-        break;
-    default:
-        break;
-    }
+//        QProcess::startDetached(qApp->arguments()[0], QStringList() << "restart");
+//        break;
+//    case QMessageBox::No:
+//        msgBox.close();
+//        break;
+//    default:
+//        break;
+//    }
 }

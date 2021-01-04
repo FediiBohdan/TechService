@@ -33,7 +33,8 @@ void ListSparePart::loadTable()
 
     QString queryString;
 
-    queryString = "SELECT id_spare_part, spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price FROM SparePartsCatalogue";
+    queryString = "SELECT id_spare_part, spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, "
+                  "price FROM SparePartsCatalogue";
 
     queryModel->setQuery(queryString, listSpareParts);
 

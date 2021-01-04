@@ -27,6 +27,31 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
+void StartWindow::translateUI(int translate)
+{
+    if (translate == 0)
+    {
+        translator.load(":/translations/russian.qm");
+        qApp->installTranslator(&translator);
+    }
+    else if (translate == 1)
+    {
+        translator.load(":/translations/ukrainian.qm");
+        qApp->installTranslator(&translator);
+    }
+    else if (translate == 2)
+    {
+        translator.load(":/translations/english.qm");
+        qApp->installTranslator(&translator);
+    }
+}
+
+void StartWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+}
+
 void StartWindow::showTime(){
     auto elapsed = elapsedTimer.elapsed();
     auto c = countdown.addMSecs(-elapsed);

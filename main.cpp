@@ -13,10 +13,9 @@ int main(int argc, char *argv[])
     app.setOrganizationName("TechService");
     app.setApplicationVersion("1.0.0.0");
 
-    // подключение переводов
+    // translations connection
     QString registerLanguage = global::getSettingsValue("language", "settings").toString();
     QTranslator translator;
-    QTranslator contextTranslator;
 
     if (registerLanguage == "Русский")
     {

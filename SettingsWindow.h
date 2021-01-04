@@ -2,12 +2,16 @@
 #define SETTINGSWINDOW_H
 
 #include "Global.h"
+#include "StartWindow.h"
 
 #include <QDialog>
 #include <QTranslator>
 #include <QApplication>
 #include <QMessageBox>
 #include <QProcess>
+#include <QDebug>
+
+class StartWindow;
 
 namespace Ui {
 class SettingsWindow;
@@ -22,8 +26,7 @@ public:
     ~SettingsWindow();
 
 protected:
-    // Метод получения событий в главном окне приложения. В нём будет производиться проверка события смены перевода приложения
-    //void changeEvent(QEvent * event) override;
+    void changeEvent(QEvent * event) override;
 
 private slots:
     void setLanguage();
@@ -33,6 +36,13 @@ private slots:
 
 private:
     Ui::SettingsWindow *ui;
+
+    StartWindow *startWindow;
+
+    QTranslator translator;
+
+signals:
+    void translate(int translate);
 };
 
 #endif // SETTINGSWINDOW_H

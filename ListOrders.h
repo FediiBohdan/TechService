@@ -33,7 +33,7 @@ private slots:
 private:
     Ui::ListOrders *ui;
 
-    QSqlDatabase ordersHistoryTable = QSqlDatabase::database("ListOrders");
+    QSqlDatabase ordersHistoryTable = QSqlDatabase::database("OrdersHistory");
 
     QSqlDatabase ordersHistoryDB;
     QPointer<QSqlQueryModel> queryModel;

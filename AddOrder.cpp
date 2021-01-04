@@ -45,7 +45,8 @@ void AddOrder::setDateAndTime()
 
 void AddOrder::on_createOrderButton_clicked()
 {
-    QSqlQuery query(ordersHistoryDB);
+    // Insertion into order table
+    QSqlQuery queryOrders(ordersHistoryDB);
 
     QString client = ui->clientLine->text();
     QString date = ui->dateLine->text();
@@ -62,24 +63,47 @@ void AddOrder::on_createOrderButton_clicked()
     QString price = ui->priceLine->text();
     QString feedback = ui->feedbackLine->text();
 
-    qDebug() << __LINE__ << query.prepare("INSERT INTO ListOrders (client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback)"
+    queryOrders.prepare("INSERT INTO OrdersHistory (client, date, contacts, auto_model, manufacture_year, VIN_number, "
+                  "discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback) "
                   "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    query.addBindValue(client);
-    query.addBindValue(date);
-    query.addBindValue(contacts);
-    query.addBindValue(autoModel);
-    query.addBindValue(manufactureYear);
-    query.addBindValue(VIN_Number);
-    query.addBindValue(discounts);
-    query.addBindValue(serviceNumber);
-    query.addBindValue(autoLicensePlate);
-    query.addBindValue(staffTeam);
-    query.addBindValue(worksList);
-    query.addBindValue(spareList);
-    query.addBindValue(price);
-    query.addBindValue(feedback);
-    qDebug() << __LINE__ << query.exec();
+    queryOrders.addBindValue(client);
+    queryOrders.addBindValue(date);
+    queryOrders.addBindValue(contacts);
+    queryOrders.addBindValue(autoModel);
+    queryOrders.addBindValue(manufactureYear);
+    queryOrders.addBindValue(VIN_Number);
+    queryOrders.addBindValue(discounts);
+    queryOrders.addBindValue(serviceNumber);
+    queryOrders.addBindValue(autoLicensePlate);
+    queryOrders.addBindValue(staffTeam);
+    queryOrders.addBindValue(worksList);
+    queryOrders.addBindValue(spareList);
+    queryOrders.addBindValue(price);
+    queryOrders.addBindValue(feedback);
+    queryOrders.exec();
+
+    // Simultaneous insertion into client table
+    QSqlQuery queryClients(clientsDB);
+
+    QString clientClientsDB = ui->clientLine->text();
+    QString contactsClientsDB = ui->contactLine->text();
+    QString autoModelClientsDB = ui->modelLine->text();
+    QString autoLicensePlateClientsDB = ui->autoLicensePlateLine->text();
+    QString manufactureYearClientsDB = ui->yearLine->text();
+    QString VIN_NumberClientsDB = ui->VIN_Line->text();
+
+    queryClients.prepare("INSERT INTO ClientsTable (client_FML_name, contacts, auto_model, auto_license_plate, "
+                  "manufacture_year, VIN_number) "
+                  "VALUES(?, ?, ?, ?, ?, ?)");
+
+    queryClients.addBindValue(clientClientsDB);
+    queryClients.addBindValue(contactsClientsDB);
+    queryClients.addBindValue(autoModelClientsDB);
+    queryClients.addBindValue(autoLicensePlateClientsDB);
+    queryClients.addBindValue(manufactureYearClientsDB);
+    queryClients.addBindValue(VIN_NumberClientsDB);
+    queryClients.exec();
 
     close();
 
