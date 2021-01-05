@@ -54,23 +54,24 @@ void StartWindow::changeEvent(QEvent *event)
 
 void StartWindow::showTime(){
     auto elapsed = elapsedTimer.elapsed();
-    auto c = countdown.addMSecs(-elapsed);
-    QString timestr = c.toString("hh:mm:ss");
+    auto counter = countdown.addMSecs(-elapsed);
+    QString timestr = counter.toString("hh:mm:ss");
     ui->lcdNumber->display(timestr);
 }
 
 void StartWindow::on_desktopButton_clicked()
 {
-    if (sparePartsTable->isVisible())
-    {
-        connect(this, &StartWindow::closeAllWindowsExceptCurrent, sparePartsTable, &ListSparePart::closeWindow);
-        emit closeAllWindowsExceptCurrent(true);
-    }
-    if (addOrder->isVisible())
-    {
-        connect(this, &StartWindow::closeAllWindowsExceptCurrent, addOrder, &AddOrder::closeWindow);
-        emit closeAllWindowsExceptCurrent(true);
-    }
+    // does not work properly
+//    if (sparePartsTable->isVisible())
+//    {
+//        connect(this, &StartWindow::closeAllWindowsExceptCurrent, sparePartsTable, &ListSparePart::closeWindow);
+//        emit closeAllWindowsExceptCurrent(true);
+//    }
+//    if (addOrder->isVisible())
+//    {
+//        connect(this, &StartWindow::closeAllWindowsExceptCurrent, addOrder, &AddOrder::closeWindow);
+//        emit closeAllWindowsExceptCurrent(true);
+//    }
 }
 
 void StartWindow::on_orderFormationButton_clicked()
@@ -94,16 +95,16 @@ void StartWindow::on_staffButton_clicked()
     listEmployees->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void StartWindow::on_todolistButton_clicked()
-{
-
-}
-
 void StartWindow::on_catalogueButton_clicked()
 {
     sparePartsTable = new ListSparePart;
     sparePartsTable->show();
     sparePartsTable->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void StartWindow::on_todolistButton_clicked()
+{
+
 }
 
 void StartWindow::on_statisticsButton_clicked()

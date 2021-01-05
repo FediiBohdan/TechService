@@ -1,7 +1,8 @@
 #ifndef LISTEMPLOYEES_H
 #define LISTEMPLOYEES_H
 
-#include <AddEmployee.h>
+#include "AddEmployee.h"
+#include "ViewEmployee.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
@@ -21,6 +22,7 @@ class ListEmployees : public QDialog
 
 private slots:
     void loadTable();
+    void showEmployeeInfo(const QModelIndex &index);
 
     void on_addWorkerButton_clicked();
 
@@ -36,6 +38,7 @@ private:
     QPointer<QSqlQueryModel> queryModel;
 
     AddEmployee *addEmployee;
+    ViewEmployee *viewEmployees;
 };
 
 #endif // LISTEMPLOYEES_H

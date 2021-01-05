@@ -2,6 +2,7 @@
 #define ListSpareParts_H
 
 #include "StartWindow.h"
+#include "AddSparePart.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -33,10 +34,13 @@ private:
     QSqlDatabase listSparePartsDB;
     QPointer<QSqlQueryModel> queryModel;
 
+    AddSparePart *addSparePart;
     StartWindow *startWindow;
 
 private slots:
     void loadTable();
+
+    void on_addSparePartButton_clicked();
 
 public slots:
     void closeWindow();

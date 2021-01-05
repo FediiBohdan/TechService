@@ -48,19 +48,6 @@ void ListSparePart::loadTable()
 
     ui->tableView->setModel(queryModel);
 
-    for (qint32 row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
-    {
-        QString idSparePart = queryModel->data(queryModel->index(row_index, 0)).toString();
-        QString spareName = queryModel->data(queryModel->index(row_index, 1)).toString();
-        QString manufacturer = queryModel->data(queryModel->index(row_index, 2)).toString();
-        QString quantityInStock = queryModel->data(queryModel->index(row_index, 3)).toString();
-        QString autoCompatibility = queryModel->data(queryModel->index(row_index, 4)).toString();
-        QString original = queryModel->data(queryModel->index(row_index, 5)).toString();
-        QString price = queryModel->data(queryModel->index(row_index, 6)).toString();
-
-        QSqlQuery query(listSparePartsDB);
-    }
-
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }
@@ -68,4 +55,11 @@ void ListSparePart::loadTable()
 void ListSparePart::closeWindow()
 {
     close();
+}
+
+void ListSparePart::on_addSparePartButton_clicked()
+{
+    addSparePart = new AddSparePart;
+    addSparePart->show();
+    addSparePart->setAttribute(Qt::WA_DeleteOnClose);
 }

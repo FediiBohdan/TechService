@@ -46,19 +46,6 @@ void ListClients::loadTable()
 
     ui->tableView->setModel(queryModel);
 
-    for (qint32 row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
-    {
-        QString id_client = queryModel->data(queryModel->index(row_index, 0)).toString();
-        QString clientPersonalInfo = queryModel->data(queryModel->index(row_index, 1)).toString();
-        QString clientContacts = queryModel->data(queryModel->index(row_index, 2)).toString();
-        QString autoModel = queryModel->data(queryModel->index(row_index, 3)).toString();
-        QString autoLicensePlate = queryModel->data(queryModel->index(row_index, 4)).toString();
-        QString manufactureYear = queryModel->data(queryModel->index(row_index, 5)).toString();
-        QString VIN_number = queryModel->data(queryModel->index(row_index, 6)).toString();
-
-        QSqlQuery query(clientsDB);
-    }
-
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }

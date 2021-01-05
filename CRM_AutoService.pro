@@ -21,13 +21,15 @@ SOURCES += main.cpp \
     AddClient.cpp \
     AddEmployee.cpp \
     AddOrder.cpp \
+    AddSparePart.cpp \
     Global.cpp \
     ListClients.cpp \
     ListEmployees.cpp \
     ListOrders.cpp \
     ListSpareParts.cpp \
     SettingsWindow.cpp \
-    StartWindow.cpp
+    StartWindow.cpp \
+    ViewEmployee.cpp
 
 RESOURCES += qml.qrc \
     images.qrc \
@@ -37,23 +39,27 @@ FORMS += \
     AddClient.ui \
     AddEmployee.ui \
     AddOrder.ui \
+    AddSparePart.ui \
     ListClients.ui \
     ListEmployees.ui \
     ListOrders.ui \
     ListSpareParts.ui \
     SettingsWindow.ui \
-    StartWindow.ui
+    StartWindow.ui \
+    ViewEmployee.ui
 
 HEADERS += \
     AddClient.h \
     AddEmployee.h \
     AddOrder.h \
+    AddSparePart.h \
     Global.h \
     ListClients.h \
     ListEmployees.h \
     ListOrders.h \
     ListSpareParts.h \
     SettingsWindow.h \
-    StartWindow.h
+    StartWindow.h \
+    ViewEmployee.h
 
 CODECFORSRC = UTF-8

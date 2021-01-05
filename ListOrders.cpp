@@ -55,28 +55,6 @@ void ListOrders::loadTable()
 
     ui->tableView->setModel(queryModel);
 
-    for (qint32 row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
-    {
-        //QString id_staff = queryModel->data(queryModel->index(row_index, 0)).toString();
-        QString clientPersonalInfo = queryModel->data(queryModel->index(row_index, 0)).toString();
-        QString orderDate = queryModel->data(queryModel->index(row_index, 1)).toString();
-        QString contacts = queryModel->data(queryModel->index(row_index, 2)).toString();
-        QString autoModel = queryModel->data(queryModel->index(row_index, 3)).toString();
-        QString manufactureYear = queryModel->data(queryModel->index(row_index, 4)).toString();
-        QString VIN = queryModel->data(queryModel->index(row_index, 5)).toString();
-        QString discounts = queryModel->data(queryModel->index(row_index, 6)).toString();
-        QString service = queryModel->data(queryModel->index(row_index, 7)).toString();
-        QString autoLicensePlate = queryModel->data(queryModel->index(row_index, 8)).toString();
-        QString staffTeam = queryModel->data(queryModel->index(row_index, 9)).toString();
-        QString worksList = queryModel->data(queryModel->index(row_index, 10)).toString();
-        QString listSpareParts = queryModel->data(queryModel->index(row_index, 11)).toString();
-        QString price = queryModel->data(queryModel->index(row_index, 12)).toString();
-        QString feedback = queryModel->data(queryModel->index(row_index, 13)).toString();
-        QString readiness = queryModel->data(queryModel->index(row_index, 14)).toString();
-
-        QSqlQuery query(ordersHistoryDB);
-    }
-
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }
