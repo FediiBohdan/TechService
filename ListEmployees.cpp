@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QAbstractItemView>
+#include <QTableWidgetItem>
 
 ListEmployees::ListEmployees(QWidget *parent) :
     QDialog(parent),
@@ -53,9 +54,10 @@ void ListEmployees::loadTable()
 
     for (qint32 row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
     {
-        QString workPlace = queryModel->data(queryModel->index(row_index, 4)).toString();
-
-        // needed replace int by QString from DB
+        if (queryModel->data(queryModel->index(row_index, 4)).toString() == '1')
+        {
+            // needed replacing 1 to string
+        }
         QSqlQuery query(employeesDB);
     }
 

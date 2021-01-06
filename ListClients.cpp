@@ -17,6 +17,8 @@ ListClients::ListClients(QWidget *parent) :
     clientsDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     clientsDB.open();
 
+    connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListClients::showClientInfo);
+
     loadTable();
 }
 
@@ -55,4 +57,14 @@ void ListClients::on_addClientButton_clicked()
     addClient = new AddClient;
     addClient->show();
     addClient->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ListClients::showClientInfo(const QModelIndex &index)
+{
+    QString clientId = queryModel->data(queryModel->index(index.row(), 0)).toString();
+
+    viewClient = new ViewClient;
+    viewClient->setValues(clientId);
+    viewClient->show();
+    viewClient->setAttribute(Qt::WA_DeleteOnClose);
 }

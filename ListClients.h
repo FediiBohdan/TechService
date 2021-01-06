@@ -2,6 +2,7 @@
 #define LISTCLIENTS_H
 
 #include "AddClient.h"
+#include "ViewClient.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -25,6 +26,7 @@ public:
 
 private slots:
     void loadTable();
+    void showClientInfo(const QModelIndex &index);
 
     void on_addClientButton_clicked();
 
@@ -32,6 +34,7 @@ private:
     Ui::ListClients *ui;
 
     AddClient *addClient;
+    ViewClient *viewClient;
 
     QSqlDatabase clientsTable = QSqlDatabase::database("ClientsTable");
     QSqlDatabase clientsDB;

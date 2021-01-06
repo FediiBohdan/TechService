@@ -3,6 +3,7 @@
 
 #include "StartWindow.h"
 #include "AddSparePart.h"
+#include "ViewSparePart.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -36,9 +37,11 @@ private:
 
     AddSparePart *addSparePart;
     StartWindow *startWindow;
+    ViewSparePart *viewSparePart;
 
 private slots:
     void loadTable();
+    void showSparePartInfo(const QModelIndex &index);
 
     void on_addSparePartButton_clicked();
 

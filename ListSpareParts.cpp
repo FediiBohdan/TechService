@@ -19,6 +19,8 @@ ListSparePart::ListSparePart(QWidget *parent) :
     listSparePartsDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     listSparePartsDB.open();
 
+    connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListSparePart::showSparePartInfo);
+
     loadTable();
 }
 
@@ -62,4 +64,14 @@ void ListSparePart::on_addSparePartButton_clicked()
     addSparePart = new AddSparePart;
     addSparePart->show();
     addSparePart->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ListSparePart::showSparePartInfo(const QModelIndex &index)
+{
+    QString sparePartId = queryModel->data(queryModel->index(index.row(), 0)).toString();
+
+    viewSparePart = new ViewSparePart;
+    viewSparePart->setValues(sparePartId);
+    viewSparePart->show();
+    viewSparePart->setAttribute(Qt::WA_DeleteOnClose);
 }

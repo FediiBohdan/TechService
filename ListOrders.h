@@ -2,6 +2,7 @@
 #define LISTORDERS_H
 
 #include "AddOrder.h"
+#include "ViewOrders.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
@@ -27,6 +28,7 @@ public:
 
 private slots:
     void loadTable();
+    void showOrderInfo(const QModelIndex &index);
 
     void on_orderCreationButton_clicked();
 
@@ -39,6 +41,7 @@ private:
     QPointer<QSqlQueryModel> queryModel;
 
     AddOrder *addOrder;
+    ViewOrders *viewOrders;
 };
 
 #endif // LISTORDERS_H

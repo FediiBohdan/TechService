@@ -29,7 +29,10 @@ SOURCES += main.cpp \
     ListSpareParts.cpp \
     SettingsWindow.cpp \
     StartWindow.cpp \
-    ViewEmployee.cpp
+    ViewClient.cpp \
+    ViewEmployee.cpp \
+    ViewOrders.cpp \
+    ViewSparePart.cpp
 
 RESOURCES += qml.qrc \
     images.qrc \
@@ -46,7 +49,10 @@ FORMS += \
     ListSpareParts.ui \
     SettingsWindow.ui \
     StartWindow.ui \
-    ViewEmployee.ui
+    ViewClient.ui \
+    ViewEmployee.ui \
+    ViewOrders.ui \
+    ViewSparePart.ui
 
 HEADERS += \
     AddClient.h \
@@ -60,6 +66,9 @@ HEADERS += \
     ListSpareParts.h \
     SettingsWindow.h \
     StartWindow.h \
-    ViewEmployee.h
+    ViewClient.h \
+    ViewEmployee.h \
+    ViewOrders.h \
+    ViewSparePart.h
 
 CODECFORSRC = UTF-8
