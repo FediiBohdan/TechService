@@ -14,6 +14,7 @@
 #include <QDebug>
 
 class StartWindow;
+class ViewSparePart;
 
 namespace Ui {
 class ListSparePart;

@@ -11,7 +11,7 @@ AddSparePart::AddSparePart(QWidget *parent) :
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
     sparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
-    sparePartsDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    sparePartsDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     sparePartsDB.open();
 }
 

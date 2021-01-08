@@ -12,6 +12,8 @@
 #include <QStandardItem>
 #include <QDebug>
 
+class ViewEmployee;
+
 namespace Ui {
 class ListEmployees;
 }

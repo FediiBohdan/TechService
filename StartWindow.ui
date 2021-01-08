@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Auto Service</string>
+   <string>TechService CRM</string>
   </property>
   <property name="windowIcon">
    <iconset resource="images.qrc">

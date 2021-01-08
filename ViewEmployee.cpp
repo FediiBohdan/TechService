@@ -16,6 +16,15 @@ ViewEmployee::~ViewEmployee()
     delete ui;
 }
 
+void ViewEmployee::closeEvent(QCloseEvent*)
+{
+    QDialog::hide();
+
+    listEmployees = new ListEmployees;
+    listEmployees->show();
+    listEmployees->setAttribute(Qt::WA_DeleteOnClose);
+}
+
 // Gets employee's id from ListEmployee
 void ViewEmployee::setValues(const QString &id)
 {

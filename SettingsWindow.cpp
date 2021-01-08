@@ -81,32 +81,3 @@ void SettingsWindow::saveSettings()
 {
     global::setSettingsValue("language", ui->languageSelection->currentText(), "settings");
 }
-
-void SettingsWindow::on_saveSettingsButton_clicked()
-{
-    ui->saveSettingsButton->hide();
-//    QMessageBox msgBox;
-//    msgBox.setWindowTitle(tr("Применение настроек"));
-//    msgBox.setText(tr("Для применения настроек необходимо перезагрузить приложение. Перезагрузить сейчас?"));
-//    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-//    msgBox.setButtonText(QMessageBox::Yes, tr("Да"));
-//    msgBox.setButtonText(QMessageBox::No, tr("Нет"));
-//    qint32 reply = msgBox.exec();
-
-//    switch (reply)
-//    {
-//    case QMessageBox::Yes:
-//        saveSettings();
-
-//        qApp->closeAllWindows();
-//        qApp->quit();
-
-//        QProcess::startDetached(qApp->arguments()[0], QStringList() << "restart");
-//        break;
-//    case QMessageBox::No:
-//        msgBox.close();
-//        break;
-//    default:
-//        break;
-//    }
-}

@@ -12,6 +12,8 @@
 #include <QSqlQuery>
 #include <QDebug>
 
+class ViewClient;
+
 namespace Ui {
 class ListClients;
 }

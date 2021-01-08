@@ -16,6 +16,15 @@ ViewOrders::~ViewOrders()
     delete ui;
 }
 
+void ViewOrders::closeEvent(QCloseEvent*)
+{
+    QDialog::hide();
+
+    listOrders = new ListOrders;
+    listOrders->show();
+    listOrders->setAttribute(Qt::WA_DeleteOnClose);
+}
+
 // Gets spare part's id from ListSpareParts
 void ViewOrders::setValues(const QString &id)
 {

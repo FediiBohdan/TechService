@@ -10,11 +10,16 @@ ListOrders::ListOrders(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    ListOrders::showNormal();
-    ListOrders::showMaximized();
+    ui->tableView->verticalHeader()->setSectionsClickable(false);
+    ui->tableView->horizontalHeader()->setSectionsClickable(false);
+
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    QDialog::showNormal();
+    QDialog::showMaximized();
 
     ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
-    ordersHistoryDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    ordersHistoryDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListOrders::showOrderInfo);
@@ -57,6 +62,8 @@ void ListOrders::loadTable()
 
     ui->tableView->setModel(queryModel);
 
+    ui->tableView->setColumnHidden(0, true);
+
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }
@@ -70,6 +77,8 @@ void ListOrders::on_orderCreationButton_clicked()
 
 void ListOrders::showOrderInfo(const QModelIndex &index)
 {
+    QDialog::hide();
+
     QString orderId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
     viewOrders = new ViewOrders;

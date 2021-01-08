@@ -1,6 +1,8 @@
 #ifndef VIEWCLIENT_H
 #define VIEWCLIENT_H
 
+#include "ListClients.h"
+
 #include <QDialog>
 #include <QMessageBox>
 #include <QSqlDatabase>
@@ -8,6 +10,8 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDebug>
+
+class ListClients;
 
 namespace Ui {
 class ViewClient;
@@ -21,15 +25,19 @@ public:
     explicit ViewClient(QWidget *parent = nullptr);
     ~ViewClient();
 
+public slots:
     void setValues(const QString &id);
 
 private:
     Ui::ViewClient *ui;
 
-    QSqlDatabase clientsTable = QSqlDatabase::database("ClientsTable");
-    QSqlDatabase clientsDB;
+    ListClients *listClient;
 
+    QSqlDatabase clientsDB;
     QString clientId;
+
+private slots:
+    void closeEvent(QCloseEvent*);
 };
 
 #endif // VIEWCLIENT_H

@@ -20,8 +20,10 @@ ListEmployees::ListEmployees(QWidget *parent) :
     ui->tableView->verticalHeader()->setSectionsClickable(false);
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
 
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
     employeesDB = QSqlDatabase::addDatabase("QSQLITE");
-    employeesDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    employeesDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     employeesDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListEmployees::showEmployeeInfo);
@@ -76,6 +78,8 @@ void ListEmployees::on_addWorkerButton_clicked()
 
 void ListEmployees::showEmployeeInfo(const QModelIndex &index)
 {
+    QDialog::hide();
+
     QString employeeId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
     viewEmployees = new ViewEmployee;

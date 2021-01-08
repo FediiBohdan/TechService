@@ -13,8 +13,10 @@ ListClients::ListClients(QWidget *parent) :
     ui->tableView->verticalHeader()->setSectionsClickable(false);
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
 
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
     clientsDB = QSqlDatabase::addDatabase("QSQLITE");
-    clientsDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    clientsDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     clientsDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListClients::showClientInfo);
@@ -48,6 +50,8 @@ void ListClients::loadTable()
 
     ui->tableView->setModel(queryModel);
 
+    ui->tableView->setColumnHidden(0, true);
+
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }
@@ -61,6 +65,8 @@ void ListClients::on_addClientButton_clicked()
 
 void ListClients::showClientInfo(const QModelIndex &index)
 {
+    QDialog::hide();
+
     QString clientId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
     viewClient = new ViewClient;

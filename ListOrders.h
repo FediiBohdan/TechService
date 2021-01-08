@@ -13,6 +13,7 @@
 #include <QDebug>
 
 class AddOrder;
+class ViewOrders;
 
 namespace Ui {
 class ListOrders;

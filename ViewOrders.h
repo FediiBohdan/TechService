@@ -1,6 +1,8 @@
 #ifndef VIEWORDERS_H
 #define VIEWORDERS_H
 
+#include "ListOrders.h"
+
 #include <QDialog>
 #include <QMessageBox>
 #include <QSqlDatabase>
@@ -8,6 +10,8 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDebug>
+
+class ListOrders;
 
 namespace Ui {
 class ViewOrders;
@@ -21,15 +25,20 @@ public:
     explicit ViewOrders(QWidget *parent = nullptr);
     ~ViewOrders();
 
+public slots:
     void setValues(const QString &id);
 
 private:
     Ui::ViewOrders *ui;
 
-    QSqlDatabase ordersTable = QSqlDatabase::database("OrdersHistory");
+    ListOrders *listOrders;
+
     QSqlDatabase ordersDB;
 
     QString orderId;
+
+private slots:
+    void closeEvent(QCloseEvent*);
 };
 
 #endif // VIEWORDERS_H

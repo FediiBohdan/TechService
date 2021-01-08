@@ -11,7 +11,7 @@ AddClient::AddClient(QWidget *parent) :
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
     clientsDB = QSqlDatabase::addDatabase("QSQLITE");
-    clientsDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    clientsDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     clientsDB.open();
 }
 

@@ -1,6 +1,8 @@
 #ifndef VIEWSPAREPART_H
 #define VIEWSPAREPART_H
 
+#include "ListSpareParts.h"
+
 #include <QDialog>
 #include <QMessageBox>
 #include <QSqlDatabase>
@@ -9,6 +11,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 
+class ListSparePart;
 
 namespace Ui {
 class ViewSparePart;
@@ -22,15 +25,20 @@ public:
     explicit ViewSparePart(QWidget *parent = nullptr);
     ~ViewSparePart();
 
+public slots:
     void setValues(const QString &id);
 
 private:
     Ui::ViewSparePart *ui;
 
-    QSqlDatabase sparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
+    ListSparePart *listSparePart;
+
     QSqlDatabase sparePartsDB;
 
     QString sparePartId;
+
+private slots:
+    void closeEvent(QCloseEvent*);
 };
 
 #endif // VIEWSPAREPART_H

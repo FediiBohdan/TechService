@@ -32,14 +32,13 @@ private slots:
     void setLanguage();
     void loadSettings();
     void saveSettings();
-    void on_saveSettingsButton_clicked();
 
 private:
     Ui::SettingsWindow *ui;
 
-    StartWindow *startWindow;
-
     QTranslator translator;
+
+    StartWindow *startWindow;
 
 signals:
     void translate(int translate);

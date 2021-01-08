@@ -11,7 +11,7 @@ AddEmployee::AddEmployee(QWidget *parent) :
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
     employeeDB = QSqlDatabase::addDatabase("QSQLITE");
-    employeeDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    employeeDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     employeeDB.open();
 }
 

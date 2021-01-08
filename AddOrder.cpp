@@ -13,7 +13,7 @@ AddOrder::AddOrder(QWidget *parent) :
     connect(ui->pushButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
 
     ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
-    ordersHistoryDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    ordersHistoryDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
     setDateAndTime();

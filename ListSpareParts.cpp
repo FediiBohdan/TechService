@@ -13,10 +13,12 @@ ListSparePart::ListSparePart(QWidget *parent) :
     ui->tableView->verticalHeader()->setSectionsClickable(false);
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
 
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
     //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &ListSparePart::closeWindow);
 
     listSparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
-    listSparePartsDB.setDatabaseName("D:\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    listSparePartsDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
     listSparePartsDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListSparePart::showSparePartInfo);
@@ -50,6 +52,8 @@ void ListSparePart::loadTable()
 
     ui->tableView->setModel(queryModel);
 
+    ui->tableView->setColumnHidden(0, true);
+
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
 }
@@ -68,6 +72,8 @@ void ListSparePart::on_addSparePartButton_clicked()
 
 void ListSparePart::showSparePartInfo(const QModelIndex &index)
 {
+    QDialog::hide();
+
     QString sparePartId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
     viewSparePart = new ViewSparePart;

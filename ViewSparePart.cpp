@@ -16,6 +16,15 @@ ViewSparePart::~ViewSparePart()
     delete ui;
 }
 
+void ViewSparePart::closeEvent(QCloseEvent*)
+{
+    QDialog::hide();
+
+    listSparePart = new ListSparePart;
+    listSparePart->show();
+    listSparePart->setAttribute(Qt::WA_DeleteOnClose);
+}
+
 // Gets spare part's id from ListSpareParts
 void ViewSparePart::setValues(const QString &id)
 {

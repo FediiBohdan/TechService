@@ -4,6 +4,11 @@
 
 #include <QApplication>
 #include <QTranslator>
+#include <QMessageBox>
+#include <QLockFile>
+#include <QObject>
+#include <QDebug>
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +17,17 @@ int main(int argc, char *argv[])
     app.setApplicationName("TechService CRM");
     app.setOrganizationName("TechService");
     app.setApplicationVersion("1.0.0.0");
+
+    QLockFile lockFile(QDir::temp().absoluteFilePath("lockFile.lock"));
+
+    if (!lockFile.tryLock(100))
+    {
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setText(QObject::tr("Приложение уже запущено!"));
+        msgBox.exec();
+        return 1;
+    }
 
     // translations connection
     QString registerLanguage = global::getSettingsValue("language", "settings").toString();
