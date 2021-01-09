@@ -2,6 +2,7 @@
 #define VIEWEMPLOYEE_H
 
 #include "ListEmployees.h"
+#include "UpdateEmployee.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -12,6 +13,7 @@
 #include <QDebug>
 
 class ListEmployees;
+class UpdateEmployee;
 
 namespace Ui {
 class ViewEmployee;
@@ -27,11 +29,13 @@ public:
 
 public slots:
     void setValues(const QString &id);
+    void receiveData(bool update);
 
 private:
     Ui::ViewEmployee *ui;
 
     ListEmployees *listEmployees;
+    UpdateEmployee *updateEmployee;
 
     QSqlDatabase employeesDB;
 
@@ -39,6 +43,7 @@ private:
 
 private slots:
     void closeEvent(QCloseEvent*);
+    void on_updateEmployeeInfoButton_clicked();
 };
 
 #endif // VIEWEMPLOYEE_H

@@ -36,7 +36,7 @@ void ViewOrders::setValues(const QString &id)
     query.prepare("SELECT DISTINCT client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, "
                   "auto_license_plate, staff_team, works_list, spare_list, price, feedback "
                   "FROM OrdersHistory WHERE id_order = " + orderId);
-    qDebug()<<query.exec();
+    query.exec();
     query.next();
 
     ui->clientLine->setText(query.value(0).toString());
@@ -53,4 +53,23 @@ void ViewOrders::setValues(const QString &id)
     ui->sparePartsLine->setText(query.value(11).toString());
     ui->priceLine->setText(query.value(12).toString());
     ui->feedbackLine->setText(query.value(13).toString());
+}
+
+void ViewOrders::on_updateOrderInfoButton_clicked()
+{
+    QDialog::hide();
+
+    updateOrders = new UpdateOrders;
+    updateOrders->setValues(orderId);
+    connect(updateOrders, &UpdateOrders::sendData, this, &ViewOrders::receiveData);
+    updateOrders->show();
+    updateOrders->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ViewOrders::receiveData(bool update)
+{
+    if (update)
+        QDialog::close();
+    else
+        QDialog::show();
 }

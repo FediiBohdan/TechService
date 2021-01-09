@@ -21,5 +21,7 @@
         <file>images/addWorker.png</file>
         <file>images/save.png</file>
         <file>images/addSparePart.png</file>
+        <file>images/edit.png</file>
+        <file>images/backToView.png</file>
     </qresource>
 </RCC>

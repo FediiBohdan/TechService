@@ -2,6 +2,7 @@
 #define VIEWCLIENT_H
 
 #include "ListClients.h"
+#include "UpdateClients.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -12,6 +13,7 @@
 #include <QDebug>
 
 class ListClients;
+class UpdateClients;
 
 namespace Ui {
 class ViewClient;
@@ -27,17 +29,21 @@ public:
 
 public slots:
     void setValues(const QString &id);
+    void receiveData(bool update);
 
 private:
     Ui::ViewClient *ui;
 
     ListClients *listClient;
+    UpdateClients *updateClients;
 
     QSqlDatabase clientsDB;
     QString clientId;
 
 private slots:
     void closeEvent(QCloseEvent*);
+
+    void on_updateClientInfoButton_clicked();
 };
 
 #endif // VIEWCLIENT_H

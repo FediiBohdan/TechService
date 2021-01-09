@@ -55,3 +55,22 @@ void ViewEmployee::setValues(const QString &id)
             ui->serviceNumber->setText("ул. ZZZ, 2");
         }
 }
+
+void ViewEmployee::on_updateEmployeeInfoButton_clicked()
+{
+    QDialog::hide();
+
+    updateEmployee = new UpdateEmployee;
+    updateEmployee->setValues(employeeId);
+    connect(updateEmployee, &UpdateEmployee::sendData, this, &ViewEmployee::receiveData);
+    updateEmployee->show();
+    updateEmployee->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ViewEmployee::receiveData(bool update)
+{
+    if (update)
+        QDialog::close();
+    else
+        QDialog::show();
+}

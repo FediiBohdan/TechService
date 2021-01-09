@@ -2,6 +2,7 @@
 #define VIEWSPAREPART_H
 
 #include "ListSpareParts.h"
+#include "UpdateSparePart.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -12,6 +13,7 @@
 #include <QDebug>
 
 class ListSparePart;
+class UpdateSparePart;
 
 namespace Ui {
 class ViewSparePart;
@@ -27,11 +29,13 @@ public:
 
 public slots:
     void setValues(const QString &id);
+    void receiveData(bool update);
 
 private:
     Ui::ViewSparePart *ui;
 
     ListSparePart *listSparePart;
+    UpdateSparePart *updateSparePart;
 
     QSqlDatabase sparePartsDB;
 
@@ -39,6 +43,7 @@ private:
 
 private slots:
     void closeEvent(QCloseEvent*);
+    void on_updateSparePartInfoButton_clicked();
 };
 
 #endif // VIEWSPAREPART_H

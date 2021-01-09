@@ -44,3 +44,22 @@ void ViewClient::setValues(const QString &id)
     ui->manufactureYearLine->setText(query.value(4).toString());
     ui->VINnumberLine->setText(query.value(5).toString());
 }
+
+void ViewClient::on_updateClientInfoButton_clicked()
+{
+    QDialog::hide();
+
+    updateClients = new UpdateClients;
+    updateClients->setValues(clientId);
+    connect(updateClients, &UpdateClients::sendData, this, &ViewClient::receiveData);
+    updateClients->show();
+    updateClients->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ViewClient::receiveData(bool update)
+{
+    if (update)
+        QDialog::close();
+    else
+        QDialog::show();
+}

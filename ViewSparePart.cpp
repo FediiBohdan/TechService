@@ -44,3 +44,22 @@ void ViewSparePart::setValues(const QString &id)
     ui->isOriginalLine->setText(query.value(4).toString());
     ui->priceLine->setText(query.value(5).toString());
 }
+
+void ViewSparePart::on_updateSparePartInfoButton_clicked()
+{
+    QDialog::hide();
+
+    updateSparePart = new UpdateSparePart;
+    updateSparePart->setValues(sparePartId);
+    connect(updateSparePart, &UpdateSparePart::sendData, this, &ViewSparePart::receiveData);
+    updateSparePart->show();
+    updateSparePart->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ViewSparePart::receiveData(bool update)
+{
+    if (update)
+        QDialog::close();
+    else
+        QDialog::show();
+}

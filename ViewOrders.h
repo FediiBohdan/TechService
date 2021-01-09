@@ -2,6 +2,7 @@
 #define VIEWORDERS_H
 
 #include "ListOrders.h"
+#include "UpdateOrders.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -12,6 +13,7 @@
 #include <QDebug>
 
 class ListOrders;
+class UpdateOrders;
 
 namespace Ui {
 class ViewOrders;
@@ -27,11 +29,13 @@ public:
 
 public slots:
     void setValues(const QString &id);
+    void receiveData(bool update);
 
 private:
     Ui::ViewOrders *ui;
 
     ListOrders *listOrders;
+    UpdateOrders *updateOrders;
 
     QSqlDatabase ordersDB;
 
@@ -39,6 +43,7 @@ private:
 
 private slots:
     void closeEvent(QCloseEvent*);
+    void on_updateOrderInfoButton_clicked();
 };
 
 #endif // VIEWORDERS_H
