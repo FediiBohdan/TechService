@@ -7,6 +7,7 @@
 #include "SettingsWindow.h"
 #include "ListOrders.h"
 #include "ListClients.h"
+#include "TaskList.h"
 
 #include <QDialog>
 #include <QDesktopServices>
@@ -45,6 +46,7 @@ private:
     SettingsWindow *settingsWindow;
     ListOrders *listOrders;
     ListClients *listClients;
+    TaskList *taskList;
 
     QTranslator translator;
 

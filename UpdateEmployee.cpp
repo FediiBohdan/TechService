@@ -6,6 +6,9 @@ UpdateEmployee::UpdateEmployee(QWidget *parent) :
     ui(new Ui::UpdateEmployee)
 {
     ui->setupUi(this);
+
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 }
 
 UpdateEmployee::~UpdateEmployee()
@@ -20,7 +23,8 @@ void UpdateEmployee::setValues(const QString& id)
     QSqlQuery query(employeesDB);
 
     query.prepare("SELECT DISTINCT employee_FML_name, employee_position, hour_payment, service_number "
-                  "FROM EmployeesTable WHERE id_employee = " + employeeId);
+        "FROM EmployeesTable WHERE id_employee = " + employeeId);
+
     query.exec();
     query.next();
 
@@ -68,7 +72,7 @@ void UpdateEmployee::on_saveUpdatedInfo_clicked()
     query.addBindValue(employeeId);
     query.exec();
 
-    close();
+    QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Сотрудник успешно добавлен!"), QMessageBox::Ok);
 }

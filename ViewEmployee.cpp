@@ -33,7 +33,8 @@ void ViewEmployee::setValues(const QString &id)
     QSqlQuery query(employeesDB);
 
     query.prepare("SELECT DISTINCT employee_FML_name, employee_position, hour_payment, service_number "
-                  "FROM EmployeesTable WHERE id_employee = " + employeeId);
+        "FROM EmployeesTable WHERE id_employee = " + employeeId);
+
     query.exec();
     query.next();
 

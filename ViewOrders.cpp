@@ -34,8 +34,9 @@ void ViewOrders::setValues(const QString &id)
 
     // add isReady
     query.prepare("SELECT DISTINCT client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, "
-                  "auto_license_plate, staff_team, works_list, spare_list, price, feedback "
-                  "FROM OrdersHistory WHERE id_order = " + orderId);
+        "auto_license_plate, staff_team, works_list, spare_list, price, feedback "
+        "FROM OrdersHistory WHERE id_order = " + orderId);
+
     query.exec();
     query.next();
 

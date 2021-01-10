@@ -6,6 +6,9 @@ UpdateSparePart::UpdateSparePart(QWidget *parent) :
     ui(new Ui::UpdateSparePart)
 {
     ui->setupUi(this);
+
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 }
 
 UpdateSparePart::~UpdateSparePart()
@@ -20,7 +23,8 @@ void UpdateSparePart::setValues(const QString& id)
     QSqlQuery query(sparePartsDB);
 
     query.prepare("SELECT DISTINCT spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price "
-                  "FROM SparePartsCatalogue WHERE id_spare_part = " + sparePartId);
+        "FROM SparePartsCatalogue WHERE id_spare_part = " + sparePartId);
+
     query.exec();
     query.next();
 
@@ -51,7 +55,7 @@ void UpdateSparePart::on_saveUpdatedInfo_clicked()
     QString price = ui->priceLine->text();
 
     queryOrders.prepare("UPDATE SparePartsCatalogue SET spare_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
-                  "WHERE id_spare_part = ?");
+        "WHERE id_spare_part = ?");
 
     queryOrders.addBindValue(sparePartName);
     queryOrders.addBindValue(manufacturer);
@@ -62,7 +66,7 @@ void UpdateSparePart::on_saveUpdatedInfo_clicked()
     queryOrders.addBindValue(sparePartId);
     queryOrders.exec();
 
-    close();
+    QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Информация о запчасти успешно обновлена!"), QMessageBox::Ok);
 }

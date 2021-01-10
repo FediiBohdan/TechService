@@ -6,6 +6,9 @@ UpdateClients::UpdateClients(QWidget *parent) :
     ui(new Ui::UpdateClients)
 {
     ui->setupUi(this);
+
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 }
 
 UpdateClients::~UpdateClients()
@@ -24,7 +27,8 @@ void UpdateClients::on_saveUpdatedInfo_clicked()
     QString manufactureYear = ui->manufactureYearLine->text();
     QString VIN_Number = ui->VINnumberLine->text();
 
-    query.prepare("UPDATE ClientsTable SET client_FML_name = ?, contacts = ?, auto_model = ?, auto_license_plate = ?, manufacture_year = ?, VIN_number = ? WHERE id_client = ?");
+    query.prepare("UPDATE ClientsTable SET client_FML_name = ?, contacts = ?, auto_model = ?, auto_license_plate = ?, manufacture_year = ?, "
+        "VIN_number = ? WHERE id_client = ?");
 
     query.addBindValue(clientFMLname);
     query.addBindValue(clientContacts);
@@ -37,7 +41,7 @@ void UpdateClients::on_saveUpdatedInfo_clicked()
 
     QDialog::close();
 
-    QMessageBox::information(this, tr("Уведомление"), tr("Данные о клиенте успешно обновлены!"), QMessageBox::Ok);
+    QMessageBox::information(this, tr("Уведомление"), tr("Информация о клиенте успешно обновлена!"), QMessageBox::Ok);
 }
 
 void UpdateClients::setValues(const QString& id)
@@ -47,7 +51,8 @@ void UpdateClients::setValues(const QString& id)
     QSqlQuery query(clientsDB);
 
     query.prepare("SELECT DISTINCT client_FML_name, contacts, auto_model, auto_license_plate, manufacture_year, VIN_number "
-                  "FROM ClientsTable WHERE id_client = " + clientId);
+        "FROM ClientsTable WHERE id_client = " + clientId);
+
     query.exec();
     query.next();
 

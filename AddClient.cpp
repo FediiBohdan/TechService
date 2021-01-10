@@ -32,7 +32,7 @@ void AddClient::on_saveClientButton_clicked()
     QString VIN_Number = ui->VINnumberLine->text();
 
     query.prepare("INSERT INTO ClientsTable (client_FML_name, contacts, auto_model, auto_license_plate, manufacture_year, VIN_Number)"
-                  "VALUES(?, ?, ?, ?, ?, ?)");
+        "VALUES(?, ?, ?, ?, ?, ?)");
 
     query.addBindValue(clientFMLname);
     query.addBindValue(clientContacts);
@@ -42,7 +42,7 @@ void AddClient::on_saveClientButton_clicked()
     query.addBindValue(VIN_Number);
     query.exec();
 
-    close();
+    QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Клиент успешно добавлен!"), QMessageBox::Ok);
 }

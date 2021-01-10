@@ -29,6 +29,7 @@ SOURCES += main.cpp \
     ListSpareParts.cpp \
     SettingsWindow.cpp \
     StartWindow.cpp \
+    TaskList.cpp \
     UpdateClients.cpp \
     UpdateEmployee.cpp \
     UpdateOrders.cpp \
@@ -53,6 +54,7 @@ FORMS += \
     ListSpareParts.ui \
     SettingsWindow.ui \
     StartWindow.ui \
+    TaskList.ui \
     UpdateClients.ui \
     UpdateEmployee.ui \
     UpdateOrders.ui \
@@ -74,6 +76,7 @@ HEADERS += \
     ListSpareParts.h \
     SettingsWindow.h \
     StartWindow.h \
+    TaskList.h \
     UpdateClients.h \
     UpdateEmployee.h \
     UpdateOrders.h \

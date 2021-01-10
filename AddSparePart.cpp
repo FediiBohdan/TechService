@@ -33,7 +33,7 @@ void AddSparePart::on_createSparePartButton_clicked()
     QString price = ui->priceLine->text();
 
     queryOrders.prepare("INSERT INTO SparePartsCatalogue (spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
-                  "VALUES(?, ?, ?, ?, ?, ?)");
+        "VALUES(?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(sparePartName);
     queryOrders.addBindValue(manufacturer);
@@ -42,6 +42,8 @@ void AddSparePart::on_createSparePartButton_clicked()
     queryOrders.addBindValue(isOriginal);
     queryOrders.addBindValue(price);
     queryOrders.exec();
+
+    QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Запчасть успешно добавлена в каталог!"), QMessageBox::Ok);
 }

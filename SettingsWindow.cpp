@@ -32,7 +32,7 @@ void SettingsWindow::setLanguage()
 
     ui->languageSelection->addItems(QStringList() << "Русский" << "Українська" << "English");
 
-    connect(ui->languageSelection, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentTextChanged), [=]
+    connect(ui->languageSelection, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentTextChanged), [=] ()
     {
         if (ui->languageSelection->currentIndex() == 0)
         {

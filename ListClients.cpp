@@ -36,7 +36,7 @@ void ListClients::loadTable()
     QString queryString;
 
     queryString = "SELECT id_client, client_FML_name, contacts, auto_model, auto_license_plate, manufacture_year, "
-                  "VIN_number FROM ClientsTable";
+        "VIN_number FROM ClientsTable";
 
     queryModel->setQuery(queryString, clientsTable);
 

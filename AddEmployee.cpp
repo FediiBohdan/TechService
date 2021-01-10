@@ -30,7 +30,7 @@ void AddEmployee::on_saveWorkerButton_clicked()
     QString serviceNumber = ui->serviceNumber->text();
 
     query.prepare("INSERT INTO ListEmployees (employee_FML_name, employee_position, hour_payment, service_number)"
-                  "VALUES(?, ?, ?, ?)");
+        "VALUES(?, ?, ?, ?)");
 
     query.addBindValue(employeeFMLname);
     query.addBindValue(employeePosition);
@@ -38,7 +38,7 @@ void AddEmployee::on_saveWorkerButton_clicked()
     query.addBindValue(serviceNumber);
     query.exec();
 
-    close();
+    QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Сотрудник успешно добавлен!"), QMessageBox::Ok);
 }

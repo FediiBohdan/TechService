@@ -33,7 +33,8 @@ void ViewClient::setValues(const QString &id)
     QSqlQuery query(clientsDB);
 
     query.prepare("SELECT DISTINCT client_FML_name, contacts, auto_model, auto_license_plate, manufacture_year, VIN_number "
-                  "FROM ClientsTable WHERE id_client = " + clientId);
+        "FROM ClientsTable WHERE id_client = " + clientId);
+
     query.exec();
     query.next();
 

@@ -64,8 +64,8 @@ void AddOrder::on_createOrderButton_clicked()
     QString feedback = ui->feedbackLine->text();
 
     queryOrders.prepare("INSERT INTO OrdersHistory (client, date, contacts, auto_model, manufacture_year, VIN_number, "
-                  "discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback) "
-                  "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        "discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback) "
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(client);
     queryOrders.addBindValue(date);
@@ -94,8 +94,8 @@ void AddOrder::on_createOrderButton_clicked()
     QString VIN_NumberClientsDB = ui->VIN_Line->text();
 
     queryClients.prepare("INSERT INTO ClientsTable (client_FML_name, contacts, auto_model, auto_license_plate, "
-                  "manufacture_year, VIN_number) "
-                  "VALUES(?, ?, ?, ?, ?, ?)");
+        "manufacture_year, VIN_number) "
+        "VALUES(?, ?, ?, ?, ?, ?)");
 
     queryClients.addBindValue(clientClientsDB);
     queryClients.addBindValue(contactsClientsDB);
@@ -105,7 +105,7 @@ void AddOrder::on_createOrderButton_clicked()
     queryClients.addBindValue(VIN_NumberClientsDB);
     queryClients.exec();
 
-    close();
+    QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Заказ успешно создан!"), QMessageBox::Ok);
 }
