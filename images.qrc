@@ -23,5 +23,7 @@
         <file>images/addSparePart.png</file>
         <file>images/edit.png</file>
         <file>images/backToView.png</file>
+        <file>images/add.png</file>
+        <file>images/remove.png</file>
     </qresource>
 </RCC>

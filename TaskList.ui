@@ -17,15 +17,9 @@
    <item row="1" column="1">
     <widget class="QListView" name="completedListView">
      <property name="styleSheet">
-      <string notr="true">QListView { font-size: 20pt; font-weight: bold; }
-     QListView::item { background-color: #2ECC71; padding: 10%;
-     border: 1px solid #27AE60; }
-     QListView::item::hover { background-color: #27AE60 }</string>
+      <string notr="true"/>
      </property>
     </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QListView" name="notCompletedListView"/>
    </item>
    <item row="0" column="0">
     <widget class="QPushButton" name="addButton">
@@ -33,6 +27,9 @@
       <string>Добавить</string>
      </property>
     </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QListView" name="notCompletedListView"/>
    </item>
    <item row="0" column="1">
     <widget class="QPushButton" name="removeButton">

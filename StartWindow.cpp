@@ -20,6 +20,11 @@ StartWindow::StartWindow(QWidget *parent) :
     elapsedTimer.start();
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
+
+    connect(ui->addButton, &QAbstractButton::clicked, this, &StartWindow::onAdd);
+    connect(ui->removeButton, &QAbstractButton::clicked, this, &StartWindow::onRemove);
+
+    loadTaskList();
 }
 
 StartWindow::~StartWindow()
@@ -57,6 +62,36 @@ void StartWindow::showTime(){
     auto counter = countdown.addMSecs(-elapsed);
     QString timestr = counter.toString("hh:mm:ss");
     ui->lcdNumber->display(timestr);
+}
+
+void StartWindow::loadTaskList()
+{
+    ui->completedListView->setDragEnabled(true);
+    ui->completedListView->setAcceptDrops(true);
+    ui->completedListView->setDropIndicatorShown(true);
+    ui->completedListView->setDefaultDropAction(Qt::MoveAction);
+
+    ui->notCompletedListView->setDragEnabled(true);
+    ui->notCompletedListView->setAcceptDrops(true);
+    ui->notCompletedListView->setDropIndicatorShown(true);
+    ui->notCompletedListView->setDefaultDropAction(Qt::MoveAction);
+
+    ui->completedListView->setModel(new QStringListModel());
+    ui->notCompletedListView->setModel(new QStringListModel());
+}
+
+void StartWindow::onAdd()
+{
+    ui->notCompletedListView->model()->insertRow(ui->notCompletedListView->model()->rowCount());
+    QModelIndex qIndex = ui->notCompletedListView->model()->index(ui->notCompletedListView->model()->rowCount() - 1, 0);
+
+    ui->notCompletedListView->edit(qIndex);
+}
+
+void StartWindow::onRemove()
+{
+    QModelIndex qIndex = ui->notCompletedListView->currentIndex();
+    ui->notCompletedListView->model()->removeRow(qIndex.row());
 }
 
 void StartWindow::on_desktopButton_clicked()

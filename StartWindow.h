@@ -19,6 +19,8 @@
 #include <QElapsedTimer>
 #include <QApplication>
 #include <QTranslator>
+#include <QListView>
+#include <QStringListModel>
 
 class ListSparePart;
 class AddOrder;
@@ -58,6 +60,10 @@ public slots:
 
 private slots:
     void showTime();
+    void onAdd();
+    void onRemove();
+    void loadTaskList();
+
     void on_catalogueButton_clicked();
     void on_telegramButton_clicked();
     void on_instagramButton_clicked();
