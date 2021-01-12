@@ -22,7 +22,6 @@ AddSparePart::~AddSparePart()
 
 void AddSparePart::on_createSparePartButton_clicked()
 {
-    // Insertion into order table
     QSqlQuery queryOrders(sparePartsDB);
 
     QString sparePartName = ui->sparePartNameLine->text();

@@ -25,5 +25,6 @@
         <file>images/backToView.png</file>
         <file>images/add.png</file>
         <file>images/remove.png</file>
+        <file>images/addTask.png</file>
     </qresource>
 </RCC>

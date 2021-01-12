@@ -139,9 +139,9 @@ void StartWindow::on_catalogueButton_clicked()
 
 void StartWindow::on_todolistButton_clicked()
 {
-    taskList = new TaskList;
-    taskList->show();
-    taskList->setAttribute(Qt::WA_DeleteOnClose);
+    listTasks = new ListTasks;
+    listTasks->show();
+    listTasks->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_statisticsButton_clicked()
