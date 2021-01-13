@@ -21,6 +21,12 @@
 #include <QTranslator>
 #include <QListView>
 #include <QStringListModel>
+#include <QSqlDatabase>
+#include <QSqlQueryModel>
+#include <QPointer>
+#include <QSqlQuery>
+#include <QCheckBox>
+#include <QHBoxLayout>
 
 class ListSparePart;
 class AddOrder;
@@ -34,6 +40,9 @@ class StartWindow;
 class StartWindow : public QDialog
 {
     Q_OBJECT
+
+signals:
+    void closeAllWindowsExceptCurrent(bool close);
 
 public:
     explicit StartWindow(QWidget *parent = nullptr);
@@ -50,7 +59,15 @@ private:
     ListClients *listClients;
     ListTasks *listTasks;
 
+    QSqlDatabase listTasksTable = QSqlDatabase::database("TasksTable");
+
+    QSqlDatabase listTasksDB;
+    QPointer<QSqlQueryModel> queryModel;
+    QPointer<QSqlQueryModel> queryModelCheckBox;
+
     QTranslator translator;
+
+    QWidget* addCheckBoxCompleted(qint32 row_index);
 
 protected:
     void changeEvent(QEvent * event) override;
@@ -77,9 +94,6 @@ private slots:
     void on_todolistButton_clicked();
     void on_statisticsButton_clicked();
     void on_settingsButton_clicked();
-
-signals:
-    void closeAllWindowsExceptCurrent(bool close);
 };
 
 #endif // STARTWINDOW_H

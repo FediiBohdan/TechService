@@ -22,6 +22,9 @@
        <height>40</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Редактировать информацию</string>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	background-color: #dbdcf7;

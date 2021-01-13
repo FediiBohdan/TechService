@@ -43,7 +43,7 @@ void ListTasks::loadTable()
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Время"));
     queryModel->setHeaderData(2, Qt::Horizontal, tr("Дата"));
-    queryModel->setHeaderData(3, Qt::Horizontal, tr("Содержимое"));
+    queryModel->setHeaderData(3, Qt::Horizontal, tr("Содержание"));
     queryModel->setHeaderData(4, Qt::Horizontal, tr("Выполнено"));
 
     ui->tableView->setModel(queryModel);
