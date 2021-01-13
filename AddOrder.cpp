@@ -12,8 +12,10 @@ AddOrder::AddOrder(QWidget *parent) :
 
     connect(ui->pushButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
-    ordersHistoryDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
     setDateAndTime();

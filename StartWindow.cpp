@@ -21,8 +21,10 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     listTasksDB = QSqlDatabase::addDatabase("QSQLITE");
-    listTasksDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     listTasksDB.open();
 
    // connect(ui->addButton, &QAbstractButton::clicked, this, &StartWindow::onAdd);
@@ -83,22 +85,39 @@ void StartWindow::loadTaskList()
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Выполнено"));
     queryModel->setHeaderData(2, Qt::Horizontal, tr("Содержание"));
 
-    ui->tableView->setModel(queryModel);
+    // "completed" tableView
+    ui->completedTasksTableView->setModel(queryModel);
+    ui->completedTasksTableView->setColumnHidden(0, true);
+    ui->completedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->completedTasksTableView->resizeColumnsToContents();
 
-    ui->tableView->setColumnHidden(0, true);
+    // "not completed" tableView
+    ui->notCompletedTasksTableView->setModel(queryModel);
+    ui->notCompletedTasksTableView->setColumnHidden(0, true);
+    ui->notCompletedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->notCompletedTasksTableView->resizeColumnsToContents();
 
-    ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
-    ui->tableView->resizeColumnsToContents();
+    for (qint32 row_index = 0; row_index < ui->completedTasksTableView->model()->rowCount(); ++row_index)
+    {
+        ui->completedTasksTableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
+        ui->completedTasksTableView->setRowHeight(row_index, 50);
+    }
 
-    for (qint32 row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
-        ui->tableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
+    for (qint32 row_index = 0; row_index < ui->notCompletedTasksTableView->model()->rowCount(); ++row_index)\
+    {
+        ui->notCompletedTasksTableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
+        ui->notCompletedTasksTableView->setRowHeight(row_index, 50);
+    }
+
+    ui->notCompletedTasksTableView->verticalHeader()->hide();
+    ui->completedTasksTableView->verticalHeader()->hide();
 }
 
 QWidget* StartWindow::addCheckBoxCompleted(qint32 row_index)
 {
-    QWidget* widget = new QWidget(this);
-    QHBoxLayout* layout = new QHBoxLayout(widget);
-    QCheckBox* checkBox = new QCheckBox(widget);
+    QWidget *widget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(widget);
+    QCheckBox *checkBox = new QCheckBox(widget);
 
     layout->addWidget(checkBox, 0, Qt::AlignCenter);
 
@@ -112,12 +131,44 @@ QWidget* StartWindow::addCheckBoxCompleted(qint32 row_index)
 
     QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(row_index, 0), Qt::EditRole).toString();
 
-    if (isFulfilled == "0")
-        checkBox->setChecked(false);
-    else
+    if (isFulfilled == "1")
+    {
         checkBox->setChecked(true);
+        ui->notCompletedTasksTableView->setRowHidden(row_index, true);
+    }
+    else
+        ui->completedTasksTableView->setRowHidden(row_index, true);
+
+    QString column = "is_fulfilled";
+    QString id = queryModel->data(queryModel->index(row_index, 0), Qt::EditRole).toString();
+
+    connect(checkBox, &QAbstractButton::pressed, this, &StartWindow::checkBoxStateChanged);
+
+    checkBox->setProperty("checkBox", QVariant::fromValue(checkBox));
+    checkBox->setProperty("id",       QVariant::fromValue(id));
+    checkBox->setProperty("column",   QVariant::fromValue(column));
 
     return widget;
+}
+
+void StartWindow::checkBoxStateChanged()
+{
+    QString id = sender()->property("id").value<QString>();
+    QString column = sender()->property("column").value<QString>();
+    QCheckBox *checkBox = sender()->property("checkBox").value<QCheckBox*>();
+
+    QSqlQuery query(listTasksDB);
+
+    if (!checkBox->isChecked() && column == "is_fulfilled")
+    {
+        checkBox->setChecked(true);
+
+        query.prepare("UPDATE TasksTable SET is_fulfilled = 1 WHERE id_to_do_list = ?");
+        query.addBindValue(id);
+        query.exec();
+    }
+
+    //loadTaskList();
 }
 
 void StartWindow::onAdd()

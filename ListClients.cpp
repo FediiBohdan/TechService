@@ -15,8 +15,10 @@ ListClients::ListClients(QWidget *parent) :
 
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     clientsDB = QSqlDatabase::addDatabase("QSQLITE");
-    clientsDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    clientsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     clientsDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListClients::showClientInfo);

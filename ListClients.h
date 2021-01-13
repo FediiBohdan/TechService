@@ -11,6 +11,7 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QDir>
 
 class ViewClient;
 

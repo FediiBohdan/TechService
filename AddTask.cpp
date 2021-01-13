@@ -7,8 +7,10 @@ AddTask::AddTask(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     listTasksDB = QSqlDatabase::addDatabase("QSQLITE");
-    listTasksDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     listTasksDB.open();
 
     setDateAndTime();

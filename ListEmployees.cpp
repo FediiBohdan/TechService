@@ -22,8 +22,10 @@ ListEmployees::ListEmployees(QWidget *parent) :
 
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     employeesDB = QSqlDatabase::addDatabase("QSQLITE");
-    employeesDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    employeesDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     employeesDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListEmployees::showEmployeeInfo);

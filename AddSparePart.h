@@ -10,6 +10,7 @@
 #include <QSqlQueryModel>
 #include <QPointer>
 #include <QSqlQuery>
+#include <QDir>
 
 namespace Ui {
 class AddSparePart;

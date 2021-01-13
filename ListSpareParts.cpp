@@ -17,8 +17,10 @@ ListSparePart::ListSparePart(QWidget *parent) :
 
     //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &ListSparePart::closeWindow);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     listSparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
-    listSparePartsDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    listSparePartsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     listSparePartsDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListSparePart::showSparePartInfo);

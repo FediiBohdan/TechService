@@ -27,6 +27,7 @@
 #include <QSqlQuery>
 #include <QCheckBox>
 #include <QHBoxLayout>
+#include <QDir>
 
 class ListSparePart;
 class AddOrder;
@@ -67,10 +68,10 @@ private:
 
     QTranslator translator;
 
-    QWidget* addCheckBoxCompleted(qint32 row_index);
+    QWidget *addCheckBoxCompleted(qint32 row_index);
 
 protected:
-    void changeEvent(QEvent * event) override;
+    void changeEvent(QEvent *event) override;
 
 public slots:
     void translateUI(int translate);
@@ -80,6 +81,7 @@ private slots:
     void onAdd();
     void onRemove();
     void loadTaskList();
+    void checkBoxStateChanged();
 
     void on_catalogueButton_clicked();
     void on_telegramButton_clicked();

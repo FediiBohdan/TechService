@@ -10,8 +10,10 @@ AddEmployee::AddEmployee(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     employeeDB = QSqlDatabase::addDatabase("QSQLITE");
-    employeeDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    employeeDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     employeeDB.open();
 }
 

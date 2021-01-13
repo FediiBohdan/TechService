@@ -8,6 +8,7 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QDir>
 
 namespace Ui {
 class AddClient;

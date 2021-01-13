@@ -14,6 +14,7 @@
 #include <QSqlQueryModel>
 #include <QPointer>
 #include <QSqlQuery>
+#include <QDir>
 
 class StartWindow;
 class ListSparePart;

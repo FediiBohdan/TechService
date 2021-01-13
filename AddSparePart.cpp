@@ -10,8 +10,10 @@ AddSparePart::AddSparePart(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     sparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
-    sparePartsDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    sparePartsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     sparePartsDB.open();
 }
 

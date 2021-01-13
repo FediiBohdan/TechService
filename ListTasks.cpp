@@ -15,8 +15,10 @@ ListTasks::ListTasks(QWidget *parent) :
     QDialog::showNormal();
     QDialog::showMaximized();
 
+    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+
     listTasksDB = QSqlDatabase::addDatabase("QSQLITE");
-    listTasksDB.setDatabaseName("C:\\Users\\BohdanF\\Documents\\Diploma\\CRM_AutoService\\ServiceStationDB.db");
+    listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     listTasksDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListTasks::showTaskInfo);

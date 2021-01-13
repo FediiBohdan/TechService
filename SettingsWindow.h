@@ -26,7 +26,7 @@ public:
     ~SettingsWindow();
 
 protected:
-    void changeEvent(QEvent * event) override;
+    void changeEvent(QEvent *event) override;
 
 private slots:
     void setLanguage();
