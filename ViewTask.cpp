@@ -6,6 +6,9 @@ ViewTask::ViewTask(QWidget *parent) :
     ui(new Ui::ViewTask)
 {
     ui->setupUi(this);
+
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 }
 
 ViewTask::~ViewTask()

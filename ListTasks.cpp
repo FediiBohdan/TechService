@@ -79,3 +79,10 @@ void ListTasks::showTaskInfo(const QModelIndex &index)
     viewTask->show();
     viewTask->setAttribute(Qt::WA_DeleteOnClose);
 }
+
+void ListTasks::on_updateButton_clicked()
+{
+   queryModel->setQuery(NULL);
+
+   loadTable();
+}

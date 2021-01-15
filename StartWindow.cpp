@@ -30,7 +30,7 @@ StartWindow::StartWindow(QWidget *parent) :
    // connect(ui->addButton, &QAbstractButton::clicked, this, &StartWindow::onAdd);
    // connect(ui->removeButton, &QAbstractButton::clicked, this, &StartWindow::onRemove);
 
-    loadTaskList();
+    loadTasksList();
 }
 
 StartWindow::~StartWindow()
@@ -70,7 +70,7 @@ void StartWindow::showTime(){
     ui->lcdNumber->display(timestr);
 }
 
-void StartWindow::loadTaskList()
+void StartWindow::loadTasksList()
 {
     queryModel = new QSqlQueryModel(this);
 
@@ -85,13 +85,13 @@ void StartWindow::loadTaskList()
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Выполнено"));
     queryModel->setHeaderData(2, Qt::Horizontal, tr("Содержание"));
 
-    // "completed" tableView
+    // tableView with completed tasks
     ui->completedTasksTableView->setModel(queryModel);
     ui->completedTasksTableView->setColumnHidden(0, true);
     ui->completedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->completedTasksTableView->resizeColumnsToContents();
 
-    // "not completed" tableView
+    // tableView with not completed tasks
     ui->notCompletedTasksTableView->setModel(queryModel);
     ui->notCompletedTasksTableView->setColumnHidden(0, true);
     ui->notCompletedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
@@ -103,7 +103,7 @@ void StartWindow::loadTaskList()
         ui->completedTasksTableView->setRowHeight(row_index, 50);
     }
 
-    for (qint32 row_index = 0; row_index < ui->notCompletedTasksTableView->model()->rowCount(); ++row_index)\
+    for (qint32 row_index = 0; row_index < ui->notCompletedTasksTableView->model()->rowCount(); ++row_index)
     {
         ui->notCompletedTasksTableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
         ui->notCompletedTasksTableView->setRowHeight(row_index, 50);
@@ -131,6 +131,9 @@ QWidget* StartWindow::addCheckBoxCompleted(qint32 row_index)
 
     QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(row_index, 0), Qt::EditRole).toString();
 
+    QString table = "completedTasksList";
+
+    // set checked/unchecked in tableView
     if (isFulfilled == "1")
     {
         checkBox->setChecked(true);
@@ -139,14 +142,12 @@ QWidget* StartWindow::addCheckBoxCompleted(qint32 row_index)
     else
         ui->completedTasksTableView->setRowHidden(row_index, true);
 
-    QString column = "is_fulfilled";
-    QString id = queryModel->data(queryModel->index(row_index, 0), Qt::EditRole).toString();
-
     connect(checkBox, &QAbstractButton::pressed, this, &StartWindow::checkBoxStateChanged);
+
+    QString id = queryModel->data(queryModel->index(row_index, 0), Qt::EditRole).toString();
 
     checkBox->setProperty("checkBox", QVariant::fromValue(checkBox));
     checkBox->setProperty("id",       QVariant::fromValue(id));
-    checkBox->setProperty("column",   QVariant::fromValue(column));
 
     return widget;
 }
@@ -154,12 +155,11 @@ QWidget* StartWindow::addCheckBoxCompleted(qint32 row_index)
 void StartWindow::checkBoxStateChanged()
 {
     QString id = sender()->property("id").value<QString>();
-    QString column = sender()->property("column").value<QString>();
     QCheckBox *checkBox = sender()->property("checkBox").value<QCheckBox*>();
 
     QSqlQuery query(listTasksDB);
 
-    if (!checkBox->isChecked() && column == "is_fulfilled")
+    if (!checkBox->isChecked())
     {
         checkBox->setChecked(true);
 
@@ -167,8 +167,23 @@ void StartWindow::checkBoxStateChanged()
         query.addBindValue(id);
         query.exec();
     }
+    else if (checkBox->isChecked())
+    {
+        checkBox->setChecked(false);
 
-    //loadTaskList();
+        query.prepare("UPDATE TasksTable SET is_fulfilled = 0 WHERE id_to_do_list = ?");
+        query.addBindValue(id);
+        query.exec();
+    }
+
+    updateTasksList();
+}
+
+void StartWindow::updateTasksList()
+{
+    queryModel->setQuery(NULL);
+
+    loadTasksList();
 }
 
 void StartWindow::onAdd()

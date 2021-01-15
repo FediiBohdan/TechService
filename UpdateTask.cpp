@@ -6,6 +6,9 @@ UpdateTask::UpdateTask(QWidget *parent) :
     ui(new Ui::UpdateTask)
 {
     ui->setupUi(this);
+
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 }
 
 UpdateTask::~UpdateTask()
@@ -44,7 +47,7 @@ void UpdateTask::on_saveUpdatedInfo_clicked()
 
     QString time = ui->timeLine->text();
     QString date = ui->dateLine->text();
-    QString content = ui->contentLine->text();
+    QString content = ui->contentLine->toPlainText();
     QString isFulfilled = ui->isFulfilledLine->text();
 
     queryTasks.prepare("UPDATE TasksTable SET time = ?, date = ?, content = ?, is_fulfilled = ? WHERE id_to_do_list = ?");

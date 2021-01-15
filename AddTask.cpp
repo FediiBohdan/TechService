@@ -13,6 +13,9 @@ AddTask::AddTask(QWidget *parent) :
     listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     listTasksDB.open();
 
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
+
     setDateAndTime();
 }
 
@@ -35,7 +38,7 @@ void AddTask::on_createTaskButton_clicked()
 
     QString time = ui->timeLine->text();
     QString date = ui->dateLine->text();
-    QString content = ui->contentLine->text();
+    QString content = ui->contentLine->toPlainText();
     QString isFulfilled = ui->isFulfilledLine->text();
 
     queryTasks.prepare("INSERT INTO TasksTable (time, date, content, is_fulfilled) "

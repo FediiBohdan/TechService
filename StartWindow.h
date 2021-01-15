@@ -80,8 +80,9 @@ private slots:
     void showTime();
     void onAdd();
     void onRemove();
-    void loadTaskList();
+    void loadTasksList();
     void checkBoxStateChanged();
+    void updateTasksList();
 
     void on_catalogueButton_clicked();
     void on_telegramButton_clicked();
