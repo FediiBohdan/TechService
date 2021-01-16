@@ -27,8 +27,7 @@ StartWindow::StartWindow(QWidget *parent) :
     listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     listTasksDB.open();
 
-   // connect(ui->addButton, &QAbstractButton::clicked, this, &StartWindow::onAdd);
-   // connect(ui->removeButton, &QAbstractButton::clicked, this, &StartWindow::onRemove);
+    connect(ui->updateButton, &QAbstractButton::clicked, this, &StartWindow::updateTasksList);
 
     loadTasksList();
 }
@@ -74,9 +73,7 @@ void StartWindow::loadTasksList()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString;
-
-    queryString = "SELECT id_to_do_list, content FROM TasksTable";
+    QString queryString = "SELECT id_to_do_list, content FROM TasksTable";
 
     queryModel->setQuery(queryString, listTasksTable);
 
@@ -97,23 +94,19 @@ void StartWindow::loadTasksList()
     ui->notCompletedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->notCompletedTasksTableView->resizeColumnsToContents();
 
-    for (qint32 row_index = 0; row_index < ui->completedTasksTableView->model()->rowCount(); ++row_index)
-    {
+    for (int row_index = 0; row_index < ui->completedTasksTableView->model()->rowCount(); ++row_index)
         ui->completedTasksTableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
-        ui->completedTasksTableView->setRowHeight(row_index, 50);
-    }
 
-    for (qint32 row_index = 0; row_index < ui->notCompletedTasksTableView->model()->rowCount(); ++row_index)
-    {
+    for (int row_index = 0; row_index < ui->notCompletedTasksTableView->model()->rowCount(); ++row_index)
         ui->notCompletedTasksTableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
-        ui->notCompletedTasksTableView->setRowHeight(row_index, 50);
-    }
 
     ui->notCompletedTasksTableView->verticalHeader()->hide();
     ui->completedTasksTableView->verticalHeader()->hide();
+    ui->notCompletedTasksTableView->resizeRowsToContents();
+    ui->completedTasksTableView->resizeRowsToContents();
 }
 
-QWidget* StartWindow::addCheckBoxCompleted(qint32 row_index)
+QWidget* StartWindow::addCheckBoxCompleted(int row_index)
 {
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -123,15 +116,11 @@ QWidget* StartWindow::addCheckBoxCompleted(qint32 row_index)
 
     queryModelCheckBox = new QSqlQueryModel(this);
 
-    QString queryStringCheckBox;
-
-    queryStringCheckBox = "SELECT is_fulfilled FROM TasksTable";
+    QString queryStringCheckBox = "SELECT is_fulfilled FROM TasksTable";
 
     queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
 
     QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(row_index, 0), Qt::EditRole).toString();
-
-    QString table = "completedTasksList";
 
     // set checked/unchecked in tableView
     if (isFulfilled == "1")
@@ -184,20 +173,6 @@ void StartWindow::updateTasksList()
     queryModel->setQuery(NULL);
 
     loadTasksList();
-}
-
-void StartWindow::onAdd()
-{
-//    ui->notCompletedListView->model()->insertRow(ui->notCompletedListView->model()->rowCount());
-//    QModelIndex qIndex = ui->notCompletedListView->model()->index(ui->notCompletedListView->model()->rowCount() - 1, 0);
-
-//    ui->notCompletedListView->edit(qIndex);
-}
-
-void StartWindow::onRemove()
-{
-//    QModelIndex qIndex = ui->notCompletedListView->currentIndex();
-//    ui->notCompletedListView->model()->removeRow(qIndex.row());
 }
 
 void StartWindow::on_desktopButton_clicked()

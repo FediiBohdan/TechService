@@ -13,7 +13,6 @@ ListTasks::ListTasks(QWidget *parent) :
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
     QDialog::showNormal();
-    QDialog::showMaximized();
 
     QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
 
@@ -35,25 +34,115 @@ void ListTasks::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString;
+    QString queryString = "SELECT id_to_do_list, time, date FROM TasksTable";
 
-    queryString = "SELECT id_to_do_list, time, date, content, is_fulfilled "
-        "FROM TasksTable";
-
-    queryModel->setQuery(queryString, listTasks);
+    queryModel->setQuery(queryString, listTasksTable);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Время"));
     queryModel->setHeaderData(2, Qt::Horizontal, tr("Дата"));
+    queryModel->insertColumn(3);
     queryModel->setHeaderData(3, Qt::Horizontal, tr("Содержание"));
+    queryModel->insertColumn(4);
     queryModel->setHeaderData(4, Qt::Horizontal, tr("Выполнено"));
 
     ui->tableView->setModel(queryModel);
 
     ui->tableView->setColumnHidden(0, true);
 
+    for (int row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
+    {
+        ui->tableView->setIndexWidget(queryModel->index(row_index, 3), addWidgetContent(row_index));
+        ui->tableView->setIndexWidget(queryModel->index(row_index, 4), addCheckBoxCompleted(row_index));
+    }
+
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
+    ui->tableView->resizeRowsToContents();
+}
+
+QWidget* ListTasks::addWidgetContent(int row_index)
+{
+    QWidget *widget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(widget);
+    QLabel *taskContentLabel = new QLabel(widget);
+
+    layout->addWidget(taskContentLabel);
+
+    queryModelLabel = new QSqlQueryModel(this);
+
+    QString queryString = "SELECT content FROM TasksTable";
+
+    queryModelLabel->setQuery(queryString, listTasksTable);
+
+    QString taskContent = queryModelLabel->data(queryModelLabel->index(row_index, 0), Qt::EditRole).toString();
+
+    taskContentLabel->setText(taskContent);
+    taskContentLabel->setOpenExternalLinks(true);
+    taskContentLabel->setWordWrap(true);
+
+    return widget;
+}
+
+QWidget* ListTasks::addCheckBoxCompleted(int row_index)
+{
+    QWidget *widget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(widget);
+    QCheckBox *checkBox = new QCheckBox(widget);
+
+    layout->addWidget(checkBox, 0, Qt::AlignCenter);
+
+    queryModelCheckBox = new QSqlQueryModel(this);
+
+    QString queryStringCheckBox;
+
+    queryStringCheckBox = "SELECT is_fulfilled FROM TasksTable";
+
+    queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
+
+    QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(row_index, 0), Qt::EditRole).toString();
+
+    // set checked/unchecked in tableView
+    if (isFulfilled == "1")
+        checkBox->setChecked(true);
+    else
+        checkBox->setChecked(false);
+
+    connect(checkBox, &QAbstractButton::pressed, this, &ListTasks::checkBoxStateChanged);
+
+    QString id = queryModel->data(queryModel->index(row_index, 0), Qt::EditRole).toString();
+
+    checkBox->setProperty("checkBox", QVariant::fromValue(checkBox));
+    checkBox->setProperty("id",       QVariant::fromValue(id));
+
+    return widget;
+}
+
+void ListTasks::checkBoxStateChanged()
+{
+    QString id = sender()->property("id").value<QString>();
+    QCheckBox *checkBox = sender()->property("checkBox").value<QCheckBox*>();
+
+    QSqlQuery query(listTasksDB);
+
+    if (!checkBox->isChecked())
+    {
+        checkBox->setChecked(true);
+
+        query.prepare("UPDATE TasksTable SET is_fulfilled = 1 WHERE id_to_do_list = ?");
+        query.addBindValue(id);
+        query.exec();
+    }
+    else if (checkBox->isChecked())
+    {
+        checkBox->setChecked(false);
+
+        query.prepare("UPDATE TasksTable SET is_fulfilled = 0 WHERE id_to_do_list = ?");
+        query.addBindValue(id);
+        query.exec();
+    }
+
+    on_updateButton_clicked();
 }
 
 void ListTasks::closeWindow()

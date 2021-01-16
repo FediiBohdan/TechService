@@ -56,7 +56,7 @@ void ListEmployees::loadTable()
 
     ui->tableView->setModel(queryModel);
 
-    for (qint32 row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
+    for (int row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
     {
         if (queryModel->data(queryModel->index(row_index, 4)).toString() == '1')
         {

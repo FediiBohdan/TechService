@@ -11,6 +11,8 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QCheckBox>
+#include <QLabel>
 
 class AddTask;
 class ViewTask;
@@ -30,20 +32,25 @@ public:
 private:
     Ui::ListTasks *ui;
 
-    QSqlDatabase listTasks = QSqlDatabase::database("TasksTable");
+    QSqlDatabase listTasksTable = QSqlDatabase::database("TasksTable");
 
     QSqlDatabase listTasksDB;
     QPointer<QSqlQueryModel> queryModel;
+    QPointer<QSqlQueryModel> queryModelCheckBox;
+    QPointer<QSqlQueryModel> queryModelLabel;
 
     AddTask *addTask;
     ViewTask *viewTask;
 
+    QWidget *addCheckBoxCompleted(int row_index);
+    QWidget *addWidgetContent(int row_index);
+
 private slots:
     void loadTable();
+    void checkBoxStateChanged();
     void showTaskInfo(const QModelIndex &index);
 
     void on_addTaskButton_clicked();
-
     void on_updateButton_clicked();
 
 public slots:

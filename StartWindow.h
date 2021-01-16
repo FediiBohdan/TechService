@@ -68,7 +68,7 @@ private:
 
     QTranslator translator;
 
-    QWidget *addCheckBoxCompleted(qint32 row_index);
+    QWidget *addCheckBoxCompleted(int row_index);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -78,8 +78,6 @@ public slots:
 
 private slots:
     void showTime();
-    void onAdd();
-    void onRemove();
     void loadTasksList();
     void checkBoxStateChanged();
     void updateTasksList();
