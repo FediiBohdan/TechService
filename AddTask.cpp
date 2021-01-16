@@ -16,12 +16,24 @@ AddTask::AddTask(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
+    ui->contentErrorLabel->hide();
+    ui->dateErrorLabel->hide();
+
     setDateAndTime();
 }
 
 AddTask::~AddTask()
 {
     delete ui;
+}
+
+void AddTask::closeEvent(QCloseEvent*)
+{
+    QDialog::close();
+
+    listTasksDialog = new ListTasks;
+    listTasksDialog->show();
+    listTasksDialog->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void AddTask::setDateAndTime()
@@ -38,8 +50,31 @@ void AddTask::on_createTaskButton_clicked()
 
     QString time = ui->timeLine->text();
     QString date = ui->dateLine->text();
+
+    bool error = false;
+
+    if (time.isEmpty() || date.isEmpty())
+    {
+        ui->dateErrorLabel->show();
+        error = true;
+    }
+    else
+        ui->dateErrorLabel->hide();
+
     QString content = ui->contentLine->toPlainText();
-    QString isFulfilled = ui->isFulfilledLine->text();
+
+    if (content.isEmpty())
+    {
+        ui->contentErrorLabel->show();
+        error = true;
+    }
+    else
+        ui->contentErrorLabel->hide();
+
+    if (error)
+        return;
+
+    QString isFulfilled = "0";
 
     queryTasks.prepare("INSERT INTO TasksTable (time, date, content, is_fulfilled) "
         "VALUES(?, ?, ?, ?)");

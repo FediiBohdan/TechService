@@ -70,7 +70,7 @@
 }
 
 QPushButton:hover {
-	background-color: #bebfd6;
+	background-color: #d3d4ee;
 	border: 1px solid #86868a;
 }</string>
           </property>
@@ -108,7 +108,7 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
-	background-color: #bebfd6;
+	background-color: #d3d4ee;
 	border: 1px solid #86868a;
 }
 
@@ -148,7 +148,7 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
-	background-color: #bebfd6;
+	background-color: #d3d4ee;
 	border: 1px solid #86868a;
 }
 </string>
@@ -187,7 +187,7 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
-	background-color: #bebfd6;
+	background-color: #d3d4ee;
 	border: 1px solid #86868a;
 }</string>
           </property>
@@ -231,7 +231,7 @@ QPushButton:hover {
 }
 
 QPushButton:hover {
-	background-color: #bebfd6;
+	background-color: #d3d4ee;
 	border: 1px solid #86868a;
 }
 
@@ -494,6 +494,10 @@ QHeaderView::section {
                                       stop: 0 #f6f7fa, stop: 1 #dadbde);
 }
 
+QPushButton:hover {
+	background-color: #eaebee;
+}
+
 QPushButton:pressed {
         background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
@@ -621,6 +625,10 @@ QPushButton:default {
     min-width: 80px;
 }
 
+QPushButton:hover {
+	background-color: #eaebee;
+}
+
 QPushButton:pressed {
         background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
@@ -735,6 +743,10 @@ border:none;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #f6f7fa, stop: 1 #dadbde);
     min-width: 80px;
+}
+
+QPushButton:hover {
+	background-color: #eaebee;
 }
 
 QPushButton:pressed {
@@ -853,6 +865,10 @@ border: none;
     min-width: 80px;
 }
 
+QPushButton:hover {
+	background-color: #eaebee;
+}
+
 QPushButton:pressed {
         background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
@@ -961,6 +977,10 @@ border: none;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #f6f7fa, stop: 1 #dadbde);
     min-width: 80px;
+}
+
+QPushButton:hover {
+	background-color: #eaebee;
 }
 
 QPushButton:pressed {
@@ -1079,6 +1099,10 @@ border: none;
     min-width: 80px;
 }
 
+QPushButton:hover {
+	background-color: #eaebee;
+}
+
 QPushButton:pressed {
         background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
@@ -1187,6 +1211,10 @@ border: none;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #f6f7fa, stop: 1 #dadbde);
     min-width: 80px;
+}
+
+QPushButton:hover {
+	background-color: #eaebee;
 }
 
 QPushButton:pressed {
@@ -1302,6 +1330,10 @@ border: none;
     min-width: 80px;
 }
 
+QPushButton:hover {
+	background-color: #eaebee;
+}
+
 QPushButton:pressed {
         background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #dadbde, stop: 1 #f6f7fa);
@@ -1410,6 +1442,10 @@ border: none;
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #f6f7fa, stop: 1 #dadbde);
     min-width: 80px;
+}
+
+QPushButton:hover {
+	background-color: #eaebee;
 }
 
 QPushButton:pressed {

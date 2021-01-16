@@ -1,6 +1,8 @@
 #ifndef ADDTASK_H
 #define ADDTASK_H
 
+#include "ListTasks.h"
+
 #include <QDialog>
 #include <QDebug>
 #include <QDate>
@@ -11,6 +13,8 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDir>
+
+class ListTasks;
 
 namespace Ui {
 class AddTask;
@@ -29,12 +33,16 @@ private slots:
 
     void on_createTaskButton_clicked();
 
+    void closeEvent(QCloseEvent*);
+
 private:
     Ui::AddTask *ui;
 
     QSqlDatabase listTasks = QSqlDatabase::database("TasksTable");
     QSqlDatabase listTasksDB;
     QPointer<QSqlQueryModel> queryModel;
+
+    ListTasks *listTasksDialog;
 };
 
 #endif // ADDTASK_H

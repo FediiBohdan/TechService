@@ -18,7 +18,7 @@ ViewTask::~ViewTask()
 
 void ViewTask::closeEvent(QCloseEvent*)
 {
-    QDialog::hide();
+    QDialog::close();
 
     listTasks = new ListTasks;
     listTasks->show();
@@ -41,7 +41,13 @@ void ViewTask::setValues(const QString &id)
     ui->timeLine->setText(query.value(0).toString());
     ui->dateLine->setText(query.value(1).toString());
     ui->contentLine->setText(query.value(2).toString());
-    ui->isFulfilledLine->setText(query.value(3).toString());
+
+    QString isFulfilled = query.value(3).toString();
+
+    if (isFulfilled == "1")
+        ui->checkBox->setChecked(true);
+    else
+        ui->checkBox->setChecked(false);
 }
 
 void ViewTask::receiveData(bool update)

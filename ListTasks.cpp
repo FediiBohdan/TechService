@@ -152,6 +152,8 @@ void ListTasks::closeWindow()
 
 void ListTasks::on_addTaskButton_clicked()
 {
+    QDialog::close();
+
     addTask = new AddTask;
     addTask->show();
     addTask->setAttribute(Qt::WA_DeleteOnClose);
@@ -159,7 +161,7 @@ void ListTasks::on_addTaskButton_clicked()
 
 void ListTasks::showTaskInfo(const QModelIndex &index)
 {
-    QDialog::hide();
+    QDialog::close();
 
     QString taskId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
