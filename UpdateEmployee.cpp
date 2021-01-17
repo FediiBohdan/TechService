@@ -74,5 +74,5 @@ void UpdateEmployee::on_saveUpdatedInfo_clicked()
 
     QDialog::close();
 
-    QMessageBox::information(this, tr("Уведомление"), tr("Сотрудник успешно добавлен!"), QMessageBox::Ok);
+    QMessageBox::information(this, tr("Уведомление"), tr("Информация о сотруднике успешно обновлена!"), QMessageBox::Ok);
 }
