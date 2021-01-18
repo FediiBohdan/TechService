@@ -2,11 +2,13 @@
 #define UPDATESPAREPART_H
 
 #include "ViewSparePart.h"
+#include "ListSpareParts.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
 
 class ViewSparePart;
+class ListSparePart;
 
 namespace Ui {
 class UpdateSparePart;
@@ -30,12 +32,16 @@ private slots:
     void on_backToViewInfoButton_clicked();
     void on_saveUpdatedInfo_clicked();
 
+    void closeEvent(QCloseEvent*);
+
 private:
     Ui::UpdateSparePart *ui;
 
     QSqlDatabase sparePartsDB;
 
     QString sparePartId;
+
+    ListSparePart *listSpareParts;
 };
 
 #endif // UPDATESPAREPART_H

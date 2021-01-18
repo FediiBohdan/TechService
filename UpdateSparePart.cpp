@@ -16,6 +16,15 @@ UpdateSparePart::~UpdateSparePart()
     delete ui;
 }
 
+void UpdateSparePart::closeEvent(QCloseEvent*)
+{
+    QDialog::close();
+
+    listSpareParts = new ListSparePart;
+    listSpareParts->show();
+    listSpareParts->setAttribute(Qt::WA_DeleteOnClose);
+}
+
 void UpdateSparePart::setValues(const QString& id)
 {
     sparePartId = id;

@@ -44,7 +44,7 @@ border-radius: 7px;
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="sparePartSearch">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -55,6 +55,9 @@ border-radius: 7px;
         </property>
         <property name="placeholderText">
          <string>Поиск</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -72,7 +75,7 @@ border-radius: 7px;
        </spacer>
       </item>
       <item row="0" column="3">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="updateButton">
         <property name="minimumSize">
          <size>
           <width>40</width>
@@ -168,8 +171,8 @@ QPushButton:pressed {
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>sparePartSearch</tabstop>
+  <tabstop>updateButton</tabstop>
   <tabstop>tableView</tabstop>
  </tabstops>
  <resources>

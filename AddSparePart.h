@@ -1,6 +1,8 @@
 #ifndef ADDSPAREPART_H
 #define ADDSPAREPART_H
 
+#include <ListSpareParts.h>
+
 #include <QDialog>
 #include <QDebug>
 #include <QDate>
@@ -11,6 +13,8 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDir>
+
+class ListSparePart;
 
 namespace Ui {
 class AddSparePart;
@@ -27,12 +31,16 @@ public:
 private slots:
     void on_createSparePartButton_clicked();
 
+    void closeEvent(QCloseEvent*);
+
 private:
     Ui::AddSparePart *ui;
 
     QSqlDatabase sparePart = QSqlDatabase::database("SparePartsCatalogue");
     QSqlDatabase sparePartsDB;
     QPointer<QSqlQueryModel> queryModel;
+
+    ListSparePart *listSpareParts;
 };
 
 #endif // ADDSPAREPART_H

@@ -15,6 +15,9 @@ ListSparePart::ListSparePart(QWidget *parent) :
 
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
+    QDialog::showNormal();
+    QDialog::showMaximized();
+
     //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &ListSparePart::closeWindow);
 
     QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
@@ -24,6 +27,8 @@ ListSparePart::ListSparePart(QWidget *parent) :
     listSparePartsDB.open();
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListSparePart::showSparePartInfo);
+
+    searchFlag = false;
 
     loadTable();
 }
@@ -38,11 +43,17 @@ void ListSparePart::loadTable()
     queryModel = new QSqlQueryModel(this);
 
     QString queryString;
-
     queryString = "SELECT id_spare_part, spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, "
-        "price FROM SparePartsCatalogue";
+        "price FROM SparePartsCatalogue ";
 
-    queryModel->setQuery(queryString, listSpareParts);
+    QString searchString;
+
+    if (searchFlag)
+        searchString.append("WHERE spare_name LIKE '%" + ui->sparePartSearch->text() + "%' GROUP BY id_spare_part ORDER BY spare_name ASC");
+
+    queryString.append(searchString);
+
+    queryModel->setQuery(queryString);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Название"));
@@ -67,6 +78,8 @@ void ListSparePart::closeWindow()
 
 void ListSparePart::on_addSparePartButton_clicked()
 {
+    QDialog::close();
+
     addSparePart = new AddSparePart;
     addSparePart->show();
     addSparePart->setAttribute(Qt::WA_DeleteOnClose);
@@ -74,7 +87,7 @@ void ListSparePart::on_addSparePartButton_clicked()
 
 void ListSparePart::showSparePartInfo(const QModelIndex &index)
 {
-    QDialog::hide();
+    QDialog::close();
 
     QString sparePartId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
@@ -82,4 +95,18 @@ void ListSparePart::showSparePartInfo(const QModelIndex &index)
     viewSparePart->setValues(sparePartId);
     viewSparePart->show();
     viewSparePart->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ListSparePart::on_sparePartSearch_returnPressed()
+{
+    searchFlag = true;
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_updateButton_clicked()
+{
+    ui->tableView->setModel(NULL);
+
+    loadTable();
 }

@@ -114,6 +114,9 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -130,6 +133,9 @@ QPushButton:pressed {
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -148,6 +154,9 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="3" column="0">
@@ -165,6 +174,9 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="5" column="1">
@@ -181,6 +193,9 @@ QPushButton:pressed {
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -205,6 +220,9 @@ QPushButton:pressed {
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

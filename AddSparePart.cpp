@@ -15,11 +15,22 @@ AddSparePart::AddSparePart(QWidget *parent) :
     sparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
     sparePartsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     sparePartsDB.open();
+
+    ui->errorLabel->hide();
 }
 
 AddSparePart::~AddSparePart()
 {
     delete ui;
+}
+
+void AddSparePart::closeEvent(QCloseEvent*)
+{
+    QDialog::close();
+
+    listSpareParts = new ListSparePart;
+    listSpareParts->show();
+    listSpareParts->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void AddSparePart::on_createSparePartButton_clicked()
@@ -32,6 +43,13 @@ void AddSparePart::on_createSparePartButton_clicked()
     QString autoCompatibility = ui->autoCompatibilityLine->text();
     QString isOriginal = ui->isOriginalLine->text();
     QString price = ui->priceLine->text();
+
+    if (sparePartName.isEmpty() || manufacturer.isEmpty() || quantityInStock.isEmpty() || autoCompatibility.isEmpty() ||
+            isOriginal.isEmpty() || price.isEmpty())
+    {
+        ui->errorLabel->show();
+        return;
+    }
 
     queryOrders.prepare("INSERT INTO SparePartsCatalogue (spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
         "VALUES(?, ?, ?, ?, ?, ?)");
