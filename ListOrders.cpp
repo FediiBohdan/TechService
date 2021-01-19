@@ -40,7 +40,7 @@ void ListOrders::loadTable()
 
     QString queryString;
 
-    queryString = "SELECT id_order, client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, auto_license_plate, "
+    queryString = "SELECT id_order, client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_address, auto_license_plate, "
         "staff_team, works_list, spare_list, price, feedback, ready_or_not FROM OrdersHistory";
 
     queryModel->setQuery(queryString, ordersHistoryTable);

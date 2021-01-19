@@ -48,8 +48,6 @@ private:
 
     AddEmployee *addEmployee;
     ViewEmployee *viewEmployees;
-
-    QWidget *addWidgetService(int row_index);
 };
 
 #endif // LISTEMPLOYEES_H

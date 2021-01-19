@@ -12,6 +12,9 @@ AddOrder::AddOrder(QWidget *parent) :
 
     connect(ui->pushButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
 
+    QDialog::showNormal();
+    QDialog::showMaximized();
+
     QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
 
     ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
@@ -66,7 +69,7 @@ void AddOrder::on_createOrderButton_clicked()
     QString feedback = ui->feedbackLine->text();
 
     queryOrders.prepare("INSERT INTO OrdersHistory (client, date, contacts, auto_model, manufacture_year, VIN_number, "
-        "discounts, service_number, auto_license_plate, staff_team, works_list, spare_list, price, feedback) "
+        "discounts, service_address, auto_license_plate, staff_team, works_list, spare_list, price, feedback) "
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(client);

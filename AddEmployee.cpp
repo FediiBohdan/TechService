@@ -16,6 +16,8 @@ AddEmployee::AddEmployee(QWidget *parent) :
     employeeDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     employeeDB.open();
 
+    ui->serviceAddress->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
+
     ui->errorLabel->hide();
 }
 
@@ -40,21 +42,21 @@ void AddEmployee::on_saveWorkerButton_clicked()
     QString employeeFMLname = ui->workerFMLname->text();
     QString employeePosition = ui->workerPosition->text();
     QString hourlyPayment = ui->hourlyPayment->text();
-    QString serviceNumber = ui->serviceNumber->text();
+    QString serviceAddress = ui->serviceAddress->currentText();
 
-    if (employeeFMLname.isEmpty() || employeePosition.isEmpty() || hourlyPayment.isEmpty() || serviceNumber.isEmpty())
+    if (employeeFMLname.isEmpty() || employeePosition.isEmpty() || hourlyPayment.isEmpty())
     {
         ui->errorLabel->show();
         return;
     }
 
-    query.prepare("INSERT INTO ListEmployees (employee_FML_name, employee_position, hour_payment, service_number)"
+    query.prepare("INSERT INTO EmployeesTable (employee_FML_name, employee_position, hour_payment, service_address)"
         "VALUES(?, ?, ?, ?)");
 
     query.addBindValue(employeeFMLname);
     query.addBindValue(employeePosition);
     query.addBindValue(hourlyPayment);
-    query.addBindValue(serviceNumber);
+    query.addBindValue(serviceAddress);
     query.exec();
 
     QDialog::close();

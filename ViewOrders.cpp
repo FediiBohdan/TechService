@@ -33,7 +33,7 @@ void ViewOrders::setValues(const QString &id)
     QSqlQuery query(ordersDB);
 
     // add isReady
-    query.prepare("SELECT DISTINCT client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_number, "
+    query.prepare("SELECT DISTINCT client, date, contacts, auto_model, manufacture_year, VIN_number, discounts, service_address, "
         "auto_license_plate, staff_team, works_list, spare_list, price, feedback "
         "FROM OrdersHistory WHERE id_order = " + orderId);
 

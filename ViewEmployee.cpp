@@ -32,7 +32,7 @@ void ViewEmployee::setValues(const QString &id)
 
     QSqlQuery query(employeesDB);
 
-    query.prepare("SELECT DISTINCT employee_FML_name, employee_position, hour_payment, service_number "
+    query.prepare("SELECT DISTINCT employee_FML_name, employee_position, hour_payment, service_address "
         "FROM EmployeesTable WHERE id_employee = " + employeeId);
 
     query.exec();
@@ -41,14 +41,7 @@ void ViewEmployee::setValues(const QString &id)
     ui->workerFMLname->setText(query.value(0).toString());
     ui->workerPosition->setText(query.value(1).toString());
     ui->hourlyPayment->setText(query.value(2).toString());
-
-    QString serviceAddress = query.value(3).toString();
-    if (serviceAddress == "1")
-        ui->serviceNumber->setText("Street A, 123");
-    else if (serviceAddress == "2")
-        ui->serviceNumber->setText("Street B, 456");
-    else if (serviceAddress == "3")
-        ui->serviceNumber->setText("Street C, 789");
+    ui->serviceNumber->setText(query.value(3).toString());
 }
 
 void ViewEmployee::on_updateEmployeeInfoButton_clicked()

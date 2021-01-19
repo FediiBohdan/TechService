@@ -198,22 +198,26 @@ QPushButton:pressed {
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="serviceNumber">
+      <widget class="QComboBox" name="serviceAddress">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QLineEdit {
+        <string notr="true">QComboBox {
 	border: 1px solid gray;
-    border-radius: 7px;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
