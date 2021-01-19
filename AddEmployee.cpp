@@ -15,11 +15,22 @@ AddEmployee::AddEmployee(QWidget *parent) :
     employeeDB = QSqlDatabase::addDatabase("QSQLITE");
     employeeDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     employeeDB.open();
+
+    ui->errorLabel->hide();
 }
 
 AddEmployee::~AddEmployee()
 {
     delete ui;
+}
+
+void AddEmployee::closeEvent(QCloseEvent*)
+{
+    QDialog::close();
+
+    listEmployees = new ListEmployees;
+    listEmployees->show();
+    listEmployees->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void AddEmployee::on_saveWorkerButton_clicked()
@@ -30,6 +41,12 @@ void AddEmployee::on_saveWorkerButton_clicked()
     QString employeePosition = ui->workerPosition->text();
     QString hourlyPayment = ui->hourlyPayment->text();
     QString serviceNumber = ui->serviceNumber->text();
+
+    if (employeeFMLname.isEmpty() || employeePosition.isEmpty() || hourlyPayment.isEmpty() || serviceNumber.isEmpty())
+    {
+        ui->errorLabel->show();
+        return;
+    }
 
     query.prepare("INSERT INTO ListEmployees (employee_FML_name, employee_position, hour_payment, service_number)"
         "VALUES(?, ?, ?, ?)");

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>646</width>
-    <height>142</height>
+    <width>719</width>
+    <height>178</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,12 +18,162 @@
     <normaloff>:/images/autoService-logo.png</normaloff>:/images/autoService-logo.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
+   <item row="1" column="1">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="saveWorkerButton">
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>30</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="errorLabel">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+	color: red;
+}</string>
+     </property>
+     <property name="text">
+      <string>Все поля обязательны к заполнению!</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>ФИО сотрудника</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Должность</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="workerFMLname">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="workerPosition">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Почасовая оплата</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Адрес СТО</string>
        </property>
       </widget>
      </item>
@@ -47,60 +197,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0" colspan="3">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>ФИО сотрудника</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3" colspan="3">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Должность</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Номер СТО</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3" colspan="3">
-      <widget class="QLineEdit" name="workerPosition">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="3">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="serviceNumber">
        <property name="font">
@@ -118,78 +214,6 @@
        </property>
        <property name="frame">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="3">
-      <widget class="QLineEdit" name="workerFMLname">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="3" column="4">
-      <widget class="QPushButton" name="saveWorkerButton">
-       <property name="minimumSize">
-        <size>
-         <width>40</width>
-         <height>40</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="images.qrc">
-         <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
        </property>
       </widget>
      </item>

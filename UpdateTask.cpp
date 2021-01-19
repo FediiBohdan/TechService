@@ -19,15 +19,6 @@ UpdateTask::~UpdateTask()
     delete ui;
 }
 
-void UpdateTask::closeEvent(QCloseEvent*)
-{
-    QDialog::close();
-
-    listTasks = new ListTasks;
-    listTasks->show();
-    listTasks->setAttribute(Qt::WA_DeleteOnClose);
-}
-
 void UpdateTask::setValues(const QString &id)
 {
     taskId = id;

@@ -9,6 +9,8 @@ UpdateEmployee::UpdateEmployee(QWidget *parent) :
 
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
+
+    ui->errorLabel->hide();
 }
 
 UpdateEmployee::~UpdateEmployee()
@@ -16,7 +18,7 @@ UpdateEmployee::~UpdateEmployee()
     delete ui;
 }
 
-void UpdateEmployee::setValues(const QString& id)
+void UpdateEmployee::setValues(const QString &id)
 {
     employeeId = id;
 
@@ -33,18 +35,12 @@ void UpdateEmployee::setValues(const QString& id)
     ui->hourlyPayment->setText(query.value(2).toString());
 
     QString serviceAddress = query.value(3).toString();
-        if (serviceAddress == '1')
-        {
-            ui->serviceNumber->setText("ул. XXX, 76");
-        }
-        else if (serviceAddress == '2')
-        {
-            ui->serviceNumber->setText("ул. YYY, 34");
-        }
-        else if (serviceAddress == '3')
-        {
-            ui->serviceNumber->setText("ул. ZZZ, 2");
-        }
+    if (serviceAddress == "1")
+        ui->serviceNumber->setText("Street A, 123");
+    else if (serviceAddress == "2")
+        ui->serviceNumber->setText("Street B, 456");
+    else if (serviceAddress == "3")
+        ui->serviceNumber->setText("Street C, 789");
 }
 
 void UpdateEmployee::on_backToViewInfoButton_clicked()
@@ -62,6 +58,12 @@ void UpdateEmployee::on_saveUpdatedInfo_clicked()
     QString employeePosition = ui->workerPosition->text();
     QString hourlyPayment = ui->hourlyPayment->text();
     QString serviceNumber = ui->serviceNumber->text();
+
+    if (employeeFMLname.isEmpty() || employeePosition.isEmpty() || hourlyPayment.isEmpty() || serviceNumber.isEmpty())
+    {
+        ui->errorLabel->show();
+        return;
+    }
 
     query.prepare("UPDATE EmployeesTable SET employee_FML_name = ?, employee_position = ?, hour_payment = ?, service_number = ? WHERE id_employee = ?");
 

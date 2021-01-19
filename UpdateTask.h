@@ -2,7 +2,6 @@
 #define UPDATETASK_H
 
 #include "ViewTask.h"
-#include "ListTasks.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
@@ -23,21 +22,17 @@ public:
     ~UpdateTask();
 
 public slots:
-    void setValues(const QString& id);
+    void setValues(const QString &id);
 
 private slots:
     void on_backToViewInfoButton_clicked();
     void on_saveUpdatedInfo_clicked();
-
-    void closeEvent(QCloseEvent*);
 
 private:
     Ui::UpdateTask *ui;
 
     QSqlDatabase listTasksDB;
     QString taskId;
-
-    ListTasks *listTasks;
 };
 
 #endif // UPDATETASK_H

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
+    <width>620</width>
     <height>221</height>
    </rect>
   </property>
@@ -17,6 +17,12 @@
    <item row="0" column="0">
     <widget class="QPushButton" name="backToViewInfoButton">
      <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
       <size>
        <width>40</width>
        <height>40</height>
@@ -52,6 +58,19 @@ QPushButton:pressed {
       </size>
      </property>
     </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item row="2" column="2">
     <widget class="QPushButton" name="saveUpdatedInfo">
@@ -94,15 +113,96 @@ QPushButton:pressed {
    </item>
    <item row="1" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0" colspan="3">
+     <item row="0" column="0">
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>ФИО сотрудника</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0" colspan="3">
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Должность</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QLineEdit" name="workerFMLname">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="workerPosition">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Почасовая оплата</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Адрес СТО</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLineEdit" name="hourlyPayment">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -141,96 +241,26 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLineEdit" name="hourlyPayment">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3" colspan="2">
-      <widget class="QLineEdit" name="workerPosition">
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="3">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Почасовая оплата</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3" colspan="2">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Должность</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Номер СТО</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
-   <item row="0" column="1">
+   <item row="2" column="0">
+    <widget class="QLabel" name="errorLabel">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+	color: red;
+}</string>
+     </property>
+     <property name="text">
+      <string>Все поля обязательны к заполнению!</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>

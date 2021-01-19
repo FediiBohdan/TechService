@@ -3,6 +3,7 @@
 
 #include "AddTask.h"
 #include "ViewTask.h"
+#include "UpdateTask.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -16,6 +17,7 @@
 
 class AddTask;
 class ViewTask;
+class UpdateTask;
 
 namespace Ui {
 class ListTasks;

@@ -18,7 +18,7 @@ ViewEmployee::~ViewEmployee()
 
 void ViewEmployee::closeEvent(QCloseEvent*)
 {
-    QDialog::hide();
+    QDialog::close();
 
     listEmployees = new ListEmployees;
     listEmployees->show();
@@ -43,18 +43,12 @@ void ViewEmployee::setValues(const QString &id)
     ui->hourlyPayment->setText(query.value(2).toString());
 
     QString serviceAddress = query.value(3).toString();
-        if (serviceAddress == '1')
-        {
-            ui->serviceNumber->setText("ул. XXX, 76");
-        }
-        else if (serviceAddress == '2')
-        {
-            ui->serviceNumber->setText("ул. YYY, 34");
-        }
-        else if (serviceAddress == '3')
-        {
-            ui->serviceNumber->setText("ул. ZZZ, 2");
-        }
+    if (serviceAddress == "1")
+        ui->serviceNumber->setText("Street A, 123");
+    else if (serviceAddress == "2")
+        ui->serviceNumber->setText("Street B, 456");
+    else if (serviceAddress == "3")
+        ui->serviceNumber->setText("Street C, 789");
 }
 
 void ViewEmployee::on_updateEmployeeInfoButton_clicked()

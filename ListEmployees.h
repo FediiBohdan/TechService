@@ -3,6 +3,7 @@
 
 #include "AddEmployee.h"
 #include "ViewEmployee.h"
+#include "UpdateEmployee.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
@@ -11,8 +12,11 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QDebug>
+#include <QLabel>
 
 class ViewEmployee;
+class UpdateEmployee;
+class AddEmployee;
 
 namespace Ui {
 class ListEmployees;
@@ -28,6 +32,8 @@ private slots:
 
     void on_addWorkerButton_clicked();
 
+    void on_updateButton_clicked();
+
 public:
     explicit ListEmployees(QWidget *parent = nullptr);
     ~ListEmployees();
@@ -38,9 +44,12 @@ private:
     QSqlDatabase employeesTable = QSqlDatabase::database("EmployeesTable");
     QSqlDatabase employeesDB;
     QPointer<QSqlQueryModel> queryModel;
+    QPointer<QSqlQueryModel> queryModelLabel;
 
     AddEmployee *addEmployee;
     ViewEmployee *viewEmployees;
+
+    QWidget *addWidgetService(int row_index);
 };
 
 #endif // LISTEMPLOYEES_H

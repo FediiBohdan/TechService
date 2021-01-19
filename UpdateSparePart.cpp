@@ -9,20 +9,13 @@ UpdateSparePart::UpdateSparePart(QWidget *parent) :
 
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
+
+    ui->errorLabel->hide();
 }
 
 UpdateSparePart::~UpdateSparePart()
 {
     delete ui;
-}
-
-void UpdateSparePart::closeEvent(QCloseEvent*)
-{
-    QDialog::close();
-
-    listSpareParts = new ListSparePart;
-    listSpareParts->show();
-    listSpareParts->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void UpdateSparePart::setValues(const QString& id)
@@ -62,6 +55,13 @@ void UpdateSparePart::on_saveUpdatedInfo_clicked()
     QString autoCompatibility = ui->autoCompatibilityLine->text();
     QString isOriginal = ui->isOriginalLine->text();
     QString price = ui->priceLine->text();
+
+    if (sparePartName.isEmpty() || manufacturer.isEmpty() || quantityInStock.isEmpty() || autoCompatibility.isEmpty() ||
+            isOriginal.isEmpty() || price.isEmpty())
+    {
+        ui->errorLabel->show();
+        return;
+    }
 
     queryOrders.prepare("UPDATE SparePartsCatalogue SET spare_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
         "WHERE id_spare_part = ?");

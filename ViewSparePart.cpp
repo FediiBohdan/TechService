@@ -18,7 +18,7 @@ ViewSparePart::~ViewSparePart()
 
 void ViewSparePart::closeEvent(QCloseEvent*)
 {
-    QDialog::hide();
+    QDialog::close();
 
     listSparePart = new ListSparePart;
     listSparePart->show();
