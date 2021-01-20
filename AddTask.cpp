@@ -16,8 +16,7 @@ AddTask::AddTask(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    ui->contentErrorLabel->hide();
-    ui->dateErrorLabel->hide();
+    ui->errorLabel->setStyleSheet("color: transparent");
 
     setDateAndTime();
 }
@@ -50,29 +49,15 @@ void AddTask::on_createTaskButton_clicked()
 
     QString time = ui->timeLine->text();
     QString date = ui->dateLine->text();
-
-    bool error = false;
-
-    if (time.isEmpty() || date.isEmpty())
-    {
-        ui->dateErrorLabel->show();
-        error = true;
-    }
-    else
-        ui->dateErrorLabel->hide();
-
     QString content = ui->contentLine->toPlainText();
 
-    if (content.isEmpty())
+    if (time.isEmpty() || date.isEmpty() || content.isEmpty())
     {
-        ui->contentErrorLabel->show();
-        error = true;
+        ui->errorLabel->setStyleSheet("color: red");
+        return;
     }
     else
-        ui->contentErrorLabel->hide();
-
-    if (error)
-        return;
+        ui->errorLabel->setStyleSheet("color: transparent");
 
     QString isFulfilled = "0";
 

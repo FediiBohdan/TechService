@@ -3,6 +3,7 @@
 
 #include "ListEmployees.h"
 #include "ListSpareParts.h"
+#include "ListOrders.h"
 
 #include <QDialog>
 #include <QQmlApplicationEngine>
@@ -37,16 +38,20 @@ private:
 
     ListSparePart *sparePartsTable;
 
-    QSqlDatabase listOrders = QSqlDatabase::database("OrdersHistory");
+    QSqlDatabase listOrdersTable = QSqlDatabase::database("OrdersHistory");
     QSqlDatabase ordersHistoryDB;
     QSqlDatabase clientsDB;
     QPointer<QSqlQueryModel> queryModel;
+
+    ListOrders *listOrders;
 
 private slots:
     void openMap();
     void setDateAndTime();
 
     void on_createOrderButton_clicked();
+
+    void closeEvent(QCloseEvent *);
 
 public slots:
     void closeWindow();

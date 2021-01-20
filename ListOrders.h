@@ -11,6 +11,7 @@
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QDebug>
+#include <QCheckBox>
 
 class AddOrder;
 class ViewOrders;
@@ -30,8 +31,11 @@ public:
 private slots:
     void loadTable();
     void showOrderInfo(const QModelIndex &index);
+    void checkBoxStateChanged();
 
     void on_orderCreationButton_clicked();
+    void on_updateButton_clicked();
+    void on_orderSearch_returnPressed();
 
 private:
     Ui::ListOrders *ui;
@@ -40,9 +44,14 @@ private:
 
     QSqlDatabase ordersHistoryDB;
     QPointer<QSqlQueryModel> queryModel;
+    QPointer<QSqlQueryModel> queryModelCheckBox;
 
     AddOrder *addOrder;
     ViewOrders *viewOrders;
+
+    bool searchFlag;
+
+    QWidget *addCheckBoxCompleted(int row_index);
 };
 
 #endif // LISTORDERS_H

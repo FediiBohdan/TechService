@@ -49,9 +49,7 @@ private slots:
     void showSparePartInfo(const QModelIndex &index);
 
     void on_addSparePartButton_clicked();
-
     void on_sparePartSearch_returnPressed();
-
     void on_updateButton_clicked();
 
 public slots:

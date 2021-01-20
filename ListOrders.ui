@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>724</width>
-    <height>559</height>
+    <width>887</width>
+    <height>594</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,17 +37,30 @@ border-radius: 7px;
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="orderSearch">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">QLineEdit {
+    border: 2px solid #dbdcf7;
+    border-radius: 5px;
+    padding: 0 4px;
+}</string>
         </property>
         <property name="placeholderText">
          <string>Поиск</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -71,6 +84,9 @@ border-radius: 7px;
           <width>40</width>
           <height>40</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="toolTip">
          <string>Создать заказ</string>
@@ -114,6 +130,9 @@ QPushButton:pressed {
           <height>40</height>
          </size>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::TabFocus</enum>
+        </property>
         <property name="toolTip">
          <string>Обновить</string>
         </property>
@@ -156,6 +175,12 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>orderSearch</tabstop>
+  <tabstop>orderCreationButton</tabstop>
+  <tabstop>updateButton</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

@@ -31,6 +31,9 @@ public:
     explicit ListTasks(QWidget *parent = nullptr);
     ~ListTasks();
 
+public slots:
+    void closeWindow();
+
 private:
     Ui::ListTasks *ui;
 
@@ -54,9 +57,6 @@ private slots:
 
     void on_addTaskButton_clicked();
     void on_updateButton_clicked();
-
-public slots:
-    void closeWindow();
 };
 
 #endif // LISTTASKS_H

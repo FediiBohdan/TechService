@@ -10,7 +10,7 @@ AddOrder::AddOrder(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    connect(ui->pushButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
+    connect(ui->openMapButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
 
     QDialog::showNormal();
     QDialog::showMaximized();
@@ -21,12 +21,25 @@ AddOrder::AddOrder(QWidget *parent) :
     ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
+    ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
+    ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
+    ui->dateErrorLabel->setStyleSheet("color: transparent");
+
     setDateAndTime();
 }
 
 AddOrder::~AddOrder()
 {
     delete ui;
+}
+
+void AddOrder::closeEvent(QCloseEvent*)
+{
+    QDialog::close();
+
+    listOrders = new ListOrders;
+    listOrders->show();
+    listOrders->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void AddOrder::openMap()
@@ -59,14 +72,54 @@ void AddOrder::on_createOrderButton_clicked()
     QString autoModel = ui->modelLine->text();
     QString manufactureYear = ui->yearLine->text();
     QString VIN_Number = ui->VIN_Line->text();
-    QString discounts = ui->discountsLine->text();
+    QString discounts = ui->discounts->currentText();
     QString serviceNumber = ui->serviceLine->text();
     QString autoLicensePlate = ui->autoLicensePlateLine->text();
-    QString staffTeam = ui->staffLine->text();
-    QString worksList = ui->worksLine->text();
-    QString spareList = ui->sparePartsLine->text();
+    //QString staffTeam = ui->staffLine->text();
+    //QString worksList = ui->worksLine->text();
+    //QString spareList = ui->sparePartsLine->text();
     QString price = ui->priceLine->text();
-    QString feedback = ui->feedbackLine->text();
+    //QString feedback = ui->feedbackLine->text();
+
+    bool error = false;
+
+    if (date.isEmpty())
+    {
+        error = true; ui->dateErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->dateErrorLabel->setStyleSheet("color: transparent");
+
+    if (client.isEmpty())
+    {
+        error = true; ui->clientErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->clientErrorLabel->setStyleSheet("color: transparent");
+
+    if (contacts.isEmpty())
+    {
+        error = true; ui->contactsErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->contactsErrorLabel->setStyleSheet("color: transparent");
+
+    if (autoModel.isEmpty())
+    {
+        error = true; ui->autoErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->autoErrorLabel->setStyleSheet("color: transparent");
+
+    if (serviceNumber.isEmpty())
+    {
+        error = true; ui->serviceErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->serviceErrorLabel->setStyleSheet("color: transparent");
+
+    if (error)
+        return;
 
     queryOrders.prepare("INSERT INTO OrdersHistory (client, date, contacts, auto_model, manufacture_year, VIN_number, "
         "discounts, service_address, auto_license_plate, staff_team, works_list, spare_list, price, feedback) "
@@ -78,14 +131,14 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(autoModel);
     queryOrders.addBindValue(manufactureYear);
     queryOrders.addBindValue(VIN_Number);
-    queryOrders.addBindValue(discounts);
+    //queryOrders.addBindValue(discounts);
     queryOrders.addBindValue(serviceNumber);
     queryOrders.addBindValue(autoLicensePlate);
-    queryOrders.addBindValue(staffTeam);
-    queryOrders.addBindValue(worksList);
-    queryOrders.addBindValue(spareList);
+    //queryOrders.addBindValue(staffTeam);
+    //queryOrders.addBindValue(worksList);
+    //queryOrders.addBindValue(spareList);
     queryOrders.addBindValue(price);
-    queryOrders.addBindValue(feedback);
+    //queryOrders.addBindValue(feedback);
     queryOrders.exec();
 
     // Simultaneous insertion into client table

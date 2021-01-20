@@ -99,7 +99,10 @@ void ListSparePart::showSparePartInfo(const QModelIndex &index)
 
 void ListSparePart::on_sparePartSearch_returnPressed()
 {
-    searchFlag = true;
+    if (ui->sparePartSearch->text().isEmpty())
+        searchFlag = false;
+    else
+        searchFlag = true;
 
     on_updateButton_clicked();
 }

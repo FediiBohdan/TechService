@@ -94,9 +94,7 @@ QWidget* ListTasks::addCheckBoxCompleted(int row_index)
 
     queryModelCheckBox = new QSqlQueryModel(this);
 
-    QString queryStringCheckBox;
-
-    queryStringCheckBox = "SELECT is_fulfilled FROM TasksTable";
+    QString queryStringCheckBox = "SELECT is_fulfilled FROM TasksTable";
 
     queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
 
