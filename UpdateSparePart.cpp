@@ -24,7 +24,7 @@ void UpdateSparePart::setValues(const QString& id)
 
     QSqlQuery query(sparePartsDB);
 
-    query.prepare("SELECT DISTINCT spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price "
+    query.prepare("SELECT DISTINCT spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price "
         "FROM SparePartsCatalogue WHERE id_spare_part = " + sparePartId);
 
     query.exec();
@@ -63,7 +63,7 @@ void UpdateSparePart::on_saveUpdatedInfo_clicked()
         return;
     }
 
-    queryOrders.prepare("UPDATE SparePartsCatalogue SET spare_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
+    queryOrders.prepare("UPDATE SparePartsCatalogue SET spare_part_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
         "WHERE id_spare_part = ?");
 
     queryOrders.addBindValue(sparePartName);

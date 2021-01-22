@@ -51,7 +51,7 @@ void AddSparePart::on_createSparePartButton_clicked()
         return;
     }
 
-    queryOrders.prepare("INSERT INTO SparePartsCatalogue (spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
+    queryOrders.prepare("INSERT INTO SparePartsCatalogue (spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
         "VALUES(?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(sparePartName);

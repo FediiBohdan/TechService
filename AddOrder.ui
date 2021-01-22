@@ -876,10 +876,24 @@ QPushButton:pressed {
      <item>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="0">
-        <widget class="QTableView" name="availableSparePartsTable"/>
+        <widget class="QTableView" name="availableSparePartsTable">
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="horizontalScrollMode">
+          <enum>QAbstractItemView::ScrollPerPixel</enum>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QTableView" name="usedSparePartsTable"/>
+        <widget class="QTableView" name="usedSparePartsTable">
+         <property name="maximumSize">
+          <size>
+           <width>320</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_9">
@@ -913,9 +927,14 @@ QPushButton:pressed {
         <widget class="QTextEdit" name="workList">
          <property name="maximumSize">
           <size>
-           <width>380</width>
+           <width>320</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
          </property>
         </widget>
        </item>
@@ -924,10 +943,24 @@ QPushButton:pressed {
      <item>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="1" column="0">
-        <widget class="QTableView" name="allEmployees"/>
+        <widget class="QTableView" name="allEmployees">
+         <property name="maximumSize">
+          <size>
+           <width>320</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QTableView" name="currentEmployees"/>
+        <widget class="QTableView" name="currentEmployees">
+         <property name="maximumSize">
+          <size>
+           <width>320</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_5">

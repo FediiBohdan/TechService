@@ -43,13 +43,13 @@ void ListSparePart::loadTable()
     queryModel = new QSqlQueryModel(this);
 
     QString queryString;
-    queryString = "SELECT id_spare_part, spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, "
+    queryString = "SELECT id_spare_part, spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, "
         "price FROM SparePartsCatalogue ";
 
     QString searchString;
 
     if (searchFlag)
-        searchString.append("WHERE spare_name LIKE '%" + ui->sparePartSearch->text() + "%' GROUP BY id_spare_part ORDER BY spare_name ASC");
+        searchString.append("WHERE spare_part_name LIKE '%" + ui->sparePartSearch->text() + "%' GROUP BY id_spare_part ORDER BY spare_part_name ASC");
 
     queryString.append(searchString);
 

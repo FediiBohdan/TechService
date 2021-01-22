@@ -26,6 +26,8 @@ AddOrder::AddOrder(QWidget *parent) :
     ui->dateErrorLabel->setStyleSheet("color: transparent");
 
     setDateAndTime();
+
+    loadSparePartsTable();
 }
 
 AddOrder::~AddOrder()
@@ -35,11 +37,11 @@ AddOrder::~AddOrder()
 
 void AddOrder::closeEvent(QCloseEvent*)
 {
-    QDialog::close();
+//    QDialog::close();
 
-    listOrders = new ListOrders;
-    listOrders->show();
-    listOrders->setAttribute(Qt::WA_DeleteOnClose);
+//    listOrders = new ListOrders;
+//    listOrders->show();
+//    listOrders->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void AddOrder::openMap()
@@ -51,6 +53,56 @@ void AddOrder::openMap()
 void AddOrder::closeWindow()
 {
     close();
+}
+
+void AddOrder::loadSparePartsTable()
+{
+    querySparePartsModel = new QSqlQueryModel(this);
+
+    QString queryString = "SELECT id_spare_part, spare_part_name, original FROM SparePartsCatalogue";
+
+    querySparePartsModel->setQuery(queryString);
+
+    querySparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id"));
+    querySparePartsModel->setHeaderData(1, Qt::Horizontal, tr("Название"));
+    querySparePartsModel->insertColumn(2);
+    querySparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Совместимость"));
+    querySparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Оригинал"));
+
+    ui->availableSparePartsTable->setModel(querySparePartsModel);
+
+    ui->availableSparePartsTable->setColumnHidden(0, true);
+
+    for (int row_index = 0; row_index < ui->availableSparePartsTable->model()->rowCount(); ++row_index)
+        ui->availableSparePartsTable->setIndexWidget(querySparePartsModel->index(row_index, 2), addWidgetCompatibilityContent(row_index));
+
+    ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->availableSparePartsTable->resizeColumnsToContents();
+    ui->availableSparePartsTable->verticalHeader()->hide();
+    ui->availableSparePartsTable->resizeRowsToContents();
+}
+
+QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
+{
+    QWidget *widget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(widget);
+    QLabel *compatibilityContentLabel = new QLabel(widget);
+
+    layout->addWidget(compatibilityContentLabel);
+
+    queryModelLabel = new QSqlQueryModel(this);
+
+    QString queryString = "SELECT auto_compatibility FROM SparePartsCatalogue";
+
+    queryModelLabel->setQuery(queryString, listSparePartsTable);
+
+    QString compatibilityContent = queryModelLabel->data(queryModelLabel->index(row_index, 0), Qt::EditRole).toString();
+
+    compatibilityContentLabel->setText(compatibilityContent);
+    compatibilityContentLabel->setOpenExternalLinks(true);
+    compatibilityContentLabel->setWordWrap(true);
+
+    return widget;
 }
 
 void AddOrder::setDateAndTime()

@@ -32,7 +32,7 @@ void ViewSparePart::setValues(const QString &id)
 
     QSqlQuery query(sparePartsDB);
 
-    query.prepare("SELECT DISTINCT spare_name, manufacturer, quantity_in_stock, auto_compatibility, original, price "
+    query.prepare("SELECT DISTINCT spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price "
         "FROM SparePartsCatalogue WHERE id_spare_part = " + sparePartId);
 
     query.exec();
