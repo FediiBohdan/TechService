@@ -52,19 +52,25 @@ private:
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> querySparePartsModel;
     QPointer<QSqlQueryModel> queryModelLabel;
+    QPointer<QSqlQueryModel> queryEmployeesModel;
 
     ListOrders *listOrders;
 
     QWidget *addWidgetCompatibilityContent(int row_index);
 
+    bool searchFlag;
+
 private slots:
     void openMap();
     void setDateAndTime();
     void loadSparePartsTable();
+    void loadEmployeesTable();
+    void updateSparePartsTable();
 
     void on_createOrderButton_clicked();
 
     void closeEvent(QCloseEvent *);
+    void on_sparePartsSearch_returnPressed();
 };
 
 #endif // ADDORDER_H

@@ -25,9 +25,14 @@ AddOrder::AddOrder(QWidget *parent) :
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
     ui->dateErrorLabel->setStyleSheet("color: transparent");
 
+    ui->serviceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
+
+    searchFlag = false;
+
     setDateAndTime();
 
     loadSparePartsTable();
+    loadEmployeesTable();
 }
 
 AddOrder::~AddOrder()
@@ -59,7 +64,14 @@ void AddOrder::loadSparePartsTable()
 {
     querySparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_spare_part, spare_part_name, original FROM SparePartsCatalogue";
+    QString queryString = "SELECT id_spare_part, spare_part_name, original FROM SparePartsCatalogue ";
+
+    QString searchString;
+
+    if (searchFlag)
+        searchString.append("WHERE spare_part_name LIKE '%" + ui->sparePartsSearch->text() + "%' GROUP BY id_spare_part ORDER BY spare_part_name ASC");
+
+    queryString.append(searchString);
 
     querySparePartsModel->setQuery(queryString);
 
@@ -92,7 +104,7 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
 
     queryModelLabel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT auto_compatibility FROM SparePartsCatalogue";
+    QString queryString = "SELECT REPLACE(auto_compatibility, ', ', '\n') FROM SparePartsCatalogue";
 
     queryModelLabel->setQuery(queryString, listSparePartsTable);
 
@@ -103,6 +115,31 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
     compatibilityContentLabel->setWordWrap(true);
 
     return widget;
+}
+
+void AddOrder::loadEmployeesTable()
+{
+    queryEmployeesModel = new QSqlQueryModel(this);
+
+    QString queryString = "SELECT id_employee, employee_FML_name, employee_position FROM EmployeesTable";
+
+    queryEmployeesModel->setQuery(queryString);
+
+    queryEmployeesModel->setHeaderData(0, Qt::Horizontal, tr("id"));
+    queryEmployeesModel->setHeaderData(1, Qt::Horizontal, tr("ФИО сотрудника"));
+    queryEmployeesModel->setHeaderData(2, Qt::Horizontal, tr("Должность"));
+
+    ui->allEmployees->setModel(queryEmployeesModel);
+
+    ui->allEmployees->setColumnHidden(0, true);
+
+    //for (int row_index = 0; row_index < ui->availableSparePartsTable->model()->rowCount(); ++row_index)
+        //ui->availableSparePartsTable->setIndexWidget(queryEmployeesModel->index(row_index, 2), addWidgetCompatibilityContent(row_index));
+
+    ui->allEmployees->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->allEmployees->resizeColumnsToContents();
+    ui->allEmployees->verticalHeader()->hide();
+    //ui->allEmployees->resizeRowsToContents();
 }
 
 void AddOrder::setDateAndTime()
@@ -125,12 +162,12 @@ void AddOrder::on_createOrderButton_clicked()
     QString manufactureYear = ui->yearLine->text();
     QString VIN_Number = ui->VIN_Line->text();
     QString discounts = ui->discounts->currentText();
-    QString serviceNumber = ui->serviceLine->text();
+    //QString serviceNumber = ui->serviceLine->text();
     QString autoLicensePlate = ui->autoLicensePlateLine->text();
     //QString staffTeam = ui->staffLine->text();
     //QString worksList = ui->worksLine->text();
     //QString spareList = ui->sparePartsLine->text();
-    QString price = ui->priceLine->text();
+    //QString price = ui->priceLine->text();
     //QString feedback = ui->feedbackLine->text();
 
     bool error = false;
@@ -163,12 +200,12 @@ void AddOrder::on_createOrderButton_clicked()
     else
         ui->autoErrorLabel->setStyleSheet("color: transparent");
 
-    if (serviceNumber.isEmpty())
-    {
-        error = true; ui->serviceErrorLabel->setStyleSheet("color: red");
-    }
-    else
-        ui->serviceErrorLabel->setStyleSheet("color: transparent");
+//    if (serviceNumber.isEmpty())
+//    {
+//        error = true; ui->serviceErrorLabel->setStyleSheet("color: red");
+//    }
+//    else
+//        ui->serviceErrorLabel->setStyleSheet("color: transparent");
 
     if (error)
         return;
@@ -184,12 +221,12 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(manufactureYear);
     queryOrders.addBindValue(VIN_Number);
     //queryOrders.addBindValue(discounts);
-    queryOrders.addBindValue(serviceNumber);
+    //queryOrders.addBindValue(serviceNumber);
     queryOrders.addBindValue(autoLicensePlate);
     //queryOrders.addBindValue(staffTeam);
     //queryOrders.addBindValue(worksList);
     //queryOrders.addBindValue(spareList);
-    queryOrders.addBindValue(price);
+    //queryOrders.addBindValue(price);
     //queryOrders.addBindValue(feedback);
     queryOrders.exec();
 
@@ -218,4 +255,18 @@ void AddOrder::on_createOrderButton_clicked()
     QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Заказ успешно создан!"), QMessageBox::Ok);
+}
+
+void AddOrder::on_sparePartsSearch_returnPressed()
+{
+    searchFlag = true;
+
+    updateSparePartsTable();
+}
+
+void AddOrder::updateSparePartsTable()
+{
+    ui->availableSparePartsTable->setModel(NULL);
+
+    loadSparePartsTable();
 }
