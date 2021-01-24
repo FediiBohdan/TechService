@@ -46,14 +46,14 @@ void ViewOrders::setValues(const QString &id)
     ui->modelLine->setText(query.value(3).toString());
     ui->yearLine->setText(query.value(4).toString());
     ui->VIN_Line->setText(query.value(5).toString());
-    ui->discountsLine->setText(query.value(6).toString());
-    ui->serviceLine->setText(query.value(7).toString());
+    //ui->discountsLine->setText(query.value(6).toString());
+    //ui->serviceLine->setText(query.value(7).toString());
     ui->autoLicensePlateLine->setText(query.value(8).toString());
-    ui->staffLine->setText(query.value(9).toString());
-    ui->worksLine->setText(query.value(10).toString());
-    ui->sparePartsLine->setText(query.value(11).toString());
-    ui->priceLine->setText(query.value(12).toString());
-    ui->feedbackLine->setText(query.value(13).toString());
+    //ui->staffLine->setText(query.value(9).toString());
+    //ui->worksLine->setText(query.value(10).toString());
+    //ui->sparePartsLine->setText(query.value(11).toString());
+    //ui->priceLine->setText(query.value(12).toString());
+    //ui->feedbackLine->setText(query.value(13).toString());
 }
 
 void ViewOrders::on_updateOrderInfoButton_clicked()

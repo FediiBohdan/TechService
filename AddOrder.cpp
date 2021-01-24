@@ -128,18 +128,43 @@ void AddOrder::loadEmployeesTable()
     queryEmployeesModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryEmployeesModel->setHeaderData(1, Qt::Horizontal, tr("ФИО сотрудника"));
     queryEmployeesModel->setHeaderData(2, Qt::Horizontal, tr("Должность"));
+    queryEmployeesModel->insertColumn(3);
+    queryEmployeesModel->setHeaderData(3, Qt::Horizontal, tr("Часы"));
 
     ui->allEmployees->setModel(queryEmployeesModel);
 
     ui->allEmployees->setColumnHidden(0, true);
 
-    //for (int row_index = 0; row_index < ui->availableSparePartsTable->model()->rowCount(); ++row_index)
-        //ui->availableSparePartsTable->setIndexWidget(queryEmployeesModel->index(row_index, 2), addWidgetCompatibilityContent(row_index));
+    for (int row_index = 0; row_index < ui->allEmployees->model()->rowCount(); ++row_index)
+        ui->allEmployees->setIndexWidget(queryEmployeesModel->index(row_index, 3), addWidgetHoursLine(row_index));
 
     ui->allEmployees->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->allEmployees->resizeColumnsToContents();
     ui->allEmployees->verticalHeader()->hide();
-    //ui->allEmployees->resizeRowsToContents();
+    ui->allEmployees->resizeRowsToContents();
+}
+
+QWidget* AddOrder::addWidgetHoursLine(int row_index)
+{
+    QWidget *widget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(widget);
+    QLineEdit *hoursLineEdit = new QLineEdit(widget);
+
+    layout->addWidget(hoursLineEdit);
+
+    queryEmployeesHoursModel = new QSqlQueryModel(this);
+
+    QString queryString = "SELECT hour_payment FROM EmployeesTable";
+
+    queryEmployeesHoursModel->setQuery(queryString, listSparePartsTable);
+
+    QString hours = queryEmployeesHoursModel->data(queryEmployeesHoursModel->index(row_index, 0), Qt::EditRole).toString();
+
+    hoursLineEdit->setText(hours);
+//    hoursLineEdit->setOpenExternalLinks(true);
+//    hoursLineEdit->setWordWrap(true);
+
+    return widget;
 }
 
 void AddOrder::setDateAndTime()

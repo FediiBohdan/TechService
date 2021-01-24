@@ -53,10 +53,12 @@ private:
     QPointer<QSqlQueryModel> querySparePartsModel;
     QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
+    QPointer<QSqlQueryModel> queryEmployeesHoursModel;
 
     ListOrders *listOrders;
 
     QWidget *addWidgetCompatibilityContent(int row_index);
+    QWidget *addWidgetHoursLine(int row_index);
 
     bool searchFlag;
 
