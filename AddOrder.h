@@ -68,6 +68,7 @@ private slots:
     void loadSparePartsTable();
     void loadEmployeesTable();
     void updateSparePartsTable();
+    void updateUsedSpareParts();
 
     void on_createOrderButton_clicked();
 

@@ -1452,6 +1452,29 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>backToViewInfoButton</tabstop>
+  <tabstop>dateLine</tabstop>
+  <tabstop>timeLine</tabstop>
+  <tabstop>updateDateLine</tabstop>
+  <tabstop>updateTimeLine</tabstop>
+  <tabstop>clientLine</tabstop>
+  <tabstop>contactLine</tabstop>
+  <tabstop>modelLine</tabstop>
+  <tabstop>yearLine</tabstop>
+  <tabstop>VIN_Line</tabstop>
+  <tabstop>autoLicensePlateLine</tabstop>
+  <tabstop>serviceComboBox</tabstop>
+  <tabstop>discounts</tabstop>
+  <tabstop>availableSparePartsTable</tabstop>
+  <tabstop>usedSparePartsTable</tabstop>
+  <tabstop>allEmployees</tabstop>
+  <tabstop>currentEmployees</tabstop>
+  <tabstop>workList</tabstop>
+  <tabstop>feedback</tabstop>
+  <tabstop>workHours</tabstop>
+  <tabstop>saveUpdatedInfo</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

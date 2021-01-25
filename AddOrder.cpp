@@ -21,10 +21,13 @@ AddOrder::AddOrder(QWidget *parent) :
     ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
+    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSpareParts);
+
     ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
     ui->dateErrorLabel->setStyleSheet("color: transparent");
 
+    ui->employeesByServiceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
     ui->serviceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
 
     searchFlag = false;
@@ -92,6 +95,7 @@ void AddOrder::loadSparePartsTable()
     ui->availableSparePartsTable->resizeColumnsToContents();
     ui->availableSparePartsTable->verticalHeader()->hide();
     ui->availableSparePartsTable->resizeRowsToContents();
+    ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
@@ -115,6 +119,11 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
     compatibilityContentLabel->setWordWrap(true);
 
     return widget;
+}
+
+void AddOrder::updateUsedSpareParts()
+{
+    qDebug()<<"ewe";
 }
 
 void AddOrder::loadEmployeesTable()
@@ -161,8 +170,6 @@ QWidget* AddOrder::addWidgetHoursLine(int row_index)
     QString hours = queryEmployeesHoursModel->data(queryEmployeesHoursModel->index(row_index, 0), Qt::EditRole).toString();
 
     hoursLineEdit->setText(hours);
-//    hoursLineEdit->setOpenExternalLinks(true);
-//    hoursLineEdit->setWordWrap(true);
 
     return widget;
 }
