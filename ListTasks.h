@@ -47,8 +47,8 @@ private:
     AddTask *addTask;
     ViewTask *viewTask;
 
-    QWidget *addCheckBoxCompleted(int row_index);
-    QWidget *addWidgetContent(int row_index);
+    QWidget *addCheckBoxCompleted(int rowIndex);
+    QWidget *addWidgetContent(int rowIndex);
 
 private slots:
     void loadTable();

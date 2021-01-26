@@ -21,7 +21,7 @@ AddOrder::AddOrder(QWidget *parent) :
     ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
-    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSpareParts);
+    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::usedSpareParts);
 
     ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
@@ -66,7 +66,7 @@ void AddOrder::closeWindow()
 
 void AddOrder::loadSparePartsTable()
 {
-    querySparePartsModel = new QSqlQueryModel(this);
+    queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
     QString queryString = "SELECT id_spare_part, spare_part_name, original FROM SparePartsCatalogue ";
 
@@ -77,20 +77,20 @@ void AddOrder::loadSparePartsTable()
 
     queryString.append(searchString);
 
-    querySparePartsModel->setQuery(queryString);
+    queryAvailableSparePartsModel->setQuery(queryString);
 
-    querySparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id"));
-    querySparePartsModel->setHeaderData(1, Qt::Horizontal, tr("Название"));
-    querySparePartsModel->insertColumn(2);
-    querySparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Совместимость"));
-    querySparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Оригинал"));
+    queryAvailableSparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id"));
+    queryAvailableSparePartsModel->setHeaderData(1, Qt::Horizontal, tr("Название"));
+    queryAvailableSparePartsModel->insertColumn(2);
+    queryAvailableSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Совместимость"));
+    queryAvailableSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Оригинал"));
 
-    ui->availableSparePartsTable->setModel(querySparePartsModel);
+    ui->availableSparePartsTable->setModel(queryAvailableSparePartsModel);
 
     ui->availableSparePartsTable->setColumnHidden(0, true);
 
-    for (int row_index = 0; row_index < ui->availableSparePartsTable->model()->rowCount(); ++row_index)
-        ui->availableSparePartsTable->setIndexWidget(querySparePartsModel->index(row_index, 2), addWidgetCompatibilityContent(row_index));
+    for (int rowIndex = 0; rowIndex < ui->availableSparePartsTable->model()->rowCount(); ++rowIndex)
+        ui->availableSparePartsTable->setIndexWidget(queryAvailableSparePartsModel->index(rowIndex, 2), addWidgetCompatibilityContent(rowIndex));
 
     ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->availableSparePartsTable->resizeColumnsToContents();
@@ -99,7 +99,7 @@ void AddOrder::loadSparePartsTable()
     ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
-QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
+QWidget* AddOrder::addWidgetCompatibilityContent(int rowIndex)
 {
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -113,7 +113,7 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
 
     queryModelLabel->setQuery(queryString, listSparePartsTable);
 
-    QString compatibilityContent = queryModelLabel->data(queryModelLabel->index(row_index, 0), Qt::EditRole).toString();
+    QString compatibilityContent = queryModelLabel->data(queryModelLabel->index(rowIndex, 0), Qt::EditRole).toString();
 
     compatibilityContentLabel->setText(compatibilityContent);
     compatibilityContentLabel->setOpenExternalLinks(true);
@@ -122,9 +122,9 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int row_index)
     return widget;
 }
 
-void AddOrder::updateUsedSpareParts()
+void AddOrder::usedSpareParts()
 {
-    qDebug()<<"ewe";
+
 }
 
 void AddOrder::loadEmployeesTable()
@@ -145,8 +145,8 @@ void AddOrder::loadEmployeesTable()
 
     ui->allEmployees->setColumnHidden(0, true);
 
-    for (int row_index = 0; row_index < ui->allEmployees->model()->rowCount(); ++row_index)
-        ui->allEmployees->setIndexWidget(queryEmployeesModel->index(row_index, 3), addWidgetHoursLine(row_index));
+    for (int rowIndex = 0; rowIndex < ui->allEmployees->model()->rowCount(); ++rowIndex)
+        ui->allEmployees->setIndexWidget(queryEmployeesModel->index(rowIndex, 3), addWidgetHoursLine(rowIndex));
 
     ui->allEmployees->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->allEmployees->resizeColumnsToContents();
@@ -154,7 +154,7 @@ void AddOrder::loadEmployeesTable()
     ui->allEmployees->resizeRowsToContents();
 }
 
-QWidget* AddOrder::addWidgetHoursLine(int row_index)
+QWidget* AddOrder::addWidgetHoursLine(int rowIndex)
 {
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -168,7 +168,7 @@ QWidget* AddOrder::addWidgetHoursLine(int row_index)
 
     queryEmployeesHoursModel->setQuery(queryString, listSparePartsTable);
 
-    QString hours = queryEmployeesHoursModel->data(queryEmployeesHoursModel->index(row_index, 0), Qt::EditRole).toString();
+    QString hours = queryEmployeesHoursModel->data(queryEmployeesHoursModel->index(rowIndex, 0), Qt::EditRole).toString();
 
     hoursLineEdit->setText(hours);
 

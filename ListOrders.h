@@ -51,7 +51,7 @@ private:
 
     bool searchFlag;
 
-    QWidget *addCheckBoxCompleted(int row_index);
+    QWidget *addCheckBoxCompleted(int rowIndex);
 };
 
 #endif // LISTORDERS_H

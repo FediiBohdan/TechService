@@ -50,15 +50,16 @@ private:
     QSqlDatabase sparePartsDB;
 
     QPointer<QSqlQueryModel> queryModel;
-    QPointer<QSqlQueryModel> querySparePartsModel;
+    QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
+    QPointer<QSqlQueryModel> queryUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
     QPointer<QSqlQueryModel> queryEmployeesHoursModel;
 
     ListOrders *listOrders;
 
-    QWidget *addWidgetCompatibilityContent(int row_index);
-    QWidget *addWidgetHoursLine(int row_index);
+    QWidget *addWidgetCompatibilityContent(int rowIndex);
+    QWidget *addWidgetHoursLine(int rowIndex);
 
     bool searchFlag;
 
@@ -68,7 +69,7 @@ private slots:
     void loadSparePartsTable();
     void loadEmployeesTable();
     void updateSparePartsTable();
-    void updateUsedSpareParts();
+    void usedSpareParts();
 
     void on_createOrderButton_clicked();
     void on_sparePartsSearch_returnPressed();

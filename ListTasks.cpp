@@ -50,10 +50,10 @@ void ListTasks::loadTable()
 
     ui->tableView->setColumnHidden(0, true);
 
-    for (int row_index = 0; row_index < ui->tableView->model()->rowCount(); ++row_index)
+    for (int rowIndex = 0; rowIndex < ui->tableView->model()->rowCount(); ++rowIndex)
     {
-        ui->tableView->setIndexWidget(queryModel->index(row_index, 3), addWidgetContent(row_index));
-        ui->tableView->setIndexWidget(queryModel->index(row_index, 4), addCheckBoxCompleted(row_index));
+        ui->tableView->setIndexWidget(queryModel->index(rowIndex, 3), addWidgetContent(rowIndex));
+        ui->tableView->setIndexWidget(queryModel->index(rowIndex, 4), addCheckBoxCompleted(rowIndex));
     }
 
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
@@ -61,7 +61,7 @@ void ListTasks::loadTable()
     ui->tableView->resizeRowsToContents();
 }
 
-QWidget* ListTasks::addWidgetContent(int row_index)
+QWidget* ListTasks::addWidgetContent(int rowIndex)
 {
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -75,7 +75,7 @@ QWidget* ListTasks::addWidgetContent(int row_index)
 
     queryModelLabel->setQuery(queryString, listTasksTable);
 
-    QString taskContent = queryModelLabel->data(queryModelLabel->index(row_index, 0), Qt::EditRole).toString();
+    QString taskContent = queryModelLabel->data(queryModelLabel->index(rowIndex, 0), Qt::EditRole).toString();
 
     taskContentLabel->setText(taskContent);
     taskContentLabel->setOpenExternalLinks(true);
@@ -84,7 +84,7 @@ QWidget* ListTasks::addWidgetContent(int row_index)
     return widget;
 }
 
-QWidget* ListTasks::addCheckBoxCompleted(int row_index)
+QWidget* ListTasks::addCheckBoxCompleted(int rowIndex)
 {
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -98,7 +98,7 @@ QWidget* ListTasks::addCheckBoxCompleted(int row_index)
 
     queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
 
-    QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(row_index, 0), Qt::EditRole).toString();
+    QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(rowIndex, 0), Qt::EditRole).toString();
 
     // set checked/unchecked in tableView
     if (isFulfilled == "1")
@@ -108,7 +108,7 @@ QWidget* ListTasks::addCheckBoxCompleted(int row_index)
 
     connect(checkBox, &QAbstractButton::pressed, this, &ListTasks::checkBoxStateChanged);
 
-    QString id = queryModel->data(queryModel->index(row_index, 0), Qt::EditRole).toString();
+    QString id = queryModel->data(queryModel->index(rowIndex, 0), Qt::EditRole).toString();
 
     checkBox->setProperty("checkBox", QVariant::fromValue(checkBox));
     checkBox->setProperty("id",       QVariant::fromValue(id));

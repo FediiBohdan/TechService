@@ -68,7 +68,7 @@ private:
 
     QTranslator translator;
 
-    QWidget *addCheckBoxCompleted(int row_index);
+    QWidget *addCheckBoxCompleted(int rowIndex);
 
 protected:
     void changeEvent(QEvent *event) override;

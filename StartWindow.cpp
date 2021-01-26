@@ -94,11 +94,11 @@ void StartWindow::loadTasksList()
     ui->notCompletedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->notCompletedTasksTableView->resizeColumnsToContents();
 
-    for (int row_index = 0; row_index < ui->completedTasksTableView->model()->rowCount(); ++row_index)
-        ui->completedTasksTableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
+    for (int rowIndex = 0; rowIndex < ui->completedTasksTableView->model()->rowCount(); ++rowIndex)
+        ui->completedTasksTableView->setIndexWidget(queryModel->index(rowIndex, 1), addCheckBoxCompleted(rowIndex));
 
-    for (int row_index = 0; row_index < ui->notCompletedTasksTableView->model()->rowCount(); ++row_index)
-        ui->notCompletedTasksTableView->setIndexWidget(queryModel->index(row_index, 1), addCheckBoxCompleted(row_index));
+    for (int rowIndex = 0; rowIndex < ui->notCompletedTasksTableView->model()->rowCount(); ++rowIndex)
+        ui->notCompletedTasksTableView->setIndexWidget(queryModel->index(rowIndex, 1), addCheckBoxCompleted(rowIndex));
 
     ui->notCompletedTasksTableView->verticalHeader()->hide();
     ui->completedTasksTableView->verticalHeader()->hide();
@@ -106,7 +106,7 @@ void StartWindow::loadTasksList()
     ui->completedTasksTableView->resizeRowsToContents();
 }
 
-QWidget* StartWindow::addCheckBoxCompleted(int row_index)
+QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)
 {
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -120,20 +120,20 @@ QWidget* StartWindow::addCheckBoxCompleted(int row_index)
 
     queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
 
-    QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(row_index, 0), Qt::EditRole).toString();
+    QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(rowIndex, 0), Qt::EditRole).toString();
 
     // set checked/unchecked in tableView
     if (isFulfilled == "1")
     {
         checkBox->setChecked(true);
-        ui->notCompletedTasksTableView->setRowHidden(row_index, true);
+        ui->notCompletedTasksTableView->setRowHidden(rowIndex, true);
     }
     else
-        ui->completedTasksTableView->setRowHidden(row_index, true);
+        ui->completedTasksTableView->setRowHidden(rowIndex, true);
 
     connect(checkBox, &QAbstractButton::pressed, this, &StartWindow::checkBoxStateChanged);
 
-    QString id = queryModel->data(queryModel->index(row_index, 0), Qt::EditRole).toString();
+    QString id = queryModel->data(queryModel->index(rowIndex, 0), Qt::EditRole).toString();
 
     checkBox->setProperty("checkBox", QVariant::fromValue(checkBox));
     checkBox->setProperty("id",       QVariant::fromValue(id));

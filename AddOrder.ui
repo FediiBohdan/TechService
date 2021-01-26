@@ -717,38 +717,6 @@
         <property name="spacing">
          <number>2</number>
         </property>
-        <item row="1" column="1">
-         <widget class="QTableView" name="usedSparePartsTable">
-          <property name="maximumSize">
-           <size>
-            <width>320</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTableView {
-	background-color: none;
-	border-radius: 0px;
-}
-
-QHeaderView {
-	border-radius: 0px;
-	background-color: #f5f5f5;
-	border: 0px;
-}
-
-QHeaderView::section {
-	background-color: white;
-}</string>
-          </property>
-          <property name="verticalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-          <property name="horizontalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0" colspan="2">
          <widget class="QFrame" name="frame_3">
           <property name="minimumSize">
@@ -894,6 +862,26 @@ QHeaderView::section {
           </property>
           <property name="horizontalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTableView" name="usedSparePartsTableView">
+          <property name="styleSheet">
+           <string notr="true">QTableView {
+	background-color: none;
+	border-radius: 0px;
+}
+
+QHeaderView {
+	border-radius: 0px;
+	background-color: #f5f5f5;
+	border: 0px;
+}
+
+QHeaderView::section {
+	background-color: white;
+}</string>
           </property>
          </widget>
         </item>
@@ -1445,7 +1433,6 @@ QPushButton:pressed {
   <tabstop>autoLicensePlateLine</tabstop>
   <tabstop>discountsComboBox</tabstop>
   <tabstop>availableSparePartsTable</tabstop>
-  <tabstop>usedSparePartsTable</tabstop>
   <tabstop>workList</tabstop>
   <tabstop>allEmployees</tabstop>
   <tabstop>currentEmployees</tabstop>
