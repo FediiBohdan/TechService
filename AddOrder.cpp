@@ -28,6 +28,7 @@ AddOrder::AddOrder(QWidget *parent) :
     ui->dateErrorLabel->setStyleSheet("color: transparent");
 
     ui->employeesByServiceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
+    ui->discountsComboBox->addItems(QStringList() << tr("Нет") << tr("Купон") << tr("Акция") << tr("Особые условия") << tr("Постоянный клиент"));
     ui->serviceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
 
     searchFlag = false;
@@ -193,7 +194,7 @@ void AddOrder::on_createOrderButton_clicked()
     QString autoModel = ui->modelLine->text();
     QString manufactureYear = ui->yearLine->text();
     QString VIN_Number = ui->VIN_Line->text();
-    QString discounts = ui->discounts->currentText();
+    QString discounts = ui->discountsComboBox->currentText();
     //QString serviceNumber = ui->serviceLine->text();
     QString autoLicensePlate = ui->autoLicensePlateLine->text();
     //QString staffTeam = ui->staffLine->text();

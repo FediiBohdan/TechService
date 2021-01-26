@@ -71,9 +71,9 @@ private slots:
     void updateUsedSpareParts();
 
     void on_createOrderButton_clicked();
+    void on_sparePartsSearch_returnPressed();
 
     void closeEvent(QCloseEvent *);
-    void on_sparePartsSearch_returnPressed();
 };
 
 #endif // ADDORDER_H

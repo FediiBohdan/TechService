@@ -15,6 +15,10 @@ AddClient::AddClient(QWidget *parent) :
     clientsDB = QSqlDatabase::addDatabase("QSQLITE");
     clientsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     clientsDB.open();
+
+    ui->autoErrorLabel->setStyleSheet("color: transparent");
+    ui->contactsErrorLabel->setStyleSheet("color: transparent");
+    ui->nameErrorLabel->setStyleSheet("color: transparent");
 }
 
 AddClient::~AddClient()
@@ -32,6 +36,32 @@ void AddClient::on_saveClientButton_clicked()
     QString autoLicensePlate = ui->autoLicensePlateLine->text();
     QString manufactureYear = ui->manufactureYearLine->text();
     QString VIN_Number = ui->VINnumberLine->text();
+
+    bool error = false;
+
+    if (clientFMLname.isEmpty())
+    {
+        error = true; ui->nameErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->nameErrorLabel->setStyleSheet("color: transparent");
+
+    if (clientContacts.isEmpty())
+    {
+        error = true; ui->contactsErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->contactsErrorLabel->setStyleSheet("color: transparent");
+
+    if (autoModel.isEmpty())
+    {
+        error = true; ui->autoErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->autoErrorLabel->setStyleSheet("color: transparent");
+
+    if (error)
+        return;
 
     query.prepare("INSERT INTO ClientsTable (client_FML_name, contacts, auto_model, auto_license_plate, manufacture_year, VIN_Number)"
         "VALUES(?, ?, ?, ?, ?, ?)");
