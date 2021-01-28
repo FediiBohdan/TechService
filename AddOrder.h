@@ -46,11 +46,13 @@ private:
     QSqlDatabase listSparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
 
     QSqlDatabase ordersHistoryDB;
+    QSqlDatabase testDB;
     QSqlDatabase clientsDB;
     QSqlDatabase sparePartsDB;
 
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
+    QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
     QPointer<QSqlQueryModel> queryUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
@@ -62,6 +64,7 @@ private:
     QWidget *addWidgetHoursLine(int rowIndex);
 
     bool searchFlag;
+    QString sparePart;
 
 private slots:
     void openMap();
@@ -69,7 +72,7 @@ private slots:
     void loadSparePartsTable();
     void loadEmployeesTable();
     void updateSparePartsTable();
-    void usedSpareParts();
+    void updateUsedSparePartsTable(const QModelIndex &index);
 
     void on_createOrderButton_clicked();
     void on_sparePartsSearch_returnPressed();

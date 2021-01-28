@@ -684,7 +684,7 @@
       <widget class="QFrame" name="frame_2">
        <property name="maximumSize">
         <size>
-         <width>840</width>
+         <width>845</width>
          <height>16777215</height>
         </size>
        </property>
@@ -827,7 +827,7 @@
          <widget class="QTableView" name="availableSparePartsTable">
           <property name="maximumSize">
            <size>
-            <width>510</width>
+            <width>570</width>
             <height>16777215</height>
            </size>
           </property>
@@ -866,21 +866,16 @@ QHeaderView::section {
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QTableView" name="usedSparePartsTableView">
+         <widget class="QTextEdit" name="sparePartsList">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
           <property name="styleSheet">
-           <string notr="true">QTableView {
+           <string notr="true">QTextEdit {
 	background-color: none;
 	border-radius: 0px;
-}
-
-QHeaderView {
-	border-radius: 0px;
-	background-color: #f5f5f5;
-	border: 0px;
-}
-
-QHeaderView::section {
-	background-color: white;
 }</string>
           </property>
          </widget>

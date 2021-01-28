@@ -21,7 +21,7 @@ AddOrder::AddOrder(QWidget *parent) :
     ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
-    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::usedSpareParts);
+    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSparePartsTable);
 
     ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
@@ -44,7 +44,7 @@ AddOrder::~AddOrder()
     delete ui;
 }
 
-void AddOrder::closeEvent(QCloseEvent*)
+void AddOrder::closeEvent(QCloseEvent *)
 {
 //    QDialog::close();
 
@@ -122,9 +122,14 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int rowIndex)
     return widget;
 }
 
-void AddOrder::usedSpareParts()
+void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
 {
+    sparePart.append(queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString());
+    sparePart.append(", ");
 
+    qDebug() << sparePart;
+
+    ui->sparePartsList->setText(sparePart.replace(", ", "\n"));
 }
 
 void AddOrder::loadEmployeesTable()
