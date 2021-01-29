@@ -124,12 +124,12 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int rowIndex)
 
 void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
 {
-    sparePart.append(queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString());
-    sparePart.append(", ");
+    sparePartsList.append(queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString());
+    sparePartsList.append(", ");
 
-    qDebug() << sparePart;
+    qDebug() << sparePartsList;
 
-    ui->sparePartsList->setText(sparePart.replace(", ", "\n"));
+    ui->sparePartsList->setText(sparePartsList.replace(", ", "\n"));
 }
 
 void AddOrder::loadEmployeesTable()
@@ -200,13 +200,11 @@ void AddOrder::on_createOrderButton_clicked()
     QString manufactureYear = ui->yearLine->text();
     QString VIN_Number = ui->VIN_Line->text();
     QString discounts = ui->discountsComboBox->currentText();
-    //QString serviceNumber = ui->serviceLine->text();
+    QString serviceNumber = ui->serviceComboBox->currentText();
     QString autoLicensePlate = ui->autoLicensePlateLine->text();
     //QString staffTeam = ui->staffLine->text();
-    //QString worksList = ui->worksLine->text();
-    //QString spareList = ui->sparePartsLine->text();
-    //QString price = ui->priceLine->text();
-    //QString feedback = ui->feedbackLine->text();
+    QString worksList = ui->worksList->toPlainText();
+    QString feedback = ui->feedback->toPlainText();
 
     bool error = false;
 
@@ -248,9 +246,9 @@ void AddOrder::on_createOrderButton_clicked()
     if (error)
         return;
 
-    queryOrders.prepare("INSERT INTO OrdersHistory (client, date, contacts, auto_model, manufacture_year, VIN_number, "
-        "discounts, service_address, auto_license_plate, staff_team, works_list, spare_list, price, feedback) "
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    queryOrders.prepare("INSERT INTO OrdersHistory (client, creation_date, contacts, auto_model, manufacture_year, VIN_number, "
+        "discounts, service_address, auto_license_plate, works_list, spare_parts_list, feedback) "
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(client);
     queryOrders.addBindValue(date);
@@ -258,14 +256,13 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(autoModel);
     queryOrders.addBindValue(manufactureYear);
     queryOrders.addBindValue(VIN_Number);
-    //queryOrders.addBindValue(discounts);
-    //queryOrders.addBindValue(serviceNumber);
+    queryOrders.addBindValue(discounts);
+    queryOrders.addBindValue(serviceNumber);
     queryOrders.addBindValue(autoLicensePlate);
     //queryOrders.addBindValue(staffTeam);
-    //queryOrders.addBindValue(worksList);
-    //queryOrders.addBindValue(spareList);
-    //queryOrders.addBindValue(price);
-    //queryOrders.addBindValue(feedback);
+    queryOrders.addBindValue(worksList);
+    queryOrders.addBindValue(sparePartsList);
+    queryOrders.addBindValue(feedback);
     queryOrders.exec();
 
     // Simultaneous insertion into client table
@@ -304,7 +301,16 @@ void AddOrder::on_sparePartsSearch_returnPressed()
 
 void AddOrder::updateSparePartsTable()
 {
-    ui->availableSparePartsTable->setModel(NULL);
+    queryAvailableSparePartsModel->setQuery(NULL);
 
     loadSparePartsTable();
+}
+
+void AddOrder::on_clearListButton_clicked()
+{
+    sparePartsList = "";
+
+    ui->sparePartsList->setText("");
+
+    qDebug() << sparePartsList;
 }

@@ -757,26 +757,23 @@
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_9">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
+           <item row="0" column="1">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel {
-	background-color: transparent;
-	border: 0px;
-	margin-left: 3px;
-}</string>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
              </property>
-             <property name="text">
-              <string>Запчасти</string>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>25</height>
+              </size>
              </property>
-            </widget>
+            </spacer>
            </item>
-           <item row="0" column="2">
+           <item row="0" column="3">
             <widget class="QLineEdit" name="sparePartsSearch">
              <property name="maximumSize">
               <size>
@@ -804,21 +801,72 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
              </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+	margin-left: 3px;
+}</string>
              </property>
-             <property name="sizeHint" stdset="0">
+             <property name="text">
+              <string>Запчасти</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="clearListButton">
+             <property name="minimumSize">
               <size>
-               <width>40</width>
-               <height>25</height>
+               <width>0</width>
+               <height>27</height>
               </size>
              </property>
-            </spacer>
+             <property name="maximumSize">
+              <size>
+               <width>27</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Очистить список</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/clearList.png</normaloff>:/images/clearList.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -827,7 +875,7 @@
          <widget class="QTableView" name="availableSparePartsTable">
           <property name="maximumSize">
            <size>
-            <width>570</width>
+            <width>585</width>
             <height>16777215</height>
            </size>
           </property>
@@ -867,6 +915,12 @@ QHeaderView::section {
         </item>
         <item row="1" column="1">
          <widget class="QTextEdit" name="sparePartsList">
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <pointsize>9</pointsize>
@@ -1211,7 +1265,7 @@ QHeaderView::section {
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QTextEdit" name="workList">
+         <widget class="QTextEdit" name="worksList">
           <property name="maximumSize">
            <size>
             <width>324</width>
@@ -1295,7 +1349,7 @@ QHeaderView::section {
        </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
@@ -1422,18 +1476,21 @@ QPushButton:pressed {
   <tabstop>contactLine</tabstop>
   <tabstop>modelLine</tabstop>
   <tabstop>yearLine</tabstop>
-  <tabstop>updateDateLine</tabstop>
-  <tabstop>updateTimeLine</tabstop>
   <tabstop>VIN_Line</tabstop>
   <tabstop>autoLicensePlateLine</tabstop>
+  <tabstop>serviceComboBox</tabstop>
   <tabstop>discountsComboBox</tabstop>
+  <tabstop>clearListButton</tabstop>
   <tabstop>availableSparePartsTable</tabstop>
-  <tabstop>workList</tabstop>
+  <tabstop>sparePartsList</tabstop>
+  <tabstop>employeesByServiceComboBox</tabstop>
   <tabstop>allEmployees</tabstop>
   <tabstop>currentEmployees</tabstop>
+  <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
   <tabstop>workHours</tabstop>
-  <tabstop>createOrderButton</tabstop>
+  <tabstop>updateTimeLine</tabstop>
+  <tabstop>updateDateLine</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

@@ -109,7 +109,7 @@ void ListSparePart::on_sparePartSearch_returnPressed()
 
 void ListSparePart::on_updateButton_clicked()
 {
-    ui->tableView->setModel(NULL);
+    queryModel->setQuery(NULL);
 
     loadTable();
 }

@@ -64,7 +64,7 @@ private:
     QWidget *addWidgetHoursLine(int rowIndex);
 
     bool searchFlag;
-    QString sparePart;
+    QString sparePartsList;
 
 private slots:
     void openMap();
@@ -78,6 +78,7 @@ private slots:
     void on_sparePartsSearch_returnPressed();
 
     void closeEvent(QCloseEvent *);
+    void on_clearListButton_clicked();
 };
 
 #endif // ADDORDER_H

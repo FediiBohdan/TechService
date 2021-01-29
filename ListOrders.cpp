@@ -164,7 +164,7 @@ void ListOrders::showOrderInfo(const QModelIndex &index)
 
 void ListOrders::on_updateButton_clicked()
 {
-    ui->tableView->setModel(NULL);
+    queryModel->setQuery(NULL);
 
     loadTable();
 }

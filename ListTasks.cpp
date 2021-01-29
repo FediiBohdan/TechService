@@ -171,7 +171,7 @@ void ListTasks::showTaskInfo(const QModelIndex &index)
 
 void ListTasks::on_updateButton_clicked()
 {
-   ui->tableView->setModel(NULL);
+   queryModel->setQuery(NULL);
 
    loadTable();
 }

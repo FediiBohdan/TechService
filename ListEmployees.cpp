@@ -83,7 +83,7 @@ void ListEmployees::showEmployeeInfo(const QModelIndex &index)
 
 void ListEmployees::on_updateButton_clicked()
 {
-    ui->tableView->setModel(NULL);
+    queryModel->setQuery(NULL);
 
     loadTable();
 }
