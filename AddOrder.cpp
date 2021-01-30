@@ -10,9 +10,6 @@ AddOrder::AddOrder(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    connect(ui->openMapButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
-
-    QDialog::showNormal();
     QDialog::showMaximized();
 
     QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
@@ -21,6 +18,7 @@ AddOrder::AddOrder(QWidget *parent) :
     ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     ordersHistoryDB.open();
 
+    connect(ui->openMapButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
     connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSparePartsTable);
 
     ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
@@ -68,7 +66,7 @@ void AddOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_spare_part, spare_part_name, original FROM SparePartsCatalogue ";
+    QString queryString = "SELECT id_spare_part, spare_part_name, original, price FROM SparePartsCatalogue ";
 
     QString searchString;
 
@@ -84,6 +82,7 @@ void AddOrder::loadSparePartsTable()
     queryAvailableSparePartsModel->insertColumn(2);
     queryAvailableSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Совместимость"));
     queryAvailableSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Оригинал"));
+    queryAvailableSparePartsModel->setHeaderData(4, Qt::Horizontal, tr("Цена"));
 
     ui->availableSparePartsTable->setModel(queryAvailableSparePartsModel);
 
@@ -127,9 +126,16 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
     sparePartsList.append(queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString());
     sparePartsList.append(", ");
 
-    qDebug() << sparePartsList;
-
     ui->sparePartsList->setText(sparePartsList.replace(", ", "\n"));
+
+    sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toInt();
+    sparePartsCost += sparePartCost;
+}
+
+void AddOrder::on_clearSparePartsListButton_clicked()
+{
+    sparePartsList = "";
+    ui->sparePartsList->setText("");
 }
 
 void AddOrder::loadEmployeesTable()
@@ -304,13 +310,4 @@ void AddOrder::updateSparePartsTable()
     queryAvailableSparePartsModel->setQuery(NULL);
 
     loadSparePartsTable();
-}
-
-void AddOrder::on_clearListButton_clicked()
-{
-    sparePartsList = "";
-
-    ui->sparePartsList->setText("");
-
-    qDebug() << sparePartsList;
 }

@@ -65,6 +65,8 @@ private:
 
     bool searchFlag;
     QString sparePartsList;
+    int sparePartCost;
+    int sparePartsCost = 0;
 
 private slots:
     void openMap();
@@ -76,9 +78,9 @@ private slots:
 
     void on_createOrderButton_clicked();
     void on_sparePartsSearch_returnPressed();
+    void on_clearSparePartsListButton_clicked();
 
     void closeEvent(QCloseEvent *);
-    void on_clearListButton_clicked();
 };
 
 #endif // ADDORDER_H

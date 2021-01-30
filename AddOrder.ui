@@ -821,7 +821,7 @@
             </widget>
            </item>
            <item row="0" column="2">
-            <widget class="QPushButton" name="clearListButton">
+            <widget class="QPushButton" name="clearSparePartsListButton">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -833,6 +833,9 @@
                <width>27</width>
                <height>27</height>
               </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
              </property>
              <property name="toolTip">
               <string>Очистить список</string>
@@ -878,6 +881,9 @@ QPushButton:pressed {
             <width>585</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="styleSheet">
            <string notr="true">QTableView {
@@ -925,6 +931,9 @@ QHeaderView::section {
            <font>
             <pointsize>9</pointsize>
            </font>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="styleSheet">
            <string notr="true">QTextEdit {
@@ -988,6 +997,9 @@ QHeaderView::section {
             <height>16777215</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="styleSheet">
            <string notr="true">QTableView {
 	background-color: none;
@@ -1019,6 +1031,9 @@ QHeaderView::section {
             <width>320</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="styleSheet">
            <string notr="true">QTableView {
@@ -1277,6 +1292,9 @@ QHeaderView::section {
             <pointsize>10</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
           <property name="styleSheet">
            <string notr="true">QTextEdit {
 	background-color: none;
@@ -1480,7 +1498,7 @@ QPushButton:pressed {
   <tabstop>autoLicensePlateLine</tabstop>
   <tabstop>serviceComboBox</tabstop>
   <tabstop>discountsComboBox</tabstop>
-  <tabstop>clearListButton</tabstop>
+  <tabstop>clearSparePartsListButton</tabstop>
   <tabstop>availableSparePartsTable</tabstop>
   <tabstop>sparePartsList</tabstop>
   <tabstop>employeesByServiceComboBox</tabstop>

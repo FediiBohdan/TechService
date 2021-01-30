@@ -16,7 +16,7 @@ ViewSparePart::~ViewSparePart()
     delete ui;
 }
 
-void ViewSparePart::closeEvent(QCloseEvent*)
+void ViewSparePart::closeEvent(QCloseEvent *)
 {
     QDialog::close();
 

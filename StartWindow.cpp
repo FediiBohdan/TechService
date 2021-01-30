@@ -14,7 +14,6 @@ StartWindow::StartWindow(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    StartWindow::showNormal();
     StartWindow::showMaximized();
 
     elapsedTimer.start();
@@ -85,14 +84,16 @@ void StartWindow::loadTasksList()
     // tableView with completed tasks
     ui->completedTasksTableView->setModel(queryModel);
     ui->completedTasksTableView->setColumnHidden(0, true);
-    ui->completedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
-    ui->completedTasksTableView->resizeColumnsToContents();
+    ui->completedTasksTableView->verticalHeader()->hide();
+    ui->completedTasksTableView->setColumnWidth(1, 84);
+    ui->completedTasksTableView->setColumnWidth(2, 280);
 
     // tableView with not completed tasks
     ui->notCompletedTasksTableView->setModel(queryModel);
     ui->notCompletedTasksTableView->setColumnHidden(0, true);
-    ui->notCompletedTasksTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
-    ui->notCompletedTasksTableView->resizeColumnsToContents();
+    ui->notCompletedTasksTableView->verticalHeader()->hide();
+    ui->notCompletedTasksTableView->setColumnWidth(1, 84);
+    ui->notCompletedTasksTableView->setColumnWidth(2, 280);
 
     for (int rowIndex = 0; rowIndex < ui->completedTasksTableView->model()->rowCount(); ++rowIndex)
         ui->completedTasksTableView->setIndexWidget(queryModel->index(rowIndex, 1), addCheckBoxCompleted(rowIndex));
@@ -100,10 +101,8 @@ void StartWindow::loadTasksList()
     for (int rowIndex = 0; rowIndex < ui->notCompletedTasksTableView->model()->rowCount(); ++rowIndex)
         ui->notCompletedTasksTableView->setIndexWidget(queryModel->index(rowIndex, 1), addCheckBoxCompleted(rowIndex));
 
-    ui->notCompletedTasksTableView->verticalHeader()->hide();
-    ui->completedTasksTableView->verticalHeader()->hide();
-    ui->notCompletedTasksTableView->resizeRowsToContents();
     ui->completedTasksTableView->resizeRowsToContents();
+    ui->notCompletedTasksTableView->resizeRowsToContents();
 }
 
 QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)

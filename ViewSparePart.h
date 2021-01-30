@@ -42,7 +42,7 @@ private:
     QString sparePartId;
 
 private slots:
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent *);
     void on_updateSparePartInfoButton_clicked();
 };
 

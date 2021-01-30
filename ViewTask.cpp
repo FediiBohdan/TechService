@@ -32,7 +32,7 @@ void ViewTask::setValues(const QString &id)
 
     QSqlQuery query(listTasksDB);
 
-    query.prepare("SELECT DISTINCT time, date, content, is_fulfilled "
+    query.prepare("SELECT DISTINCT time, date, content "
         "FROM TasksTable WHERE id_to_do_list = " + taskId);
 
     query.exec();
@@ -41,13 +41,6 @@ void ViewTask::setValues(const QString &id)
     ui->timeLine->setText(query.value(0).toString());
     ui->dateLine->setText(query.value(1).toString());
     ui->contentLine->setText(query.value(2).toString());
-
-    QString isFulfilled = query.value(3).toString();
-
-    if (isFulfilled == "1")
-        ui->checkBox->setChecked(true);
-    else
-        ui->checkBox->setChecked(false);
 }
 
 void ViewTask::receiveData(bool update)
