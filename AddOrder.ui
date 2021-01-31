@@ -82,6 +82,12 @@
              <pointsize>10</pointsize>
             </font>
            </property>
+           <property name="cursor">
+            <cursorShape>ArrowCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 	border: 1px solid gray;
@@ -113,6 +119,12 @@
             <font>
              <pointsize>10</pointsize>
             </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>ArrowCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
@@ -192,6 +204,12 @@
              <pointsize>10</pointsize>
             </font>
            </property>
+           <property name="cursor">
+            <cursorShape>ArrowCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
 	background-color: transparent;
@@ -221,6 +239,12 @@
             <font>
              <pointsize>10</pointsize>
             </font>
+           </property>
+           <property name="cursor">
+            <cursorShape>ArrowCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
@@ -763,7 +787,7 @@
               <enum>Qt::Horizontal</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
+              <enum>QSizePolicy::Expanding</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -773,54 +797,7 @@
              </property>
             </spacer>
            </item>
-           <item row="0" column="3">
-            <widget class="QLineEdit" name="sparePartsSearch">
-             <property name="maximumSize">
-              <size>
-               <width>305</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="focusPolicy">
-              <enum>Qt::ClickFocus</enum>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLineEdit {
-    border: 2px solid #dbdcf7;
-    border-radius: 5px;
-    padding: 0 4px;
-}</string>
-             </property>
-             <property name="placeholderText">
-              <string>Поиск</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_9">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel {
-	background-color: transparent;
-	border: 0px;
-	margin-left: 3px;
-}</string>
-             </property>
-             <property name="text">
-              <string>Запчасти</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
+           <item row="0" column="5">
             <widget class="QPushButton" name="clearSparePartsListButton">
              <property name="minimumSize">
               <size>
@@ -871,6 +848,72 @@ QPushButton:pressed {
              </property>
             </widget>
            </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="sparePartsSearch">
+             <property name="minimumSize">
+              <size>
+               <width>278</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>305</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    border: 2px solid #dbdcf7;
+    border-radius: 5px;
+    padding: 0 4px;
+}</string>
+             </property>
+             <property name="placeholderText">
+              <string>Поиск</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+	margin-left: 3px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Запчасти</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </widget>
         </item>
@@ -895,12 +938,13 @@ QLabel {
 	background-color: transparent;
 	border-radius: 0px;
 	border: 0px;
-	font-size: 14px;
+	font-size: 9pt;
 }
 
 QHeaderView {
 	border-radius: 0px;
 	background-color: #f5f5f5;
+	font-size: 9pt;
 	border: 0px;
 }
 
@@ -1009,6 +1053,7 @@ QHeaderView::section {
 QHeaderView {
 	border-radius: 0px;
 	background-color: #f5f5f5;
+	font-size: 9pt;
 	border: 0px;
 }
 
@@ -1135,7 +1180,7 @@ QHeaderView::section {
             <widget class="QComboBox" name="employeesByServiceComboBox">
              <property name="minimumSize">
               <size>
-               <width>300</width>
+               <width>308</width>
                <height>20</height>
               </size>
              </property>
@@ -1289,11 +1334,11 @@ QHeaderView::section {
           </property>
           <property name="font">
            <font>
-            <pointsize>10</pointsize>
+            <pointsize>9</pointsize>
            </font>
           </property>
           <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
+           <enum>Qt::TabFocus</enum>
           </property>
           <property name="styleSheet">
            <string notr="true">QTextEdit {
@@ -1488,8 +1533,6 @@ QPushButton:pressed {
   </layout>
  </widget>
  <tabstops>
-  <tabstop>dateLine</tabstop>
-  <tabstop>timeLine</tabstop>
   <tabstop>clientLine</tabstop>
   <tabstop>contactLine</tabstop>
   <tabstop>modelLine</tabstop>
@@ -1498,17 +1541,11 @@ QPushButton:pressed {
   <tabstop>autoLicensePlateLine</tabstop>
   <tabstop>serviceComboBox</tabstop>
   <tabstop>discountsComboBox</tabstop>
-  <tabstop>clearSparePartsListButton</tabstop>
-  <tabstop>availableSparePartsTable</tabstop>
-  <tabstop>sparePartsList</tabstop>
+  <tabstop>sparePartsSearch</tabstop>
   <tabstop>employeesByServiceComboBox</tabstop>
-  <tabstop>allEmployees</tabstop>
-  <tabstop>currentEmployees</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
   <tabstop>workHours</tabstop>
-  <tabstop>updateTimeLine</tabstop>
-  <tabstop>updateDateLine</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

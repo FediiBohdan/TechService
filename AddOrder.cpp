@@ -92,10 +92,10 @@ void AddOrder::loadSparePartsTable()
         ui->availableSparePartsTable->setIndexWidget(queryAvailableSparePartsModel->index(rowIndex, 2), addWidgetCompatibilityContent(rowIndex));
 
     ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->availableSparePartsTable->resizeColumnsToContents();
     ui->availableSparePartsTable->verticalHeader()->hide();
     ui->availableSparePartsTable->resizeRowsToContents();
-    ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 QWidget* AddOrder::addWidgetCompatibilityContent(int rowIndex)
@@ -123,6 +123,19 @@ QWidget* AddOrder::addWidgetCompatibilityContent(int rowIndex)
 
 void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
 {
+    QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
+
+    QSqlQuery queryCheckAmount(sparePartsDB);
+
+    queryCheckAmount.prepare("SELECT quantity_in_stock FROM SparePartsCatalogue WHERE (id_spare_part = '" + sparePartId + "' AND quantity_in_stock = 0)");
+    queryCheckAmount.exec();
+
+    if (queryCheckAmount.first() == 1)
+    {
+        QMessageBox::warning(this, tr("Предупреждение"), tr("Данная запчасть на складе отсутствует!"), QMessageBox::Ok);
+        return;
+    }
+
     sparePartsList.append(queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString());
     sparePartsList.append(", ");
 
