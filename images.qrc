@@ -27,5 +27,6 @@
         <file>images/remove.png</file>
         <file>images/addTask.png</file>
         <file>images/clearList.png</file>
+        <file>images/backgroundImage.png</file>
     </qresource>
 </RCC>

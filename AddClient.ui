@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Добавление клиента</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <item row="2" column="2">
     <widget class="QPushButton" name="saveClientButton">
@@ -56,6 +59,9 @@ QPushButton:pressed {
        <width>30</width>
        <height>30</height>
       </size>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

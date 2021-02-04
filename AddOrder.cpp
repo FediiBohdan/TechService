@@ -93,6 +93,7 @@ void AddOrder::loadSparePartsTable()
 
     ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->availableSparePartsTable->horizontalHeader()->setSectionsClickable(false);
     ui->availableSparePartsTable->resizeColumnsToContents();
     ui->availableSparePartsTable->verticalHeader()->hide();
     ui->availableSparePartsTable->resizeRowsToContents();
@@ -149,6 +150,7 @@ void AddOrder::on_clearSparePartsListButton_clicked()
 {
     sparePartsList = "";
     ui->sparePartsList->setText("");
+    sparePartsCost = 0;
 }
 
 void AddOrder::loadEmployeesTable()
@@ -173,6 +175,8 @@ void AddOrder::loadEmployeesTable()
         ui->allEmployees->setIndexWidget(queryEmployeesModel->index(rowIndex, 3), addWidgetHoursLine(rowIndex));
 
     ui->allEmployees->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->allEmployees->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->allEmployees->horizontalHeader()->setSectionsClickable(false);
     ui->allEmployees->resizeColumnsToContents();
     ui->allEmployees->verticalHeader()->hide();
     ui->allEmployees->resizeRowsToContents();
