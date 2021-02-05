@@ -87,6 +87,7 @@ void StartWindow::loadTasksList()
     ui->completedTasksTableView->verticalHeader()->hide();
     ui->completedTasksTableView->setColumnWidth(1, 84);
     ui->completedTasksTableView->setColumnWidth(2, 280);
+    ui->completedTasksTableView->horizontalHeader()->setSectionsClickable(false);
 
     // tableView with not completed tasks
     ui->notCompletedTasksTableView->setModel(queryModel);
@@ -94,6 +95,7 @@ void StartWindow::loadTasksList()
     ui->notCompletedTasksTableView->verticalHeader()->hide();
     ui->notCompletedTasksTableView->setColumnWidth(1, 84);
     ui->notCompletedTasksTableView->setColumnWidth(2, 280);
+    ui->notCompletedTasksTableView->horizontalHeader()->setSectionsClickable(false);
 
     for (int rowIndex = 0; rowIndex < ui->completedTasksTableView->model()->rowCount(); ++rowIndex)
         ui->completedTasksTableView->setIndexWidget(queryModel->index(rowIndex, 1), addCheckBoxCompleted(rowIndex));

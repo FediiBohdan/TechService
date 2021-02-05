@@ -25,9 +25,10 @@ AddOrder::AddOrder(QWidget *parent) :
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
     ui->dateErrorLabel->setStyleSheet("color: transparent");
 
-    ui->employeesByServiceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
     ui->discountsComboBox->addItems(QStringList() << tr("Нет") << tr("Купон") << tr("Акция") << tr("Особые условия") << tr("Постоянный клиент"));
     ui->serviceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
+
+    connect(ui->serviceComboBox, &QComboBox::currentTextChanged, this, &AddOrder::updateEmployeesTable);
 
     searchFlag = false;
 
@@ -140,7 +141,9 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
     sparePartsList.append(queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString());
     sparePartsList.append(", ");
 
-    ui->sparePartsList->setText(sparePartsList.replace(", ", "\n"));
+    QString sparePartCostDetail = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toString();
+
+    ui->sparePartsList->setText(sparePartsList.replace(", ", (" - " + sparePartCostDetail + "\n")));
 
     sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toInt();
     sparePartsCost += sparePartCost;
@@ -157,7 +160,7 @@ void AddOrder::loadEmployeesTable()
 {
     queryEmployeesModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_employee, employee_FML_name, employee_position FROM EmployeesTable";
+    QString queryString = "SELECT id_employee, employee_FML_name, employee_position FROM EmployeesTable WHERE service_address = '" + ui->serviceComboBox->currentText() + "'";
 
     queryEmployeesModel->setQuery(queryString);
 
@@ -201,6 +204,13 @@ QWidget* AddOrder::addWidgetHoursLine(int rowIndex)
     hoursLineEdit->setText(hours);
 
     return widget;
+}
+
+void AddOrder::updateEmployeesTable()
+{
+    queryEmployeesModel->setQuery(NULL);
+
+    loadEmployeesTable();
 }
 
 void AddOrder::setDateAndTime()

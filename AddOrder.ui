@@ -1183,30 +1183,6 @@ QHeaderView::section {
              </property>
             </widget>
            </item>
-           <item row="0" column="2">
-            <widget class="QComboBox" name="employeesByServiceComboBox">
-             <property name="minimumSize">
-              <size>
-               <width>308</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QComboBox {
-	border: 1px solid gray;
-    border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 6px;
-}</string>
-             </property>
-            </widget>
-           </item>
           </layout>
          </widget>
         </item>
@@ -1555,7 +1531,6 @@ QPushButton:pressed {
   <tabstop>serviceComboBox</tabstop>
   <tabstop>discountsComboBox</tabstop>
   <tabstop>sparePartsSearch</tabstop>
-  <tabstop>employeesByServiceComboBox</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
   <tabstop>workHours</tabstop>

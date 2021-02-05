@@ -74,6 +74,7 @@ private slots:
     void loadSparePartsTable();
     void loadEmployeesTable();
     void updateSparePartsTable();
+    void updateEmployeesTable();
     void updateUsedSparePartsTable(const QModelIndex &index);
 
     void on_createOrderButton_clicked();
