@@ -28,5 +28,16 @@
         <file>images/addTask.png</file>
         <file>images/clearList.png</file>
         <file>images/backgroundImage.png</file>
+        <file>images/acura.png</file>
+        <file>images/honda.png</file>
+        <file>images/isuzu.png</file>
+        <file>images/lexus.png</file>
+        <file>images/mazda.png</file>
+        <file>images/mitsubishi.png</file>
+        <file>images/nissan.png</file>
+        <file>images/subaru.png</file>
+        <file>images/suzuki.png</file>
+        <file>images/toyota.png</file>
+        <file>images/infiniti.png</file>
     </qresource>
 </RCC>
