@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1092</width>
-    <height>1000</height>
+    <height>1001</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -246,7 +246,7 @@ QPushButton:pressed {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton">
+          <widget class="QPushButton" name="toyotaSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -304,7 +304,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>65</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -356,7 +356,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_2">
+          <widget class="QPushButton" name="mitsubishiSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -414,7 +414,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>50</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -466,7 +466,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_3">
+          <widget class="QPushButton" name="nissanSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -524,7 +524,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>80</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -576,7 +576,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_4">
+          <widget class="QPushButton" name="mazdaSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -634,7 +634,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>50</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -686,7 +686,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_5">
+          <widget class="QPushButton" name="hondaSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -744,7 +744,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>70</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -796,7 +796,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_6">
+          <widget class="QPushButton" name="lexusSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -854,7 +854,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>70</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -906,7 +906,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_7">
+          <widget class="QPushButton" name="subaruSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -964,7 +964,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>70</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -1016,7 +1016,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_8">
+          <widget class="QPushButton" name="suzukiSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -1074,7 +1074,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>65</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -1126,7 +1126,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_9">
+          <widget class="QPushButton" name="infinitiSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -1184,7 +1184,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>80</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -1236,7 +1236,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_11">
+          <widget class="QPushButton" name="isuzuSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -1294,7 +1294,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>65</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -1346,7 +1346,7 @@ QPushButton:default {
           <number>4</number>
          </property>
          <item row="0" column="0">
-          <widget class="QPushButton" name="desktopButton_10">
+          <widget class="QPushButton" name="acuraSearchButton">
            <property name="minimumSize">
             <size>
              <width>84</width>
@@ -1404,7 +1404,7 @@ QPushButton:default {
            <property name="iconSize">
             <size>
              <width>70</width>
-             <height>60</height>
+             <height>67</height>
             </size>
            </property>
            <property name="autoDefault">
@@ -1423,7 +1423,19 @@ QPushButton:default {
  <tabstops>
   <tabstop>sparePartSearch</tabstop>
   <tabstop>updateButton</tabstop>
+  <tabstop>addSparePartButton</tabstop>
   <tabstop>tableView</tabstop>
+  <tabstop>toyotaSearchButton</tabstop>
+  <tabstop>mitsubishiSearchButton</tabstop>
+  <tabstop>nissanSearchButton</tabstop>
+  <tabstop>mazdaSearchButton</tabstop>
+  <tabstop>hondaSearchButton</tabstop>
+  <tabstop>lexusSearchButton</tabstop>
+  <tabstop>subaruSearchButton</tabstop>
+  <tabstop>suzukiSearchButton</tabstop>
+  <tabstop>infinitiSearchButton</tabstop>
+  <tabstop>isuzuSearchButton</tabstop>
+  <tabstop>acuraSearchButton</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

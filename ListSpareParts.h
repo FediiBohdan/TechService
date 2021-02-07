@@ -42,7 +42,10 @@ private:
     StartWindow *startWindow;
     ViewSparePart *viewSparePart;
 
+    QString autoModel;
+
     bool searchFlag;
+    bool autoSearchFlag;
 
 private slots:
     void loadTable();
@@ -51,6 +54,17 @@ private slots:
     void on_addSparePartButton_clicked();
     void on_sparePartSearch_returnPressed();
     void on_updateButton_clicked();
+    void on_toyotaSearchButton_clicked();
+    void on_mitsubishiSearchButton_clicked();
+    void on_nissanSearchButton_clicked();
+    void on_mazdaSearchButton_clicked();
+    void on_hondaSearchButton_clicked();
+    void on_lexusSearchButton_clicked();
+    void on_subaruSearchButton_clicked();
+    void on_suzukiSearchButton_clicked();
+    void on_infinitiSearchButton_clicked();
+    void on_isuzuSearchButton_clicked();
+    void on_acuraSearchButton_clicked();
 
 public slots:
     void closeWindow();

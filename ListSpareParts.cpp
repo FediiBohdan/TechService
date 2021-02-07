@@ -10,12 +10,6 @@ ListSparePart::ListSparePart(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    ui->tableView->verticalHeader()->setSectionsClickable(false);
-    ui->tableView->horizontalHeader()->setSectionsClickable(false);
-
-    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-
-    QDialog::showNormal();
     QDialog::showMaximized();
 
     //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &ListSparePart::closeWindow);
@@ -29,6 +23,7 @@ ListSparePart::ListSparePart(QWidget *parent) :
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListSparePart::showSparePartInfo);
 
     searchFlag = false;
+    autoSearchFlag = false;
 
     loadTable();
 }
@@ -51,6 +46,9 @@ void ListSparePart::loadTable()
     if (searchFlag)
         searchString.append("WHERE spare_part_name LIKE '%" + ui->sparePartSearch->text() + "%' GROUP BY id_spare_part ORDER BY spare_part_name ASC");
 
+    else if (autoSearchFlag)
+        searchString.append("WHERE auto_compatibility LIKE '%" + autoModel + "%' GROUP BY id_spare_part ORDER BY spare_part_name ASC");
+
     queryString.append(searchString);
 
     queryModel->setQuery(queryString);
@@ -67,8 +65,11 @@ void ListSparePart::loadTable()
 
     ui->tableView->setColumnHidden(0, true);
 
-    ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
+    ui->tableView->verticalHeader()->setSectionsClickable(false);
+    ui->tableView->horizontalHeader()->setSectionsClickable(false);
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
 }
 
 void ListSparePart::closeWindow()
@@ -98,11 +99,123 @@ void ListSparePart::showSparePartInfo(const QModelIndex &index)
 }
 
 void ListSparePart::on_sparePartSearch_returnPressed()
-{
+{    
     if (ui->sparePartSearch->text().isEmpty())
         searchFlag = false;
     else
         searchFlag = true;
+
+    autoSearchFlag = false;
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_toyotaSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Toyota";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_mitsubishiSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Mitsubishi";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_nissanSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Nissan";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_mazdaSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Mazda";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_hondaSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Honda";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_lexusSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Lexus";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_subaruSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Subaru";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_suzukiSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Suzuki";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_infinitiSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Infiniti";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_isuzuSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Isuzu";
+
+    on_updateButton_clicked();
+}
+
+void ListSparePart::on_acuraSearchButton_clicked()
+{
+    autoSearchFlag = true;
+    searchFlag = false;
+
+    autoModel = "Acura";
 
     on_updateButton_clicked();
 }
