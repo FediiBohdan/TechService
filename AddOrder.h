@@ -61,7 +61,6 @@ private:
     ListOrders *listOrders;
 
     QWidget *addWidgetCompatibilityContent(int rowIndex);
-    QWidget *addWidgetHoursLine(int rowIndex);
 
     bool searchFlag;
     QString sparePartsList;
@@ -76,12 +75,19 @@ private slots:
     void updateSparePartsTable();
     void updateEmployeesTable();
     void updateUsedSparePartsTable(const QModelIndex &index);
+    void setOrderEmployees(const QModelIndex &index);
+
+    void closeEvent(QCloseEvent *);
 
     void on_createOrderButton_clicked();
     void on_sparePartsSearch_returnPressed();
     void on_clearSparePartsListButton_clicked();
-
-    void closeEvent(QCloseEvent *);
+    void on_clearMechanicButton_clicked();
+    void on_clearMechanic2Button_clicked();
+    void on_clearDiagnosticianButton_clicked();
+    void on_clearElectronicButton_clicked();
+    void on_clearWasherButton_clicked();
+    void on_clearLocksmithButton_clicked();
 };
 
 #endif // ADDORDER_H

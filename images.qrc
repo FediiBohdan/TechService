@@ -39,5 +39,6 @@
         <file>images/suzuki.png</file>
         <file>images/toyota.png</file>
         <file>images/infiniti.png</file>
+        <file>images/returnEmployee.png</file>
     </qresource>
 </RCC>

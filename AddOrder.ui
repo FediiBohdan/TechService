@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1431</width>
-    <height>711</height>
+    <height>943</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -916,6 +916,7 @@
               <string notr="true">QPushButton {
 	background-color: #dbdcf7;
 	border: 1px solid #999999;
+	border-radius: 2px;
 }
 
 QPushButton:hover {
@@ -1015,6 +1016,33 @@ QPushButton:pressed {
           </layout>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="QTextEdit" name="sparePartsList">
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::StrongFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTextEdit {
+	background-color: white;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}</string>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="0">
          <widget class="QTableView" name="availableSparePartsTable">
           <property name="maximumSize">
@@ -1028,8 +1056,12 @@ QPushButton:pressed {
           </property>
           <property name="styleSheet">
            <string notr="true">QTableView {
-	background-color: none;
-	border-radius: 0px;
+	background-color: white;
+	border: 1px solid grey;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
     selection-color: black; 
 	selection-background-color: #f2e7ff;
 }
@@ -1060,30 +1092,6 @@ QHeaderView::section {
           </property>
           <property name="horizontalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QTextEdit" name="sparePartsList">
-          <property name="maximumSize">
-           <size>
-            <width>250</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTextEdit {
-	background-color: none;
-	border-radius: 0px;
-}</string>
           </property>
          </widget>
         </item>
@@ -1127,11 +1135,11 @@ QHeaderView::section {
         <property name="spacing">
          <number>2</number>
         </property>
-        <item row="1" column="0">
-         <widget class="QTableView" name="allEmployees">
+        <item row="2" column="0" rowspan="8">
+         <widget class="QTableView" name="EmployeesBySetrviceTable">
           <property name="minimumSize">
            <size>
-            <width>390</width>
+            <width>370</width>
             <height>0</height>
            </size>
           </property>
@@ -1146,8 +1154,11 @@ QHeaderView::section {
           </property>
           <property name="styleSheet">
            <string notr="true">QTableView {
-	background-color: none;
-	border-radius: 0px;
+	background-color: white;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 	selection-color: black; 
 	selection-background-color: #f2e7ff;
 }
@@ -1171,42 +1182,375 @@ QHeaderView::section {
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QTableView" name="currentEmployees">
-          <property name="maximumSize">
+        <item row="4" column="1" colspan="2">
+         <widget class="QFrame" name="frame_8">
+          <property name="minimumSize">
            <size>
-            <width>320</width>
-            <height>16777215</height>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
           <property name="styleSheet">
-           <string notr="true">QTableView {
-	background-color: none;
-	border-radius: 0px;
-}
-
-QHeaderView {
-	border-radius: 0px;
-	background-color: #f5f5f5;
-	border: 0px;
-}
-
-QHeaderView::section {
+           <string notr="true">QFrame {
 	background-color: white;
 }</string>
           </property>
-          <property name="verticalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
           </property>
-          <property name="horizontalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
           </property>
+          <layout class="QGridLayout" name="gridLayout_17">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>1</number>
+           </property>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="clearDiagnosticianButton">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Вернуть работника</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLineEdit" name="diagnosticianLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_24">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Нормо-часы</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_19">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Диагност</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="diagnosticianHoursLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
-        <item row="0" column="0" colspan="2">
+        <item row="6" column="1" colspan="2">
+         <widget class="QFrame" name="frame_10">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame {
+	background-color: white;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_19">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>1</number>
+           </property>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLineEdit" name="locksmithLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_26">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Нормо-часы</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="locksmithHoursLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="clearLocksmithButton">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Вернуть работника</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_21">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Слесарь</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
          <widget class="QFrame" name="frame_4">
           <property name="minimumSize">
            <size>
@@ -1275,6 +1619,748 @@ QHeaderView::section {
              </property>
              <property name="text">
               <string>Работники</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="2" column="1" colspan="2">
+         <widget class="QFrame" name="frame_7">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame {
+	background-color: white;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_16">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>1</number>
+           </property>
+           <item row="2" column="0" colspan="3">
+            <widget class="QLineEdit" name="mechanicLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="3">
+            <widget class="QLabel" name="label_23">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Нормо-часы</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="3">
+            <widget class="QLabel" name="label_18">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Механик</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QPushButton" name="clearMechanicButton">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Вернуть работника</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QLineEdit" name="mechanicHoursLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="inputMask">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="5" column="1" colspan="2">
+         <widget class="QFrame" name="frame_9">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame {
+	background-color: white;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_18">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>1</number>
+           </property>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLineEdit" name="electronicsLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="clearElectronicButton">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Вернуть работника</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="electronicsHoursLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_25">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Нормо-часы</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_20">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Электронщик</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="7" column="1" rowspan="2" colspan="2">
+         <widget class="QFrame" name="frame_11">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame {
+	background-color: white;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_20">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>1</number>
+           </property>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLineEdit" name="washerLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_22">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Мойщик</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="clearWasherButton">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Вернуть работника</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="washerHoursLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_27">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Нормо-часы</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="1" colspan="2">
+         <widget class="QFrame" name="frame_12">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame {
+	background-color: white;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_21">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>1</number>
+           </property>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="mechanic2HoursLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="inputMask">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_29">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Нормо-часы</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="clearMechanic2Button">
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Вернуть работника</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_28">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Механик</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLineEdit" name="mechanic2Line">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1420,8 +2506,11 @@ QHeaderView::section {
           </property>
           <property name="styleSheet">
            <string notr="true">QTextEdit {
-	background-color: none;
-	border-radius: 0px;
+	background-color: white;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 }</string>
           </property>
          </widget>
@@ -1433,54 +2522,19 @@ QHeaderView::section {
    </item>
    <item row="2" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_7">
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="workHours">
-       <property name="maximumSize">
-        <size>
-         <width>100</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="label_15">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_11">
        <property name="font">
         <font>
          <pointsize>9</pointsize>
         </font>
        </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
        <property name="text">
-        <string>Часы работы</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::PlainText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <string>Отзыв клиента</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0" rowspan="6">
+     <item row="1" column="0" rowspan="4">
       <widget class="QTextEdit" name="feedback">
        <property name="maximumSize">
         <size>
@@ -1506,19 +2560,47 @@ QHeaderView::section {
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_11">
+     <item row="0" column="1" rowspan="3">
+      <widget class="QPushButton" name="openMapButton">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>25</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+       </property>
        <property name="text">
-        <string>Отзыв клиента</string>
+        <string>Открыть карту</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="4" column="1">
       <widget class="QPushButton" name="createOrderButton">
        <property name="minimumSize">
         <size>
@@ -1572,46 +2654,6 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="0" column="1" rowspan="3">
-      <widget class="QPushButton" name="openMapButton">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::StrongFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-       </property>
-       <property name="text">
-        <string>Открыть карту</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>
@@ -1630,10 +2672,28 @@ QPushButton:pressed {
   <tabstop>orderStatusComboBox</tabstop>
   <tabstop>sparePartsSearch</tabstop>
   <tabstop>clearSparePartsListButton</tabstop>
+  <tabstop>sparePartsList</tabstop>
   <tabstop>worksList</tabstop>
+  <tabstop>mechanicLine</tabstop>
+  <tabstop>mechanicHoursLine</tabstop>
+  <tabstop>clearMechanicButton</tabstop>
+  <tabstop>mechanic2Line</tabstop>
+  <tabstop>mechanic2HoursLine</tabstop>
+  <tabstop>clearMechanic2Button</tabstop>
+  <tabstop>diagnosticianLine</tabstop>
+  <tabstop>diagnosticianHoursLine</tabstop>
+  <tabstop>clearDiagnosticianButton</tabstop>
+  <tabstop>electronicsLine</tabstop>
+  <tabstop>electronicsHoursLine</tabstop>
+  <tabstop>clearElectronicButton</tabstop>
+  <tabstop>locksmithLine</tabstop>
+  <tabstop>locksmithHoursLine</tabstop>
+  <tabstop>clearLocksmithButton</tabstop>
+  <tabstop>washerLine</tabstop>
+  <tabstop>washerHoursLine</tabstop>
+  <tabstop>clearWasherButton</tabstop>
   <tabstop>feedback</tabstop>
   <tabstop>openMapButton</tabstop>
-  <tabstop>workHours</tabstop>
   <tabstop>createOrderButton</tabstop>
  </tabstops>
  <resources>

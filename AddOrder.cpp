@@ -20,6 +20,7 @@ AddOrder::AddOrder(QWidget *parent) :
 
     connect(ui->openMapButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
     connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSparePartsTable);
+    connect(ui->EmployeesBySetrviceTable, &QAbstractItemView::clicked, this, &AddOrder::setOrderEmployees);
 
     ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
@@ -169,43 +170,42 @@ void AddOrder::loadEmployeesTable()
     queryEmployeesModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryEmployeesModel->setHeaderData(1, Qt::Horizontal, tr("ФИО сотрудника"));
     queryEmployeesModel->setHeaderData(2, Qt::Horizontal, tr("Должность"));
-    queryEmployeesModel->insertColumn(3);
-    queryEmployeesModel->setHeaderData(3, Qt::Horizontal, tr("Часы"));
 
-    ui->allEmployees->setModel(queryEmployeesModel);
+    ui->EmployeesBySetrviceTable->setModel(queryEmployeesModel);
 
-    ui->allEmployees->setColumnHidden(0, true);
+    ui->EmployeesBySetrviceTable->setColumnHidden(0, true);
 
-    for (int rowIndex = 0; rowIndex < ui->allEmployees->model()->rowCount(); ++rowIndex)
-        ui->allEmployees->setIndexWidget(queryEmployeesModel->index(rowIndex, 3), addWidgetHoursLine(rowIndex));
-
-    ui->allEmployees->horizontalHeader()->setDefaultSectionSize(maximumWidth());
-    ui->allEmployees->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->allEmployees->horizontalHeader()->setSectionsClickable(false);
-    ui->allEmployees->resizeColumnsToContents();
-    ui->allEmployees->verticalHeader()->hide();
-    ui->allEmployees->resizeRowsToContents();
+    ui->EmployeesBySetrviceTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->EmployeesBySetrviceTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->EmployeesBySetrviceTable->horizontalHeader()->setSectionsClickable(false);
+    ui->EmployeesBySetrviceTable->resizeColumnsToContents();
+    ui->EmployeesBySetrviceTable->verticalHeader()->hide();
 }
 
-QWidget* AddOrder::addWidgetHoursLine(int rowIndex)
+void AddOrder::setOrderEmployees(const QModelIndex &index)
 {
-    QWidget *widget = new QWidget(this);
-    QHBoxLayout *layout = new QHBoxLayout(widget);
-    QLineEdit *hoursLineEdit = new QLineEdit(widget);
+    QString employeeName = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 1), Qt::EditRole).toString();
+    QString employeePosition = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 2), Qt::EditRole).toString();
 
-    layout->addWidget(hoursLineEdit);
+    if (ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
+            employeeName != ui->mechanic2Line->text())
+        ui->mechanicLine->setText(employeeName);
 
-    queryEmployeesHoursModel = new QSqlQueryModel(this);
+    else if (!ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
+             employeeName != ui->mechanicLine->text())
+        ui->mechanic2Line->setText(employeeName);
 
-    QString queryString = "SELECT hour_payment FROM EmployeesTable";
+    else if (employeePosition == "Диагност")
+        ui->diagnosticianLine->setText(employeeName);
 
-    queryEmployeesHoursModel->setQuery(queryString, listSparePartsTable);
+    else if (employeePosition == "Электронщик")
+        ui->electronicsLine->setText(employeeName);
 
-    QString hours = queryEmployeesHoursModel->data(queryEmployeesHoursModel->index(rowIndex, 0), Qt::EditRole).toString();
+    else if (employeePosition == "Слесарь")
+        ui->locksmithLine->setText(employeeName);
 
-    hoursLineEdit->setText(hours);
-
-    return widget;
+    else if (employeePosition == "Мойщик")
+        ui->washerLine->setText(employeeName);
 }
 
 void AddOrder::updateEmployeesTable()
@@ -339,4 +339,40 @@ void AddOrder::updateSparePartsTable()
     queryAvailableSparePartsModel->setQuery(NULL);
 
     loadSparePartsTable();
+}
+
+void AddOrder::on_clearMechanicButton_clicked()
+{
+    ui->mechanicLine->setText("");
+    ui->mechanicHoursLine->setText("");
+}
+
+void AddOrder::on_clearMechanic2Button_clicked()
+{
+    ui->mechanic2Line->setText("");
+    ui->mechanic2HoursLine->setText("");
+}
+
+void AddOrder::on_clearDiagnosticianButton_clicked()
+{
+    ui->diagnosticianLine->setText("");
+    ui->diagnosticianHoursLine->setText("");
+}
+
+void AddOrder::on_clearElectronicButton_clicked()
+{
+    ui->electronicsLine->setText("");
+    ui->electronicsHoursLine->setText("");
+}
+
+void AddOrder::on_clearLocksmithButton_clicked()
+{
+    ui->locksmithLine->setText("");
+    ui->locksmithHoursLine->setText("");
+}
+
+void AddOrder::on_clearWasherButton_clicked()
+{
+    ui->washerLine->setText("");
+    ui->washerHoursLine->setText("");
 }
