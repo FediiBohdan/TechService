@@ -26,9 +26,11 @@ AddOrder::AddOrder(QWidget *parent) :
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
     ui->dateErrorLabel->setStyleSheet("color: transparent");
 
+    ui->removeLastSparePartButton->setEnabled(false);
+
     ui->orderStatusComboBox->addItems(QStringList() << tr("Заявка") << tr("В работе") << tr("Завершен, неоплачен") << tr("Завершен, оплачен"));
     ui->discountsComboBox->addItems(QStringList() << tr("Нет") << tr("Купон") << tr("Акция") << tr("Особые условия") << tr("Постоянный клиент"));
-    ui->serviceComboBox->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
+    ui->serviceComboBox->addItems(QStringList() << "Среднефонтанская, 30А (Приморский р-н)" << "Платонова, 56 (Малиновский р-н)" << "Архитекторская, 28 (Киевский р-н)");
     ui->clientTypeComboBox->addItems(QStringList() << tr("Физ. лицо") << tr("Юр. лицо"));
 
     connect(ui->serviceComboBox, &QComboBox::currentTextChanged, this, &AddOrder::updateEmployeesTable);
@@ -141,7 +143,9 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
         return;
     }
 
-    sparePartsList.append(queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString());
+    QString sparePart = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
+
+    sparePartsList.append(sparePart);
     sparePartsList.append(", ");
 
     QString sparePartCostDetail = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toString();
@@ -150,6 +154,19 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
 
     sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toInt();
     sparePartsCost += sparePartCost;
+
+    sparePartNameLength = sparePart.length() + sparePartCostDetail.length() + 4;
+
+    ui->removeLastSparePartButton->setEnabled(true);
+}
+
+void AddOrder::on_removeLastSparePartButton_clicked()
+{
+   sparePartsList.chop(sparePartNameLength);
+
+   ui->sparePartsList->setText(sparePartsList);
+
+   ui->removeLastSparePartButton->setEnabled(false);
 }
 
 void AddOrder::on_clearSparePartsListButton_clicked()
@@ -157,6 +174,8 @@ void AddOrder::on_clearSparePartsListButton_clicked()
     sparePartsList = "";
     ui->sparePartsList->setText("");
     sparePartsCost = 0;
+
+    ui->removeLastSparePartButton->setEnabled(false);
 }
 
 void AddOrder::loadEmployeesTable()
@@ -231,15 +250,7 @@ void AddOrder::on_createOrderButton_clicked()
     QString client = ui->clientLine->text();
     QString date = ui->dateLine->text();
     QString contacts = ui->contactLine->text();
-    QString autoModel = ui->modelLine->text();
-    QString manufactureYear = ui->yearLine->text();
-    QString VIN_Number = ui->VIN_Line->text();
-    QString discounts = ui->discountsComboBox->currentText();
-    QString serviceNumber = ui->serviceComboBox->currentText();
-    QString autoLicensePlate = ui->autoLicensePlateLine->text();
-    //QString staffTeam = ui->staffLine->text();
-    QString worksList = ui->worksList->toPlainText();
-    QString feedback = ui->feedback->toPlainText();
+    QString brandModel = ui->brandLine->text();
 
     bool error = false;
 
@@ -264,62 +275,111 @@ void AddOrder::on_createOrderButton_clicked()
     else
         ui->contactsErrorLabel->setStyleSheet("color: transparent");
 
-    if (autoModel.isEmpty())
+    if (brandModel.isEmpty())
     {
         error = true; ui->autoErrorLabel->setStyleSheet("color: red");
     }
     else
         ui->autoErrorLabel->setStyleSheet("color: transparent");
 
-//    if (serviceNumber.isEmpty())
-//    {
-//        error = true; ui->serviceErrorLabel->setStyleSheet("color: red");
-//    }
-//    else
-//        ui->serviceErrorLabel->setStyleSheet("color: transparent");
-
     if (error)
         return;
 
-    queryOrders.prepare("INSERT INTO OrdersHistory (client, creation_date, contacts, auto_model, manufacture_year, VIN_number, "
-        "discounts, service_address, auto_license_plate, works_list, spare_parts_list, feedback) "
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, contacts, auto_brand, auto_model, "
+                "manufacture_year, VIN_number, auto_license_plate, discounts, order_status, spare_parts_list, works_list, feedback, price) "
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+    queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(client);
     queryOrders.addBindValue(date);
+    queryOrders.addBindValue(ui->timeLine->text());
     queryOrders.addBindValue(contacts);
-    queryOrders.addBindValue(autoModel);
-    queryOrders.addBindValue(manufactureYear);
-    queryOrders.addBindValue(VIN_Number);
-    queryOrders.addBindValue(discounts);
-    queryOrders.addBindValue(serviceNumber);
-    queryOrders.addBindValue(autoLicensePlate);
-    //queryOrders.addBindValue(staffTeam);
-    queryOrders.addBindValue(worksList);
-    queryOrders.addBindValue(sparePartsList);
-    queryOrders.addBindValue(feedback);
+    queryOrders.addBindValue(brandModel);
+    queryOrders.addBindValue(ui->modelLine->text());
+    queryOrders.addBindValue(ui->yearLine->text());
+    queryOrders.addBindValue(ui->VIN_Line->text());
+    queryOrders.addBindValue(ui->autoLicensePlateLine->text());
+    queryOrders.addBindValue(ui->discountsComboBox->currentText());
+    queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
+    queryOrders.addBindValue(ui->sparePartsList->toPlainText());
+    queryOrders.addBindValue(ui->worksList->toPlainText());
+    queryOrders.addBindValue(ui->feedback->toPlainText());
+    queryOrders.addBindValue(400);
     queryOrders.exec();
+
+    int id = queryOrders.lastInsertId().toInt();
+
+    // Simultaneous insertion into detailed order table
+    QSqlQuery queryOrderDetail(orderDetailDB);
+
+    if (!ui->mechanicLine->text().isEmpty() && !ui->mechanicHoursLine->text().isEmpty())
+    {
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.addBindValue(ui->mechanicLine->text());
+        queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
+        queryOrderDetail.exec();
+    }
+
+    if (!ui->mechanic2Line->text().isEmpty() && !ui->mechanic2HoursLine->text().isEmpty())
+    {
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.addBindValue(ui->mechanic2Line->text());
+        queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
+        queryOrderDetail.exec();
+    }
+
+    if (!ui->diagnosticianLine->text().isEmpty() && !ui->diagnosticianHoursLine->text().isEmpty())
+    {
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
+        queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
+        queryOrderDetail.exec();
+    }
+
+    if (!ui->electronicsLine->text().isEmpty() && !ui->electronicsHoursLine->text().isEmpty())
+    {
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.addBindValue(ui->electronicsLine->text());
+        queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
+        queryOrderDetail.exec();
+    }
+
+    if (!ui->locksmithLine->text().isEmpty() && !ui->locksmithHoursLine->text().isEmpty())
+    {
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.addBindValue(ui->locksmithLine->text());
+        queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
+        queryOrderDetail.exec();
+    }
+
+    if (!ui->washerLine->text().isEmpty() && !ui->washerHoursLine->text().isEmpty())
+    {
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.addBindValue(ui->washerLine->text());
+        queryOrderDetail.addBindValue(ui->washerHoursLine->text());
+        queryOrderDetail.exec();
+    }
 
     // Simultaneous insertion into client table
     QSqlQuery queryClients(clientsDB);
 
-    QString clientClientsDB = ui->clientLine->text();
-    QString contactsClientsDB = ui->contactLine->text();
-    QString autoModelClientsDB = ui->modelLine->text();
-    QString autoLicensePlateClientsDB = ui->autoLicensePlateLine->text();
-    QString manufactureYearClientsDB = ui->yearLine->text();
-    QString VIN_NumberClientsDB = ui->VIN_Line->text();
+    queryClients.prepare("INSERT INTO ClientsTable (client_type, client_FML_name, contacts, auto_brand, auto_model, auto_license_plate, "
+        "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
 
-    queryClients.prepare("INSERT INTO ClientsTable (client_FML_name, contacts, auto_model, auto_license_plate, "
-        "manufacture_year, VIN_number) "
-        "VALUES(?, ?, ?, ?, ?, ?)");
-
-    queryClients.addBindValue(clientClientsDB);
-    queryClients.addBindValue(contactsClientsDB);
-    queryClients.addBindValue(autoModelClientsDB);
-    queryClients.addBindValue(autoLicensePlateClientsDB);
-    queryClients.addBindValue(manufactureYearClientsDB);
-    queryClients.addBindValue(VIN_NumberClientsDB);
+    queryClients.addBindValue(ui->clientTypeComboBox->currentText());
+    queryClients.addBindValue(client);
+    queryClients.addBindValue(contacts);
+    queryClients.addBindValue(brandModel);
+    queryClients.addBindValue(ui->modelLine->text());
+    queryClients.addBindValue(ui->autoLicensePlateLine->text());
+    queryClients.addBindValue(ui->yearLine->text());
+    queryClients.addBindValue(ui->VIN_Line->text());
     queryClients.exec();
 
     QDialog::close();

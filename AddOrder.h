@@ -44,11 +44,13 @@ private:
 
     QSqlDatabase listOrdersTable = QSqlDatabase::database("OrdersHistory");
     QSqlDatabase listSparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
+    QSqlDatabase orderDetailTable = QSqlDatabase::database("OrderDetailTable");
 
-    QSqlDatabase ordersHistoryDB;
     QSqlDatabase testDB;
     QSqlDatabase clientsDB;
     QSqlDatabase sparePartsDB;
+    QSqlDatabase orderDetailDB;
+    QSqlDatabase ordersHistoryDB;
 
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
@@ -66,6 +68,7 @@ private:
     QString sparePartsList;
     int sparePartCost;
     int sparePartsCost = 0;
+    int sparePartNameLength = 0;
 
 private slots:
     void openMap();
@@ -88,6 +91,7 @@ private slots:
     void on_clearElectronicButton_clicked();
     void on_clearWasherButton_clicked();
     void on_clearLocksmithButton_clicked();
+    void on_removeLastSparePartButton_clicked();
 };
 
 #endif // ADDORDER_H

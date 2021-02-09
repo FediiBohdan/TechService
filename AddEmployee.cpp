@@ -16,7 +16,7 @@ AddEmployee::AddEmployee(QWidget *parent) :
     employeeDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
     employeeDB.open();
 
-    ui->serviceAddress->addItems(QStringList() << "Street A, 123" << "Street B, 456" << "Street C, 789");
+    ui->serviceAddress->addItems(QStringList() << "Среднефонтанская, 30А (Приморский р-н)" << "Платонова, 56 (Малиновский р-н)" << "Архитекторская, 28 (Киевский р-н)");
 
     ui->errorLabel->hide();
 }
