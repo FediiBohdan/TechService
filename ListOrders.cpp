@@ -40,8 +40,8 @@ void ListOrders::loadTable()
     queryModel = new QSqlQueryModel(this);
 
     QString queryString;
-    queryString = "SELECT id_order, creation_date, updating_date, client, contacts, auto_model, auto_license_plate, "
-        "manufacture_year, VIN_number, service_address, work_hours, price FROM OrdersHistory ";
+    queryString = "SELECT id_order, order_status, creation_date, updating_date, client_type, client, contacts, auto_brand, auto_model, "
+        "auto_license_plate, manufacture_year, VIN_number, service_address, price FROM OrdersHistory ";
 
     QString searchString;
 
@@ -55,17 +55,19 @@ void ListOrders::loadTable()
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->insertColumn(1);
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Готово"));
-    queryModel->setHeaderData(2, Qt::Horizontal, tr("Дата создания"));
-    queryModel->setHeaderData(3, Qt::Horizontal, tr("Дата обновления"));
-    queryModel->setHeaderData(4, Qt::Horizontal, tr("ФИО клиента"));
-    queryModel->setHeaderData(5, Qt::Horizontal, tr("Контакты"));
-    queryModel->setHeaderData(6, Qt::Horizontal, tr("Модель авто"));
-    queryModel->setHeaderData(7, Qt::Horizontal, tr("Госномер"));
-    queryModel->setHeaderData(8, Qt::Horizontal, tr("Год выпуска"));
-    queryModel->setHeaderData(9, Qt::Horizontal, tr("VIN"));
-    queryModel->setHeaderData(10, Qt::Horizontal, tr("Сервис"));
-    queryModel->setHeaderData(11, Qt::Horizontal, tr("Часы работы"));
-    queryModel->setHeaderData(12, Qt::Horizontal, tr("Стоимость"));
+    queryModel->setHeaderData(2, Qt::Horizontal, tr("Статус"));
+    queryModel->setHeaderData(3, Qt::Horizontal, tr("Дата создания"));
+    queryModel->setHeaderData(4, Qt::Horizontal, tr("Дата обновления"));
+    queryModel->setHeaderData(5, Qt::Horizontal, tr("Тип клиента"));
+    queryModel->setHeaderData(6, Qt::Horizontal, tr("ФИО клиента"));
+    queryModel->setHeaderData(7, Qt::Horizontal, tr("Контакты"));
+    queryModel->setHeaderData(8, Qt::Horizontal, tr("Марка авто"));
+    queryModel->setHeaderData(9, Qt::Horizontal, tr("Модель авто"));
+    queryModel->setHeaderData(10, Qt::Horizontal, tr("Госномер"));
+    queryModel->setHeaderData(11, Qt::Horizontal, tr("Год выпуска"));
+    queryModel->setHeaderData(12, Qt::Horizontal, tr("VIN"));
+    queryModel->setHeaderData(13, Qt::Horizontal, tr("Сервис"));
+    queryModel->setHeaderData(14, Qt::Horizontal, tr("Стоимость"));
 
     ui->tableView->setModel(queryModel);
 

@@ -66,9 +66,20 @@ private:
 
     bool searchFlag;
     QString sparePartsList;
-    int sparePartCost;
-    int sparePartsCost = 0;
+    float sparePartCost;
+    float sparePartsCost = 0;
     int sparePartNameLength = 0;
+    int mechanicHourPayment = 0;
+    int mechanic2HourPayment = 0;
+    int diagnosticianHourPayment = 0;
+    int electronicHourPayment = 0;
+    int locksmithHourPayment = 0;
+    int washerHourPayment = 0;
+    int totalEmployeePayment = 0;
+    int couponDiscount = 3;//%
+    int promotionDiscount = 4;//%
+    int specialCondidtionsDiscount = 8;//%
+    int regularCustomerDiscount = 6;//%
 
 private slots:
     void openMap();

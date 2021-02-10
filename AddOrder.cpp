@@ -50,11 +50,11 @@ AddOrder::~AddOrder()
 
 void AddOrder::closeEvent(QCloseEvent *)
 {
-//    QDialog::close();
+    QDialog::close();
 
-//    listOrders = new ListOrders;
-//    listOrders->show();
-//    listOrders->setAttribute(Qt::WA_DeleteOnClose);
+    listOrders = new ListOrders;
+    listOrders->show();
+    listOrders->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void AddOrder::openMap()
@@ -152,7 +152,7 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
 
     ui->sparePartsList->setText(sparePartsList.replace(", ", (" - " + sparePartCostDetail + "\n")));
 
-    sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toInt();
+    sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toFloat();
     sparePartsCost += sparePartCost;
 
     sparePartNameLength = sparePart.length() + sparePartCostDetail.length() + 4;
@@ -182,17 +182,19 @@ void AddOrder::loadEmployeesTable()
 {
     queryEmployeesModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_employee, employee_FML_name, employee_position FROM EmployeesTable WHERE service_address = '" + ui->serviceComboBox->currentText() + "'";
+    QString queryString = "SELECT id_employee, employee_FML_name, employee_position, hour_payment FROM EmployeesTable WHERE service_address = '" + ui->serviceComboBox->currentText() + "'";
 
     queryEmployeesModel->setQuery(queryString);
 
     queryEmployeesModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryEmployeesModel->setHeaderData(1, Qt::Horizontal, tr("ФИО сотрудника"));
     queryEmployeesModel->setHeaderData(2, Qt::Horizontal, tr("Должность"));
+    queryEmployeesModel->setHeaderData(3, Qt::Horizontal, tr("Почасовая оплата"));
 
     ui->EmployeesBySetrviceTable->setModel(queryEmployeesModel);
 
     ui->EmployeesBySetrviceTable->setColumnHidden(0, true);
+    ui->EmployeesBySetrviceTable->setColumnHidden(3, true);
 
     ui->EmployeesBySetrviceTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->EmployeesBySetrviceTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -208,23 +210,41 @@ void AddOrder::setOrderEmployees(const QModelIndex &index)
 
     if (ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
             employeeName != ui->mechanic2Line->text())
+    {
         ui->mechanicLine->setText(employeeName);
+        mechanicHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+    }
 
     else if (!ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
              employeeName != ui->mechanicLine->text())
+    {
         ui->mechanic2Line->setText(employeeName);
+        mechanic2HourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+    }
 
     else if (employeePosition == "Диагност")
+    {
         ui->diagnosticianLine->setText(employeeName);
+        diagnosticianHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+    }
 
     else if (employeePosition == "Электронщик")
+    {
         ui->electronicsLine->setText(employeeName);
+        electronicHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+    }
 
     else if (employeePosition == "Слесарь")
+    {
         ui->locksmithLine->setText(employeeName);
+        locksmithHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+    }
 
     else if (employeePosition == "Мойщик")
+    {
         ui->washerLine->setText(employeeName);
+        washerHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+    }
 }
 
 void AddOrder::updateEmployeesTable()
@@ -286,7 +306,7 @@ void AddOrder::on_createOrderButton_clicked()
         return;
 
     queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, contacts, auto_brand, auto_model, "
-                "manufacture_year, VIN_number, auto_license_plate, discounts, order_status, spare_parts_list, works_list, feedback, price) "
+                "manufacture_year, VIN_number, auto_license_plate, service_address, discounts, order_status, spare_parts_list, works_list, feedback) "
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
@@ -299,12 +319,12 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(ui->yearLine->text());
     queryOrders.addBindValue(ui->VIN_Line->text());
     queryOrders.addBindValue(ui->autoLicensePlateLine->text());
+    queryOrders.addBindValue(ui->serviceComboBox->currentText());
     queryOrders.addBindValue(ui->discountsComboBox->currentText());
     queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
     queryOrders.addBindValue(ui->sparePartsList->toPlainText());
     queryOrders.addBindValue(ui->worksList->toPlainText());
     queryOrders.addBindValue(ui->feedback->toPlainText());
-    queryOrders.addBindValue(400);
     queryOrders.exec();
 
     int id = queryOrders.lastInsertId().toInt();
@@ -312,7 +332,7 @@ void AddOrder::on_createOrderButton_clicked()
     // Simultaneous insertion into detailed order table
     QSqlQuery queryOrderDetail(orderDetailDB);
 
-    if (!ui->mechanicLine->text().isEmpty() && !ui->mechanicHoursLine->text().isEmpty())
+    if (!ui->mechanicLine->text().isEmpty())
     {
         queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
         queryOrderDetail.addBindValue(id);
@@ -321,7 +341,7 @@ void AddOrder::on_createOrderButton_clicked()
         queryOrderDetail.exec();
     }
 
-    if (!ui->mechanic2Line->text().isEmpty() && !ui->mechanic2HoursLine->text().isEmpty())
+    if (!ui->mechanic2Line->text().isEmpty())
     {
         queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
         queryOrderDetail.addBindValue(id);
@@ -330,7 +350,7 @@ void AddOrder::on_createOrderButton_clicked()
         queryOrderDetail.exec();
     }
 
-    if (!ui->diagnosticianLine->text().isEmpty() && !ui->diagnosticianHoursLine->text().isEmpty())
+    if (!ui->diagnosticianLine->text().isEmpty())
     {
         queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
         queryOrderDetail.addBindValue(id);
@@ -339,7 +359,7 @@ void AddOrder::on_createOrderButton_clicked()
         queryOrderDetail.exec();
     }
 
-    if (!ui->electronicsLine->text().isEmpty() && !ui->electronicsHoursLine->text().isEmpty())
+    if (!ui->electronicsLine->text().isEmpty())
     {
         queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
         queryOrderDetail.addBindValue(id);
@@ -348,7 +368,7 @@ void AddOrder::on_createOrderButton_clicked()
         queryOrderDetail.exec();
     }
 
-    if (!ui->locksmithLine->text().isEmpty() && !ui->locksmithHoursLine->text().isEmpty())
+    if (!ui->locksmithLine->text().isEmpty())
     {
         queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
         queryOrderDetail.addBindValue(id);
@@ -357,7 +377,7 @@ void AddOrder::on_createOrderButton_clicked()
         queryOrderDetail.exec();
     }
 
-    if (!ui->washerLine->text().isEmpty() && !ui->washerHoursLine->text().isEmpty())
+    if (!ui->washerLine->text().isEmpty())
     {
         queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
         queryOrderDetail.addBindValue(id);
@@ -381,6 +401,74 @@ void AddOrder::on_createOrderButton_clicked()
     queryClients.addBindValue(ui->yearLine->text());
     queryClients.addBindValue(ui->VIN_Line->text());
     queryClients.exec();
+
+    // order price calculation
+    // employees payment calculation
+    float mechanicOverallPayment = 0;
+    float mechanic2OverallPayment = 0;
+    float diagnosticianOverallPayment = 0;
+    float electronicOverallPayment = 0;
+    float locksmithOverallPayment = 0;
+    float washerOverAllPayment = 0;
+
+    if (!ui->mechanicLine->text().isEmpty() && ui->mechanicHoursLine->text().isEmpty())
+        mechanicOverallPayment = mechanicHourPayment * 1;
+    else if (!ui->mechanicLine->text().isEmpty() && !ui->mechanicHoursLine->text().isEmpty())
+        mechanicOverallPayment = mechanicHourPayment * ui->mechanicHoursLine->text().toFloat();
+
+    if (!ui->mechanic2Line->text().isEmpty() && ui->mechanic2HoursLine->text().isEmpty())
+        mechanic2OverallPayment = mechanic2HourPayment * 1;
+    else if (!ui->mechanic2Line->text().isEmpty() && !ui->mechanic2HoursLine->text().isEmpty())
+        mechanic2OverallPayment = mechanic2HourPayment * ui->mechanic2HoursLine->text().toFloat();
+
+    if (!ui->diagnosticianLine->text().isEmpty() && ui->diagnosticianHoursLine->text().isEmpty())
+        diagnosticianOverallPayment = diagnosticianHourPayment * 1;
+    else if (!ui->diagnosticianLine->text().isEmpty() && !ui->diagnosticianHoursLine->text().isEmpty())
+        diagnosticianOverallPayment = diagnosticianHourPayment * ui->diagnosticianHoursLine->text().toFloat();
+
+    if (!ui->electronicsLine->text().isEmpty() && ui->electronicsHoursLine->text().isEmpty())
+        electronicOverallPayment = electronicHourPayment * 1;
+    else if (!ui->electronicsLine->text().isEmpty() && !ui->electronicsHoursLine->text().isEmpty())
+        electronicOverallPayment = electronicHourPayment * ui->electronicsHoursLine->text().toFloat();
+
+    if (!ui->locksmithLine->text().isEmpty() && ui->locksmithHoursLine->text().isEmpty())
+        locksmithOverallPayment = locksmithHourPayment * 1;
+    else if (!ui->locksmithLine->text().isEmpty() && !ui->locksmithHoursLine->text().isEmpty())
+        locksmithOverallPayment = locksmithHourPayment * ui->locksmithHoursLine->text().toFloat();
+
+    if (!ui->washerLine->text().isEmpty() && ui->washerHoursLine->text().isEmpty())
+        washerOverAllPayment = washerHourPayment * 1;
+    else if (!ui->washerLine->text().isEmpty() && !ui->washerHoursLine->text().isEmpty())
+        washerOverAllPayment = washerHourPayment * ui->washerHoursLine->text().toFloat();
+
+    float orderTotalCost = sparePartsCost + mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment
+                         + electronicOverallPayment + locksmithOverallPayment + washerOverAllPayment;
+
+    // disounts calculation
+    float orderTotalDiscountCost = 0;
+
+    if (ui->discountsComboBox->currentIndex() == 0)
+        orderTotalDiscountCost = orderTotalCost;
+
+    else if (ui->discountsComboBox->currentIndex() == 1)
+        orderTotalDiscountCost = orderTotalCost - ((orderTotalCost * couponDiscount) / 100);
+
+    else if (ui->discountsComboBox->currentIndex() == 2)
+        orderTotalDiscountCost = orderTotalCost - ((orderTotalCost * promotionDiscount) / 100);
+
+    else if (ui->discountsComboBox->currentIndex() == 3)
+        orderTotalDiscountCost = orderTotalCost - ((orderTotalCost * specialCondidtionsDiscount) / 100);
+
+    else if (ui->discountsComboBox->currentIndex() == 4)
+        orderTotalDiscountCost = orderTotalCost - ((orderTotalCost * regularCustomerDiscount) / 100);
+
+    // cost update
+    QString orderTotalDiscountCostDB = QString("%1").arg(orderTotalDiscountCost, 0, 'f', 2);
+
+    queryOrders.prepare("UPDATE OrdersHistory SET price = ? WHERE id_order = ?");
+    queryOrders.addBindValue(orderTotalDiscountCostDB);
+    queryOrders.addBindValue(id);
+    queryOrders.exec();
 
     QDialog::close();
 
