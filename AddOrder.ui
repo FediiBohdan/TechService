@@ -2653,46 +2653,6 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="0" column="1" rowspan="3">
-      <widget class="QPushButton" name="openMapButton">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::StrongFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-       </property>
-       <property name="text">
-        <string>Открыть карту</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="1">
       <widget class="QPushButton" name="createOrderButton">
        <property name="minimumSize">
@@ -2741,6 +2701,46 @@ QPushButton:pressed {
          <width>30</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" rowspan="4">
+      <widget class="QPushButton" name="openMapButton">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+       </property>
+       <property name="text">
+        <string>Открыть карту</string>
        </property>
        <property name="autoDefault">
         <bool>false</bool>

@@ -28,10 +28,10 @@ AddOrder::AddOrder(QWidget *parent) :
 
     ui->removeLastSparePartButton->setEnabled(false);
 
+    ui->clientTypeComboBox->addItems(QStringList() << tr("Физ. лицо") << tr("Юр. лицо"));
     ui->orderStatusComboBox->addItems(QStringList() << tr("Заявка") << tr("В работе") << tr("Завершен, неоплачен") << tr("Завершен, оплачен"));
     ui->discountsComboBox->addItems(QStringList() << tr("Нет") << tr("Купон") << tr("Акция") << tr("Особые условия") << tr("Постоянный клиент"));
     ui->serviceComboBox->addItems(QStringList() << "Среднефонтанская, 30А (Приморский р-н)" << "Платонова, 56 (Малиновский р-н)" << "Архитекторская, 28 (Киевский р-н)");
-    ui->clientTypeComboBox->addItems(QStringList() << tr("Физ. лицо") << tr("Юр. лицо"));
 
     connect(ui->serviceComboBox, &QComboBox::currentTextChanged, this, &AddOrder::updateEmployeesTable);
 
@@ -334,55 +334,61 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->mechanicLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
         queryOrderDetail.addBindValue(id);
         queryOrderDetail.addBindValue(ui->mechanicLine->text());
         queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
+        queryOrderDetail.addBindValue("Механик");
         queryOrderDetail.exec();
     }
 
     if (!ui->mechanic2Line->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
         queryOrderDetail.addBindValue(id);
         queryOrderDetail.addBindValue(ui->mechanic2Line->text());
         queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
+        queryOrderDetail.addBindValue("Механик");
         queryOrderDetail.exec();
     }
 
     if (!ui->diagnosticianLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
         queryOrderDetail.addBindValue(id);
         queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
         queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
+        queryOrderDetail.addBindValue("Диагност");
         queryOrderDetail.exec();
     }
 
     if (!ui->electronicsLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
         queryOrderDetail.addBindValue(id);
         queryOrderDetail.addBindValue(ui->electronicsLine->text());
         queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
+        queryOrderDetail.addBindValue("Электронщик");
         queryOrderDetail.exec();
     }
 
     if (!ui->locksmithLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
         queryOrderDetail.addBindValue(id);
         queryOrderDetail.addBindValue(ui->locksmithLine->text());
         queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
+        queryOrderDetail.addBindValue("Слесарь");
         queryOrderDetail.exec();
     }
 
     if (!ui->washerLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours) VALUES(?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
         queryOrderDetail.addBindValue(id);
         queryOrderDetail.addBindValue(ui->washerLine->text());
         queryOrderDetail.addBindValue(ui->washerHoursLine->text());
+        queryOrderDetail.addBindValue("Мойщик");
         queryOrderDetail.exec();
     }
 

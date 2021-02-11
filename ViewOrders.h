@@ -38,6 +38,7 @@ private:
     UpdateOrders *updateOrders;
 
     QSqlDatabase ordersDB;
+    QSqlDatabase orderDetailDB;
 
     QString orderId;
 

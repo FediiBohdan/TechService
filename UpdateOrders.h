@@ -27,14 +27,16 @@ public slots:
     void setValues(const QString &id);
 
 private slots:
-    void on_backToViewInfoButton_clicked();
+    void openMap();
 
+    void on_backToViewInfoButton_clicked();
     void on_saveUpdatedInfo_clicked();
 
 private:
     Ui::UpdateOrders *ui;
 
     QSqlDatabase ordersDB;
+    QSqlDatabase orderDetailDB;
 
     QString orderId;
 };
