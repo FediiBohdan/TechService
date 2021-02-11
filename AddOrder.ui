@@ -1211,7 +1211,7 @@ QHeaderView::section {
          <number>2</number>
         </property>
         <item row="2" column="0" rowspan="8">
-         <widget class="QTableView" name="EmployeesBySetrviceTable">
+         <widget class="QTableView" name="employeesByServiceTable">
           <property name="minimumSize">
            <size>
             <width>370</width>

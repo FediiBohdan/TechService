@@ -46,7 +46,6 @@ private:
     QSqlDatabase listSparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
     QSqlDatabase orderDetailTable = QSqlDatabase::database("OrderDetailTable");
 
-    QSqlDatabase testDB;
     QSqlDatabase clientsDB;
     QSqlDatabase sparePartsDB;
     QSqlDatabase orderDetailDB;

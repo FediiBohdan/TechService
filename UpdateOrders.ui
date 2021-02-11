@@ -177,7 +177,7 @@ QPushButton:pressed {
        <item row="0" column="0">
         <widget class="QLabel" name="updateDateLabel">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="minimumSize">
           <size>
@@ -197,9 +197,7 @@ QPushButton:pressed {
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLabel {
-	color: transparent;
-}</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Дата изменения</string>
@@ -214,7 +212,7 @@ QPushButton:pressed {
          <item row="0" column="0">
           <widget class="QLineEdit" name="updateDateLine">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="minimumSize">
             <size>
@@ -241,8 +239,13 @@ QPushButton:pressed {
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
-	background-color: transparent;
-	border: 0px;
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom: none;
 }</string>
            </property>
           </widget>
@@ -250,7 +253,7 @@ QPushButton:pressed {
          <item row="1" column="0">
           <widget class="QLineEdit" name="updateTimeLine">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="minimumSize">
             <size>
@@ -277,8 +280,13 @@ QPushButton:pressed {
            </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit {
-	background-color: transparent;
-	border: 0px;
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-top: none;
 }</string>
            </property>
           </widget>
@@ -1240,7 +1248,7 @@ QHeaderView::section {
          <number>2</number>
         </property>
         <item row="2" column="0" rowspan="8">
-         <widget class="QTableView" name="EmployeesBySetrviceTable">
+         <widget class="QTableView" name="employeesByServiceTable">
           <property name="minimumSize">
            <size>
             <width>370</width>
@@ -2683,7 +2691,7 @@ QPushButton:pressed {
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QPushButton" name="createOrderButton">
+      <widget class="QPushButton" name="saveUpdatedInfo">
        <property name="minimumSize">
         <size>
          <width>40</width>

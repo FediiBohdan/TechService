@@ -20,7 +20,7 @@ AddOrder::AddOrder(QWidget *parent) :
 
     connect(ui->openMapButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
     connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSparePartsTable);
-    connect(ui->EmployeesBySetrviceTable, &QAbstractItemView::clicked, this, &AddOrder::setOrderEmployees);
+    connect(ui->employeesByServiceTable, &QAbstractItemView::clicked, this, &AddOrder::setOrderEmployees);
 
     ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
@@ -191,16 +191,16 @@ void AddOrder::loadEmployeesTable()
     queryEmployeesModel->setHeaderData(2, Qt::Horizontal, tr("Должность"));
     queryEmployeesModel->setHeaderData(3, Qt::Horizontal, tr("Почасовая оплата"));
 
-    ui->EmployeesBySetrviceTable->setModel(queryEmployeesModel);
+    ui->employeesByServiceTable->setModel(queryEmployeesModel);
 
-    ui->EmployeesBySetrviceTable->setColumnHidden(0, true);
-    ui->EmployeesBySetrviceTable->setColumnHidden(3, true);
+    ui->employeesByServiceTable->setColumnHidden(0, true);
+    ui->employeesByServiceTable->setColumnHidden(3, true);
 
-    ui->EmployeesBySetrviceTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
-    ui->EmployeesBySetrviceTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->EmployeesBySetrviceTable->horizontalHeader()->setSectionsClickable(false);
-    ui->EmployeesBySetrviceTable->resizeColumnsToContents();
-    ui->EmployeesBySetrviceTable->verticalHeader()->hide();
+    ui->employeesByServiceTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->employeesByServiceTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->employeesByServiceTable->horizontalHeader()->setSectionsClickable(false);
+    ui->employeesByServiceTable->resizeColumnsToContents();
+    ui->employeesByServiceTable->verticalHeader()->hide();
 }
 
 void AddOrder::setOrderEmployees(const QModelIndex &index)
@@ -395,9 +395,10 @@ void AddOrder::on_createOrderButton_clicked()
     // Simultaneous insertion into client table
     QSqlQuery queryClients(clientsDB);
 
-    queryClients.prepare("INSERT INTO ClientsTable (client_type, client_FML_name, contacts, auto_brand, auto_model, auto_license_plate, "
-        "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
+    queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, auto_brand, auto_model, auto_license_plate, "
+        "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+    queryClients.addBindValue(id);
     queryClients.addBindValue(ui->clientTypeComboBox->currentText());
     queryClients.addBindValue(client);
     queryClients.addBindValue(contacts);
