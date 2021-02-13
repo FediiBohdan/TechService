@@ -10,6 +10,8 @@ ListClients::ListClients(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
+    QDialog::showMaximized();
+
     ui->tableView->verticalHeader()->setSectionsClickable(false);
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
 
@@ -23,6 +25,10 @@ ListClients::ListClients(QWidget *parent) :
 
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListClients::showClientInfo);
 
+    ui->searchComboBox->addItems(QStringList() << tr("Поиск по имени") << tr("Поиск по номеру"));
+
+    searchFlag = false;
+
     loadTable();
 }
 
@@ -35,20 +41,29 @@ void ListClients::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString;
+    QString queryString = "SELECT id_client, client_type, client_FML_name, contacts, email, auto_model, auto_license_plate, manufacture_year, "
+                          "VIN_number FROM ClientsTable ";
 
-    queryString = "SELECT id_client, client_FML_name, contacts, auto_model, auto_license_plate, manufacture_year, "
-        "VIN_number FROM ClientsTable";
+    QString searchString;
 
-    queryModel->setQuery(queryString, clientsTable);
+    if (searchFlag && ui->searchComboBox->currentIndex() == 0)
+        searchString.append("WHERE client_FML_name LIKE '%" + ui->clientSearch->text() + "%' GROUP BY id_client ORDER BY client_FML_name ASC");
+    else if (searchFlag && ui->searchComboBox->currentIndex() == 1)
+        searchString.append("WHERE contacts LIKE '%" + ui->clientSearch->text() + "%' GROUP BY id_client ORDER BY client_FML_name ASC");
+
+    queryString.append(searchString);
+
+    queryModel->setQuery(queryString);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
-    queryModel->setHeaderData(1, Qt::Horizontal, tr("ФИО клиента"));
-    queryModel->setHeaderData(2, Qt::Horizontal, tr("Контакты"));
-    queryModel->setHeaderData(3, Qt::Horizontal, tr("Модель авто"));
-    queryModel->setHeaderData(4, Qt::Horizontal, tr("Госномер"));
-    queryModel->setHeaderData(5, Qt::Horizontal, tr("Год производства"));
-    queryModel->setHeaderData(6, Qt::Horizontal, tr("VIN-номер"));
+    queryModel->setHeaderData(1, Qt::Horizontal, tr("Тип клиента"));
+    queryModel->setHeaderData(2, Qt::Horizontal, tr("ФИО клиента"));
+    queryModel->setHeaderData(3, Qt::Horizontal, tr("Контакты"));
+    queryModel->setHeaderData(4, Qt::Horizontal, tr("Электронная почта"));
+    queryModel->setHeaderData(5, Qt::Horizontal, tr("Модель авто"));
+    queryModel->setHeaderData(6, Qt::Horizontal, tr("Госномер"));
+    queryModel->setHeaderData(7, Qt::Horizontal, tr("Год производства"));
+    queryModel->setHeaderData(8, Qt::Horizontal, tr("VIN-номер"));
 
     ui->tableView->setModel(queryModel);
 
@@ -56,10 +71,13 @@ void ListClients::loadTable()
 
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
+    ui->tableView->resizeRowsToContents();
 }
 
 void ListClients::on_addClientButton_clicked()
 {
+    QDialog::close();
+
     addClient = new AddClient;
     addClient->show();
     addClient->setAttribute(Qt::WA_DeleteOnClose);
@@ -75,4 +93,21 @@ void ListClients::showClientInfo(const QModelIndex &index)
     viewClient->setValues(clientId);
     viewClient->show();
     viewClient->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ListClients::on_clientSearch_returnPressed()
+{
+    if (ui->clientSearch->text().isEmpty())
+        searchFlag = false;
+    else
+        searchFlag = true;
+
+    on_updateButton_clicked();
+}
+
+void ListClients::on_updateButton_clicked()
+{
+    queryModel->setQuery(NULL);
+
+    loadTable();
 }

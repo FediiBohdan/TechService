@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1428</width>
-    <height>997</height>
+    <height>999</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -853,6 +853,41 @@ QPushButton:pressed {
          </property>
          <property name="text">
           <string>Пробег</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="emailLine">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_30">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Электронная почта</string>
          </property>
         </widget>
        </item>

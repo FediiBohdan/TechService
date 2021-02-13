@@ -2,11 +2,13 @@
 #define UPDATECLIENTS_H
 
 #include "ViewClient.h"
+#include "ListClients.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
 
 class ViewClient;
+class ListClients;
 
 namespace Ui {
 class UpdateClients;
@@ -27,8 +29,9 @@ public slots:
     void setValues(const QString &id);
 
 private slots:
-    void on_saveUpdatedInfo_clicked();
+    void closeEvent(QCloseEvent *);
 
+    void on_saveUpdatedInfo_clicked();
     void on_backToViewInfoButton_clicked();
 
 private:
@@ -37,6 +40,8 @@ private:
     QSqlDatabase clientsDB;
 
     QString clientId;
+
+    ListClients *listClients;
 };
 
 #endif // UPDATECLIENTS_H

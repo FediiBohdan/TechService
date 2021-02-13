@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>768</width>
-    <height>509</height>
+    <width>1069</width>
+    <height>691</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,6 +20,13 @@
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="0">
+    <widget class="QTableView" name="tableView">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
@@ -42,7 +49,7 @@ border-radius: 7px;
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="2">
+      <item row="0" column="4">
        <widget class="QPushButton" name="updateButton">
         <property name="minimumSize">
          <size>
@@ -90,7 +97,41 @@ QPushButton:pressed {
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0">
+       <widget class="QComboBox" name="searchComboBox">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QComboBox {
+	border: 1px solid gray;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 6px;
+}</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
        <widget class="QPushButton" name="addClientButton">
         <property name="minimumSize">
          <size>
@@ -138,27 +179,35 @@ QPushButton:pressed {
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="clientSearch">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
         </property>
-       </spacer>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QTableView" name="tableView"/>
-   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>searchComboBox</tabstop>
+  <tabstop>clientSearch</tabstop>
+  <tabstop>addClientButton</tabstop>
+  <tabstop>updateButton</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

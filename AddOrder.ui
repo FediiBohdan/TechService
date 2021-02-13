@@ -819,6 +819,41 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="emailLine">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_30">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Электронная почта</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
@@ -2615,19 +2650,7 @@ QPushButton:pressed {
    </item>
    <item row="2" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_7">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Отзыв клиента</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" rowspan="4">
+     <item row="1" column="0" rowspan="3">
       <widget class="QTextEdit" name="feedback">
        <property name="maximumSize">
         <size>
@@ -2653,7 +2676,47 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1" colspan="2">
+      <widget class="QPushButton" name="openMapButton">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+       </property>
+       <property name="text">
+        <string>Открыть карту</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
       <widget class="QPushButton" name="createOrderButton">
        <property name="minimumSize">
         <size>
@@ -2707,43 +2770,44 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="0" column="1" rowspan="4">
-      <widget class="QPushButton" name="openMapButton">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>25</height>
-        </size>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
        </property>
+       <property name="text">
+        <string>Отзыв клиента</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="3">
+      <widget class="QLineEdit" name="lineEdit_2">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
-       <property name="focusPolicy">
-        <enum>Qt::StrongFocus</enum>
-       </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
+        <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
 }</string>
        </property>
-       <property name="text">
-        <string>Открыть карту</string>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="3">
+      <widget class="QLabel" name="label_31">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
        </property>
-       <property name="autoDefault">
-        <bool>false</bool>
+       <property name="text">
+        <string>Дата и время приема</string>
        </property>
       </widget>
      </item>
@@ -2782,7 +2846,6 @@ QPushButton:pressed {
   <tabstop>clearWasherButton</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
-  <tabstop>openMapButton</tabstop>
   <tabstop>createOrderButton</tabstop>
  </tabstops>
  <resources>

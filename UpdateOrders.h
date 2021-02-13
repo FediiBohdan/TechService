@@ -83,11 +83,20 @@ private:
 
     QWidget *addWidgetCompatibilityContent(int rowIndex);
 
-    QString orderId;
     bool searchFlag;
+    bool mechanicFlag;
+    bool mechanic2Flag;
+    bool diagnosticianFlag;
+    bool electronicFlag;
+    bool locksmithFlag;
+    bool washerFlag;
+
+    QString orderId;
     QString sparePartsList;
+
     float sparePartCost;
     float sparePartsCost = 0;
+
     int sparePartNameLength = 0;
     int mechanicHourPayment = 0;
     int mechanic2HourPayment = 0;

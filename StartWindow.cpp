@@ -85,16 +85,16 @@ void StartWindow::loadTasksList()
     ui->completedTasksTableView->setModel(queryModel);
     ui->completedTasksTableView->setColumnHidden(0, true);
     ui->completedTasksTableView->verticalHeader()->hide();
-    ui->completedTasksTableView->setColumnWidth(1, 84);
-    ui->completedTasksTableView->setColumnWidth(2, 280);
+    ui->completedTasksTableView->setColumnWidth(1, 95);
+    ui->completedTasksTableView->setColumnWidth(2, 287);
     ui->completedTasksTableView->horizontalHeader()->setSectionsClickable(false);
 
     // tableView with not completed tasks
     ui->notCompletedTasksTableView->setModel(queryModel);
     ui->notCompletedTasksTableView->setColumnHidden(0, true);
     ui->notCompletedTasksTableView->verticalHeader()->hide();
-    ui->notCompletedTasksTableView->setColumnWidth(1, 84);
-    ui->notCompletedTasksTableView->setColumnWidth(2, 280);
+    ui->notCompletedTasksTableView->setColumnWidth(1, 95);
+    ui->notCompletedTasksTableView->setColumnWidth(2, 288);
     ui->notCompletedTasksTableView->horizontalHeader()->setSectionsClickable(false);
 
     for (int rowIndex = 0; rowIndex < ui->completedTasksTableView->model()->rowCount(); ++rowIndex)

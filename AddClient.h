@@ -1,6 +1,8 @@
 #ifndef ADDCLIENT_H
 #define ADDCLIENT_H
 
+#include "ListClients.h"
+
 #include <QDialog>
 #include <QMessageBox>
 #include <QSqlDatabase>
@@ -9,6 +11,8 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QDir>
+
+class ListClients;
 
 namespace Ui {
 class AddClient;
@@ -25,10 +29,14 @@ public:
 private slots:
     void on_saveClientButton_clicked();
 
+    void closeEvent(QCloseEvent *);
+
 private:
     Ui::AddClient *ui;
 
-    QSqlDatabase listClients = QSqlDatabase::database("ClientsTable");
+    ListClients *listClients;
+
+    QSqlDatabase listClientsTable = QSqlDatabase::database("ClientsTable");
     QSqlDatabase clientsDB;
     QPointer<QSqlQueryModel> queryModel;
 };

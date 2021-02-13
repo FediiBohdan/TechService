@@ -39,7 +39,9 @@ void ViewClient::setValues(const QString &id)
     query.next();
 
     ui->clientFMLnameLine->setText(query.value(0).toString());
-    ui->contactsLine->setText(query.value(1).toString());
+    QString contacts = query.value(1).toString();
+    contacts.replace("\n", ", ");
+    ui->contactsLine->setText(contacts);
     ui->autoModelLine->setText(query.value(2).toString());
     ui->autoLicensePlateLine->setText(query.value(3).toString());
     ui->manufactureYearLine->setText(query.value(4).toString());

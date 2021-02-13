@@ -305,15 +305,18 @@ void AddOrder::on_createOrderButton_clicked()
     if (error)
         return;
 
-    queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, contacts, auto_brand, auto_model, "
+    contacts.replace(", ", "\n");
+
+    queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, contacts, email, auto_brand, auto_model, "
                 "manufacture_year, VIN_number, auto_license_plate, service_address, discounts, order_status, spare_parts_list, works_list, feedback) "
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(client);
     queryOrders.addBindValue(date);
     queryOrders.addBindValue(ui->timeLine->text());
     queryOrders.addBindValue(contacts);
+    queryOrders.addBindValue(ui->emailLine->text());
     queryOrders.addBindValue(brandModel);
     queryOrders.addBindValue(ui->modelLine->text());
     queryOrders.addBindValue(ui->yearLine->text());
@@ -348,7 +351,7 @@ void AddOrder::on_createOrderButton_clicked()
         queryOrderDetail.addBindValue(id);
         queryOrderDetail.addBindValue(ui->mechanic2Line->text());
         queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
-        queryOrderDetail.addBindValue("Механик");
+        queryOrderDetail.addBindValue("Механик_2");
         queryOrderDetail.exec();
     }
 
@@ -395,13 +398,14 @@ void AddOrder::on_createOrderButton_clicked()
     // Simultaneous insertion into client table
     QSqlQuery queryClients(clientsDB);
 
-    queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, auto_brand, auto_model, auto_license_plate, "
-        "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, "
+        "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryClients.addBindValue(id);
     queryClients.addBindValue(ui->clientTypeComboBox->currentText());
     queryClients.addBindValue(client);
     queryClients.addBindValue(contacts);
+    queryClients.addBindValue(ui->emailLine->text());
     queryClients.addBindValue(brandModel);
     queryClients.addBindValue(ui->modelLine->text());
     queryClients.addBindValue(ui->autoLicensePlateLine->text());

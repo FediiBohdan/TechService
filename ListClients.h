@@ -3,6 +3,7 @@
 
 #include "AddClient.h"
 #include "ViewClient.h"
+#include "UpdateClients.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -12,8 +13,11 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QDir>
+#include <QLabel>
 
 class ViewClient;
+class AddClient;
+class UpdateClients;
 
 namespace Ui {
 class ListClients;
@@ -33,11 +37,17 @@ private slots:
 
     void on_addClientButton_clicked();
 
+    void on_clientSearch_returnPressed();
+
+    void on_updateButton_clicked();
+
 private:
     Ui::ListClients *ui;
 
     AddClient *addClient;
     ViewClient *viewClient;
+
+    bool searchFlag;
 
     QSqlDatabase clientsTable = QSqlDatabase::database("ClientsTable");
     QSqlDatabase clientsDB;
