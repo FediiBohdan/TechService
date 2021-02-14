@@ -248,7 +248,7 @@ void UpdateOrders::setValues(const QString &id)
 
     QSqlQuery query(ordersDB);
 
-    query.prepare("SELECT DISTINCT client_type, client, creation_date, creation_time, contacts, email, auto_brand, auto_model, manufacture_year, "
+    query.prepare("SELECT DISTINCT client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, manufacture_year, "
                   "VIN_number, auto_license_plate, service_address, discounts, order_status, spare_parts_list, works_list, feedback "
                   "FROM OrdersHistory WHERE id_order = " + orderId);
 
@@ -264,15 +264,16 @@ void UpdateOrders::setValues(const QString &id)
     ui->clientLine->setText(query.value(1).toString());
     ui->dateLine->setText(query.value(2).toString());
     ui->timeLine->setText(query.value(3).toString());
-    ui->contactLine->setText(query.value(4).toString());
-    ui->emailLine->setText(query.value(5).toString());
-    ui->brandLine->setText(query.value(6).toString());
-    ui->modelLine->setText(query.value(7).toString());
-    ui->yearLine->setText(query.value(8).toString());
-    ui->VIN_Line->setText(query.value(9).toString());
-    ui->autoLicensePlateLine->setText(query.value(10).toString());
+    ui->receptionLine->setText(query.value(4).toString());
+    ui->contactLine->setText(query.value(5).toString());
+    ui->emailLine->setText(query.value(6).toString());
+    ui->brandLine->setText(query.value(7).toString());
+    ui->modelLine->setText(query.value(8).toString());
+    ui->yearLine->setText(query.value(9).toString());
+    ui->VIN_Line->setText(query.value(10).toString());
+    ui->autoLicensePlateLine->setText(query.value(11).toString());
 
-    QString serviceAddress = query.value(11).toString();
+    QString serviceAddress = query.value(12).toString();
     if (serviceAddress == "Среднефонтанская, 30А (Приморский р-н)")
         ui->serviceComboBox->setCurrentIndex(0);
     else if (serviceAddress == "Платонова, 56 (Малиновский р-н)")
@@ -280,7 +281,7 @@ void UpdateOrders::setValues(const QString &id)
     else if (serviceAddress == "(Архитекторская, 28 (Киевский р-н)")
         ui->serviceComboBox->setCurrentIndex(2);
 
-    QString discountType = query.value(12).toString();
+    QString discountType = query.value(13).toString();
     if (discountType == "Нет" || discountType == "Немає")
         ui->discountsComboBox->setCurrentIndex(0);
     else if (discountType == "Купон" || discountType == "Coupon")
@@ -292,7 +293,7 @@ void UpdateOrders::setValues(const QString &id)
     else if (discountType == "Постоянный клиент" || discountType == "Постійний клієнт")
         ui->discountsComboBox->setCurrentIndex(4);
 
-    QString orderStatus = query.value(13).toString();
+    QString orderStatus = query.value(14).toString();
     if (orderStatus == "Заявка")
         ui->orderStatusComboBox->setCurrentIndex(0);
     else if (orderStatus == "В работе")
@@ -302,9 +303,9 @@ void UpdateOrders::setValues(const QString &id)
     else if (orderStatus == "Завершен, оплачен")
         ui->orderStatusComboBox->setCurrentIndex(3);
 
-    ui->sparePartsList->setText(query.value(14).toString());
-    ui->worksList->setText(query.value(15).toString());
-    ui->feedback->setText(query.value(16).toString());
+    ui->sparePartsList->setText(query.value(15).toString());
+    ui->worksList->setText(query.value(16).toString());
+    ui->feedback->setText(query.value(17).toString());
 
     QSqlQuery queryEmployee(orderDetailDB);
 
@@ -416,7 +417,7 @@ void UpdateOrders::on_saveUpdatedInfo_clicked()
     if (error)
         return;
 
-    queryOrders.prepare("UPDATE OrdersHistory SET client_type = ?, client = ?, updating_date = ?,  updating_time = ?, contacts = ?, email = ?, "
+    queryOrders.prepare("UPDATE OrdersHistory SET client_type = ?, client = ?, updating_date = ?,  updating_time = ?, reception_date = ?, contacts = ?, email = ?, "
         "auto_brand = ?, auto_model = ?, manufacture_year = ?, VIN_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, "
         "order_status = ?, spare_parts_list = ?, works_list = ?, feedback = ? WHERE id_order = ?");
 
@@ -424,6 +425,7 @@ void UpdateOrders::on_saveUpdatedInfo_clicked()
     queryOrders.addBindValue(client);
     queryOrders.addBindValue(date);
     queryOrders.addBindValue(ui->updateTimeLine->text());
+    queryOrders.addBindValue(ui->receptionLine->text());
     queryOrders.addBindValue(contacts);
     queryOrders.addBindValue(ui->emailLine->text());
     queryOrders.addBindValue(brandModel);
@@ -608,21 +610,31 @@ void UpdateOrders::on_saveUpdatedInfo_clicked()
     }
 
     // Simultaneous insertion into client table
-    QSqlQuery queryClients(clientsDB);
+    QSqlQuery query(clientsDB);
+    query.prepare("SELECT EXISTS (SELECT client_FML_name, contacts FROM ClientsTable WHERE client_FML_name = '" + ui->clientLine->text() + "' AND contacts LIKE '%" + ui->contactLine->text() + "%')");
+    query.exec();
+    query.next();
 
-    queryClients.prepare("UPDATE ClientsTable SET client_type = ?, client_FML_name = ?, contacts = ?, auto_brand = ?, auto_model = ?, auto_license_plate = ?, "
-        "manufacture_year = ?, VIN_number = ? WHERE id_order = ?");
+    if (query.value(0) != 0)
+        ui->techLabel->setHidden(true);
+    else if (query.value(0) == 0)
+    {
+        QSqlQuery queryClients(clientsDB);
 
-    queryClients.addBindValue(ui->clientTypeComboBox->currentText());
-    queryClients.addBindValue(client);
-    queryClients.addBindValue(contacts);
-    queryClients.addBindValue(brandModel);
-    queryClients.addBindValue(ui->modelLine->text());
-    queryClients.addBindValue(ui->autoLicensePlateLine->text());
-    queryClients.addBindValue(ui->yearLine->text());
-    queryClients.addBindValue(ui->VIN_Line->text());
-    queryClients.addBindValue(orderId);
-    queryClients.exec();
+        queryClients.prepare("UPDATE ClientsTable SET client_type = ?, client_FML_name = ?, contacts = ?, auto_brand = ?, auto_model = ?, auto_license_plate = ?, "
+            "manufacture_year = ?, VIN_number = ? WHERE id_order = ?");
+
+        queryClients.addBindValue(ui->clientTypeComboBox->currentText());
+        queryClients.addBindValue(client);
+        queryClients.addBindValue(contacts);
+        queryClients.addBindValue(brandModel);
+        queryClients.addBindValue(ui->modelLine->text());
+        queryClients.addBindValue(ui->autoLicensePlateLine->text());
+        queryClients.addBindValue(ui->yearLine->text());
+        queryClients.addBindValue(ui->VIN_Line->text());
+        queryClients.addBindValue(orderId);
+        queryClients.exec();
+    }
 
     // order price calculation
     // employees payment calculation

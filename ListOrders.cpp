@@ -40,7 +40,7 @@ void ListOrders::loadTable()
     queryModel = new QSqlQueryModel(this);
 
     QString queryString;
-    queryString = "SELECT id_order, order_status, creation_date, updating_date, client_type, client, contacts, auto_brand, auto_model, "
+    queryString = "SELECT id_order, order_status, creation_date, reception_date, client_type, client, contacts, auto_brand, auto_model, "
         "auto_license_plate, manufacture_year, VIN_number, service_address, price FROM OrdersHistory ";
 
     QString searchString;
@@ -56,10 +56,10 @@ void ListOrders::loadTable()
     queryModel->insertColumn(1);
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Готово"));
     queryModel->setHeaderData(2, Qt::Horizontal, tr("Статус"));
-    queryModel->setHeaderData(3, Qt::Horizontal, tr("Дата создания"));
-    queryModel->setHeaderData(4, Qt::Horizontal, tr("Дата обновления"));
+    queryModel->setHeaderData(3, Qt::Horizontal, tr("Создано"));
+    queryModel->setHeaderData(4, Qt::Horizontal, tr("Дата приема"));
     queryModel->setHeaderData(5, Qt::Horizontal, tr("Тип клиента"));
-    queryModel->setHeaderData(6, Qt::Horizontal, tr("ФИО клиента"));
+    queryModel->setHeaderData(6, Qt::Horizontal, tr("ФИО клиента (название)"));
     queryModel->setHeaderData(7, Qt::Horizontal, tr("Контакты"));
     queryModel->setHeaderData(8, Qt::Horizontal, tr("Марка авто"));
     queryModel->setHeaderData(9, Qt::Horizontal, tr("Модель авто"));
@@ -74,10 +74,7 @@ void ListOrders::loadTable()
     ui->tableView->setColumnHidden(0, true);
 
     for (int rowIndex = 0; rowIndex < ui->tableView->model()->rowCount(); ++rowIndex)
-    {
-        //ui->tableView->setIndexWidget(queryModel->index(rowIndex, 3), addWidgetContent(rowIndex));
         ui->tableView->setIndexWidget(queryModel->index(rowIndex, 1), addCheckBoxCompleted(rowIndex));
-    }
 
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();

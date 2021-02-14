@@ -40,5 +40,6 @@
         <file>images/toyota.png</file>
         <file>images/infiniti.png</file>
         <file>images/returnEmployee.png</file>
+        <file>images/map.png</file>
     </qresource>
 </RCC>

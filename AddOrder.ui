@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1431</width>
-    <height>943</height>
+    <height>954</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -264,6 +264,41 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QGridLayout" name="gridLayout_5">
+       <item row="1" column="0">
+        <widget class="QComboBox" name="clientTypeComboBox">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QComboBox {
+	border: 1px solid gray;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 6px;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="brandLine">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="4" colspan="2">
         <widget class="QLabel" name="autoErrorLabel">
          <property name="sizePolicy">
@@ -293,69 +328,6 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QLabel" name="clientErrorLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>18</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel {
-	color: red;
-}</string>
-         </property>
-         <property name="text">
-          <string>Поле с данными клиента не должно быть пустым!</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLineEdit" name="brandLine">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QLineEdit" name="modelLine">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="5">
         <widget class="QLabel" name="label_16">
          <property name="font">
@@ -365,35 +337,6 @@
          </property>
          <property name="text">
           <string>Модель автомобиля</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Марка автомобиля</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="dateErrorLabel">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel {
-	color: red;
-}</string>
-         </property>
-         <property name="text">
-          <string>Дата и (или) время отсутствуют!</string>
          </property>
         </widget>
        </item>
@@ -417,6 +360,36 @@
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_12">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Клиент</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Марка автомобиля</string>
          </property>
         </widget>
        </item>
@@ -449,15 +422,78 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="label_7">
+       <item row="2" column="1" colspan="2">
+        <widget class="QLabel" name="clientErrorLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>18</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	color: red;
+}</string>
+         </property>
+         <property name="text">
+          <string>Поле с данными клиента не должно быть пустым!</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QLineEdit" name="modelLine">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_17">
          <property name="font">
           <font>
            <pointsize>9</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Контактный номер</string>
+          <string>Тип клиента</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="dateErrorLabel">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	color: red;
+}</string>
+         </property>
+         <property name="text">
+          <string>Дата и (или) время отсутствуют!</string>
          </property>
         </widget>
        </item>
@@ -487,51 +523,15 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_12">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_7">
          <property name="font">
           <font>
            <pointsize>9</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Клиент</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="clientTypeComboBox">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QComboBox {
-	border: 1px solid gray;
-    border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 6px;
-}</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_17">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Тип клиента</string>
+          <string>Контактные номера</string>
          </property>
         </widget>
        </item>
@@ -851,6 +851,18 @@
          </property>
          <property name="text">
           <string>Электронная почта</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="techLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	color: transparent;
+}</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
          </property>
         </widget>
        </item>
@@ -2650,12 +2662,36 @@ QPushButton:pressed {
    </item>
    <item row="2" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_7">
-     <item row="1" column="0" rowspan="3">
-      <widget class="QTextEdit" name="feedback">
-       <property name="maximumSize">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Отзыв клиента</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" rowspan="2" colspan="4">
+      <widget class="QLabel" name="label_31">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Дата / время приема</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="4">
+      <widget class="QLineEdit" name="receptionLine">
+       <property name="minimumSize">
         <size>
-         <width>16777215</width>
-         <height>16777215</height>
+         <width>160</width>
+         <height>0</height>
         </size>
        </property>
        <property name="font">
@@ -2664,59 +2700,16 @@ QPushButton:pressed {
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QTextEdit {
+        <string notr="true">QLineEdit {
 	border: 1px solid gray;
     border-radius: 7px;
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
        </property>
-       <property name="placeholderText">
-        <string>Текст отзыва</string>
-       </property>
       </widget>
      </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QPushButton" name="openMapButton">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::StrongFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-       </property>
-       <property name="text">
-        <string>Открыть карту</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="3">
+     <item row="5" column="4">
       <widget class="QPushButton" name="createOrderButton">
        <property name="minimumSize">
         <size>
@@ -2770,46 +2763,103 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_11">
+     <item row="5" column="3">
+      <widget class="QPushButton" name="openMapButton">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="font">
         <font>
-         <pointsize>9</pointsize>
+         <pointsize>10</pointsize>
         </font>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+       </property>
        <property name="text">
-        <string>Отзыв клиента</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/images/map.png</normaloff>:/images/map.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>36</width>
+         <height>36</height>
+        </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="2" column="1" colspan="3">
-      <widget class="QLineEdit" name="lineEdit_2">
+     <item row="1" column="0" rowspan="5">
+      <widget class="QTextEdit" name="feedback">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QLineEdit {
+        <string notr="true">QTextEdit {
 	border: 1px solid gray;
     border-radius: 7px;
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
        </property>
+       <property name="placeholderText">
+        <string>Текст отзыва</string>
+       </property>
       </widget>
      </item>
-     <item row="1" column="1" colspan="3">
-      <widget class="QLabel" name="label_31">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
+     <item row="4" column="1">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
-       <property name="text">
-        <string>Дата и время приема</string>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
        </property>
-      </widget>
+      </spacer>
      </item>
     </layout>
    </item>

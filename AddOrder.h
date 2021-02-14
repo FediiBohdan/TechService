@@ -36,6 +36,7 @@ public:
 
 public slots:
     void closeWindow();
+    void setValues(const QString &clientName, const QString &clientContacts, const QString &autoBrand);
 
 private:
     Ui::AddOrder *ui;
@@ -64,6 +65,7 @@ private:
     QWidget *addWidgetCompatibilityContent(int rowIndex);
 
     bool searchFlag;
+    bool openFlag = true;
     QString sparePartsList;
     float sparePartCost;
     float sparePartsCost = 0;

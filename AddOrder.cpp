@@ -50,11 +50,15 @@ AddOrder::~AddOrder()
 
 void AddOrder::closeEvent(QCloseEvent *)
 {
-    QDialog::close();
-
-    listOrders = new ListOrders;
-    listOrders->show();
-    listOrders->setAttribute(Qt::WA_DeleteOnClose);
+    if (openFlag)
+    {
+        QDialog::close();
+        listOrders = new ListOrders;
+        listOrders->show();
+        listOrders->setAttribute(Qt::WA_DeleteOnClose);
+    }
+    else if (openFlag == false)
+        QDialog::close();
 }
 
 void AddOrder::openMap()
@@ -66,6 +70,16 @@ void AddOrder::openMap()
 void AddOrder::closeWindow()
 {
     close();
+}
+
+// Gets employee's id from ListEmployee
+void AddOrder::setValues(const QString &clientName, const QString &clientContacts, const QString &autoBrand)
+{
+    ui->clientLine->setText(clientName);
+    ui->contactLine->setText(clientContacts);
+    ui->brandLine->setText(autoBrand);
+
+    openFlag = false;
 }
 
 void AddOrder::loadSparePartsTable()
@@ -307,14 +321,15 @@ void AddOrder::on_createOrderButton_clicked()
 
     contacts.replace(", ", "\n");
 
-    queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, contacts, email, auto_brand, auto_model, "
+    queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, "
                 "manufacture_year, VIN_number, auto_license_plate, service_address, discounts, order_status, spare_parts_list, works_list, feedback) "
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(client);
     queryOrders.addBindValue(date);
     queryOrders.addBindValue(ui->timeLine->text());
+    queryOrders.addBindValue(ui->receptionLine->text());
     queryOrders.addBindValue(contacts);
     queryOrders.addBindValue(ui->emailLine->text());
     queryOrders.addBindValue(brandModel);
@@ -396,22 +411,32 @@ void AddOrder::on_createOrderButton_clicked()
     }
 
     // Simultaneous insertion into client table
-    QSqlQuery queryClients(clientsDB);
+    QSqlQuery query(clientsDB);
+    query.prepare("SELECT EXISTS (SELECT client_FML_name, contacts FROM ClientsTable WHERE client_FML_name = '" + ui->clientLine->text() + "' AND contacts LIKE '%" + ui->contactLine->text() + "%')");
+    query.exec();
+    query.next();
 
-    queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, "
-        "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    if (query.value(0) != 0)
+        ui->techLabel->setHidden(true);
+    else if (query.value(0) == 0)
+    {
+        QSqlQuery queryClients(clientsDB);
 
-    queryClients.addBindValue(id);
-    queryClients.addBindValue(ui->clientTypeComboBox->currentText());
-    queryClients.addBindValue(client);
-    queryClients.addBindValue(contacts);
-    queryClients.addBindValue(ui->emailLine->text());
-    queryClients.addBindValue(brandModel);
-    queryClients.addBindValue(ui->modelLine->text());
-    queryClients.addBindValue(ui->autoLicensePlateLine->text());
-    queryClients.addBindValue(ui->yearLine->text());
-    queryClients.addBindValue(ui->VIN_Line->text());
-    queryClients.exec();
+        queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, "
+            "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        queryClients.addBindValue(id);
+        queryClients.addBindValue(ui->clientTypeComboBox->currentText());
+        queryClients.addBindValue(client);
+        queryClients.addBindValue(contacts);
+        queryClients.addBindValue(ui->emailLine->text());
+        queryClients.addBindValue(brandModel);
+        queryClients.addBindValue(ui->modelLine->text());
+        queryClients.addBindValue(ui->autoLicensePlateLine->text());
+        queryClients.addBindValue(ui->yearLine->text());
+        queryClients.addBindValue(ui->VIN_Line->text());
+        queryClients.exec();
+    }
 
     // order price calculation
     // employees payment calculation

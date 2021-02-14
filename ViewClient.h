@@ -3,6 +3,7 @@
 
 #include "ListClients.h"
 #include "UpdateClients.h"
+#include "AddOrder.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -14,6 +15,7 @@
 
 class ListClients;
 class UpdateClients;
+class AddOrder;
 
 namespace Ui {
 class ViewClient;
@@ -28,6 +30,8 @@ public:
     ~ViewClient();
 
 public slots:
+    void loadOrderHistoryTable();
+
     void setValues(const QString &id);
     void receiveData(bool update);
 
@@ -36,14 +40,18 @@ private:
 
     ListClients *listClient;
     UpdateClients *updateClients;
+    AddOrder *addOrder;
+
+    QPointer<QSqlQueryModel> queryModel;
 
     QSqlDatabase clientsDB;
     QString clientId;
 
 private slots:
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent *);
 
     void on_updateClientInfoButton_clicked();
+    void on_createOrderByClientButton_clicked();
 };
 
 #endif // VIEWCLIENT_H

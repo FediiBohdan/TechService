@@ -91,6 +91,12 @@ border-radius: 7px;
           <height>40</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
         </property>
@@ -134,6 +140,12 @@ QPushButton:pressed {
       <item row="0" column="3">
        <widget class="QPushButton" name="updateButton">
         <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
          <size>
           <width>40</width>
           <height>40</height>
