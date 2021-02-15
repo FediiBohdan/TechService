@@ -62,8 +62,6 @@ private:
 
     ListOrders *listOrders;
 
-    QWidget *addWidgetCompatibilityContent(int rowIndex);
-
     bool searchFlag;
     bool openFlag = true;
     QString sparePartsList;

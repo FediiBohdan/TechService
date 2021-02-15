@@ -41,7 +41,9 @@ void ViewSparePart::setValues(const QString &id)
     ui->sparePartNameLine->setText(query.value(0).toString());
     ui->manufacturerLine->setText(query.value(1).toString());
     ui->quantityInStockLine->setText(query.value(2).toString());
-    ui->autoCompatibilityLine->setText(query.value(3).toString());
+    QString autoCompatibility = query.value(3).toString();
+    autoCompatibility.replace("\n", ", ");
+    ui->autoCompatibilityLine->setText(autoCompatibility);
     ui->isOriginalLine->setText(query.value(4).toString());
     ui->priceLine->setText(query.value(5).toString());
 }

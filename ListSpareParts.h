@@ -14,6 +14,10 @@
 #include <QSqlQuery>
 #include <QDebug>
 
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
+
 class StartWindow;
 class ViewSparePart;
 class AddSparePart;
@@ -49,6 +53,7 @@ private:
 
 private slots:
     void loadTable();
+    void saveAsCSV(QString filename);
     void showSparePartInfo(const QModelIndex &index);
 
     void on_addSparePartButton_clicked();
@@ -65,6 +70,7 @@ private slots:
     void on_infinitiSearchButton_clicked();
     void on_isuzuSearchButton_clicked();
     void on_acuraSearchButton_clicked();
+    void on_csvExportButton_clicked();
 
 public slots:
     void closeWindow();

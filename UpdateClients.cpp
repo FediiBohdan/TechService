@@ -100,9 +100,9 @@ void UpdateClients::setValues(const QString &id)
     query.next();
 
     QString clientType = query.value(0).toString();
-    if (clientType == "Физ. лицо")
+    if (clientType == "Физ. лицо" || clientType == "Фіз. особа" || clientType == "Private")
         ui->clientTypeComboBox->setCurrentIndex(0);
-    else if (clientType == "Юр. лицо")
+    else if (clientType == "Юр. лицо" || clientType == "Юр. особа" || clientType == "Organization")
         ui->clientTypeComboBox->setCurrentIndex(1);
 
     ui->clientFMLnameLine->setText(query.value(1).toString());

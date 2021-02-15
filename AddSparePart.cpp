@@ -51,6 +51,8 @@ void AddSparePart::on_createSparePartButton_clicked()
         return;
     }
 
+    autoCompatibility.replace(", ", "\n");
+
     queryOrders.prepare("INSERT INTO SparePartsCatalogue (spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
         "VALUES(?, ?, ?, ?, ?, ?)");
 

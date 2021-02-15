@@ -96,3 +96,6 @@ HEADERS += \
     ViewTask.h
 
 CODECFORSRC = UTF-8
+
+DISTFILES += \
+    images/csvExport.png

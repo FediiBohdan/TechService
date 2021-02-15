@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>467</height>
+    <width>850</width>
+    <height>531</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -155,7 +155,13 @@ QPushButton:pressed {
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QTableView" name="tableView"/>
+    <widget class="QTableView" name="tableView">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+	font-size: 9pt;
+}</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

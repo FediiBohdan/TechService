@@ -41,5 +41,6 @@
         <file>images/infiniti.png</file>
         <file>images/returnEmployee.png</file>
         <file>images/map.png</file>
+        <file>images/csvExport.png</file>
     </qresource>
 </RCC>

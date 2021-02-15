@@ -70,6 +70,44 @@ void ListSparePart::loadTable()
     ui->tableView->horizontalHeader()->setSectionsClickable(false);
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->tableView->resizeRowsToContents();
+}
+
+void ListSparePart::saveAsCSV(QString filename)
+{
+    QFile csvFile (filename);
+
+    if (csvFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream textStream(&csvFile);
+        QStringList stringList;
+
+        stringList << "\" \"";
+        for (int column = 1; column < ui->tableView->horizontalHeader()->count(); ++column)
+            stringList << "\"" + ui->tableView->model()->headerData(column, Qt::Horizontal).toString() + "\"";
+
+        qDebug() << __LINE__ << stringList;
+        textStream << stringList.join(";") + "\n";
+
+        for (int row = 0; row < ui->tableView->verticalHeader()->count(); ++row)
+        {
+            stringList.clear();
+            stringList << "\"" + ui->tableView->model()->headerData(row, Qt::Vertical).toString() + "\""; qDebug() << __LINE__ << stringList;
+
+            for (int column = 1; column < ui->tableView->horizontalHeader()->count(); ++column)
+                stringList << "\"" + ui->tableView->model()->data(ui->tableView->model()->index(row, column), Qt::DisplayRole).toString() + "\"";
+
+            textStream << stringList.join(";") + "\n"; qDebug() << __LINE__ << stringList;
+        }
+
+        csvFile.close();
+    }
+}
+
+void ListSparePart::on_csvExportButton_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Экспорт"), "", tr("CSV (*.csv);;All Files (*)"));
+    saveAsCSV(fileName);
 }
 
 void ListSparePart::closeWindow()

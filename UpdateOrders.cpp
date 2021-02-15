@@ -256,9 +256,9 @@ void UpdateOrders::setValues(const QString &id)
     query.next();
 
     QString clientType = query.value(0).toString();
-    if (clientType == "Физ. лицо")
+    if (clientType == "Физ. лицо" || clientType == "Фіз. особа" || clientType == "Private")
         ui->clientTypeComboBox->setCurrentIndex(0);
-    else
+    else if (clientType == "Юр. лицо" || clientType == "Юр. особа" || clientType == "Organization")
         ui->clientTypeComboBox->setCurrentIndex(1);
 
     ui->clientLine->setText(query.value(1).toString());
@@ -282,25 +282,25 @@ void UpdateOrders::setValues(const QString &id)
         ui->serviceComboBox->setCurrentIndex(2);
 
     QString discountType = query.value(13).toString();
-    if (discountType == "Нет" || discountType == "Немає")
+    if (discountType == "Нет" || discountType == "Немає" || discountType == "No")
         ui->discountsComboBox->setCurrentIndex(0);
     else if (discountType == "Купон" || discountType == "Coupon")
         ui->discountsComboBox->setCurrentIndex(1);
     else if (discountType == "Акция" || discountType == "Акція" || discountType == "Promotion")
         ui->discountsComboBox->setCurrentIndex(2);
-    else if (discountType == "Особые условия" || discountType == "Особливі умови")
+    else if (discountType == "Особые условия" || discountType == "Особливі умови" || discountType == "Special conditions")
         ui->discountsComboBox->setCurrentIndex(3);
-    else if (discountType == "Постоянный клиент" || discountType == "Постійний клієнт")
+    else if (discountType == "Постоянный клиент" || discountType == "Постійний клієнт" || discountType == "Regular customer")
         ui->discountsComboBox->setCurrentIndex(4);
 
     QString orderStatus = query.value(14).toString();
-    if (orderStatus == "Заявка")
+    if (orderStatus == "Заявка" || orderStatus == "Application")
         ui->orderStatusComboBox->setCurrentIndex(0);
-    else if (orderStatus == "В работе")
+    else if (orderStatus == "В работе" || orderStatus == "В роботі" || orderStatus == "In work")
         ui->orderStatusComboBox->setCurrentIndex(1);
-    else if (orderStatus == "Завершен, неоплачен")
+    else if (orderStatus == "Завершен, неоплачен" || orderStatus == "Завершений, не сплачений" || orderStatus == "Completed, not paid")
         ui->orderStatusComboBox->setCurrentIndex(2);
-    else if (orderStatus == "Завершен, оплачен")
+    else if (orderStatus == "Завершен, оплачен" || orderStatus == "Завершений, сплачений" || orderStatus == "Completed, paid")
         ui->orderStatusComboBox->setCurrentIndex(3);
 
     ui->sparePartsList->setText(query.value(15).toString());

@@ -86,7 +86,7 @@ void AddOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_spare_part, spare_part_name, original, price FROM SparePartsCatalogue ";
+    QString queryString = "SELECT id_spare_part, spare_part_name, auto_compatibility, original, price FROM SparePartsCatalogue ";
 
     QString searchString;
 
@@ -99,7 +99,6 @@ void AddOrder::loadSparePartsTable()
 
     queryAvailableSparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryAvailableSparePartsModel->setHeaderData(1, Qt::Horizontal, tr("Название"));
-    queryAvailableSparePartsModel->insertColumn(2);
     queryAvailableSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Совместимость"));
     queryAvailableSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Оригинал"));
     queryAvailableSparePartsModel->setHeaderData(4, Qt::Horizontal, tr("Цена"));
@@ -108,38 +107,12 @@ void AddOrder::loadSparePartsTable()
 
     ui->availableSparePartsTable->setColumnHidden(0, true);
 
-    for (int rowIndex = 0; rowIndex < ui->availableSparePartsTable->model()->rowCount(); ++rowIndex)
-        ui->availableSparePartsTable->setIndexWidget(queryAvailableSparePartsModel->index(rowIndex, 2), addWidgetCompatibilityContent(rowIndex));
-
     ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->availableSparePartsTable->horizontalHeader()->setSectionsClickable(false);
     ui->availableSparePartsTable->resizeColumnsToContents();
     ui->availableSparePartsTable->verticalHeader()->hide();
     ui->availableSparePartsTable->resizeRowsToContents();
-}
-
-QWidget* AddOrder::addWidgetCompatibilityContent(int rowIndex)
-{
-    QWidget *widget = new QWidget(this);
-    QHBoxLayout *layout = new QHBoxLayout(widget);
-    QLabel *compatibilityContentLabel = new QLabel(widget);
-
-    layout->addWidget(compatibilityContentLabel);
-
-    queryModelLabel = new QSqlQueryModel(this);
-
-    QString queryString = "SELECT REPLACE(auto_compatibility, ', ', '\n') FROM SparePartsCatalogue";
-
-    queryModelLabel->setQuery(queryString, listSparePartsTable);
-
-    QString compatibilityContent = queryModelLabel->data(queryModelLabel->index(rowIndex, 0), Qt::EditRole).toString();
-
-    compatibilityContentLabel->setText(compatibilityContent);
-    compatibilityContentLabel->setOpenExternalLinks(true);
-    compatibilityContentLabel->setWordWrap(true);
-
-    return widget;
 }
 
 void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
