@@ -14,6 +14,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QLabel>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
 
 class ViewClient;
 class AddClient;
@@ -33,13 +36,13 @@ public:
 
 private slots:
     void loadTable();
+    void saveAsCSV(QString filename);
     void showClientInfo(const QModelIndex &index);
 
     void on_addClientButton_clicked();
-
     void on_clientSearch_returnPressed();
-
     void on_updateButton_clicked();
+    void on_csvExportButton_clicked();
 
 private:
     Ui::ListClients *ui;

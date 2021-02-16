@@ -13,6 +13,9 @@
 #include <QStandardItem>
 #include <QDebug>
 #include <QLabel>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
 
 class ViewEmployee;
 class UpdateEmployee;
@@ -28,11 +31,12 @@ class ListEmployees : public QDialog
 
 private slots:
     void loadTable();
+    void saveAsCSV(QString filename);
     void showEmployeeInfo(const QModelIndex &index);
 
     void on_addWorkerButton_clicked();
-
     void on_updateButton_clicked();
+    void on_csvExportButton_clicked();
 
 public:
     explicit ListEmployees(QWidget *parent = nullptr);

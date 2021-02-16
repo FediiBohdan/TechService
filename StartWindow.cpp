@@ -226,9 +226,11 @@ void StartWindow::on_todolistButton_clicked()
     listTasks->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void StartWindow::on_statisticsButton_clicked()
+void StartWindow::on_analyticsButton_clicked()
 {
-
+    analyticsDialog = new AnalyticsDialog;
+    analyticsDialog->show();
+    analyticsDialog->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_settingsButton_clicked()

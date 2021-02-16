@@ -12,6 +12,9 @@
 #include <QStandardItem>
 #include <QDebug>
 #include <QCheckBox>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
 
 class AddOrder;
 class ViewOrders;
@@ -30,12 +33,14 @@ public:
 
 private slots:
     void loadTable();
+    void saveAsCSV(QString filename);
     void showOrderInfo(const QModelIndex &index);
     void checkBoxStateChanged();
 
     void on_orderCreationButton_clicked();
     void on_updateButton_clicked();
     void on_orderSearch_returnPressed();
+    void on_csvExportButton_clicked();
 
 private:
     Ui::ListOrders *ui;

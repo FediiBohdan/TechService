@@ -83,24 +83,26 @@ void ListSparePart::saveAsCSV(QString filename)
         QStringList stringList;
 
         stringList << "\" \"";
+
         for (int column = 1; column < ui->tableView->horizontalHeader()->count(); ++column)
             stringList << "\"" + ui->tableView->model()->headerData(column, Qt::Horizontal).toString() + "\"";
 
-        qDebug() << __LINE__ << stringList;
         textStream << stringList.join(";") + "\n";
 
         for (int row = 0; row < ui->tableView->verticalHeader()->count(); ++row)
         {
             stringList.clear();
-            stringList << "\"" + ui->tableView->model()->headerData(row, Qt::Vertical).toString() + "\""; qDebug() << __LINE__ << stringList;
+            stringList << "\"" + ui->tableView->model()->headerData(row, Qt::Vertical).toString() + "\"";
 
             for (int column = 1; column < ui->tableView->horizontalHeader()->count(); ++column)
                 stringList << "\"" + ui->tableView->model()->data(ui->tableView->model()->index(row, column), Qt::DisplayRole).toString() + "\"";
 
-            textStream << stringList.join(";") + "\n"; qDebug() << __LINE__ << stringList;
+            textStream << stringList.join(";") + "\n";
         }
 
         csvFile.close();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("База запчастей успешно экспортирована!"), QMessageBox::Ok);
     }
 }
 

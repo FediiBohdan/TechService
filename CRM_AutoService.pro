@@ -7,6 +7,7 @@ QT += gui
 QT += network
 QT += widgets
 QT += sql
+QT += charts
 
 VERSION = 1.0.0.0
 
@@ -23,6 +24,7 @@ SOURCES += main.cpp \
     AddOrder.cpp \
     AddSparePart.cpp \
     AddTask.cpp \
+    AnalyticsDialog.cpp \
     Global.cpp \
     ListClients.cpp \
     ListEmployees.cpp \
@@ -52,6 +54,7 @@ FORMS += \
     AddOrder.ui \
     AddSparePart.ui \
     AddTask.ui \
+    AnalyticsDialog.ui \
     ListClients.ui \
     ListEmployees.ui \
     ListOrders.ui \
@@ -76,6 +79,7 @@ HEADERS += \
     AddOrder.h \
     AddSparePart.h \
     AddTask.h \
+    AnalyticsDialog.h \
     Global.h \
     ListClients.h \
     ListEmployees.h \

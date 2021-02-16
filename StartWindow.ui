@@ -1116,7 +1116,7 @@ border: none;
          <item row="0" column="0">
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QPushButton" name="statisticsButton">
+            <widget class="QPushButton" name="analyticsButton">
              <property name="minimumSize">
               <size>
                <width>84</width>
@@ -1622,7 +1622,7 @@ QPushButton:hover {
   <tabstop>staffButton</tabstop>
   <tabstop>catalogueButton</tabstop>
   <tabstop>todolistButton</tabstop>
-  <tabstop>statisticsButton</tabstop>
+  <tabstop>analyticsButton</tabstop>
   <tabstop>settingsButton</tabstop>
   <tabstop>updateButton</tabstop>
   <tabstop>notCompletedTasksTableView</tabstop>

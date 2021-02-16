@@ -14,10 +14,7 @@
    <string>Список клиентов</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog {
-	background-color: #fcfff7;
-	background-image: url(:/images/backgroundImage.png)
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="1" column="0">
@@ -49,7 +46,93 @@ border-radius: 7px;
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="4">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="clientSearch">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="addClientButton">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Добавить клиента</string>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="images.qrc">
+          <normaloff>:/images/addWorker.png</normaloff>:/images/addWorker.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>33</width>
+          <height>33</height>
+         </size>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QComboBox" name="searchComboBox">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QComboBox {
+	border: 1px solid gray;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 6px;
+}</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
        <widget class="QPushButton" name="updateButton">
         <property name="minimumSize">
          <size>
@@ -110,40 +193,19 @@ QPushButton:pressed {
         </property>
        </spacer>
       </item>
-      <item row="0" column="0">
-       <widget class="QComboBox" name="searchComboBox">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QComboBox {
-	border: 1px solid gray;
-    border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 6px;
-}</string>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToContents</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="addClientButton">
+      <item row="0" column="4">
+       <widget class="QPushButton" name="csvExportButton">
         <property name="minimumSize">
          <size>
           <width>40</width>
           <height>40</height>
          </size>
         </property>
-        <property name="toolTip">
-         <string>Добавить клиента</string>
-        </property>
-        <property name="statusTip">
-         <string/>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
@@ -166,33 +228,13 @@ QPushButton:pressed {
         </property>
         <property name="icon">
          <iconset resource="images.qrc">
-          <normaloff>:/images/addWorker.png</normaloff>:/images/addWorker.png</iconset>
+          <normaloff>:/images/csvExport.png</normaloff>:/images/csvExport.png</iconset>
         </property>
         <property name="iconSize">
          <size>
           <width>33</width>
           <height>33</height>
          </size>
-        </property>
-        <property name="autoDefault">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="clientSearch">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
         </property>
        </widget>
       </item>

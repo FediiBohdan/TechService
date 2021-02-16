@@ -89,3 +89,41 @@ void ListEmployees::on_updateButton_clicked()
 
     loadTable();
 }
+
+void ListEmployees::saveAsCSV(QString filename)
+{
+    QFile csvFile (filename);
+
+    if (csvFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream textStream(&csvFile);
+        QStringList stringList;
+
+        stringList << "\" \"";
+        for (int column = 1; column < ui->tableView->horizontalHeader()->count(); ++column)
+            stringList << "\"" + ui->tableView->model()->headerData(column, Qt::Horizontal).toString() + "\"";
+
+        textStream << stringList.join(";") + "\n";
+
+        for (int row = 0; row < ui->tableView->verticalHeader()->count(); ++row)
+        {
+            stringList.clear();
+            stringList << "\"" + ui->tableView->model()->headerData(row, Qt::Vertical).toString() + "\"";
+
+            for (int column = 1; column < ui->tableView->horizontalHeader()->count(); ++column)
+                stringList << "\"" + ui->tableView->model()->data(ui->tableView->model()->index(row, column), Qt::DisplayRole).toString() + "\"";
+
+            textStream << stringList.join(";") + "\n";
+        }
+
+        csvFile.close();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("База сотрудников успешно экспортирована!"), QMessageBox::Ok);
+    }
+}
+
+void ListEmployees::on_csvExportButton_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Экспорт"), "", tr("CSV (*.csv);;All Files (*)"));
+    saveAsCSV(fileName);
+}
