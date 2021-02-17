@@ -18,7 +18,14 @@
     <normaloff>:/images/autoService-logo.png</normaloff>:/images/autoService-logo.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QDialog {
+	background-color: #d3dcf3;
+	background-image: url(:/images/backgroundImage.png)
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -198,6 +205,9 @@ QPushButton:pressed {
           <height>33</height>
          </size>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
      </layout>
@@ -208,6 +218,12 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>addWorkerButton</tabstop>
+  <tabstop>csvExportButton</tabstop>
+  <tabstop>updateButton</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

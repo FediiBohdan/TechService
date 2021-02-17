@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string>Информация о сотруднике</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <spacer name="horizontalSpacer">
@@ -230,6 +239,13 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>updateEmployeeInfoButton</tabstop>
+  <tabstop>workerFMLname</tabstop>
+  <tabstop>workerPosition</tabstop>
+  <tabstop>hourlyPayment</tabstop>
+  <tabstop>serviceNumber</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

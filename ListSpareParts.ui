@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1092</width>
+    <width>1216</width>
     <height>1001</height>
    </rect>
   </property>
@@ -19,8 +19,12 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
-	background-color: #fcfff7;
+	background-color: #d3dcf3;
 	background-image: url(:/images/backgroundImage.png)
+}
+
+QMessageBox {
+	background-color: white;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_14">
@@ -219,6 +223,9 @@ QPushButton:pressed {
           <width>33</width>
           <height>33</height>
          </size>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -1470,8 +1477,6 @@ QPushButton:default {
  </widget>
  <tabstops>
   <tabstop>sparePartSearch</tabstop>
-  <tabstop>updateButton</tabstop>
-  <tabstop>addSparePartButton</tabstop>
   <tabstop>tableView</tabstop>
   <tabstop>toyotaSearchButton</tabstop>
   <tabstop>mitsubishiSearchButton</tabstop>
@@ -1484,6 +1489,9 @@ QPushButton:default {
   <tabstop>infinitiSearchButton</tabstop>
   <tabstop>isuzuSearchButton</tabstop>
   <tabstop>acuraSearchButton</tabstop>
+  <tabstop>addSparePartButton</tabstop>
+  <tabstop>csvExportButton</tabstop>
+  <tabstop>updateButton</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

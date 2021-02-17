@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string>Редактирование информации о задании</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="0">
     <widget class="QPushButton" name="backToViewInfoButton">
@@ -359,6 +368,14 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>dateLine</tabstop>
+  <tabstop>timeLine</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>contentLine</tabstop>
+  <tabstop>saveUpdatedInfo</tabstop>
+  <tabstop>backToViewInfoButton</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

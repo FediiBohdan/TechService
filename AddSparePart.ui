@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string>Добавление запчасти</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
@@ -308,6 +317,15 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>sparePartNameLine</tabstop>
+  <tabstop>manufacturerLine</tabstop>
+  <tabstop>quantityInStockLine</tabstop>
+  <tabstop>autoCompatibilityLine</tabstop>
+  <tabstop>isOriginalLine</tabstop>
+  <tabstop>priceLine</tabstop>
+  <tabstop>createSparePartButton</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

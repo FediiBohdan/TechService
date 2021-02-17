@@ -15,8 +15,12 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
-	background-color: #fcfff7;
+	background-color: #d3dcf3;
 	background-image: url(:/images/backgroundImage.png)
+}
+
+QMessageBox {
+	background-color: white;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -165,6 +169,11 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>addTaskButton</tabstop>
+  <tabstop>updateButton</tabstop>
+  <tabstop>tableView</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

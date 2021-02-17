@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string>Информация о заказе</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_15">
    <item row="0" column="0">
     <widget class="QPushButton" name="updateOrderInfoButton">
@@ -2282,6 +2291,7 @@ QPushButton:pressed {
   <tabstop>sparePartsList</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
+  <tabstop>receptionLine</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

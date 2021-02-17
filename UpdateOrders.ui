@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string>Редактирование информации о заказе</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_15">
    <item row="0" column="0">
     <widget class="QPushButton" name="backToViewInfoButton">
@@ -2913,6 +2922,40 @@ QPushButton:pressed {
   </layout>
  </widget>
  <tabstops>
+  <tabstop>clientTypeComboBox</tabstop>
+  <tabstop>clientLine</tabstop>
+  <tabstop>contactLine</tabstop>
+  <tabstop>brandLine</tabstop>
+  <tabstop>modelLine</tabstop>
+  <tabstop>emailLine</tabstop>
+  <tabstop>yearLine</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>VIN_Line</tabstop>
+  <tabstop>autoLicensePlateLine</tabstop>
+  <tabstop>serviceComboBox</tabstop>
+  <tabstop>discountsComboBox</tabstop>
+  <tabstop>orderStatusComboBox</tabstop>
+  <tabstop>sparePartsSearch</tabstop>
+  <tabstop>removeLastSparePartButton</tabstop>
+  <tabstop>clearSparePartsListButton</tabstop>
+  <tabstop>sparePartsList</tabstop>
+  <tabstop>mechanicHoursLine</tabstop>
+  <tabstop>clearMechanicButton</tabstop>
+  <tabstop>mechanic2HoursLine</tabstop>
+  <tabstop>clearMechanic2Button</tabstop>
+  <tabstop>diagnosticianHoursLine</tabstop>
+  <tabstop>clearDiagnosticianButton</tabstop>
+  <tabstop>electronicsHoursLine</tabstop>
+  <tabstop>clearElectronicButton</tabstop>
+  <tabstop>locksmithHoursLine</tabstop>
+  <tabstop>clearLocksmithButton</tabstop>
+  <tabstop>washerHoursLine</tabstop>
+  <tabstop>clearWasherButton</tabstop>
+  <tabstop>worksList</tabstop>
+  <tabstop>feedback</tabstop>
+  <tabstop>receptionLine</tabstop>
+  <tabstop>openMapButton</tabstop>
+  <tabstop>saveUpdatedInfo</tabstop>
   <tabstop>backToViewInfoButton</tabstop>
  </tabstops>
  <resources>

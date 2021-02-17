@@ -7,14 +7,26 @@
     <x>0</x>
     <y>0</y>
     <width>642</width>
-    <height>379</height>
+    <height>362</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Добавление клиента</string>
   </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
    <item row="0" column="0" colspan="2">
@@ -466,7 +478,7 @@ QPushButton:pressed {
        </property>
        <property name="styleSheet">
         <string notr="true">QLineEdit {
-	border: 1px solid gray;
+	border: 1px solid grey;
     border-radius: 7px;
     background-color: #dbdcf7;
 	padding-left: 3px;
@@ -494,6 +506,18 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>clientTypeComboBox</tabstop>
+  <tabstop>clientFMLnameLine</tabstop>
+  <tabstop>contactsLine</tabstop>
+  <tabstop>emailLine</tabstop>
+  <tabstop>autoBrandLine</tabstop>
+  <tabstop>autoModelLine</tabstop>
+  <tabstop>manufactureYearLine</tabstop>
+  <tabstop>autoLicensePlateLine</tabstop>
+  <tabstop>VINnumberLine</tabstop>
+  <tabstop>saveClientButton</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

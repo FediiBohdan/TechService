@@ -14,7 +14,14 @@
    <string>Список заказов</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QDialog {
+	background-color: #d3dcf3;
+	background-image: url(:/images/backgroundImage.png)
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
@@ -54,7 +61,7 @@ border-radius: 7px;
          </size>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::StrongFocus</enum>
         </property>
         <property name="toolTip">
          <string>Создать заказ</string>
@@ -231,6 +238,9 @@ QPushButton:pressed {
           <height>33</height>
          </size>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
      </layout>
@@ -244,6 +254,7 @@ QPushButton:pressed {
  <tabstops>
   <tabstop>orderSearch</tabstop>
   <tabstop>orderCreationButton</tabstop>
+  <tabstop>csvExportButton</tabstop>
   <tabstop>updateButton</tabstop>
   <tabstop>tableView</tabstop>
  </tabstops>

@@ -17,6 +17,15 @@
    <iconset resource="images.qrc">
     <normaloff>:/images/autoService-logo.png</normaloff>:/images/autoService-logo.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_15">
    <property name="leftMargin">
     <number>8</number>
@@ -2871,6 +2880,7 @@ QPushButton:pressed {
   <tabstop>contactLine</tabstop>
   <tabstop>brandLine</tabstop>
   <tabstop>modelLine</tabstop>
+  <tabstop>emailLine</tabstop>
   <tabstop>yearLine</tabstop>
   <tabstop>lineEdit</tabstop>
   <tabstop>VIN_Line</tabstop>
@@ -2879,9 +2889,9 @@ QPushButton:pressed {
   <tabstop>discountsComboBox</tabstop>
   <tabstop>orderStatusComboBox</tabstop>
   <tabstop>sparePartsSearch</tabstop>
-  <tabstop>sparePartsList</tabstop>
   <tabstop>removeLastSparePartButton</tabstop>
   <tabstop>clearSparePartsListButton</tabstop>
+  <tabstop>sparePartsList</tabstop>
   <tabstop>mechanicHoursLine</tabstop>
   <tabstop>clearMechanicButton</tabstop>
   <tabstop>mechanic2HoursLine</tabstop>
@@ -2896,6 +2906,8 @@ QPushButton:pressed {
   <tabstop>clearWasherButton</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
+  <tabstop>receptionLine</tabstop>
+  <tabstop>openMapButton</tabstop>
   <tabstop>createOrderButton</tabstop>
  </tabstops>
  <resources>

@@ -7,11 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>642</width>
-    <height>419</height>
+    <height>409</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Редактирование информации о клиенте</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+	background-color: #f7f9ff;
+}
+
+QMessageBox {
+	background-color: white;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
    <item row="5" column="2">
@@ -552,6 +561,19 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>clientTypeComboBox</tabstop>
+  <tabstop>clientFMLnameLine</tabstop>
+  <tabstop>contactsLine</tabstop>
+  <tabstop>emailLine</tabstop>
+  <tabstop>autoBrandLine</tabstop>
+  <tabstop>autoModelLine</tabstop>
+  <tabstop>manufactureYearLine</tabstop>
+  <tabstop>autoLicensePlateLine</tabstop>
+  <tabstop>VINnumberLine</tabstop>
+  <tabstop>saveUpdatedInfo</tabstop>
+  <tabstop>backToViewInfoButton</tabstop>
+ </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>
