@@ -2,6 +2,9 @@
 #define ANALYTICSDIALOG_H
 
 #include <QDialog>
+#include <QSqlDatabase>
+#include <QSqlQueryModel>
+#include <QDir>
 
 namespace Ui {
 class AnalyticsDialog;
@@ -17,6 +20,11 @@ public:
 
 private:
     Ui::AnalyticsDialog *ui;
+
+    QSqlDatabase analiticsDB;
+
+private slots:
+    void employeeWorksChart();
 };
 
 #endif // ANALYTICSDIALOG_H

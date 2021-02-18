@@ -42,6 +42,14 @@ UpdateOrders::~UpdateOrders()
     delete ui;
 }
 
+void UpdateOrders::closeEvent(QCloseEvent *)
+{
+    QDialog::close();
+    listOrders = new ListOrders;
+    listOrders->show();
+    listOrders->setAttribute(Qt::WA_DeleteOnClose);
+}
+
 void UpdateOrders::openMap()
 {
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;

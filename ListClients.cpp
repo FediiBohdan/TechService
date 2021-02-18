@@ -41,7 +41,7 @@ void ListClients::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_client, client_type, client_FML_name, contacts, email, auto_model, auto_license_plate, manufacture_year, "
+    QString queryString = "SELECT id_client, client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, manufacture_year, "
                           "VIN_number FROM ClientsTable ";
 
     QString searchString;
@@ -60,10 +60,11 @@ void ListClients::loadTable()
     queryModel->setHeaderData(2, Qt::Horizontal, tr("ФИО клиента"));
     queryModel->setHeaderData(3, Qt::Horizontal, tr("Контакты"));
     queryModel->setHeaderData(4, Qt::Horizontal, tr("Электронная почта"));
-    queryModel->setHeaderData(5, Qt::Horizontal, tr("Модель авто"));
-    queryModel->setHeaderData(6, Qt::Horizontal, tr("Госномер"));
-    queryModel->setHeaderData(7, Qt::Horizontal, tr("Год производства"));
-    queryModel->setHeaderData(8, Qt::Horizontal, tr("VIN-номер"));
+    queryModel->setHeaderData(5, Qt::Horizontal, tr("Марка авто"));
+    queryModel->setHeaderData(6, Qt::Horizontal, tr("Модель авто"));
+    queryModel->setHeaderData(7, Qt::Horizontal, tr("Госномер"));
+    queryModel->setHeaderData(8, Qt::Horizontal, tr("Год производства"));
+    queryModel->setHeaderData(9, Qt::Horizontal, tr("VIN-номер"));
 
     ui->tableView->setModel(queryModel);
 

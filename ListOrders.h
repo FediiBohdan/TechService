@@ -18,6 +18,7 @@
 
 class AddOrder;
 class ViewOrders;
+class UpdateOrders;
 
 namespace Ui {
 class ListOrders;

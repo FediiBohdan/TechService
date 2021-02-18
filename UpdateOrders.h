@@ -2,6 +2,7 @@
 #define UPDATEORDERS_H
 
 #include "ViewOrders.h"
+#include "ListOrders.h"
 
 #include <QDialog>
 #include <QQmlApplicationEngine>
@@ -17,6 +18,7 @@
 #include <QLabel>
 
 class ViewOrders;
+class ListOrders;
 
 namespace Ui {
 class UpdateOrders;
@@ -46,7 +48,7 @@ private slots:
     void updateUsedSparePartsTable(const QModelIndex &index);
     void setOrderEmployees(const QModelIndex &index);
 
-    //void closeEvent(QCloseEvent *);
+    void closeEvent(QCloseEvent *);
 
     void on_sparePartsSearch_returnPressed();
     void on_clearSparePartsListButton_clicked();
@@ -62,6 +64,8 @@ private slots:
 
 private:
     Ui::UpdateOrders *ui;
+
+    ListOrders *listOrders;
 
     QSqlDatabase listOrdersTable = QSqlDatabase::database("OrdersHistory");
     QSqlDatabase listSparePartsTable = QSqlDatabase::database("SparePartsCatalogue");

@@ -13,7 +13,6 @@
 #include <QPointer>
 #include <QSqlQuery>
 #include <QDebug>
-
 #include <QFile>
 #include <QTextStream>
 #include <QFileDialog>
