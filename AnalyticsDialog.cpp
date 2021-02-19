@@ -57,55 +57,45 @@ AnalyticsDialog::~AnalyticsDialog()
 
 void AnalyticsDialog::employeeWorksChart()
 {
-    QLineSeries *series = new QLineSeries(); // y
-    series->append(0, 16);
-    series->append(1, 25);
-    series->append(2, 24);
-    series->append(3, 19);
-    series->append(4, 33);
-    series->append(5, 25);
-    series->append(6, 34);
+    QLineSeries *lineseries = new QLineSeries();
+    lineseries->append(QPoint(0, 4));
+    lineseries->append(QPoint(1, 15));
+    lineseries->append(QPoint(2, 20));
+    lineseries->append(QPoint(3, 4));
+    lineseries->append(QPoint(4, 12));
+    lineseries->append(QPoint(5, 17));
 
-    // Create chart, add data, hide legend, and add axis
     QChart *chart = new QChart();
     chart->legend()->hide();
-    chart->addSeries(series);
-    chart->createDefaultAxes();
-
-    // Customize the title font
-    QFont font;
-    font.setPixelSize(16);
-    chart->setTitleFont(font);
-    chart->setTitleBrush(QBrush(Qt::black));
-    chart->setTitle("Title");
-
-    // Change the line color and weight
-    QPen pen(QRgb(0x000000));
-    pen.setWidth(3);
-    series->setPen(pen);
-
-    //NoAnimation, GridAxisAnimations, SeriesAnimations
+    chart->addSeries(lineseries);
     chart->setAnimationOptions(QChart::AllAnimations);
 
-    // Change the x axis categories
-    QCategoryAxis *axisX = new QCategoryAxis(); //x
-    axisX->append("1986", 0);
-    axisX->append("1987", 1);
-    axisX->append("1988", 2);
-    axisX->append("1989", 3);
-    axisX->append("1990", 4);
-    axisX->append("1991", 5);
-    axisX->append("1992", 6);
-    chart->setAxisX(axisX, series);
-    //chart->addAxis(axisX, Qt::AlignBottom);
-    //chart->addAxis(series, Qt::AlignLeft);
+    QFont font;
+    font.setPixelSize(16);
+    chart->setTitle("Title");
+    chart->setTitleFont(font);
+    chart->setTitleBrush(QBrush(Qt::black));
 
-    // Used to display the chart
+    QPen pen(Qt::black);
+    pen.setWidth(3);
+    lineseries->setPen(pen);
+
+    QStringList categories;
+    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    lineseries->attachAxis(axisX);
+    axisX->setRange(QString("1994"), QString("1999"));
+
+    QValueAxis *axisY = new QValueAxis();
+    chart->addAxis(axisY, Qt::AlignLeft);
+    lineseries->attachAxis(axisY);
+    axisY->setRange(0, 20);
+
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
-    chartView->setMinimumSize(946, 516);
-
-
-    chartView->setParent(ui->horizontalFrame);
+    //chartView->setMinimumSize(946, 516);
+    chartView->setParent(ui->horizontalWidget);
 }

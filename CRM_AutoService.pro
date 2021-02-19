@@ -101,5 +101,4 @@ HEADERS += \
 
 CODECFORSRC = UTF-8
 
-DISTFILES += \
-    images/csvExport.png
+DISTFILES +=
