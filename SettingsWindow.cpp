@@ -81,3 +81,21 @@ void SettingsWindow::saveSettings()
 {
     global::setSettingsValue("language", ui->languageSelection->currentText(), "settings");
 }
+
+void SettingsWindow::on_saveSettingsButton_clicked()
+{
+    QString userFirstName = ui->userFirstName->text();
+    QString userSecondName = ui->userSecondName->text();
+    QString userThirdName = ui->userThirdName->text();
+    QString userPosition = ui->userPosition->text();
+
+    global::setSettingsValue("userFirstName", userFirstName, "settings");
+    global::setSettingsValue("userSecondName", userSecondName, "settings");
+    global::setSettingsValue("userThirdName", userThirdName, "settings");
+    global::setSettingsValue("userPosition", userPosition, "settings");
+
+    QString userFSname = userFirstName.append(" " + userSecondName);
+
+    connect(this, &SettingsWindow::userData, startWindow, &StartWindow::setUserData);
+    emit userData(userFSname, userPosition);
+}

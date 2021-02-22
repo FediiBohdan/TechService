@@ -33,6 +33,8 @@ private slots:
     void loadSettings();
     void saveSettings();
 
+    void on_saveSettingsButton_clicked();
+
 private:
     Ui::SettingsWindow *ui;
 
@@ -42,6 +44,7 @@ private:
 
 signals:
     void translate(int translate);
+    void userData(const QString &userFsName, const QString &userPosition);
 };
 
 #endif // SETTINGSWINDOW_H

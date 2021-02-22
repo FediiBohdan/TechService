@@ -8,7 +8,6 @@
 #include "ListOrders.h"
 #include "ListClients.h"
 #include "ListTasks.h"
-#include "AnalyticsDialog.h"
 
 #include <QDialog>
 #include <QDesktopServices>
@@ -60,7 +59,6 @@ private:
     ListOrders *listOrders;
     ListClients *listClients;
     ListTasks *listTasks;
-    AnalyticsDialog *analyticsDialog;
 
     QSqlDatabase listTasksTable = QSqlDatabase::database("TasksTable");
 
@@ -77,6 +75,7 @@ protected:
 
 public slots:
     void translateUI(int translate);
+    void setUserData(const QString &userFSname, const QString &userPosition);
 
 private slots:
     void showTime();
@@ -95,7 +94,6 @@ private slots:
     void on_desktopButton_clicked();
     void on_staffButton_clicked();
     void on_todolistButton_clicked();
-    void on_analyticsButton_clicked();
     void on_settingsButton_clicked();
 };
 

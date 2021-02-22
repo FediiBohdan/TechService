@@ -16,6 +16,8 @@ StartWindow::StartWindow(QWidget *parent) :
 
     StartWindow::showMaximized();
 
+    ui->positionLabel->hide();
+
     elapsedTimer.start();
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
@@ -53,6 +55,17 @@ void StartWindow::translateUI(int translate)
         translator.load(":/translations/english.qm");
         qApp->installTranslator(&translator);
     }
+}
+
+void StartWindow::setUserData(const QString &userFSname, const QString &userPosition)
+{
+    ui->positionLabel->show();
+
+    ui->nameLine->setText(userFSname);
+    ui->positionLabel->setText(userPosition);
+
+    qDebug() << ui->nameLine->text();
+    qDebug() << ui->positionLabel->text();
 }
 
 void StartWindow::changeEvent(QEvent *event)
@@ -224,13 +237,6 @@ void StartWindow::on_todolistButton_clicked()
     listTasks = new ListTasks;
     listTasks->show();
     listTasks->setAttribute(Qt::WA_DeleteOnClose);
-}
-
-void StartWindow::on_analyticsButton_clicked()
-{
-    analyticsDialog = new AnalyticsDialog;
-    analyticsDialog->show();
-    analyticsDialog->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void StartWindow::on_settingsButton_clicked()
