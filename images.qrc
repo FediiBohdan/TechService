@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/mapMarker.png</file>
         <file>images/catalogue.png</file>
         <file>images/desktop.png</file>
         <file>images/orderFormation.png</file>
@@ -42,5 +41,6 @@
         <file>images/returnEmployee.png</file>
         <file>images/map.png</file>
         <file>images/csvExport.png</file>
+        <file>images/mapMarker.png</file>
     </qresource>
 </RCC>
