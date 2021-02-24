@@ -51,6 +51,7 @@ private:
     QSqlDatabase sparePartsDB;
     QSqlDatabase orderDetailDB;
     QSqlDatabase ordersHistoryDB;
+    QSqlDatabase ordersHistoryDB1;
 
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
@@ -67,6 +68,7 @@ private:
     QString sparePartsList;
     float sparePartCost;
     float sparePartsCost = 0;
+    int orderId = 0;
     int sparePartNameLength = 0;
     int mechanicHourPayment = 0;
     int mechanic2HourPayment = 0;
@@ -102,6 +104,7 @@ private slots:
     void on_clearWasherButton_clicked();
     void on_clearLocksmithButton_clicked();
     void on_removeLastSparePartButton_clicked();
+    void on_addSparePartsButton_clicked();
 };
 
 #endif // ADDORDER_H

@@ -1,5 +1,6 @@
 #include "StartWindow.h"
 #include "ui_StartWindow.h"
+#include "ui_SettingsWindow.h"
 
 QElapsedTimer elapsedTimer;
 QTimer *timer = new QTimer();

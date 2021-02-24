@@ -43,5 +43,6 @@
         <file>images/csvExport.png</file>
         <file>images/mapMarker.png</file>
         <file>images/noUser.png</file>
+        <file>images/addOrderDetails.png</file>
     </qresource>
 </RCC>

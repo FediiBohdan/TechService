@@ -28,6 +28,10 @@ AddOrder::AddOrder(QWidget *parent) :
 
     ui->removeLastSparePartButton->setEnabled(false);
 
+    ui->sparePartsFrame->setEnabled(false);
+    ui->employeesFrame->setEnabled(false);
+    ui->worksFrame->setEnabled(false);
+
     ui->clientTypeComboBox->addItems(QStringList() << tr("Физ. лицо") << tr("Юр. лицо"));
     ui->orderStatusComboBox->addItems(QStringList() << tr("Заявка") << tr("В работе") << tr("Завершен, неоплачен") << tr("Завершен, оплачен"));
     ui->discountsComboBox->addItems(QStringList() << tr("Нет") << tr("Купон") << tr("Акция") << tr("Особые условия") << tr("Постоянный клиент"));
@@ -82,6 +86,61 @@ void AddOrder::setValues(const QString &clientName, const QString &clientContact
     openFlag = false;
 }
 
+void AddOrder::on_addSparePartsButton_clicked()
+{
+    QString client = ui->clientLine->text();
+    QString date = ui->dateLine->text();
+    QString contacts = ui->contactLine->text();
+    QString brandModel = ui->brandLine->text();
+
+    bool error = false;
+
+    if (date.isEmpty())
+    {
+        error = true; ui->dateErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->dateErrorLabel->setStyleSheet("color: transparent");
+
+    if (client.isEmpty())
+    {
+        error = true; ui->clientErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->clientErrorLabel->setStyleSheet("color: transparent");
+
+    if (contacts.isEmpty())
+    {
+        error = true; ui->contactsErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->contactsErrorLabel->setStyleSheet("color: transparent");
+
+    if (brandModel.isEmpty())
+    {
+        error = true; ui->autoErrorLabel->setStyleSheet("color: red");
+    }
+    else
+        ui->autoErrorLabel->setStyleSheet("color: transparent");
+
+    if (error)
+        return;
+
+    QSqlQuery queryOrders(ordersHistoryDB);
+
+    queryOrders.prepare("INSERT INTO OrdersHistory (client, contacts, auto_brand) VALUES(?, ?, ?)");
+    queryOrders.addBindValue(ui->clientLine->text());
+    queryOrders.addBindValue(ui->contactLine->text());
+    queryOrders.addBindValue(ui->brandLine->text());
+    queryOrders.exec();
+
+    orderId = queryOrders.lastInsertId().toInt();
+
+    ui->sparePartsFrame->setEnabled(true);
+    ui->employeesFrame->setEnabled(true);
+    ui->worksFrame->setEnabled(true);
+}
+
 void AddOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
@@ -117,7 +176,10 @@ void AddOrder::loadSparePartsTable()
 
 void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
 {
+    queryUsedSparePartsModel = new QSqlQueryModel(this);
+
     QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
+    QString sparePartName = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
 
     QSqlQuery queryCheckAmount(sparePartsDB);
 
@@ -128,30 +190,30 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
     {
         QMessageBox::warning(this, tr("Предупреждение"), tr("Данная запчасть на складе отсутствует!"), QMessageBox::Ok);
         return;
-    }
+    }    
 
-    QString sparePart = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
+//    QString sparePart = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
 
-    sparePartsList.append(sparePart);
-    sparePartsList.append(", ");
+//    sparePartsList.append(sparePart);
+//    sparePartsList.append(", ");
 
-    QString sparePartCostDetail = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toString();
+//    QString sparePartCostDetail = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toString();
 
-    ui->sparePartsList->setText(sparePartsList.replace(", ", (" - " + sparePartCostDetail + "\n")));
+//    ui->sparePartsList->setText(sparePartsList.replace(", ", (" - " + sparePartCostDetail + "\n")));
 
     sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toFloat();
     sparePartsCost += sparePartCost;
 
-    sparePartNameLength = sparePart.length() + sparePartCostDetail.length() + 4;
+    //sparePartNameLength = sparePart.length() + sparePartCostDetail.length() + 4;
 
-    ui->removeLastSparePartButton->setEnabled(true);
+    //ui->removeLastSparePartButton->setEnabled(true);
 }
 
 void AddOrder::on_removeLastSparePartButton_clicked()
 {
    sparePartsList.chop(sparePartNameLength);
 
-   ui->sparePartsList->setText(sparePartsList);
+   //ui->sparePartsList->setText(sparePartsList);
 
    ui->removeLastSparePartButton->setEnabled(false);
 }
@@ -159,7 +221,7 @@ void AddOrder::on_removeLastSparePartButton_clicked()
 void AddOrder::on_clearSparePartsListButton_clicked()
 {
     sparePartsList = "";
-    ui->sparePartsList->setText("");
+    //ui->sparePartsList->setText("");
     sparePartsCost = 0;
 
     ui->removeLastSparePartButton->setEnabled(false);
@@ -295,8 +357,8 @@ void AddOrder::on_createOrderButton_clicked()
     contacts.replace(", ", "\n");
 
     queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, "
-                "manufacture_year, VIN_number, auto_license_plate, service_address, discounts, order_status, spare_parts_list, works_list, feedback) "
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                "manufacture_year, VIN_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback) "
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(client);
@@ -313,7 +375,7 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(ui->serviceComboBox->currentText());
     queryOrders.addBindValue(ui->discountsComboBox->currentText());
     queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
-    queryOrders.addBindValue(ui->sparePartsList->toPlainText());
+    //queryOrders.addBindValue(ui->sparePartsList->toPlainText());
     queryOrders.addBindValue(ui->worksList->toPlainText());
     queryOrders.addBindValue(ui->feedback->toPlainText());
     queryOrders.exec();

@@ -999,8 +999,17 @@ border: none;
            </item>
            <item>
             <widget class="QLabel" name="positionLabel">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	border: 0px;
+	background-color: transparent;
+}</string>
+             </property>
              <property name="text">
               <string>Должность</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>

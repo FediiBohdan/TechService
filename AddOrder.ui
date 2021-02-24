@@ -41,6 +41,12 @@ QMessageBox {
    </property>
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout_13">
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
      <item row="0" column="0">
       <layout class="QGridLayout" name="gridLayout_12">
        <item row="0" column="0">
@@ -548,24 +554,50 @@ QMessageBox {
      </item>
      <item>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="5">
-        <widget class="QLabel" name="label_14">
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_15">
          <property name="font">
           <font>
            <pointsize>9</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Сервис</string>
+          <string>Пробег</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="7">
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="yearLine">
+         <property name="maximumSize">
+          <size>
+           <width>90</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="8">
         <widget class="QComboBox" name="orderStatusComboBox">
          <property name="minimumSize">
           <size>
            <width>170</width>
-           <height>25</height>
+           <height>20</height>
           </size>
          </property>
          <property name="font">
@@ -584,31 +616,7 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
-        <widget class="QLabel" name="label_13">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Госномер</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="7">
-        <widget class="QLabel" name="label_2">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Статус заказа</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
+       <item row="1" column="6">
         <widget class="QComboBox" name="serviceComboBox">
          <property name="minimumSize">
           <size>
@@ -632,12 +640,12 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QLineEdit" name="VIN_Line">
+       <item row="1" column="5">
+        <widget class="QLineEdit" name="autoLicensePlateLine">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>20</height>
           </size>
          </property>
          <property name="font">
@@ -655,24 +663,36 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="0" column="6">
-        <widget class="QLabel" name="label_6">
+       <item row="0" column="4">
+        <widget class="QLabel" name="label_3">
          <property name="font">
           <font>
            <pointsize>9</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>Скидки</string>
+          <string>VIN-номер</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="8">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Статус заказа</string>
          </property>
         </widget>
        </item>
        <item row="1" column="4">
-        <widget class="QLineEdit" name="autoLicensePlateLine">
+        <widget class="QLineEdit" name="VIN_Line">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>20</height>
           </size>
          </property>
          <property name="font">
@@ -690,7 +710,7 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="1" column="6">
+       <item row="1" column="7">
         <widget class="QComboBox" name="discountsComboBox">
          <property name="minimumSize">
           <size>
@@ -720,7 +740,36 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QLabel" name="label_14">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Сервис</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
         <widget class="QLabel" name="label_10">
          <property name="font">
           <font>
@@ -732,7 +781,43 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="2" column="5">
+       <item row="2" column="1">
+        <widget class="QLabel" name="techLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	color: transparent;
+}</string>
+         </property>
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QLabel" name="label_13">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Госномер</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7">
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Скидки</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="6">
         <widget class="QLabel" name="serviceErrorLabel">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
@@ -761,74 +846,59 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="label_3">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>VIN-номер</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="yearLine">
-         <property name="maximumSize">
+       <item row="2" column="0">
+        <widget class="QPushButton" name="addSparePartsButton">
+         <property name="minimumSize">
           <size>
-           <width>90</width>
-           <height>16777215</height>
+           <width>27</width>
+           <height>27</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
+         <property name="maximumSize">
+          <size>
+           <width>27</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Добавить детали к заказу</string>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
+          <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
 }</string>
          </property>
          <property name="text">
           <string/>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="lineEdit">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
+         <property name="icon">
+          <iconset resource="images.qrc">
+           <normaloff>:/images/addOrderDetails.png</normaloff>:/images/addOrderDetails.png</iconset>
          </property>
-         <property name="styleSheet">
-          <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
+         <property name="iconSize">
+          <size>
+           <width>27</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_15">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Пробег</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
+       <item row="1" column="0" colspan="2">
         <widget class="QLineEdit" name="emailLine">
          <property name="minimumSize">
           <size>
@@ -851,7 +921,7 @@ QMessageBox {
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_30">
          <property name="font">
           <font>
@@ -860,18 +930,6 @@ QMessageBox {
          </property>
          <property name="text">
           <string>Электронная почта</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="techLabel">
-         <property name="styleSheet">
-          <string notr="true">QLabel {
-	color: transparent;
-}</string>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
          </property>
         </widget>
        </item>
@@ -885,10 +943,10 @@ QMessageBox {
       <number>2</number>
      </property>
      <item>
-      <widget class="QFrame" name="frame_2">
+      <widget class="QFrame" name="sparePartsFrame">
        <property name="maximumSize">
         <size>
-         <width>845</width>
+         <width>850</width>
          <height>16777215</height>
         </size>
        </property>
@@ -1151,7 +1209,7 @@ QPushButton:pressed {
          <widget class="QTextEdit" name="sparePartsList">
           <property name="maximumSize">
            <size>
-            <width>250</width>
+            <width>390</width>
             <height>16777215</height>
            </size>
           </property>
@@ -1178,7 +1236,7 @@ QPushButton:pressed {
          <widget class="QTableView" name="availableSparePartsTable">
           <property name="maximumSize">
            <size>
-            <width>585</width>
+            <width>450</width>
             <height>16777215</height>
            </size>
           </property>
@@ -1230,7 +1288,7 @@ QHeaderView::section {
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="frame">
+      <widget class="QFrame" name="employeesFrame">
        <property name="maximumSize">
         <size>
          <width>720</width>
@@ -2520,7 +2578,7 @@ QPushButton:pressed {
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="frame_5">
+      <widget class="QFrame" name="worksFrame">
        <property name="maximumSize">
         <size>
          <width>330</width>
