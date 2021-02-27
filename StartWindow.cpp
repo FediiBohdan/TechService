@@ -1,6 +1,5 @@
 #include "StartWindow.h"
 #include "ui_StartWindow.h"
-#include "ui_SettingsWindow.h"
 
 QElapsedTimer elapsedTimer;
 QTimer *timer = new QTimer();
@@ -32,6 +31,18 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(ui->updateButton, &QAbstractButton::clicked, this, &StartWindow::updateTasksList);
 
     loadTasksList();
+
+    QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
+    QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
+    QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
+    QString userFSname = registerUserFirstName.append(" " + registerUserSecondName);
+
+    if (ui->positionLabel->isHidden() && !registerUserFirstName.isEmpty())
+    {
+        ui->positionLabel->show();
+        ui->nameLine->setText(userFSname);
+        ui->positionLabel->setText(registerUserPosition);
+    }
 }
 
 StartWindow::~StartWindow()
@@ -39,7 +50,7 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
-void StartWindow::translateUI(int translate)
+void StartWindow::translateUI(const int translate)
 {
     if (translate == 0)
     {
@@ -244,6 +255,8 @@ void StartWindow::on_settingsButton_clicked()
 {
     settingsWindow = new SettingsWindow;
     settingsWindow->show();
+    connect(settingsWindow, &SettingsWindow::userData, this, &StartWindow::setUserData);
+    connect(settingsWindow, &SettingsWindow::translate, this, &StartWindow::translateUI);
     settingsWindow->setAttribute(Qt::WA_DeleteOnClose);
 }
 

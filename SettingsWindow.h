@@ -32,6 +32,8 @@ private slots:
     void setLanguage();
     void loadSettings();
     void saveSettings();
+    void setUserInfo();
+    void saveUserData();
 
     void on_saveSettingsButton_clicked();
 
@@ -40,11 +42,9 @@ private:
 
     QTranslator translator;
 
-    StartWindow *startWindow;
-
 signals:
     void translate(int translate);
-    void userData(const QString &userFsName, const QString &userPosition);
+    void userData(const QString &userFSName, const QString &userPosition);
 };
 
 #endif // SETTINGSWINDOW_H

@@ -74,7 +74,7 @@ protected:
     void changeEvent(QEvent *event) override;
 
 public slots:
-    void translateUI(int translate);
+    void translateUI(const int translate);
     void setUserData(const QString &userFSname, const QString &userPosition);
 
 private slots:
