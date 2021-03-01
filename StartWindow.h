@@ -32,7 +32,6 @@
 class ListSparePart;
 class AddOrder;
 class ListOrders;
-class SettingsWindow;
 
 namespace Ui {
 class StartWindow;
@@ -70,11 +69,14 @@ private:
 
     QWidget *addCheckBoxCompleted(int rowIndex);
 
+    QString userFSname1;
+    QString userPosition1;
+
 protected:
     void changeEvent(QEvent *event) override;
 
 public slots:
-    void translateUI(const int translate);
+    void translateUI(const QString &language);
     void setUserData(const QString &userFSname, const QString &userPosition);
 
 private slots:

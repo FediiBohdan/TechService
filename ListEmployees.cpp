@@ -124,6 +124,6 @@ void ListEmployees::saveAsCSV(QString filename)
 
 void ListEmployees::on_csvExportButton_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Экспорт"), "", tr("CSV (*.csv);;All Files (*)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Экспорт"), "", "CSV (*.csv);;All Files (*)");
     saveAsCSV(fileName);
 }

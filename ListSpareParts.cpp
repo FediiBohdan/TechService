@@ -108,7 +108,7 @@ void ListSparePart::saveAsCSV(QString filename)
 
 void ListSparePart::on_csvExportButton_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Экспорт"), "", tr("CSV (*.csv);;All Files (*)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Экспорт"), "", "CSV (*.csv);;All Files (*)");
     saveAsCSV(fileName);
 }
 

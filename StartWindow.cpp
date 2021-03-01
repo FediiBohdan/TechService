@@ -18,6 +18,19 @@ StartWindow::StartWindow(QWidget *parent) :
 
     ui->positionLabel->hide();
 
+    QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
+    QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
+    QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
+
+    if (ui->positionLabel->isHidden() && !registerUserFirstName.isEmpty())
+    {
+        QString userFSname = registerUserFirstName.append(" " + registerUserSecondName);
+
+        ui->positionLabel->show();
+        ui->nameLabel->setText(userFSname);
+        ui->positionLabel->setText(registerUserPosition);
+    }
+
     elapsedTimer.start();
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
@@ -31,18 +44,6 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(ui->updateButton, &QAbstractButton::clicked, this, &StartWindow::updateTasksList);
 
     loadTasksList();
-
-    QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
-    QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
-    QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
-    QString userFSname = registerUserFirstName.append(" " + registerUserSecondName);
-
-    if (ui->positionLabel->isHidden() && !registerUserFirstName.isEmpty())
-    {
-        ui->positionLabel->show();
-        ui->nameLine->setText(userFSname);
-        ui->positionLabel->setText(registerUserPosition);
-    }
 }
 
 StartWindow::~StartWindow()
@@ -50,33 +51,31 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
-void StartWindow::translateUI(const int translate)
+void StartWindow::translateUI(const QString &language)
 {
-    if (translate == 0)
-    {
-        translator.load(":/translations/russian.qm");
-        qApp->installTranslator(&translator);
-    }
-    else if (translate == 1)
-    {
+    if (language == "russian")
+        translator.load(":/translations/russian.qm");        
+    else if (language == "ukrainian")
         translator.load(":/translations/ukrainian.qm");
-        qApp->installTranslator(&translator);
-    }
-    else if (translate == 2)
-    {
+    else if (language == "english")
         translator.load(":/translations/english.qm");
-        qApp->installTranslator(&translator);
-    }
+
+    qApp->installTranslator(&translator);
 }
 
 void StartWindow::setUserData(const QString &userFSname, const QString &userPosition)
 {
-    ui->positionLabel->show();
+    qDebug() << __LINE__;
 
-    ui->nameLine->setText(userFSname);
-    ui->positionLabel->setText(userPosition);
+    //ui->positionLabel->show();
 
-    qDebug() << ui->nameLine->text();
+    userFSname1 = userFSname;
+    userPosition1 = userPosition;
+
+    ui->nameLabel->setText(userFSname1);
+    ui->positionLabel->setText(userPosition1);
+
+    qDebug() << ui->nameLabel->text();
     qDebug() << ui->positionLabel->text();
 }
 

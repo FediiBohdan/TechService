@@ -10,7 +10,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    setLanguage();
+    ui->languageSelection->addItems(QStringList() << "Русский" << "Українська" << "English");
+    connect(ui->languageSelection, &QComboBox::currentTextChanged, this, &SettingsWindow::setLanguage);
+
+    QString registerLanguage = global::getSettingsValue("language", "settings").toString();
+
+    if (registerLanguage.isEmpty())
+       ui->languageSelection->setCurrentIndex(0);
+
     loadSettings();
     setUserInfo();
 }
@@ -48,43 +55,24 @@ void SettingsWindow::setUserInfo()
 
 void SettingsWindow::setLanguage()
 {
-    ui->languageSelection->addItems(QStringList() << "Русский" << "Українська" << "English");
-
-    connect(ui->languageSelection, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentTextChanged), [=] ()
+    if (ui->languageSelection->currentIndex() == 0)
     {
-        if (ui->languageSelection->currentIndex() == 0)
-        {
-           translator.load(":/translations/russian.qm");
-           qApp->installTranslator(&translator);
-           saveSettings();
+       translator.load(":/translations/russian.qm");
+       emit translate("russian"); //pass translation parameter for simultaneous dynamic GUI language changes
+    }
+    else if (ui->languageSelection->currentIndex() == 1)
+    {
+       translator.load(":/translations/ukrainian.qm");
+       emit translate("ukrainian");
+    }
+    else if (ui->languageSelection->currentIndex() == 2)
+    {
+       translator.load(":/translations/english.qm");
+       emit translate("english");
+    }
 
-           // pass translation parameter to classes for simultaneous dynamic translation changes
-           emit translate(0);
-        }
-        else if (ui->languageSelection->currentIndex() == 1)
-        {
-           translator.load(":/translations/ukrainian.qm");
-           qApp->installTranslator(&translator);
-           saveSettings();
-
-           emit translate(1);
-        }
-        else if (ui->languageSelection->currentIndex() == 2)
-        {
-           translator.load(":/translations/english.qm");
-           qApp->installTranslator(&translator);
-           saveSettings();
-
-           emit translate(2);
-        }
-    });
-
-    QString registerLanguage = global::getSettingsValue("language", "settings").toString();
-
-       if (registerLanguage == "")
-           ui->languageSelection->setCurrentIndex(0);
-       else
-           ui->languageSelection->setCurrentIndex(ui->languageSelection->findData(registerLanguage, Qt::UserRole, Qt::MatchExactly));
+    qApp->installTranslator(&translator);
+    saveSettings();
 }
 
 void SettingsWindow::loadSettings()
@@ -117,5 +105,5 @@ void SettingsWindow::saveUserData()
 
     QString userFSname = userFirstName.append(" " + userSecondName);
 
-    emit userData(userFSname, userPosition); qDebug() << __LINE__;
+    emit userData(userFSname, userPosition);
 }

@@ -2,7 +2,6 @@
 #define SETTINGSWINDOW_H
 
 #include "Global.h"
-#include "StartWindow.h"
 
 #include <QDialog>
 #include <QTranslator>
@@ -10,8 +9,6 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QDebug>
-
-class StartWindow;
 
 namespace Ui {
 class SettingsWindow;
@@ -43,7 +40,7 @@ private:
     QTranslator translator;
 
 signals:
-    void translate(int translate);
+    void translate(const QString &language);
     void userData(const QString &userFSName, const QString &userPosition);
 };
 
