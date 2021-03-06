@@ -69,9 +69,6 @@ private:
 
     QWidget *addCheckBoxCompleted(int rowIndex);
 
-    QString userFSname1;
-    QString userPosition1;
-
 protected:
     void changeEvent(QEvent *event) override;
 

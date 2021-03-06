@@ -22,7 +22,7 @@ StartWindow::StartWindow(QWidget *parent) :
     QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
     QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
 
-    if (ui->positionLabel->isHidden() && !registerUserFirstName.isEmpty())
+    if ((ui->positionLabel->isHidden()) && (!registerUserFirstName.isEmpty()))
     {
         QString userFSname = registerUserFirstName.append(" " + registerUserSecondName);
 
@@ -53,8 +53,11 @@ StartWindow::~StartWindow()
 
 void StartWindow::translateUI(const QString &language)
 {
+    if (!translator.isEmpty())
+        qApp->removeTranslator(&translator);
+
     if (language == "russian")
-        translator.load(":/translations/russian.qm");        
+        translator.load(":/translations/russian.qm");
     else if (language == "ukrainian")
         translator.load(":/translations/ukrainian.qm");
     else if (language == "english")
@@ -65,18 +68,10 @@ void StartWindow::translateUI(const QString &language)
 
 void StartWindow::setUserData(const QString &userFSname, const QString &userPosition)
 {
-    qDebug() << __LINE__;
+    ui->positionLabel->show();
 
-    //ui->positionLabel->show();
-
-    userFSname1 = userFSname;
-    userPosition1 = userPosition;
-
-    ui->nameLabel->setText(userFSname1);
-    ui->positionLabel->setText(userPosition1);
-
-    qDebug() << ui->nameLabel->text();
-    qDebug() << ui->positionLabel->text();
+    ui->nameLabel->setText(userFSname);
+    ui->positionLabel->setText(userPosition);
 }
 
 void StartWindow::changeEvent(QEvent *event)
@@ -85,7 +80,8 @@ void StartWindow::changeEvent(QEvent *event)
         ui->retranslateUi(this);
 }
 
-void StartWindow::showTime(){
+void StartWindow::showTime()
+{
     auto elapsed = elapsedTimer.elapsed();
     auto counter = countdown.addMSecs(-elapsed);
     QString timestr = counter.toString("hh:mm:ss");
@@ -213,6 +209,8 @@ void StartWindow::on_desktopButton_clicked()
 //        connect(this, &StartWindow::closeAllWindowsExceptCurrent, addOrder, &AddOrder::closeWindow);
 //        emit closeAllWindowsExceptCurrent(true);
 //    }
+
+    qDebug() << sparePartsTable->isVisible();
 }
 
 void StartWindow::on_orderFormationButton_clicked()

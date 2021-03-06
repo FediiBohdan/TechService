@@ -55,8 +55,10 @@ private:
 
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
+    QPointer<QSqlQueryModel> queryGetUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
     QPointer<QSqlQueryModel> queryUsedSparePartsModel;
+    QPointer<QSqlQueryModel> queryRemoveUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
     QPointer<QSqlQueryModel> queryEmployeesHoursModel;
@@ -90,20 +92,19 @@ private slots:
     void updateSparePartsTable();
     void updateEmployeesTable();
     void updateUsedSparePartsTable(const QModelIndex &index);
+    void removeUsedSparePartsTable(const QModelIndex &index);
     void setOrderEmployees(const QModelIndex &index);
 
     void closeEvent(QCloseEvent *);
 
     void on_createOrderButton_clicked();
     void on_sparePartsSearch_returnPressed();
-    void on_clearSparePartsListButton_clicked();
     void on_clearMechanicButton_clicked();
     void on_clearMechanic2Button_clicked();
     void on_clearDiagnosticianButton_clicked();
     void on_clearElectronicButton_clicked();
     void on_clearWasherButton_clicked();
     void on_clearLocksmithButton_clicked();
-    void on_removeLastSparePartButton_clicked();
     void on_addSparePartsButton_clicked();
 };
 

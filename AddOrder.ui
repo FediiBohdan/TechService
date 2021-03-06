@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1431</width>
-    <height>954</height>
+    <height>961</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1019,6 +1019,22 @@ QPushButton:pressed {
            <property name="bottomMargin">
             <number>0</number>
            </property>
+           <item row="0" column="1">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Expanding</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>25</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
            <item row="0" column="4">
             <spacer name="horizontalSpacer_4">
              <property name="orientation">
@@ -1031,80 +1047,6 @@ QPushButton:pressed {
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="0" column="6">
-            <widget class="QPushButton" name="clearSparePartsListButton">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>27</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="focusPolicy">
-              <enum>Qt::StrongFocus</enum>
-             </property>
-             <property name="toolTip">
-              <string>Очистить список</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-	border-radius: 2px;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="images.qrc">
-               <normaloff>:/images/clearList.png</normaloff>:/images/clearList.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>30</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="autoDefault">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_9">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel {
-	background-color: transparent;
-	border: 0px;
-	margin-left: 3px;
-}</string>
-             </property>
-             <property name="text">
-              <string>Запчасти</string>
-             </property>
-            </widget>
            </item>
            <item row="0" column="3">
             <widget class="QLineEdit" name="sparePartsSearch">
@@ -1140,103 +1082,33 @@ QPushButton:pressed {
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>25</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="0" column="5">
-            <widget class="QPushButton" name="removeLastSparePartButton">
-             <property name="minimumSize">
-              <size>
-               <width>27</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>27</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Удалить последнюю запчасть</string>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-	border-radius: 2px;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+	margin-left: 3px;
 }</string>
              </property>
              <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="images.qrc">
-               <normaloff>:/images/backToView.png</normaloff>:/images/backToView.png</iconset>
-             </property>
-             <property name="autoDefault">
-              <bool>false</bool>
+              <string>Запчасти</string>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QTextEdit" name="sparePartsList">
-          <property name="maximumSize">
-           <size>
-            <width>390</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::StrongFocus</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTextEdit {
-	background-color: white;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-bottom-left-radius: 6px;
-	border-bottom-right-radius: 6px;
-}</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="QTableView" name="availableSparePartsTable">
           <property name="maximumSize">
            <size>
-            <width>450</width>
+            <width>532</width>
             <height>16777215</height>
            </size>
           </property>
@@ -1281,6 +1153,46 @@ QHeaderView::section {
           </property>
           <property name="horizontalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTableView" name="usedSparePartsTableView">
+          <property name="maximumSize">
+           <size>
+            <width>310</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTableView {
+	background-color: white;
+	border: 1px solid grey;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+    selection-color: black; 
+	selection-background-color: #f2e7ff;
+}
+
+QLabel {
+	background-color: transparent;
+	border-radius: 0px;
+	border: 0px;
+	font-size: 9pt;
+}
+
+QHeaderView {
+	border-radius: 0px;
+	background-color: #f5f5f5;
+	font-size: 9pt;
+	border: 0px;
+}
+
+QHeaderView::section {
+	background-color: white;
+}</string>
           </property>
          </widget>
         </item>
@@ -2947,9 +2859,6 @@ QPushButton:pressed {
   <tabstop>discountsComboBox</tabstop>
   <tabstop>orderStatusComboBox</tabstop>
   <tabstop>sparePartsSearch</tabstop>
-  <tabstop>removeLastSparePartButton</tabstop>
-  <tabstop>clearSparePartsListButton</tabstop>
-  <tabstop>sparePartsList</tabstop>
   <tabstop>mechanicHoursLine</tabstop>
   <tabstop>clearMechanicButton</tabstop>
   <tabstop>mechanic2HoursLine</tabstop>

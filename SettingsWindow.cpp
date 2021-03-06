@@ -55,6 +55,11 @@ void SettingsWindow::setUserInfo()
 
 void SettingsWindow::setLanguage()
 {
+    QTranslator translator;
+
+    if (!translator.isEmpty())
+        qApp->removeTranslator(&translator);
+
     if (ui->languageSelection->currentIndex() == 0)
     {
        translator.load(":/translations/russian.qm");
@@ -89,7 +94,9 @@ void SettingsWindow::on_saveSettingsButton_clicked()
 {
     saveUserData();
 
-    //QDialog::close();
+    QDialog::close();
+
+    QMessageBox::information(this, tr("Уведомление"), tr("Настройки успешно сохранены!"), QMessageBox::Ok);
 }
 
 void SettingsWindow::saveUserData()

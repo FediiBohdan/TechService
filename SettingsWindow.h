@@ -37,7 +37,7 @@ private slots:
 private:
     Ui::SettingsWindow *ui;
 
-    QTranslator translator;
+    //QTranslator translator;
 
 signals:
     void translate(const QString &language);
