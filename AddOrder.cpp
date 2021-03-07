@@ -134,6 +134,7 @@ void AddOrder::on_addSparePartsButton_clicked()
     queryOrders.exec();
 
     orderId = queryOrders.lastInsertId().toInt();
+    s_orderId = queryOrders.lastInsertId().toString();
 
     ui->sparePartsFrame->setEnabled(true);
     ui->employeesFrame->setEnabled(true);
@@ -174,6 +175,33 @@ void AddOrder::loadSparePartsTable()
     ui->availableSparePartsTable->resizeRowsToContents();
 }
 
+void AddOrder::loadUsedSparePartsTable()
+{
+    queryGetUsedSparePartsModel = new QSqlQueryModel(this);
+
+    QString queryString = "SELECT id_order_spare_part, id_order, order_spare_part, order_spare_part_price FROM OrderSpareParts "
+                          "WHERE id_order = '" + s_orderId + "'";
+
+    queryGetUsedSparePartsModel->setQuery(queryString);
+
+    queryGetUsedSparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id_order_spare_part"));
+    queryGetUsedSparePartsModel->setHeaderData(1, Qt::Horizontal, tr("id_order"));
+    queryGetUsedSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Название"));
+    queryGetUsedSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Цена"));
+
+    ui->usedSparePartsTableView->setModel(queryGetUsedSparePartsModel);
+
+    ui->usedSparePartsTableView->setColumnHidden(0, true);
+    ui->usedSparePartsTableView->setColumnHidden(1, true);
+
+    ui->usedSparePartsTableView->resizeRowsToContents();
+    ui->usedSparePartsTableView->verticalHeader()->hide();
+    ui->usedSparePartsTableView->resizeColumnsToContents();
+    ui->usedSparePartsTableView->horizontalHeader()->setSectionsClickable(false);
+    ui->usedSparePartsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->usedSparePartsTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+}
+
 // choosing needed spare parts for the order + amount check
 void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
 {
@@ -202,29 +230,9 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
     queryUsedSparePartsModel.addBindValue(sparePartPrice);
     queryUsedSparePartsModel.exec();
 
-    queryGetUsedSparePartsModel = new QSqlQueryModel(this);
+    loadUsedSparePartsTable();
 
-    QString queryString = "SELECT id_order_spare_part, id_order, order_spare_part, order_spare_part_price FROM OrderSpareParts";
-
-    queryGetUsedSparePartsModel->setQuery(queryString);
-
-    queryGetUsedSparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id_order_spare_part"));
-    queryGetUsedSparePartsModel->setHeaderData(1, Qt::Horizontal, tr("id_order"));
-    queryGetUsedSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Название"));
-    queryGetUsedSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Цена"));
-
-    ui->usedSparePartsTableView->setModel(queryGetUsedSparePartsModel);
-
-    ui->usedSparePartsTableView->setColumnHidden(0, true);
-    ui->usedSparePartsTableView->setColumnHidden(1, true);
-
-    ui->usedSparePartsTableView->resizeRowsToContents();
-    ui->usedSparePartsTableView->verticalHeader()->hide();
-    ui->usedSparePartsTableView->resizeColumnsToContents();
-    ui->usedSparePartsTableView->horizontalHeader()->setSectionsClickable(false);
-    ui->usedSparePartsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->usedSparePartsTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
-
+    //!!!1//
     sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toFloat();
     sparePartsCost += sparePartCost;
 }
@@ -239,6 +247,22 @@ void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
     queryRemoveUsedSparePartsModel.prepare("DELETE FROM OrderSpareParts WHERE id_order_spare_part = ?");
     queryRemoveUsedSparePartsModel.addBindValue(orderSparePartId);
     queryRemoveUsedSparePartsModel.exec();
+
+    updateusedSparePartsTable();
+}
+
+void AddOrder::updateEmployeesTable()
+{
+    queryEmployeesModel->setQuery(NULL);
+
+    loadEmployeesTable();
+}
+
+void AddOrder::updateusedSparePartsTable()
+{
+    queryGetUsedSparePartsModel->setQuery(NULL);
+
+    loadUsedSparePartsTable();
 }
 
 void AddOrder::loadEmployeesTable()
@@ -308,13 +332,6 @@ void AddOrder::setOrderEmployees(const QModelIndex &index)
         ui->washerLine->setText(employeeName);
         washerHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
     }
-}
-
-void AddOrder::updateEmployeesTable()
-{
-    queryEmployeesModel->setQuery(NULL);
-
-    loadEmployeesTable();
 }
 
 void AddOrder::setDateAndTime()
