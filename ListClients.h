@@ -2,8 +2,7 @@
 #define LISTCLIENTS_H
 
 #include "AddClient.h"
-#include "ViewClient.h"
-#include "UpdateClients.h"
+#include "ViewUpdateClient.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -18,9 +17,8 @@
 #include <QTextStream>
 #include <QFileDialog>
 
-class ViewClient;
+class ViewUpdateClient;
 class AddClient;
-class UpdateClients;
 
 namespace Ui {
 class ListClients;
@@ -48,7 +46,7 @@ private:
     Ui::ListClients *ui;
 
     AddClient *addClient;
-    ViewClient *viewClient;
+    ViewUpdateClient *viewUpdateClient;
 
     bool searchFlag;
 

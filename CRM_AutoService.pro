@@ -33,16 +33,15 @@ SOURCES += main.cpp \
     ListTasks.cpp \
     SettingsWindow.cpp \
     StartWindow.cpp \
-    UpdateClients.cpp \
     UpdateEmployee.cpp \
     UpdateOrders.cpp \
     UpdateSparePart.cpp \
     UpdateTask.cpp \
-    ViewClient.cpp \
     ViewEmployee.cpp \
     ViewOrders.cpp \
     ViewSparePart.cpp \
-    ViewTask.cpp
+    ViewTask.cpp \
+    ViewUpdateClient.cpp
 
 RESOURCES += qml.qrc \
     images.qrc \
@@ -62,16 +61,15 @@ FORMS += \
     ListTasks.ui \
     SettingsWindow.ui \
     StartWindow.ui \
-    UpdateClients.ui \
     UpdateEmployee.ui \
     UpdateOrders.ui \
     UpdateSparePart.ui \
     UpdateTask.ui \
-    ViewClient.ui \
     ViewEmployee.ui \
     ViewOrders.ui \
     ViewSparePart.ui \
-    ViewTask.ui
+    ViewTask.ui \
+    ViewUpdateClient.ui
 
 HEADERS += \
     AddClient.h \
@@ -88,16 +86,15 @@ HEADERS += \
     ListTasks.h \
     SettingsWindow.h \
     StartWindow.h \
-    UpdateClients.h \
     UpdateEmployee.h \
     UpdateOrders.h \
     UpdateSparePart.h \
     UpdateTask.h \
-    ViewClient.h \
     ViewEmployee.h \
     ViewOrders.h \
     ViewSparePart.h \
-    ViewTask.h
+    ViewTask.h \
+    ViewUpdateClient.h
 
 CODECFORSRC = UTF-8
 

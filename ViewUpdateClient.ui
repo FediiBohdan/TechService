@@ -1,51 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ViewClient</class>
- <widget class="QDialog" name="ViewClient">
+ <class>ViewUpdateClient</class>
+ <widget class="QDialog" name="ViewUpdateClient">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>919</width>
-    <height>395</height>
+    <width>672</width>
+    <height>387</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
   <property name="windowTitle">
-   <string>Информация о клиенте</string>
+   <string>Редактирование информации о клиенте</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
 	background-color: #f7f9ff;
-}
-
-QWidget {
-	background-color: #f7f9ff;
-}
-
-QMessageBox {
-	background-color: white;
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_5">
-   <property name="leftMargin">
-    <number>5</number>
-   </property>
-   <property name="topMargin">
-    <number>5</number>
-   </property>
-   <property name="rightMargin">
-    <number>5</number>
-   </property>
-   <property name="bottomMargin">
-    <number>5</number>
-   </property>
-   <item row="0" column="0">
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
+    <widget class="QPushButton" name="saveUpdatedInfo">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>27</width>
+       <height>27</height>
+      </size>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -55,18 +93,61 @@ QMessageBox {
        <string>Информация о клиенте</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0">
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>784</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
+       <item row="2" column="0" colspan="3">
+        <layout class="QGridLayout" name="gridLayout_10">
+         <item row="1" column="0" colspan="2">
+          <widget class="QLineEdit" name="contacts">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_22">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Контакты</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="contactsErrorLabel">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel {
+	color: red;
+}</string>
+           </property>
+           <property name="text">
+            <string>Поле с контактами не должно быть пустым!</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="4" column="0" colspan="3">
         <layout class="QGridLayout" name="gridLayout_11">
@@ -98,6 +179,9 @@ QMessageBox {
 }</string>
            </property>
            <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
             <bool>true</bool>
            </property>
           </widget>
@@ -144,6 +228,9 @@ QMessageBox {
            <property name="frame">
             <bool>true</bool>
            </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item row="1" column="2" colspan="2">
@@ -164,6 +251,9 @@ QMessageBox {
            <property name="frame">
             <bool>true</bool>
            </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item row="0" column="0">
@@ -178,7 +268,7 @@ QMessageBox {
            </property>
           </widget>
          </item>
-         <item row="0" column="2" colspan="2">
+         <item row="0" column="2">
           <widget class="QLabel" name="label_24">
            <property name="font">
             <font>
@@ -190,134 +280,20 @@ QMessageBox {
            </property>
           </widget>
          </item>
-        </layout>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="updateClientInfoButton">
-         <property name="minimumSize">
-          <size>
-           <width>40</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Редактировать информацию</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="images.qrc">
-           <normaloff>:/images/edit.png</normaloff>:/images/edit.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <layout class="QGridLayout" name="gridLayout_12">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_26">
+         <item row="0" column="3">
+          <widget class="QLabel" name="autoErrorLabel">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
             </font>
            </property>
-           <property name="text">
-            <string>Тип клиента</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1" colspan="2">
-          <widget class="QLineEdit" name="clientFMLname">
-           <property name="minimumSize">
-            <size>
-             <width>550</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
            <property name="styleSheet">
-            <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
+            <string notr="true">QLabel {
+	color: red;
 }</string>
            </property>
-           <property name="frame">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLineEdit" name="clientTypeLine">
-           <property name="minimumSize">
-            <size>
-             <width>110</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>110</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QLabel" name="label_27">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
            <property name="text">
-            <string>ФИО клиента / название</string>
+            <string>Поле с маркой авто не должно быть пустым!</string>
            </property>
           </widget>
          </item>
@@ -379,6 +355,9 @@ QPushButton:pressed {
            <property name="frame">
             <bool>true</bool>
            </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item row="3" column="0">
@@ -411,6 +390,9 @@ QPushButton:pressed {
            <property name="frame">
             <bool>true</bool>
            </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item row="0" column="0" colspan="2">
@@ -440,41 +422,8 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
            </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0" colspan="3">
-        <layout class="QGridLayout" name="gridLayout_10">
-         <item row="1" column="0" colspan="2">
-          <widget class="QLineEdit" name="contacts">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-           </property>
-           <property name="frame">
+           <property name="readOnly">
             <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0" colspan="2">
-          <widget class="QLabel" name="label_22">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Контакты</string>
            </property>
           </widget>
          </item>
@@ -528,6 +477,168 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="updateInfoButton">
+         <property name="minimumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Редактировать информацию</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="images.qrc">
+           <normaloff>:/images/edit.png</normaloff>:/images/edit.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <layout class="QGridLayout" name="gridLayout_12">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_26">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Тип клиента</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="3">
+          <widget class="QLineEdit" name="clientFMLname">
+           <property name="minimumSize">
+            <size>
+             <width>550</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QComboBox" name="clientTypeComboBox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QComboBox {
+	border: 1px solid gray;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 6px;
+}</string>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_27">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>ФИО клиента / название</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2" colspan="2">
+          <widget class="QLabel" name="nameErrorLabel">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel {
+	color: red;
+}</string>
+           </property>
+           <property name="text">
+            <string>Поле с данными клиента не должно быть пустым!</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>784</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
@@ -551,21 +662,6 @@ QPushButton:pressed {
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>createOrderByClientButton</tabstop>
-  <tabstop>updateClientInfoButton</tabstop>
-  <tabstop>clientTypeLine</tabstop>
-  <tabstop>clientFMLname</tabstop>
-  <tabstop>contacts</tabstop>
-  <tabstop>email</tabstop>
-  <tabstop>autoBrand</tabstop>
-  <tabstop>autoModel</tabstop>
-  <tabstop>manufactureYear</tabstop>
-  <tabstop>autoLicensePlate</tabstop>
-  <tabstop>VINnumber</tabstop>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>tableView</tabstop>
- </tabstops>
  <resources>
   <include location="images.qrc"/>
  </resources>

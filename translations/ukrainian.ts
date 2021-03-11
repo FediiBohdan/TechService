@@ -1208,89 +1208,89 @@
     </message>
 </context>
 <context>
-    <name>UpdateClients</name>
+    <name>ViewUpdateClient</name>
     <message>
-        <location filename="../UpdateClients.ui" line="14"/>
+        <location filename="../ViewUpdateClient.ui" line="14"/>
         <source>Редактирование информации о клиенте</source>
         <translation>Редагування інформації про клієнта</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="437"/>
+        <location filename="../ViewUpdateClient.ui" line="437"/>
         <source>Госномер</source>
         <translation>Держномер</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="360"/>
+        <location filename="../ViewUpdateClient.ui" line="360"/>
         <source>Модель авто</source>
         <translation>Модель авто</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="132"/>
+        <location filename="../ViewUpdateClient.ui" line="132"/>
         <source>Тип клиента</source>
         <translation>Тип клієнта</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="144"/>
+        <location filename="../ViewUpdateClient.ui" line="144"/>
         <source>ФИО клиента / название</source>
         <translation>ПІБ клієнта / назва</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="161"/>
+        <location filename="../ViewUpdateClient.ui" line="161"/>
         <source>Поле с данными клиента не должно быть пустым!</source>
         <translation>Поле з даними клієнта не повинно бути порожнім!</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="218"/>
+        <location filename="../ViewUpdateClient.ui" line="218"/>
         <source>Контакты</source>
         <translation>Контакти</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="248"/>
+        <location filename="../ViewUpdateClient.ui" line="248"/>
         <source>Поле с контактами не должно быть пустым!</source>
         <translation>Поле з контактами не повинно бути порожнім!</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="284"/>
+        <location filename="../ViewUpdateClient.ui" line="284"/>
         <source>Марка авто</source>
         <translation>Марка авто</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="389"/>
+        <location filename="../ViewUpdateClient.ui" line="389"/>
         <source>Электронная почта</source>
         <translation>Електронна пошта</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="449"/>
+        <location filename="../ViewUpdateClient.ui" line="449"/>
         <source>Год выпуска</source>
         <translation>Рік випуску</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="510"/>
+        <location filename="../ViewUpdateClient.ui" line="510"/>
         <source>Поле с маркой авто не должно быть пустым!</source>
         <translation>Поле з маркою авто не повинно бути порожнім!</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.ui" line="493"/>
+        <location filename="../ViewUpdateClient.ui" line="493"/>
         <source>VIN-номер</source>
         <translation>VIN-номер</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.cpp" line="17"/>
+        <location filename="../ViewUpdateClient.cpp" line="17"/>
         <source>Физ. лицо</source>
         <translation>Фіз. особа</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.cpp" line="17"/>
+        <location filename="../ViewUpdateClient.cpp" line="17"/>
         <source>Юр. лицо</source>
         <translation>Юр. особа</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.cpp" line="87"/>
+        <location filename="../ViewUpdateClient.cpp" line="87"/>
         <source>Уведомление</source>
         <translation>Сповіщення</translation>
     </message>
     <message>
-        <location filename="../UpdateClients.cpp" line="87"/>
+        <location filename="../ViewUpdateClient.cpp" line="87"/>
         <source>Информация о клиенте успешно обновлена!</source>
         <translation>Інформація про клієнта успішно оновлена!</translation>
     </message>

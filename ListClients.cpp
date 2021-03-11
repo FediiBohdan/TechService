@@ -86,14 +86,14 @@ void ListClients::on_addClientButton_clicked()
 
 void ListClients::showClientInfo(const QModelIndex &index)
 {
-    QDialog::hide();
+    QDialog::close();
 
     QString clientId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
-    viewClient = new ViewClient;
-    viewClient->setValues(clientId);
-    viewClient->show();
-    viewClient->setAttribute(Qt::WA_DeleteOnClose);
+    viewUpdateClient = new ViewUpdateClient;
+    viewUpdateClient->setValues(clientId);
+    viewUpdateClient->show();
+    viewUpdateClient->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void ListClients::on_clientSearch_returnPressed()

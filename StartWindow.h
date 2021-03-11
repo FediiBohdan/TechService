@@ -32,6 +32,7 @@
 class ListSparePart;
 class AddOrder;
 class ListOrders;
+class ListClients;
 
 namespace Ui {
 class StartWindow;
