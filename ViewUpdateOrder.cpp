@@ -1,9 +1,9 @@
-#include "UpdateOrders.h"
-#include "ui_UpdateOrders.h"
+#include "ViewUpdateOrder.h"
+#include "ui_ViewUpdateOrder.h"
 
-UpdateOrders::UpdateOrders(QWidget *parent) :
+ViewUpdateOrder::ViewUpdateOrder(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::UpdateOrders)
+    ui(new Ui::ViewUpdateOrder)
 {
     ui->setupUi(this);
 
@@ -12,22 +12,20 @@ UpdateOrders::UpdateOrders(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);    
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    connect(ui->openMapButton, &QAbstractButton::clicked, this, &UpdateOrders::openMap);
-    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &UpdateOrders::updateUsedSparePartsTable);
-    connect(ui->employeesByServiceTable, &QAbstractItemView::clicked, this, &UpdateOrders::setOrderEmployees);
+    connect(ui->openMapButton, &QAbstractButton::clicked, this, &ViewUpdateOrder::openMap);
+    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &ViewUpdateOrder::updateUsedSparePartsTable);
+    connect(ui->employeesByServiceTable, &QAbstractItemView::clicked, this, &ViewUpdateOrder::setOrderEmployees);
 
     ui->clientErrorLabel->setStyleSheet("color: transparent"); ui->contactsErrorLabel->setStyleSheet("color: transparent");
     ui->autoErrorLabel->setStyleSheet("color: transparent"); ui->serviceErrorLabel->setStyleSheet("color: transparent");
     ui->dateErrorLabel->setStyleSheet("color: transparent");
-
-    ui->removeLastSparePartButton->setEnabled(false);
 
     ui->clientTypeComboBox->addItems(QStringList() << tr("Физ. лицо") << tr("Юр. лицо"));
     ui->orderStatusComboBox->addItems(QStringList() << tr("Заявка") << tr("В работе") << tr("Завершен, неоплачен") << tr("Завершен, оплачен"));
     ui->discountsComboBox->addItems(QStringList() << tr("Нет") << tr("Купон") << tr("Акция") << tr("Особые условия") << tr("Постоянный клиент"));
     ui->serviceComboBox->addItems(QStringList() << "Среднефонтанская, 30А (Приморский р-н)" << "Платонова, 56 (Малиновский р-н)" << "Архитекторская, 28 (Киевский р-н)");
 
-    connect(ui->serviceComboBox, &QComboBox::currentTextChanged, this, &UpdateOrders::updateEmployeesTable);
+    connect(ui->serviceComboBox, &QComboBox::currentTextChanged, this, &ViewUpdateOrder::updateEmployeesTable);
 
     searchFlag = false;
 
@@ -37,12 +35,12 @@ UpdateOrders::UpdateOrders(QWidget *parent) :
     loadEmployeesTable();
 }
 
-UpdateOrders::~UpdateOrders()
+ViewUpdateOrder::~ViewUpdateOrder()
 {
     delete ui;
 }
 
-void UpdateOrders::closeEvent(QCloseEvent *)
+void ViewUpdateOrder::closeEvent(QCloseEvent *)
 {
     QDialog::close();
     listOrders = new ListOrders;
@@ -50,13 +48,13 @@ void UpdateOrders::closeEvent(QCloseEvent *)
     listOrders->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void UpdateOrders::openMap()
+void ViewUpdateOrder::openMap()
 {
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;
     engine->load(QUrl(QStringLiteral("qrc:/mapInteraction.qml")));
 }
 
-void UpdateOrders::loadSparePartsTable()
+void ViewUpdateOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
@@ -93,7 +91,7 @@ void UpdateOrders::loadSparePartsTable()
     ui->availableSparePartsTable->resizeRowsToContents();
 }
 
-QWidget* UpdateOrders::addWidgetCompatibilityContent(int rowIndex)
+QWidget* ViewUpdateOrder::addWidgetCompatibilityContent(int rowIndex)
 {
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -116,7 +114,7 @@ QWidget* UpdateOrders::addWidgetCompatibilityContent(int rowIndex)
     return widget;
 }
 
-void UpdateOrders::updateUsedSparePartsTable(const QModelIndex &index)
+void ViewUpdateOrder::updateUsedSparePartsTable(const QModelIndex &index)
 {
     QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
 
@@ -133,40 +131,13 @@ void UpdateOrders::updateUsedSparePartsTable(const QModelIndex &index)
 
     QString sparePart = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
 
-    sparePartsList.append(sparePart);
-    sparePartsList.append(", ");
-
     QString sparePartCostDetail = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toString();
-
-    ui->sparePartsList->setText(sparePartsList.replace(", ", (" - " + sparePartCostDetail + "\n")));
 
     sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toFloat();
     sparePartsCost += sparePartCost;
-
-    sparePartNameLength = sparePart.length() + sparePartCostDetail.length() + 4;
-
-    ui->removeLastSparePartButton->setEnabled(true);
 }
 
-void UpdateOrders::on_removeLastSparePartButton_clicked()
-{
-   sparePartsList.chop(sparePartNameLength);
-
-   ui->sparePartsList->setText(sparePartsList);
-
-   ui->removeLastSparePartButton->setEnabled(false);
-}
-
-void UpdateOrders::on_clearSparePartsListButton_clicked()
-{
-    sparePartsList = "";
-    ui->sparePartsList->setText("");
-    sparePartsCost = 0;
-
-    ui->removeLastSparePartButton->setEnabled(false);
-}
-
-void UpdateOrders::loadEmployeesTable()
+void ViewUpdateOrder::loadEmployeesTable()
 {
     queryEmployeesModel = new QSqlQueryModel(this);
 
@@ -191,7 +162,7 @@ void UpdateOrders::loadEmployeesTable()
     ui->employeesByServiceTable->verticalHeader()->hide();
 }
 
-void UpdateOrders::setOrderEmployees(const QModelIndex &index)
+void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 {
     QString employeeName = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 1), Qt::EditRole).toString();
     QString employeePosition = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 2), Qt::EditRole).toString();
@@ -235,14 +206,14 @@ void UpdateOrders::setOrderEmployees(const QModelIndex &index)
     }
 }
 
-void UpdateOrders::updateEmployeesTable()
+void ViewUpdateOrder::updateEmployeesTable()
 {
     queryEmployeesModel->setQuery(NULL);
 
     loadEmployeesTable();
 }
 
-void UpdateOrders::setDateAndTime()
+void ViewUpdateOrder::setDateAndTime()
 {
     QDate currentDate = QDate::currentDate();
     QTime currentTime = QTime::currentTime();
@@ -250,7 +221,7 @@ void UpdateOrders::setDateAndTime()
     ui->updateTimeLine->setText(currentTime.toString(Qt::SystemLocaleDate));
 }
 
-void UpdateOrders::setValues(const QString &id)
+void ViewUpdateOrder::setValues(const QString &id)
 {
     orderId = id;
 
@@ -376,14 +347,7 @@ void UpdateOrders::setValues(const QString &id)
         washerFlag = true;
 }
 
-void UpdateOrders::on_backToViewInfoButton_clicked()
-{
-    emit sendData(false);
-
-    QDialog::close();
-}
-
-void UpdateOrders::on_saveUpdatedInfo_clicked()
+void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 {
     QSqlQuery queryOrders(ordersDB);
 
@@ -720,52 +684,57 @@ void UpdateOrders::on_saveUpdatedInfo_clicked()
     QMessageBox::information(this, tr("Уведомление"), tr("Информация о заказе успешно обновлена!"), QMessageBox::Ok);
 }
 
-void UpdateOrders::on_sparePartsSearch_returnPressed()
+void ViewUpdateOrder::on_sparePartsSearch_returnPressed()
 {
     searchFlag = true;
 
     updateSparePartsTable();
 }
 
-void UpdateOrders::updateSparePartsTable()
+void ViewUpdateOrder::updateSparePartsTable()
 {
     queryAvailableSparePartsModel->setQuery(NULL);
 
     loadSparePartsTable();
 }
 
-void UpdateOrders::on_clearMechanicButton_clicked()
+void ViewUpdateOrder::on_clearMechanicButton_clicked()
 {
     ui->mechanicLine->setText("");
     ui->mechanicHoursLine->setText("");
 }
 
-void UpdateOrders::on_clearMechanic2Button_clicked()
+void ViewUpdateOrder::on_clearMechanic2Button_clicked()
 {
     ui->mechanic2Line->setText("");
     ui->mechanic2HoursLine->setText("");
 }
 
-void UpdateOrders::on_clearDiagnosticianButton_clicked()
+void ViewUpdateOrder::on_clearDiagnosticianButton_clicked()
 {
     ui->diagnosticianLine->setText("");
     ui->diagnosticianHoursLine->setText("");
 }
 
-void UpdateOrders::on_clearElectronicButton_clicked()
+void ViewUpdateOrder::on_clearElectronicButton_clicked()
 {
     ui->electronicsLine->setText("");
     ui->electronicsHoursLine->setText("");
 }
 
-void UpdateOrders::on_clearLocksmithButton_clicked()
+void ViewUpdateOrder::on_clearLocksmithButton_clicked()
 {
     ui->locksmithLine->setText("");
     ui->locksmithHoursLine->setText("");
 }
 
-void UpdateOrders::on_clearWasherButton_clicked()
+void ViewUpdateOrder::on_clearWasherButton_clicked()
 {
     ui->washerLine->setText("");
     ui->washerHoursLine->setText("");
+}
+
+void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
+{
+
 }

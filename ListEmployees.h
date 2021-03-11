@@ -2,8 +2,7 @@
 #define LISTEMPLOYEES_H
 
 #include "AddEmployee.h"
-#include "ViewEmployee.h"
-#include "UpdateEmployee.h"
+#include "ViewUpdateEmployee.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
@@ -17,8 +16,7 @@
 #include <QTextStream>
 #include <QFileDialog>
 
-class ViewEmployee;
-class UpdateEmployee;
+class ViewUpdateEmployee;
 class AddEmployee;
 
 namespace Ui {
@@ -51,7 +49,7 @@ private:
     QPointer<QSqlQueryModel> queryModelLabel;
 
     AddEmployee *addEmployee;
-    ViewEmployee *viewEmployees;
+    ViewUpdateEmployee *viewUpdateEmployees;
 };
 
 #endif // LISTEMPLOYEES_H

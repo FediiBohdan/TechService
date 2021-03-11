@@ -2,7 +2,7 @@
 #define LISTORDERS_H
 
 #include "AddOrder.h"
-#include "ViewOrders.h"
+#include "ViewUpdateOrder.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
@@ -17,8 +17,7 @@
 #include <QFileDialog>
 
 class AddOrder;
-class ViewOrders;
-class UpdateOrders;
+class ViewUpdateOrder;
 
 namespace Ui {
 class ListOrders;
@@ -53,7 +52,7 @@ private:
     QPointer<QSqlQueryModel> queryModelCheckBox;
 
     AddOrder *addOrder;
-    ViewOrders *viewOrders;
+    ViewUpdateOrder *viewUpdateOrder;
 
     bool searchFlag;
 

@@ -2,8 +2,7 @@
 #define LISTTASKS_H
 
 #include "AddTask.h"
-#include "ViewTask.h"
-#include "UpdateTask.h"
+#include "ViewUpdateTask.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -16,8 +15,7 @@
 #include <QLabel>
 
 class AddTask;
-class ViewTask;
-class UpdateTask;
+class ViewUpdateTask;
 
 namespace Ui {
 class ListTasks;
@@ -45,7 +43,7 @@ private:
     QPointer<QSqlQueryModel> queryModelLabel;
 
     AddTask *addTask;
-    ViewTask *viewTask;
+    ViewUpdateTask *viewUpdateTask;
 
     QWidget *addCheckBoxCompleted(int rowIndex);
     QWidget *addWidgetContent(int rowIndex);

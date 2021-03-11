@@ -1,9 +1,9 @@
-#include "UpdateSparePart.h"
-#include "ui_UpdateSparePart.h"
+#include "ViewUpdateSparePart.h"
+#include "ui_ViewUpdateSparePart.h"
 
-UpdateSparePart::UpdateSparePart(QWidget *parent) :
+ViewUpdateSparePart::ViewUpdateSparePart(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::UpdateSparePart)
+    ui(new Ui::ViewUpdateSparePart)
 {
     ui->setupUi(this);
 
@@ -13,12 +13,12 @@ UpdateSparePart::UpdateSparePart(QWidget *parent) :
     ui->errorLabel->hide();
 }
 
-UpdateSparePart::~UpdateSparePart()
+ViewUpdateSparePart::~ViewUpdateSparePart()
 {
     delete ui;
 }
 
-void UpdateSparePart::setValues(const QString& id)
+void ViewUpdateSparePart::setValues(const QString& id)
 {
     sparePartId = id;
 
@@ -40,16 +40,9 @@ void UpdateSparePart::setValues(const QString& id)
     ui->priceLine->setText(query.value(5).toString());
 }
 
-void UpdateSparePart::on_backToViewInfoButton_clicked()
+void ViewUpdateSparePart::on_saveUpdatedInfo_clicked()
 {
-    emit sendData(false);
-
-    QDialog::close();
-}
-
-void UpdateSparePart::on_saveUpdatedInfo_clicked()
-{
-    QSqlQuery queryOrders(sparePartsDB);
+    QSqlQuery querySpareParts(sparePartsDB);
 
     QString sparePartName = ui->sparePartNameLine->text();
     QString manufacturer = ui->manufacturerLine->text();
@@ -67,19 +60,31 @@ void UpdateSparePart::on_saveUpdatedInfo_clicked()
 
     autoCompatibility.replace(", ", "\n");
 
-    queryOrders.prepare("UPDATE SparePartsCatalogue SET spare_part_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
+    querySpareParts.prepare("UPDATE SparePartsCatalogue SET spare_part_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
         "WHERE id_spare_part = ?");
 
-    queryOrders.addBindValue(sparePartName);
-    queryOrders.addBindValue(manufacturer);
-    queryOrders.addBindValue(quantityInStock);
-    queryOrders.addBindValue(autoCompatibility);
-    queryOrders.addBindValue(isOriginal);
-    queryOrders.addBindValue(price);
-    queryOrders.addBindValue(sparePartId);
-    queryOrders.exec();
+    querySpareParts.addBindValue(sparePartName);
+    querySpareParts.addBindValue(manufacturer);
+    querySpareParts.addBindValue(quantityInStock);
+    querySpareParts.addBindValue(autoCompatibility);
+    querySpareParts.addBindValue(isOriginal);
+    querySpareParts.addBindValue(price);
+    querySpareParts.addBindValue(sparePartId);
+    querySpareParts.exec();
 
     QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Информация о запчасти успешно обновлена!"), QMessageBox::Ok);
+}
+
+void ViewUpdateSparePart::on_updateSparePartInfoButton_clicked()
+{
+    ui->updateSparePartInfoButton->setEnabled(false);
+    ui->sparePartNameLine->setReadOnly(false);
+    ui->manufacturerLine->setReadOnly(false);
+    ui->quantityInStockLine->setReadOnly(false);
+    ui->autoCompatibilityLine->setReadOnly(false);
+    ui->isOriginalLine->setReadOnly(false);
+    ui->priceLine->setReadOnly(false);
+    ui->saveUpdatedInfo->setEnabled(true);
 }

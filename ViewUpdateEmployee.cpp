@@ -1,9 +1,9 @@
-#include "UpdateEmployee.h"
-#include "ui_UpdateEmployee.h"
+#include "ViewUpdateEmployee.h"
+#include "ui_ViewUpdateEmployee.h"
 
-UpdateEmployee::UpdateEmployee(QWidget *parent) :
+ViewUpdateEmployee::ViewUpdateEmployee(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::UpdateEmployee)
+    ui(new Ui::ViewUpdateEmployee)
 {
     ui->setupUi(this);
 
@@ -13,12 +13,12 @@ UpdateEmployee::UpdateEmployee(QWidget *parent) :
     ui->errorLabel->hide();
 }
 
-UpdateEmployee::~UpdateEmployee()
+ViewUpdateEmployee::~ViewUpdateEmployee()
 {
     delete ui;
 }
 
-void UpdateEmployee::setValues(const QString &id)
+void ViewUpdateEmployee::setValues(const QString &id)
 {
     employeeId = id;
 
@@ -36,14 +36,7 @@ void UpdateEmployee::setValues(const QString &id)
     ui->serviceNumber->setText(query.value(3).toString());
 }
 
-void UpdateEmployee::on_backToViewInfoButton_clicked()
-{
-    emit sendData(false);
-
-    QDialog::close();
-}
-
-void UpdateEmployee::on_saveUpdatedInfo_clicked()
+void ViewUpdateEmployee::on_saveUpdatedInfo_clicked()
 {
     QSqlQuery query(employeesDB);
 
@@ -70,4 +63,14 @@ void UpdateEmployee::on_saveUpdatedInfo_clicked()
     QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Информация о сотруднике успешно обновлена!"), QMessageBox::Ok);
+}
+
+void ViewUpdateEmployee::on_updateEmployeeInfoButton_clicked()
+{
+    ui->updateEmployeeInfoButton->setEnabled(false);
+    ui->workerFMLname->setReadOnly(false);
+    ui->workerPosition->setReadOnly(false);
+    ui->serviceNumber->setReadOnly(false);
+    ui->hourlyPayment->setReadOnly(false);
+    ui->saveUpdatedInfo->setEnabled(true);
 }

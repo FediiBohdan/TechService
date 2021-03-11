@@ -132,10 +132,10 @@ void ListSparePart::showSparePartInfo(const QModelIndex &index)
 
     QString sparePartId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
-    viewSparePart = new ViewSparePart;
-    viewSparePart->setValues(sparePartId);
-    viewSparePart->show();
-    viewSparePart->setAttribute(Qt::WA_DeleteOnClose);
+    viewUpdateSparePart = new ViewUpdateSparePart;
+    viewUpdateSparePart->setValues(sparePartId);
+    viewUpdateSparePart->show();
+    viewUpdateSparePart->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void ListSparePart::on_sparePartSearch_returnPressed()

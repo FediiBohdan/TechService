@@ -3,8 +3,7 @@
 
 #include "StartWindow.h"
 #include "AddSparePart.h"
-#include "ViewSparePart.h"
-#include "UpdateSparePart.h"
+#include "ViewUpdateSparePart.h"
 
 #include <QDialog>
 #include <QMessageBox>
@@ -18,9 +17,8 @@
 #include <QFileDialog>
 
 class StartWindow;
-class ViewSparePart;
 class AddSparePart;
-class UpdateSparePart;
+class ViewUpdateSparePart;
 
 namespace Ui {
 class ListSparePart;
@@ -43,7 +41,7 @@ private:
 
     AddSparePart *addSparePart;
     StartWindow *startWindow;
-    ViewSparePart *viewSparePart;
+    ViewUpdateSparePart *viewUpdateSparePart;
 
     QString autoModel;
 

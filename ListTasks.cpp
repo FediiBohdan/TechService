@@ -163,10 +163,10 @@ void ListTasks::showTaskInfo(const QModelIndex &index)
 
     QString taskId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
-    viewTask = new ViewTask;
-    viewTask->setValues(taskId);
-    viewTask->show();
-    viewTask->setAttribute(Qt::WA_DeleteOnClose);
+    viewUpdateTask = new ViewUpdateTask;
+    viewUpdateTask->setValues(taskId);
+    viewUpdateTask->show();
+    viewUpdateTask->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void ListTasks::on_updateButton_clicked()

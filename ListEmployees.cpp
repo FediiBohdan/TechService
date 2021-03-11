@@ -77,10 +77,10 @@ void ListEmployees::showEmployeeInfo(const QModelIndex &index)
 
     QString employeeId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
-    viewEmployees = new ViewEmployee;
-    viewEmployees->setValues(employeeId);
-    viewEmployees->show();
-    viewEmployees->setAttribute(Qt::WA_DeleteOnClose);
+    viewUpdateEmployees = new ViewUpdateEmployee;
+    viewUpdateEmployees->setValues(employeeId);
+    viewUpdateEmployees->show();
+    viewUpdateEmployees->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void ListEmployees::on_updateButton_clicked()

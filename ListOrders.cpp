@@ -155,10 +155,10 @@ void ListOrders::showOrderInfo(const QModelIndex &index)
 
     QString orderId = queryModel->data(queryModel->index(index.row(), 0)).toString();
 
-    viewOrders = new ViewOrders;
-    viewOrders->setValues(orderId);
-    viewOrders->show();
-    viewOrders->setAttribute(Qt::WA_DeleteOnClose);
+    viewUpdateOrder = new ViewUpdateOrder;
+    viewUpdateOrder->setValues(orderId);
+    viewUpdateOrder->show();
+    viewUpdateOrder->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void ListOrders::on_updateButton_clicked()

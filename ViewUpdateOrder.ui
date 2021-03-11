@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>UpdateOrders</class>
- <widget class="QDialog" name="UpdateOrders">
+ <class>ViewUpdateOrder</class>
+ <widget class="QDialog" name="ViewUpdateOrder">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,51 +23,6 @@ QMessageBox {
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_15">
-   <item row="0" column="0">
-    <widget class="QPushButton" name="backToViewInfoButton">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="images.qrc">
-       <normaloff>:/images/backToView.png</normaloff>:/images/backToView.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>27</width>
-       <height>27</height>
-      </size>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_13">
      <item row="0" column="0">
@@ -310,6 +265,26 @@ QPushButton:pressed {
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QGridLayout" name="gridLayout_5">
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="brandLine">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="4" colspan="2">
         <widget class="QLabel" name="autoErrorLabel">
          <property name="sizePolicy">
@@ -336,6 +311,47 @@ QPushButton:pressed {
          </property>
          <property name="text">
           <string>Поле с маркой авто не должно быть пустым!</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="contactsErrorLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>18</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+	color: red;
+}</string>
+         </property>
+         <property name="text">
+          <string>Поле с контактами не должно быть пустым!</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Тип клиента</string>
          </property>
         </widget>
        </item>
@@ -368,61 +384,24 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
-        <widget class="QLineEdit" name="brandLine">
+       <item row="1" column="0">
+        <widget class="QComboBox" name="clientTypeComboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="font">
           <font>
            <pointsize>10</pointsize>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QLineEdit {
+          <string notr="true">QComboBox {
 	border: 1px solid gray;
-    border-radius: 7px;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
     background-color: #dbdcf7;
-	padding-left: 3px;
+	padding-left: 6px;
 }</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="5">
-        <widget class="QLineEdit" name="modelLine">
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5">
-        <widget class="QLabel" name="label_16">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Модель автомобиля</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Марка автомобиля</string>
          </property>
         </widget>
        </item>
@@ -440,58 +419,6 @@ QPushButton:pressed {
          </property>
          <property name="text">
           <string>Дата и (или) время отсутствуют!</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1" colspan="2">
-        <widget class="QLineEdit" name="clientLine">
-         <property name="minimumSize">
-          <size>
-           <width>550</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLabel" name="contactsErrorLabel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>18</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>9</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QLabel {
-	color: red;
-}</string>
-         </property>
-         <property name="text">
-          <string>Поле с контактами не должно быть пустым!</string>
          </property>
         </widget>
        </item>
@@ -531,6 +458,33 @@ QPushButton:pressed {
          <property name="text">
           <string/>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Марка автомобиля</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QLabel" name="label_16">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Модель автомобиля</string>
+         </property>
         </widget>
        </item>
        <item row="0" column="1">
@@ -551,33 +505,49 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="clientTypeComboBox">
+       <item row="1" column="5">
+        <widget class="QLineEdit" name="modelLine">
          <property name="font">
           <font>
            <pointsize>10</pointsize>
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">QComboBox {
+          <string notr="true">QLineEdit {
 	border: 1px solid gray;
-    border-top-left-radius: 7px;
-	border-bottom-left-radius: 7px;
+    border-radius: 7px;
     background-color: #dbdcf7;
-	padding-left: 6px;
+	padding-left: 3px;
 }</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_17">
+       <item row="1" column="1" colspan="2">
+        <widget class="QLineEdit" name="clientLine">
+         <property name="minimumSize">
+          <size>
+           <width>550</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
-           <pointsize>9</pointsize>
+           <pointsize>10</pointsize>
           </font>
          </property>
-         <property name="text">
-          <string>Тип клиента</string>
+         <property name="styleSheet">
+          <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -599,10 +569,13 @@ QPushButton:pressed {
        </item>
        <item row="1" column="7">
         <widget class="QComboBox" name="orderStatusComboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>170</width>
-           <height>25</height>
+           <height>0</height>
           </size>
          </property>
          <property name="font">
@@ -647,6 +620,9 @@ QPushButton:pressed {
        </item>
        <item row="1" column="5">
         <widget class="QComboBox" name="serviceComboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -674,7 +650,7 @@ QPushButton:pressed {
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>0</height>
           </size>
          </property>
          <property name="font">
@@ -689,6 +665,9 @@ QPushButton:pressed {
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -709,7 +688,7 @@ QPushButton:pressed {
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>25</height>
+           <height>0</height>
           </size>
          </property>
          <property name="font">
@@ -725,10 +704,16 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="1" column="6">
         <widget class="QComboBox" name="discountsComboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="minimumSize">
           <size>
            <width>150</width>
@@ -834,6 +819,9 @@ QPushButton:pressed {
          <property name="text">
           <string/>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="1" column="2">
@@ -850,6 +838,9 @@ QPushButton:pressed {
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -886,6 +877,9 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item row="0" column="0">
@@ -900,7 +894,7 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="2" column="1">
         <widget class="QLabel" name="techLabel">
          <property name="styleSheet">
           <string notr="true">QLabel {
@@ -922,7 +916,7 @@ QPushButton:pressed {
       <number>2</number>
      </property>
      <item>
-      <widget class="QFrame" name="frame_2">
+      <widget class="QFrame" name="sparePartsFrame">
        <property name="maximumSize">
         <size>
          <width>845</width>
@@ -998,73 +992,21 @@ QPushButton:pressed {
            <property name="bottomMargin">
             <number>0</number>
            </property>
-           <item row="0" column="4">
-            <spacer name="horizontalSpacer_4">
+           <item row="0" column="1">
+            <spacer name="horizontalSpacer">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Expanding</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>40</width>
-               <height>20</height>
+               <height>25</height>
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="0" column="6">
-            <widget class="QPushButton" name="clearSparePartsListButton">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>27</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="focusPolicy">
-              <enum>Qt::StrongFocus</enum>
-             </property>
-             <property name="toolTip">
-              <string>Очистить список</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-	border-radius: 2px;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="images.qrc">
-               <normaloff>:/images/clearList.png</normaloff>:/images/clearList.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>30</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="autoDefault">
-              <bool>false</bool>
-             </property>
-            </widget>
            </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_9">
@@ -1119,67 +1061,18 @@ QPushButton:pressed {
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <spacer name="horizontalSpacer">
+           <item row="0" column="4">
+            <spacer name="horizontalSpacer_4">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
                <width>40</width>
-               <height>25</height>
+               <height>20</height>
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="0" column="5">
-            <widget class="QPushButton" name="removeLastSparePartButton">
-             <property name="minimumSize">
-              <size>
-               <width>27</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>27</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Удалить последнюю запчасть</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-	border-radius: 2px;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="images.qrc">
-               <normaloff>:/images/backToView.png</normaloff>:/images/backToView.png</iconset>
-             </property>
-             <property name="autoDefault">
-              <bool>false</bool>
-             </property>
-            </widget>
            </item>
           </layout>
          </widget>
@@ -1267,7 +1160,7 @@ QHeaderView::section {
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="frame">
+      <widget class="QFrame" name="employeesFrame">
        <property name="maximumSize">
         <size>
          <width>720</width>
@@ -2557,7 +2450,7 @@ QPushButton:pressed {
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="frame_5">
+      <widget class="QFrame" name="worksFrame">
        <property name="maximumSize">
         <size>
          <width>330</width>
@@ -2753,6 +2646,9 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item row="1" column="0" rowspan="5">
@@ -2776,6 +2672,9 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
        </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
        <property name="placeholderText">
         <string>Текст отзыва</string>
        </property>
@@ -2783,6 +2682,9 @@ QPushButton:pressed {
      </item>
      <item row="5" column="2">
       <widget class="QPushButton" name="openMapButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="minimumSize">
         <size>
          <width>40</width>
@@ -2839,6 +2741,9 @@ QPushButton:pressed {
      </item>
      <item row="5" column="3">
       <widget class="QPushButton" name="saveUpdatedInfo">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="minimumSize">
         <size>
          <width>40</width>
@@ -2919,6 +2824,51 @@ QPushButton:pressed {
      </property>
     </spacer>
    </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="updateOrderInfoButton">
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>40</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="images.qrc">
+       <normaloff>:/images/edit.png</normaloff>:/images/edit.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -2936,8 +2886,6 @@ QPushButton:pressed {
   <tabstop>discountsComboBox</tabstop>
   <tabstop>orderStatusComboBox</tabstop>
   <tabstop>sparePartsSearch</tabstop>
-  <tabstop>removeLastSparePartButton</tabstop>
-  <tabstop>clearSparePartsListButton</tabstop>
   <tabstop>sparePartsList</tabstop>
   <tabstop>mechanicHoursLine</tabstop>
   <tabstop>clearMechanicButton</tabstop>
@@ -2956,7 +2904,6 @@ QPushButton:pressed {
   <tabstop>receptionLine</tabstop>
   <tabstop>openMapButton</tabstop>
   <tabstop>saveUpdatedInfo</tabstop>
-  <tabstop>backToViewInfoButton</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

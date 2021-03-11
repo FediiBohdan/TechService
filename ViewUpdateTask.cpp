@@ -1,9 +1,9 @@
-#include "UpdateTask.h"
-#include "ui_UpdateTask.h"
+#include "ViewUpdateTask.h"
+#include "ui_ViewUpdateTask.h"
 
-UpdateTask::UpdateTask(QWidget *parent) :
+ViewUpdateTask::ViewUpdateTask(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::UpdateTask)
+    ui(new Ui::ViewUpdateTask)
 {
     ui->setupUi(this);
 
@@ -13,12 +13,12 @@ UpdateTask::UpdateTask(QWidget *parent) :
     ui->errorLabel->setStyleSheet("color: transparent");
 }
 
-UpdateTask::~UpdateTask()
+ViewUpdateTask::~ViewUpdateTask()
 {
     delete ui;
 }
 
-void UpdateTask::setValues(const QString &id)
+void ViewUpdateTask::setValues(const QString &id)
 {
     taskId = id;
 
@@ -42,14 +42,7 @@ void UpdateTask::setValues(const QString &id)
         ui->checkBox->setChecked(false);
 }
 
-void UpdateTask::on_backToViewInfoButton_clicked()
-{
-    emit sendData(false);
-
-    QDialog::close();
-}
-
-void UpdateTask::on_saveUpdatedInfo_clicked()
+void ViewUpdateTask::on_saveUpdatedInfo_clicked()
 {
     QSqlQuery queryTasks(listTasksDB);
 
@@ -84,4 +77,12 @@ void UpdateTask::on_saveUpdatedInfo_clicked()
     QDialog::close();
 
     QMessageBox::information(this, tr("Уведомление"), tr("Задание успешно обновлено!"), QMessageBox::Ok);
+}
+
+void ViewUpdateTask::on_updateTaskButton_clicked()
+{
+    ui->updateTaskButton->setEnabled(false);
+    ui->checkBox->setCheckable(true);
+    ui->contentLine->setReadOnly(false);
+    ui->saveUpdatedInfo->setEnabled(true);
 }

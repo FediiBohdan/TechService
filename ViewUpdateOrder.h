@@ -1,7 +1,6 @@
-#ifndef UPDATEORDERS_H
-#define UPDATEORDERS_H
+#ifndef VIEWUPDATEORDER_H
+#define VIEWUPDATEORDER_H
 
-#include "ViewOrders.h"
 #include "ListOrders.h"
 
 #include <QDialog>
@@ -17,14 +16,13 @@
 #include <QDir>
 #include <QLabel>
 
-class ViewOrders;
 class ListOrders;
 
 namespace Ui {
-class UpdateOrders;
+class ViewUpdateOrder;
 }
 
-class UpdateOrders : public QDialog
+class ViewUpdateOrder : public QDialog
 {
     Q_OBJECT
 
@@ -32,8 +30,8 @@ signals:
     void sendData(bool update);
 
 public:
-    explicit UpdateOrders(QWidget *parent = nullptr);
-    ~UpdateOrders();
+    explicit ViewUpdateOrder(QWidget *parent = nullptr);
+    ~ViewUpdateOrder();
 
 public slots:
     void setValues(const QString &id);
@@ -51,19 +49,17 @@ private slots:
     void closeEvent(QCloseEvent *);
 
     void on_sparePartsSearch_returnPressed();
-    void on_clearSparePartsListButton_clicked();
     void on_clearMechanicButton_clicked();
     void on_clearMechanic2Button_clicked();
     void on_clearDiagnosticianButton_clicked();
     void on_clearElectronicButton_clicked();
     void on_clearWasherButton_clicked();
     void on_clearLocksmithButton_clicked();
-    void on_removeLastSparePartButton_clicked();
-    void on_backToViewInfoButton_clicked();
     void on_saveUpdatedInfo_clicked();
+    void on_updateOrderInfoButton_clicked();
 
 private:
-    Ui::UpdateOrders *ui;
+    Ui::ViewUpdateOrder *ui;
 
     ListOrders *listOrders;
 
@@ -115,4 +111,4 @@ private:
     int regularCustomerDiscount = 6;//%
 };
 
-#endif // UPDATEORDERS_H
+#endif // VIEWUPDATEORDER_H
