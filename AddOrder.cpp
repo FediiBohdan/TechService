@@ -177,24 +177,27 @@ void AddOrder::loadSparePartsTable()
     ui->availableSparePartsTable->resizeRowsToContents();
 }
 
+// shows table with used spare parts
 void AddOrder::loadUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_order_spare_part, id_order, order_spare_part, order_spare_part_price FROM OrderSpareParts "
+    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM OrderSpareParts "
                           "WHERE id_order = '" + s_orderId + "'";
 
     queryGetUsedSparePartsModel->setQuery(queryString);
 
     queryGetUsedSparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id_order_spare_part"));
     queryGetUsedSparePartsModel->setHeaderData(1, Qt::Horizontal, tr("id_order"));
-    queryGetUsedSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Название"));
-    queryGetUsedSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Цена"));
+    queryGetUsedSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("id_spare_part"));
+    queryGetUsedSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Название"));
+    queryGetUsedSparePartsModel->setHeaderData(4, Qt::Horizontal, tr("Цена"));
 
     ui->usedSparePartsTableView->setModel(queryGetUsedSparePartsModel);
 
     ui->usedSparePartsTableView->setColumnHidden(0, true);
     ui->usedSparePartsTableView->setColumnHidden(1, true);
+    ui->usedSparePartsTableView->setColumnHidden(2, true);
 
     ui->usedSparePartsTableView->resizeRowsToContents();
     ui->usedSparePartsTableView->verticalHeader()->hide();
@@ -250,7 +253,7 @@ void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
 void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
 {
     QString orderSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
-    QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
+    QString returnSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 2), Qt::EditRole).toString();
 
     QSqlQuery queryRemoveUsedSparePartsModel(sparePartsDB);
 
@@ -259,16 +262,21 @@ void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
     queryRemoveUsedSparePartsModel.exec();
 
     // spare part is returned to available spare parts list
-    //updateAvailableSparePartsTable();
-    int sparePartsAmount = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 2), Qt::EditRole).toInt();
+    // firstly check the amount of returning spare part
+    QSqlQuery query(sparePartsDB);
 
-    qDebug() << sparePartsAmount;
+    query.prepare("SELECT quantity_in_stock FROM SparePartsCatalogue WHERE id_spare_part = " + returnSparePartId);
+    query.exec();
+    query.next();
 
+    int sparePartsAmount = query.value(0).toInt();
+
+    // then increase its amount in available spare parts
     QSqlQuery querySpareParts(sparePartsDB);
 
     querySpareParts.prepare("UPDATE SparePartsCatalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount + 1);
-    querySpareParts.addBindValue(sparePartId);
+    querySpareParts.addBindValue(returnSparePartId);
     querySpareParts.exec();
 
     updateUsedSparePartsTable();
@@ -325,15 +333,15 @@ void AddOrder::setOrderEmployees(const QModelIndex &index)
     QString employeeName = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 1), Qt::EditRole).toString();
     QString employeePosition = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 2), Qt::EditRole).toString();
 
-    if (ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
-            employeeName != ui->mechanic2Line->text())
+    if ((ui->mechanicLine->text().isEmpty()) && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
+            (employeeName != ui->mechanic2Line->text()))
     {
         ui->mechanicLine->setText(employeeName);
         mechanicHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
     }
 
-    else if (!ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
-             employeeName != ui->mechanicLine->text())
+    else if ((!ui->mechanicLine->text().isEmpty()) && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
+             (employeeName != ui->mechanicLine->text()))
     {
         ui->mechanic2Line->setText(employeeName);
         mechanic2HourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
@@ -542,38 +550,48 @@ void AddOrder::on_createOrderButton_clicked()
     float locksmithOverallPayment = 0;
     float washerOverAllPayment = 0;
 
-    if (!ui->mechanicLine->text().isEmpty() && ui->mechanicHoursLine->text().isEmpty())
+    if ((!ui->mechanicLine->text().isEmpty()) && (ui->mechanicHoursLine->text().isEmpty()))
         mechanicOverallPayment = mechanicHourPayment * 1;
-    else if (!ui->mechanicLine->text().isEmpty() && !ui->mechanicHoursLine->text().isEmpty())
+    else if ((!ui->mechanicLine->text().isEmpty()) && (!ui->mechanicHoursLine->text().isEmpty()))
         mechanicOverallPayment = mechanicHourPayment * ui->mechanicHoursLine->text().toFloat();
 
-    if (!ui->mechanic2Line->text().isEmpty() && ui->mechanic2HoursLine->text().isEmpty())
+    if ((!ui->mechanic2Line->text().isEmpty()) && (ui->mechanic2HoursLine->text().isEmpty()))
         mechanic2OverallPayment = mechanic2HourPayment * 1;
-    else if (!ui->mechanic2Line->text().isEmpty() && !ui->mechanic2HoursLine->text().isEmpty())
+    else if ((!ui->mechanic2Line->text().isEmpty()) && (!ui->mechanic2HoursLine->text().isEmpty()))
         mechanic2OverallPayment = mechanic2HourPayment * ui->mechanic2HoursLine->text().toFloat();
 
-    if (!ui->diagnosticianLine->text().isEmpty() && ui->diagnosticianHoursLine->text().isEmpty())
+    if ((!ui->diagnosticianLine->text().isEmpty()) && (ui->diagnosticianHoursLine->text().isEmpty()))
         diagnosticianOverallPayment = diagnosticianHourPayment * 1;
-    else if (!ui->diagnosticianLine->text().isEmpty() && !ui->diagnosticianHoursLine->text().isEmpty())
+    else if ((!ui->diagnosticianLine->text().isEmpty()) && (!ui->diagnosticianHoursLine->text().isEmpty()))
         diagnosticianOverallPayment = diagnosticianHourPayment * ui->diagnosticianHoursLine->text().toFloat();
 
-    if (!ui->electronicsLine->text().isEmpty() && ui->electronicsHoursLine->text().isEmpty())
+    if ((!ui->electronicsLine->text().isEmpty()) && (ui->electronicsHoursLine->text().isEmpty()))
         electronicOverallPayment = electronicHourPayment * 1;
-    else if (!ui->electronicsLine->text().isEmpty() && !ui->electronicsHoursLine->text().isEmpty())
+    else if ((!ui->electronicsLine->text().isEmpty()) && (!ui->electronicsHoursLine->text().isEmpty()))
         electronicOverallPayment = electronicHourPayment * ui->electronicsHoursLine->text().toFloat();
 
-    if (!ui->locksmithLine->text().isEmpty() && ui->locksmithHoursLine->text().isEmpty())
+    if ((!ui->locksmithLine->text().isEmpty()) && (ui->locksmithHoursLine->text().isEmpty()))
         locksmithOverallPayment = locksmithHourPayment * 1;
-    else if (!ui->locksmithLine->text().isEmpty() && !ui->locksmithHoursLine->text().isEmpty())
+    else if ((!ui->locksmithLine->text().isEmpty()) && (!ui->locksmithHoursLine->text().isEmpty()))
         locksmithOverallPayment = locksmithHourPayment * ui->locksmithHoursLine->text().toFloat();
 
-    if (!ui->washerLine->text().isEmpty() && ui->washerHoursLine->text().isEmpty())
+    if ((!ui->washerLine->text().isEmpty()) && (ui->washerHoursLine->text().isEmpty()))
         washerOverAllPayment = washerHourPayment * 1;
-    else if (!ui->washerLine->text().isEmpty() && !ui->washerHoursLine->text().isEmpty())
+    else if ((!ui->washerLine->text().isEmpty()) && (!ui->washerHoursLine->text().isEmpty()))
         washerOverAllPayment = washerHourPayment * ui->washerHoursLine->text().toFloat();
 
-    // add spare part cost
-    float orderTotalCost = mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment
+    // calculate spare parts cost
+    QSqlQuery querySparePartsCost(sparePartsDB);
+
+    int sparePartsCost = 0;
+    querySparePartsCost.prepare("SELECT SUM(order_spare_part_price) FROM OrderSpareParts WHERE id_order = " + s_orderId);
+    querySparePartsCost.exec();
+    if (querySparePartsCost.next())
+            sparePartsCost = querySparePartsCost.value(0).toInt();
+    querySparePartsCost.finish();
+
+    // whole order cost calculation
+    float orderTotalCost = sparePartsCost + mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment
                          + electronicOverallPayment + locksmithOverallPayment + washerOverAllPayment;
 
     // disounts calculation

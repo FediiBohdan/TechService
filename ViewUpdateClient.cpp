@@ -96,7 +96,6 @@ void ViewUpdateClient::setValues(const QString &id)
 
     query.prepare("SELECT DISTINCT client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, manufacture_year, "
         "VIN_number FROM ClientsTable WHERE id_client = " + clientId);
-
     query.exec();
     query.next();
 
