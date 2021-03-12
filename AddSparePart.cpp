@@ -24,7 +24,7 @@ AddSparePart::~AddSparePart()
     delete ui;
 }
 
-void AddSparePart::closeEvent(QCloseEvent*)
+void AddSparePart::closeEvent(QCloseEvent *)
 {
     QDialog::close();
 

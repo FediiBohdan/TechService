@@ -37,7 +37,6 @@ public slots:
     void setValues(const QString &id);
 
 private slots:
-    void openMap();
     void setDateAndTime();
     void loadSparePartsTable();
     void loadEmployeesTable();

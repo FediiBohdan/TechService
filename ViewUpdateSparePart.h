@@ -1,6 +1,8 @@
 #ifndef VIEWUPDATESPAREPART_H
 #define VIEWUPDATESPAREPART_H
 
+#include "ListSpareParts.h"
+
 #include <QDialog>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -28,12 +30,16 @@ private slots:
     void on_saveUpdatedInfo_clicked();
     void on_updateSparePartInfoButton_clicked();
 
+    void closeEvent(QCloseEvent *);
+
 private:
     Ui::ViewUpdateSparePart *ui;
 
     QSqlDatabase sparePartsDB;
 
     QString sparePartId;
+
+    ListSparePart *listSpareParts;
 };
 
 #endif // VIEWUPDATESPAREPART_H

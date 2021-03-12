@@ -33,7 +33,7 @@ private slots:
 
     void on_createTaskButton_clicked();
 
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent *);
 
 private:
     Ui::AddTask *ui;

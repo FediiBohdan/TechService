@@ -30,6 +30,8 @@ private slots:
     void on_saveUpdatedInfo_clicked();
     void on_updateTaskButton_clicked();
 
+    void closeEvent(QCloseEvent *);
+
 private:
     Ui::ViewUpdateTask *ui;
 

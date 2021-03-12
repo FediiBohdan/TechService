@@ -67,12 +67,8 @@ private:
 
     bool searchFlag;
     bool openFlag = true;
-    QString sparePartsList;
     QString s_orderId;
-    float sparePartCost;
-    float sparePartsCost = 0;
     int orderId = 0;
-    int sparePartNameLength = 0;
     int mechanicHourPayment = 0;
     int mechanic2HourPayment = 0;
     int diagnosticianHourPayment = 0;
@@ -93,8 +89,9 @@ private slots:
     void loadUsedSparePartsTable();
     void updateSparePartsTable();
     void updateEmployeesTable();
-    void updateusedSparePartsTable();
-    void updateUsedSparePartsTable(const QModelIndex &index);
+    void updateUsedSparePartsTable();
+    void updateAvailableSparePartsTable();
+    void updateUsedSparePartsListTable(const QModelIndex &index);
     void removeUsedSparePartsTable(const QModelIndex &index);
     void setOrderEmployees(const QModelIndex &index);
 

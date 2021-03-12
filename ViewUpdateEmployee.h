@@ -6,7 +6,7 @@
 #include <QDialog>
 #include <QSqlDatabase>
 
-class ListEmployee;
+class ListEmployees;
 
 namespace Ui {
 class ViewUpdateEmployee;
@@ -30,12 +30,16 @@ private slots:
     void on_saveUpdatedInfo_clicked();
     void on_updateEmployeeInfoButton_clicked();
 
+    void closeEvent(QCloseEvent *);
+
 private:
     Ui::ViewUpdateEmployee *ui;
 
     QSqlDatabase employeesDB;
 
     QString employeeId;
+
+    ListEmployees *listEmployees;
 };
 
 #endif // VIEWUPDATEEMPLOYEE_H

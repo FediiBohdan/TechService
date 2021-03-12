@@ -12,7 +12,6 @@ ViewUpdateOrder::ViewUpdateOrder(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);    
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    connect(ui->openMapButton, &QAbstractButton::clicked, this, &ViewUpdateOrder::openMap);
     connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &ViewUpdateOrder::updateUsedSparePartsTable);
     connect(ui->employeesByServiceTable, &QAbstractItemView::clicked, this, &ViewUpdateOrder::setOrderEmployees);
 
@@ -43,15 +42,10 @@ ViewUpdateOrder::~ViewUpdateOrder()
 void ViewUpdateOrder::closeEvent(QCloseEvent *)
 {
     QDialog::close();
+
     listOrders = new ListOrders;
     listOrders->show();
     listOrders->setAttribute(Qt::WA_DeleteOnClose);
-}
-
-void ViewUpdateOrder::openMap()
-{
-    QQmlApplicationEngine *engine = new QQmlApplicationEngine;
-    engine->load(QUrl(QStringLiteral("qrc:/mapInteraction.qml")));
 }
 
 void ViewUpdateOrder::loadSparePartsTable()
@@ -230,7 +224,6 @@ void ViewUpdateOrder::setValues(const QString &id)
     query.prepare("SELECT DISTINCT client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, manufacture_year, "
                   "VIN_number, auto_license_plate, service_address, discounts, order_status, spare_parts_list, works_list, feedback "
                   "FROM OrdersHistory WHERE id_order = " + orderId);
-
     query.exec();
     query.next();
 
@@ -736,5 +729,37 @@ void ViewUpdateOrder::on_clearWasherButton_clicked()
 
 void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
 {
-
+    ui->updateOrderInfoButton->setEnabled(false);
+    ui->clientTypeComboBox->setEnabled(true);
+    ui->clientLine->setReadOnly(false);
+    ui->contactLine->setReadOnly(false);
+    ui->brandLine->setReadOnly(false);
+    ui->modelLine->setReadOnly(false);
+    ui->emailLine->setReadOnly(false);
+    ui->yearLine->setReadOnly(false);
+    ui->mileageLine->setReadOnly(false);
+    ui->VIN_Line->setReadOnly(false);
+    ui->autoLicensePlateLine->setReadOnly(false);
+    ui->serviceComboBox->setEnabled(true);
+    ui->discountsComboBox->setEnabled(true);
+    ui->orderStatusComboBox->setEnabled(true);
+    ui->sparePartsSearch->setReadOnly(false);
+    ui->availableSparePartsTable->setEnabled(true);
+    ui->employeesByServiceTable->setEnabled(true);
+    ui->mechanicHoursLine->setReadOnly(false);
+    ui->mechanic2HoursLine->setReadOnly(false);
+    ui->diagnosticianHoursLine->setReadOnly(false);
+    ui->electronicsHoursLine->setReadOnly(false);
+    ui->locksmithHoursLine->setReadOnly(false);
+    ui->washerHoursLine->setReadOnly(false);
+    ui->clearMechanicButton->setEnabled(true);
+    ui->clearMechanic2Button->setEnabled(true);
+    ui->clearDiagnosticianButton->setEnabled(true);
+    ui->clearElectronicButton->setEnabled(true);
+    ui->clearLocksmithButton->setEnabled(true);
+    ui->clearWasherButton->setEnabled(true);
+    ui->worksList->setEnabled(true);
+    ui->feedback->setReadOnly(false);
+    ui->receptionLine->setReadOnly(false);
+    ui->saveUpdatedInfo->setEnabled(true);
 }

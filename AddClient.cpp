@@ -28,7 +28,7 @@ AddClient::~AddClient()
     delete ui;
 }
 
-void AddClient::closeEvent(QCloseEvent*)
+void AddClient::closeEvent(QCloseEvent *)
 {
     QDialog::close();
 

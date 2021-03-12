@@ -31,7 +31,7 @@ public:
 private slots:
     void on_createSparePartButton_clicked();
 
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent *);
 
 private:
     Ui::AddSparePart *ui;

@@ -23,7 +23,7 @@ ViewUpdateClient::~ViewUpdateClient()
     delete ui;
 }
 
-void ViewUpdateClient::closeEvent(QCloseEvent*)
+void ViewUpdateClient::closeEvent(QCloseEvent *)
 {
     QDialog::close();
 

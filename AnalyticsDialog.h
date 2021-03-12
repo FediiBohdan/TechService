@@ -10,7 +10,6 @@
 // Used to change names on axis
 #include <QtCharts/QCategoryAxis>
 
-
 #include <QDialog>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>

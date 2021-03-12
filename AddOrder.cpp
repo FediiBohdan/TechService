@@ -19,7 +19,7 @@ AddOrder::AddOrder(QWidget *parent) :
     ordersHistoryDB.open();
 
     connect(ui->openMapButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
-    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSparePartsTable);
+    connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSparePartsListTable);
     connect(ui->usedSparePartsTableView, &QAbstractItemView::clicked, this, &AddOrder::removeUsedSparePartsTable);
     connect(ui->employeesByServiceTable, &QAbstractItemView::clicked, this, &AddOrder::setOrderEmployees);
 
@@ -146,7 +146,7 @@ void AddOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_spare_part, spare_part_name, auto_compatibility, original, price FROM SparePartsCatalogue ";
+    QString queryString = "SELECT id_spare_part, spare_part_name, quantity_in_stock, auto_compatibility, original, price FROM SparePartsCatalogue ";
 
     QString searchString;
 
@@ -159,13 +159,15 @@ void AddOrder::loadSparePartsTable()
 
     queryAvailableSparePartsModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryAvailableSparePartsModel->setHeaderData(1, Qt::Horizontal, tr("Название"));
-    queryAvailableSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Совместимость"));
-    queryAvailableSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Оригинал"));
-    queryAvailableSparePartsModel->setHeaderData(4, Qt::Horizontal, tr("Цена"));
+    queryAvailableSparePartsModel->setHeaderData(2, Qt::Horizontal, tr("Количество"));
+    queryAvailableSparePartsModel->setHeaderData(3, Qt::Horizontal, tr("Совместимость"));
+    queryAvailableSparePartsModel->setHeaderData(4, Qt::Horizontal, tr("Оригинал"));
+    queryAvailableSparePartsModel->setHeaderData(5, Qt::Horizontal, tr("Цена"));
 
     ui->availableSparePartsTable->setModel(queryAvailableSparePartsModel);
 
     ui->availableSparePartsTable->setColumnHidden(0, true);
+    ui->availableSparePartsTable->setColumnHidden(2, true);
 
     ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -203,13 +205,13 @@ void AddOrder::loadUsedSparePartsTable()
 }
 
 // choosing needed spare parts for the order + amount check
-void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
+void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
 {
     QSqlQuery queryUsedSparePartsModel(sparePartsDB);
 
     QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString sparePartName = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
-    QString sparePartPrice = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toString();
+    QString sparePartPrice = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 5), Qt::EditRole).toString();
 
     QSqlQuery queryCheckAmount(sparePartsDB);
 
@@ -222,25 +224,33 @@ void AddOrder::updateUsedSparePartsTable(const QModelIndex &index)
         return;
     }
 
-    queryUsedSparePartsModel.prepare("INSERT INTO OrderSpareParts (id_order, order_spare_part, order_spare_part_price)"
-        "VALUES(?, ?, ?)");
-
+    // insertion spare parts by order to OrderSpareParts table
+    queryUsedSparePartsModel.prepare("INSERT INTO OrderSpareParts (id_order, id_spare_part, order_spare_part, order_spare_part_price) VALUES(?, ?, ?, ?)");
     queryUsedSparePartsModel.addBindValue(orderId);
+    queryUsedSparePartsModel.addBindValue(sparePartId);
     queryUsedSparePartsModel.addBindValue(sparePartName);
     queryUsedSparePartsModel.addBindValue(sparePartPrice);
     queryUsedSparePartsModel.exec();
 
-    loadUsedSparePartsTable();
+    // spare part is removed from available spare parts list
+    int sparePartsAmount = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 2), Qt::EditRole).toInt();
 
-    //!!!1//
-    sparePartCost = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 4), Qt::EditRole).toFloat();
-    sparePartsCost += sparePartCost;
+    QSqlQuery querySpareParts(sparePartsDB);
+
+    querySpareParts.prepare("UPDATE SparePartsCatalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
+    querySpareParts.addBindValue(sparePartsAmount - 1);
+    querySpareParts.addBindValue(sparePartId);
+    querySpareParts.exec();
+
+    loadUsedSparePartsTable();
+    updateAvailableSparePartsTable();
 }
 
 // removing spare parts from used spare parts table
 void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
 {
     QString orderSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
+    QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
 
     QSqlQuery queryRemoveUsedSparePartsModel(sparePartsDB);
 
@@ -248,7 +258,21 @@ void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
     queryRemoveUsedSparePartsModel.addBindValue(orderSparePartId);
     queryRemoveUsedSparePartsModel.exec();
 
-    updateusedSparePartsTable();
+    // spare part is returned to available spare parts list
+    //updateAvailableSparePartsTable();
+    int sparePartsAmount = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 2), Qt::EditRole).toInt();
+
+    qDebug() << sparePartsAmount;
+
+    QSqlQuery querySpareParts(sparePartsDB);
+
+    querySpareParts.prepare("UPDATE SparePartsCatalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
+    querySpareParts.addBindValue(sparePartsAmount + 1);
+    querySpareParts.addBindValue(sparePartId);
+    querySpareParts.exec();
+
+    updateUsedSparePartsTable();
+    updateAvailableSparePartsTable();
 }
 
 void AddOrder::updateEmployeesTable()
@@ -258,11 +282,17 @@ void AddOrder::updateEmployeesTable()
     loadEmployeesTable();
 }
 
-void AddOrder::updateusedSparePartsTable()
+void AddOrder::updateUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel->setQuery(NULL);
 
     loadUsedSparePartsTable();
+}
+
+void AddOrder::updateAvailableSparePartsTable()
+{
+    queryAvailableSparePartsModel->setQuery(NULL);
+    loadSparePartsTable();
 }
 
 void AddOrder::loadEmployeesTable()
@@ -406,7 +436,6 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(ui->serviceComboBox->currentText());
     queryOrders.addBindValue(ui->discountsComboBox->currentText());
     queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
-    //queryOrders.addBindValue(ui->sparePartsList->toPlainText());
     queryOrders.addBindValue(ui->worksList->toPlainText());
     queryOrders.addBindValue(ui->feedback->toPlainText());
     queryOrders.exec();
@@ -543,7 +572,8 @@ void AddOrder::on_createOrderButton_clicked()
     else if (!ui->washerLine->text().isEmpty() && !ui->washerHoursLine->text().isEmpty())
         washerOverAllPayment = washerHourPayment * ui->washerHoursLine->text().toFloat();
 
-    float orderTotalCost = sparePartsCost + mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment
+    // add spare part cost
+    float orderTotalCost = mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment
                          + electronicOverallPayment + locksmithOverallPayment + washerOverAllPayment;
 
     // disounts calculation

@@ -26,7 +26,7 @@ AddEmployee::~AddEmployee()
     delete ui;
 }
 
-void AddEmployee::closeEvent(QCloseEvent*)
+void AddEmployee::closeEvent(QCloseEvent *)
 {
     QDialog::close();
 

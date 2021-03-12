@@ -39,10 +39,6 @@ SOURCES += main.cpp \
     ViewUpdateSparePart.cpp \
     ViewUpdateTask.cpp
 
-RESOURCES += qml.qrc \
-    images.qrc \
-    translations.qrc
-
 FORMS += \
     AddClient.ui \
     AddEmployee.ui \
@@ -83,6 +79,10 @@ HEADERS += \
     ViewUpdateOrder.h \
     ViewUpdateSparePart.h \
     ViewUpdateTask.h
+
+RESOURCES += qml.qrc \
+    images.qrc \
+    translations.qrc
 
 CODECFORSRC = UTF-8
 

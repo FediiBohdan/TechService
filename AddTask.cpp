@@ -26,7 +26,7 @@ AddTask::~AddTask()
     delete ui;
 }
 
-void AddTask::closeEvent(QCloseEvent*)
+void AddTask::closeEvent(QCloseEvent *)
 {
     QDialog::close();
 
