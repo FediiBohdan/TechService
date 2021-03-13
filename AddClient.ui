@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>642</width>
-    <height>362</height>
+    <width>651</width>
+    <height>307</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -231,64 +231,8 @@ QPushButton:pressed {
    </item>
    <item row="2" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Марка авто</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="label_8">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Модель авто</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="autoModelLine">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLineEdit" name="autoBrandLine">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -331,6 +275,50 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="label_8">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Модель авто</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLineEdit" name="autoBrandLine">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0" colspan="2">
       <widget class="QLineEdit" name="emailLine">
        <property name="font">
@@ -348,10 +336,54 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Марка авто</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="3" column="0" colspan="2">
     <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Госномер</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3" colspan="2">
+      <widget class="QLineEdit" name="VINnumberLine">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	border: 1px solid grey;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="autoLicensePlateLine">
        <property name="minimumSize">
@@ -381,30 +413,6 @@ QPushButton:pressed {
        </property>
        <property name="frame">
         <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Госномер</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Год выпуска</string>
        </property>
       </widget>
      </item>
@@ -440,7 +448,7 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
+     <item row="0" column="3">
       <widget class="QLabel" name="label_6">
        <property name="font">
         <font>
@@ -452,25 +460,20 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="autoErrorLabel">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
          <pointsize>9</pointsize>
         </font>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-	color: red;
-}</string>
-       </property>
        <property name="text">
-        <string>Поле с маркой авто не должно быть пустым!</string>
+        <string>Год выпуска</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2" colspan="2">
-      <widget class="QLineEdit" name="VINnumberLine">
+     <item row="1" column="2">
+      <widget class="QLineEdit" name="mileageLine">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -484,8 +487,34 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
        </property>
-       <property name="frame">
-        <bool>true</bool>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_10">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Пробег</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="autoErrorLabel">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+	color: red;
+}</string>
+       </property>
+       <property name="text">
+        <string>Поле с маркой авто не должно быть пустым!</string>
        </property>
       </widget>
      </item>

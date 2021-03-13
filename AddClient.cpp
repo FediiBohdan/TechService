@@ -73,8 +73,8 @@ void AddClient::on_saveClientButton_clicked()
 
     clientContacts.replace(", ", "\n");
 
-    query.prepare("INSERT INTO ClientsTable (client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, manufacture_year, VIN_Number)"
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    query.prepare("INSERT INTO ClientsTable (client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, VIN_Number)"
+        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     query.addBindValue(ui->clientTypeComboBox->currentText());
     query.addBindValue(clientFMLname);
@@ -82,6 +82,7 @@ void AddClient::on_saveClientButton_clicked()
     query.addBindValue(ui->emailLine->text());
     query.addBindValue(autoBrand);
     query.addBindValue(ui->autoModelLine->text());
+    query.addBindValue(ui->mileageLine->text());
     query.addBindValue(ui->autoLicensePlateLine->text());
     query.addBindValue(ui->manufactureYearLine->text());
     query.addBindValue(ui->VINnumberLine->text());

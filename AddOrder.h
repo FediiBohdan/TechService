@@ -69,6 +69,12 @@ private:
     bool openFlag = true;
     QString s_orderId;
     int orderId = 0;
+    int mechanicId = 0;
+    int mechanic2Id = 0;
+    int diagnosticianId = 0;
+    int electronicId = 0;
+    int locksmithId = 0;
+    int washerId = 0;
     int mechanicHourPayment = 0;
     int mechanic2HourPayment = 0;
     int diagnosticianHourPayment = 0;

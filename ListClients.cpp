@@ -41,7 +41,7 @@ void ListClients::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_client, client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, manufacture_year, "
+    QString queryString = "SELECT id_client, client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
                           "VIN_number FROM ClientsTable ";
 
     QString searchString;
@@ -62,9 +62,10 @@ void ListClients::loadTable()
     queryModel->setHeaderData(4, Qt::Horizontal, tr("Электронная почта"));
     queryModel->setHeaderData(5, Qt::Horizontal, tr("Марка авто"));
     queryModel->setHeaderData(6, Qt::Horizontal, tr("Модель авто"));
-    queryModel->setHeaderData(7, Qt::Horizontal, tr("Госномер"));
-    queryModel->setHeaderData(8, Qt::Horizontal, tr("Год производства"));
-    queryModel->setHeaderData(9, Qt::Horizontal, tr("VIN-номер"));
+    queryModel->setHeaderData(7, Qt::Horizontal, tr("Пробег"));
+    queryModel->setHeaderData(8, Qt::Horizontal, tr("Госномер"));
+    queryModel->setHeaderData(9, Qt::Horizontal, tr("Год производства"));
+    queryModel->setHeaderData(10, Qt::Horizontal, tr("VIN-номер"));
 
     ui->tableView->setModel(queryModel);
 
@@ -113,9 +114,9 @@ void ListClients::on_updateButton_clicked()
     loadTable();
 }
 
-void ListClients::saveAsCSV(QString filename)
+void ListClients::saveAsCSV(QString fileName)
 {
-    QFile csvFile (filename);
+    QFile csvFile (fileName);
 
     if (csvFile.open(QIODevice::WriteOnly))
     {

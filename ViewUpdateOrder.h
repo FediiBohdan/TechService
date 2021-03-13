@@ -40,9 +40,13 @@ private slots:
     void setDateAndTime();
     void loadSparePartsTable();
     void loadEmployeesTable();
+    void loadUsedSparePartsTable();
     void updateSparePartsTable();
     void updateEmployeesTable();
-    void updateUsedSparePartsTable(const QModelIndex &index);
+    void updateUsedSparePartsTable();
+    void updateAvailableSparePartsTable();
+    void updateUsedSparePartsListTable(const QModelIndex &index);
+    void removeUsedSparePartsTable(const QModelIndex &index);
     void setOrderEmployees(const QModelIndex &index);
 
     void closeEvent(QCloseEvent *);
@@ -71,16 +75,18 @@ private:
     QSqlDatabase clientsDB;
     QSqlDatabase sparePartsDB;
     QSqlDatabase ordersHistoryDB;
+    QSqlDatabase employeesDB;
 
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
+    QPointer<QSqlQueryModel> queryGetUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
     QPointer<QSqlQueryModel> queryUsedSparePartsModel;
+    QPointer<QSqlQueryModel> queryRemoveUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
     QPointer<QSqlQueryModel> queryEmployeesHoursModel;
-
-    QWidget *addWidgetCompatibilityContent(int rowIndex);
+    QPointer<QSqlQueryModel> queryRemoveEmployeeModel;
 
     bool searchFlag;
     bool mechanicFlag;

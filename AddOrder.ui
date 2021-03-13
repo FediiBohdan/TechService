@@ -741,7 +741,7 @@ QMessageBox {
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="mileageLine">
          <property name="font">
           <font>
            <pointsize>10</pointsize>
@@ -2852,7 +2852,7 @@ QPushButton:pressed {
   <tabstop>modelLine</tabstop>
   <tabstop>emailLine</tabstop>
   <tabstop>yearLine</tabstop>
-  <tabstop>lineEdit</tabstop>
+  <tabstop>mileageLine</tabstop>
   <tabstop>VIN_Line</tabstop>
   <tabstop>autoLicensePlateLine</tabstop>
   <tabstop>serviceComboBox</tabstop>

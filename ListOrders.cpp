@@ -40,7 +40,7 @@ void ListOrders::loadTable()
     queryModel = new QSqlQueryModel(this);
 
     QString queryString;
-    queryString = "SELECT id_order, order_status, creation_date, reception_date, client_type, client, contacts, auto_brand, auto_model, "
+    queryString = "SELECT id_order, order_status, creation_date, reception_date, client_type, client, contacts, auto_brand, auto_model, mileage, "
         "auto_license_plate, manufacture_year, VIN_number, service_address, price FROM OrdersHistory ";
 
     QString searchString;
@@ -63,11 +63,12 @@ void ListOrders::loadTable()
     queryModel->setHeaderData(7, Qt::Horizontal, tr("Контакты"));
     queryModel->setHeaderData(8, Qt::Horizontal, tr("Марка авто"));
     queryModel->setHeaderData(9, Qt::Horizontal, tr("Модель авто"));
-    queryModel->setHeaderData(10, Qt::Horizontal, tr("Госномер"));
-    queryModel->setHeaderData(11, Qt::Horizontal, tr("Год выпуска"));
-    queryModel->setHeaderData(12, Qt::Horizontal, tr("VIN"));
-    queryModel->setHeaderData(13, Qt::Horizontal, tr("Сервис"));
-    queryModel->setHeaderData(14, Qt::Horizontal, tr("Стоимость"));
+    queryModel->setHeaderData(10, Qt::Horizontal, tr("Пробег"));
+    queryModel->setHeaderData(11, Qt::Horizontal, tr("Госномер"));
+    queryModel->setHeaderData(12, Qt::Horizontal, tr("Год выпуска"));
+    queryModel->setHeaderData(13, Qt::Horizontal, tr("VIN"));
+    queryModel->setHeaderData(14, Qt::Horizontal, tr("Сервис"));
+    queryModel->setHeaderData(15, Qt::Horizontal, tr("Стоимость"));
 
     ui->tableView->setModel(queryModel);
 
@@ -178,9 +179,9 @@ void ListOrders::on_orderSearch_returnPressed()
     on_updateButton_clicked();
 }
 
-void ListOrders::saveAsCSV(QString filename)
+void ListOrders::saveAsCSV(QString fileName)
 {
-    QFile csvFile (filename);
+    QFile csvFile (fileName);
 
     if (csvFile.open(QIODevice::WriteOnly))
     {

@@ -33,7 +33,7 @@ public:
 
 private slots:
     void loadTable();
-    void saveAsCSV(QString filename);
+    void saveAsCSV(QString fileName);
     void showOrderInfo(const QModelIndex &index);
     void checkBoxStateChanged();
 

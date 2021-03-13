@@ -75,7 +75,7 @@ void AddOrder::closeWindow()
     close();
 }
 
-// Gets employee's id from ListEmployee
+// Gets employee's id from ViewEmployee
 void AddOrder::setValues(const QString &clientName, const QString &clientContacts, const QString &autoBrand)
 {
     ui->clientLine->setText(clientName);
@@ -332,12 +332,14 @@ void AddOrder::setOrderEmployees(const QModelIndex &index)
 {
     QString employeeName = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 1), Qt::EditRole).toString();
     QString employeePosition = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 2), Qt::EditRole).toString();
+    int employeeId = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 0), Qt::EditRole).toInt();
 
     if ((ui->mechanicLine->text().isEmpty()) && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
             (employeeName != ui->mechanic2Line->text()))
     {
         ui->mechanicLine->setText(employeeName);
         mechanicHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+        mechanicId = employeeId;
     }
 
     else if ((!ui->mechanicLine->text().isEmpty()) && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
@@ -345,30 +347,35 @@ void AddOrder::setOrderEmployees(const QModelIndex &index)
     {
         ui->mechanic2Line->setText(employeeName);
         mechanic2HourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+        mechanic2Id = employeeId;
     }
 
     else if (employeePosition == "Диагност")
     {
         ui->diagnosticianLine->setText(employeeName);
         diagnosticianHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+        diagnosticianId = employeeId;
     }
 
     else if (employeePosition == "Электронщик")
     {
         ui->electronicsLine->setText(employeeName);
         electronicHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+        electronicId = employeeId;
     }
 
     else if (employeePosition == "Слесарь")
     {
         ui->locksmithLine->setText(employeeName);
         locksmithHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+        locksmithId = employeeId;
     }
 
     else if (employeePosition == "Мойщик")
     {
         ui->washerLine->setText(employeeName);
         washerHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
+        washerId = employeeId;
     }
 }
 
@@ -425,9 +432,9 @@ void AddOrder::on_createOrderButton_clicked()
 
     contacts.replace(", ", "\n");
 
-    queryOrders.prepare("INSERT INTO OrdersHistory (client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, "
-                "manufacture_year, VIN_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback) "
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    queryOrders.prepare("UPDATE OrdersHistory SET client_type = ?, client = ?, creation_date = ?, creation_time = ?, reception_date = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, "
+                "mileage = ?, manufacture_year = ?, VIN_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, order_status = ?, works_list = ?, feedback = ? "
+                "WHERE id_order = ?");
 
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(client);
@@ -438,6 +445,7 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(ui->emailLine->text());
     queryOrders.addBindValue(brandModel);
     queryOrders.addBindValue(ui->modelLine->text());
+    queryOrders.addBindValue(ui->mileageLine->text());
     queryOrders.addBindValue(ui->yearLine->text());
     queryOrders.addBindValue(ui->VIN_Line->text());
     queryOrders.addBindValue(ui->autoLicensePlateLine->text());
@@ -446,17 +454,19 @@ void AddOrder::on_createOrderButton_clicked()
     queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
     queryOrders.addBindValue(ui->worksList->toPlainText());
     queryOrders.addBindValue(ui->feedback->toPlainText());
+    queryOrders.addBindValue(s_orderId);
     queryOrders.exec();
 
-    int id = queryOrders.lastInsertId().toInt();
+    //int id = queryOrders.lastInsertId().toInt();
 
     // Simultaneous insertion into detailed order table
     QSqlQuery queryOrderDetail(orderDetailDB);
 
     if (!ui->mechanicLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.addBindValue(mechanicId);
         queryOrderDetail.addBindValue(ui->mechanicLine->text());
         queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
         queryOrderDetail.addBindValue("Механик");
@@ -465,8 +475,9 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->mechanic2Line->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.addBindValue(mechanic2Id);
         queryOrderDetail.addBindValue(ui->mechanic2Line->text());
         queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
         queryOrderDetail.addBindValue("Механик_2");
@@ -475,8 +486,9 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->diagnosticianLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.addBindValue(diagnosticianId);
         queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
         queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
         queryOrderDetail.addBindValue("Диагност");
@@ -485,8 +497,9 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->electronicsLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.addBindValue(electronicId);
         queryOrderDetail.addBindValue(ui->electronicsLine->text());
         queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
         queryOrderDetail.addBindValue("Электронщик");
@@ -495,8 +508,9 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->locksmithLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.addBindValue(locksmithId);
         queryOrderDetail.addBindValue(ui->locksmithLine->text());
         queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
         queryOrderDetail.addBindValue("Слесарь");
@@ -505,8 +519,9 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->washerLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-        queryOrderDetail.addBindValue(id);
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.addBindValue(washerId);
         queryOrderDetail.addBindValue(ui->washerLine->text());
         queryOrderDetail.addBindValue(ui->washerHoursLine->text());
         queryOrderDetail.addBindValue("Мойщик");
@@ -525,16 +540,17 @@ void AddOrder::on_createOrderButton_clicked()
     {
         QSqlQuery queryClients(clientsDB);
 
-        queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, "
-            "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, "
+            "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        queryClients.addBindValue(id);
+        queryClients.addBindValue(orderId);
         queryClients.addBindValue(ui->clientTypeComboBox->currentText());
         queryClients.addBindValue(client);
         queryClients.addBindValue(contacts);
         queryClients.addBindValue(ui->emailLine->text());
         queryClients.addBindValue(brandModel);
         queryClients.addBindValue(ui->modelLine->text());
+        queryClients.addBindValue(ui->mileageLine->text());
         queryClients.addBindValue(ui->autoLicensePlateLine->text());
         queryClients.addBindValue(ui->yearLine->text());
         queryClients.addBindValue(ui->VIN_Line->text());
@@ -617,7 +633,7 @@ void AddOrder::on_createOrderButton_clicked()
 
     queryOrders.prepare("UPDATE OrdersHistory SET price = ? WHERE id_order = ?");
     queryOrders.addBindValue(orderTotalDiscountCostDB);
-    queryOrders.addBindValue(id);
+    queryOrders.addBindValue(orderId);
     queryOrders.exec();
 
     QDialog::close();

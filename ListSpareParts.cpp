@@ -73,9 +73,9 @@ void ListSparePart::loadTable()
     ui->tableView->resizeRowsToContents();
 }
 
-void ListSparePart::saveAsCSV(QString filename)
+void ListSparePart::saveAsCSV(QString fileName)
 {
-    QFile csvFile (filename);
+    QFile csvFile (fileName);
 
     if (csvFile.open(QIODevice::WriteOnly))
     {

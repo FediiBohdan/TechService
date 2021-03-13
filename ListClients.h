@@ -34,7 +34,7 @@ public:
 
 private slots:
     void loadTable();
-    void saveAsCSV(QString filename);
+    void saveAsCSV(QString fileName);
     void showClientInfo(const QModelIndex &index);
 
     void on_addClientButton_clicked();

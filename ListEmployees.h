@@ -29,7 +29,7 @@ class ListEmployees : public QDialog
 
 private slots:
     void loadTable();
-    void saveAsCSV(QString filename);
+    void saveAsCSV(QString fileName);
     void showEmployeeInfo(const QModelIndex &index);
 
     void on_addWorkerButton_clicked();

@@ -50,7 +50,7 @@ private:
 
 private slots:
     void loadTable();
-    void saveAsCSV(QString filename);
+    void saveAsCSV(QString fileName);
     void showSparePartInfo(const QModelIndex &index);
 
     void on_addSparePartButton_clicked();

@@ -151,53 +151,6 @@ QPushButton:pressed {
        </item>
        <item row="4" column="0" colspan="3">
         <layout class="QGridLayout" name="gridLayout_11">
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="autoLicensePlate">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-           </property>
-           <property name="frame">
-            <bool>true</bool>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_23">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Госномер</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <widget class="QLineEdit" name="manufactureYear">
            <property name="minimumSize">
@@ -233,8 +186,72 @@ QPushButton:pressed {
            </property>
           </widget>
          </item>
-         <item row="1" column="2" colspan="2">
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_24">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>VIN-номер</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3" colspan="2">
           <widget class="QLineEdit" name="VINnumber">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="autoErrorLabel">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel {
+	color: red;
+}</string>
+           </property>
+           <property name="text">
+            <string>Поле с маркой авто не должно быть пустым!</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="autoLicensePlate">
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -268,32 +285,44 @@ QPushButton:pressed {
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_24">
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_23">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
             </font>
            </property>
            <property name="text">
-            <string>VIN-номер</string>
+            <string>Госномер</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
-          <widget class="QLabel" name="autoErrorLabel">
+         <item row="1" column="2">
+          <widget class="QLineEdit" name="mileageLine">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
             </font>
            </property>
-           <property name="styleSheet">
-            <string notr="true">QLabel {
-	color: red;
-}</string>
-           </property>
            <property name="text">
-            <string>Поле с маркой авто не должно быть пустым!</string>
+            <string>Пробег</string>
            </property>
           </widget>
          </item>

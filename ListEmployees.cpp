@@ -90,9 +90,9 @@ void ListEmployees::on_updateButton_clicked()
     loadTable();
 }
 
-void ListEmployees::saveAsCSV(QString filename)
+void ListEmployees::saveAsCSV(QString fileName)
 {
-    QFile csvFile (filename);
+    QFile csvFile (fileName);
 
     if (csvFile.open(QIODevice::WriteOnly))
     {

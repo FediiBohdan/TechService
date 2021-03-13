@@ -68,7 +68,7 @@ void ViewUpdateClient::on_saveUpdatedInfo_clicked()
 
     clientContacts.replace(", ", "\n");
 
-    query.prepare("UPDATE ClientsTable SET client_type = ?, client_FML_name = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, auto_license_plate = ?, manufacture_year = ?, "
+    query.prepare("UPDATE ClientsTable SET client_type = ?, client_FML_name = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, mileage = ?, auto_license_plate = ?, manufacture_year = ?, "
         "VIN_number = ? WHERE id_client = ?");
 
     query.addBindValue(ui->clientTypeComboBox->currentText());
@@ -77,6 +77,7 @@ void ViewUpdateClient::on_saveUpdatedInfo_clicked()
     query.addBindValue(ui->email->text());
     query.addBindValue(autoBrand);
     query.addBindValue(ui->autoModel->text());
+    query.addBindValue(ui->mileageLine->text());
     query.addBindValue(ui->autoLicensePlate->text());
     query.addBindValue(ui->manufactureYear->text());
     query.addBindValue(ui->VINnumber->text());
@@ -94,7 +95,7 @@ void ViewUpdateClient::setValues(const QString &id)
 
     QSqlQuery query(clientsDB);
 
-    query.prepare("SELECT DISTINCT client_type, client_FML_name, contacts, email, auto_brand, auto_model, auto_license_plate, manufacture_year, "
+    query.prepare("SELECT DISTINCT client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
         "VIN_number FROM ClientsTable WHERE id_client = " + clientId);
     query.exec();
     query.next();
@@ -112,9 +113,10 @@ void ViewUpdateClient::setValues(const QString &id)
     ui->email->setText(query.value(3).toString());
     ui->autoBrand->setText(query.value(4).toString());
     ui->autoModel->setText(query.value(5).toString());
-    ui->autoLicensePlate->setText(query.value(6).toString());
-    ui->manufactureYear->setText(query.value(7).toString());
-    ui->VINnumber->setText(query.value(8).toString());
+    ui->mileageLine->setText(query.value(6).toString());
+    ui->autoLicensePlate->setText(query.value(7).toString());
+    ui->manufactureYear->setText(query.value(8).toString());
+    ui->VINnumber->setText(query.value(9).toString());
 
     loadOrderHistoryTable();
 }
