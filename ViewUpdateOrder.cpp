@@ -27,8 +27,6 @@ ViewUpdateOrder::ViewUpdateOrder(QWidget *parent) :
 
     connect(ui->serviceComboBox, &QComboBox::currentTextChanged, this, &ViewUpdateOrder::updateEmployeesTable);
 
-    //QSqlQuery queryRemoveEmployeeModel(employeesDB);
-
     searchFlag = false;
 
     setDateAndTime();
@@ -232,19 +230,19 @@ void ViewUpdateOrder::loadEmployeesTable()
 
 void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 {
-    QString employeeName = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 1), Qt::EditRole).toString();
-    QString employeePosition = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 2), Qt::EditRole).toString();
     int employeeId = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 0), Qt::EditRole).toInt();
+    QString employeeName = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 1), Qt::EditRole).toString();
+    QString employeePosition = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 2), Qt::EditRole).toString();    
 
-    if (ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
-            employeeName != ui->mechanic2Line->text())
+    if ((ui->mechanicLine->text().isEmpty()) && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
+        (employeeName != ui->mechanic2Line->text()))
     {
         ui->mechanicLine->setText(employeeName);
         mechanicHourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
     }
 
-    else if (!ui->mechanicLine->text().isEmpty() && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
-             employeeName != ui->mechanicLine->text())
+    else if ((!ui->mechanicLine->text().isEmpty()) && (employeePosition == "Механик" || employeePosition == "Главный механик") &&
+        (employeeName != ui->mechanicLine->text()))
     {
         ui->mechanic2Line->setText(employeeName);
         mechanic2HourPayment = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 3), Qt::EditRole).toInt();
@@ -283,7 +281,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
     if (queryCheckEmployee.value(0) != 0) // if employee exists, just update him
     {
-        if (!ui->mechanicLine->text().isEmpty() && mechanicFlag == false) //mechanic
+        if (!ui->mechanicLine->text().isEmpty()) //mechanic
         {
             queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->mechanicLine->text());
@@ -293,166 +291,189 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
             queryOrderDetail.addBindValue(employeeId);
             queryOrderDetail.exec();
         }
-        else if (ui->mechanicLine->text().isEmpty() && mechanicFlag == false)
+
+        if (!ui->mechanic2Line->text().isEmpty()) //mechanic_2
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.addBindValue(ui->mechanic2Line->text());
+            queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
+            queryOrderDetail.addBindValue("Механик_2");
             queryOrderDetail.addBindValue(orderId);
             queryOrderDetail.addBindValue(employeeId);
             queryOrderDetail.exec();
         }
 
-        if (!ui->mechanic2Line->text().isEmpty() && mechanic2Flag == false) //mechanic_2
+        if (!ui->diagnosticianLine->text().isEmpty()) //diagnostician
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
-            queryOrderDetail.addBindValue(ui->mechanic2Line->text());
-            queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
-            queryOrderDetail.addBindValue("Механик_2");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Механик_2");
-            queryOrderDetail.exec();
-        }
-        else if (ui->mechanic2Line->text().isEmpty() && mechanic2Flag == false)
-        {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Механик_2");
-            queryOrderDetail.exec();
-        }
-
-        if (!ui->diagnosticianLine->text().isEmpty() && diagnosticianFlag == false) //diagnostician
-        {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
+            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
             queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
             queryOrderDetail.addBindValue("Диагност");
             queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Диагност");
-            queryOrderDetail.exec();
-        }
-        else if (ui->diagnosticianLine->text().isEmpty() && diagnosticianFlag == false)
-        {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Диагност");
+            queryOrderDetail.addBindValue(employeeId);
             queryOrderDetail.exec();
         }
 
-        if (!ui->electronicsLine->text().isEmpty() && electronicFlag == false) //electronic
+        if (!ui->electronicsLine->text().isEmpty()) //electronics
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
+            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->electronicsLine->text());
             queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
             queryOrderDetail.addBindValue("Электронщик");
             queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Электронщик");
-            queryOrderDetail.exec();
-        }
-        else if (ui->electronicsLine->text().isEmpty() && electronicFlag == false)
-        {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Электронщик");
+            queryOrderDetail.addBindValue(employeeId);
             queryOrderDetail.exec();
         }
 
-        if (!ui->locksmithLine->text().isEmpty() && locksmithFlag == false) //locksmith
+        if (!ui->locksmithLine->text().isEmpty()) // locksmith
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
+            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->locksmithLine->text());
             queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
             queryOrderDetail.addBindValue("Слесарь");
             queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Слесарь");
-            queryOrderDetail.exec();
-        }
-        else if (ui->locksmithLine->text().isEmpty() && locksmithFlag == false)
-        {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Слесарь");
+            queryOrderDetail.addBindValue(employeeId);
             queryOrderDetail.exec();
         }
 
-        if (!ui->washerLine->text().isEmpty() && washerFlag == false) //washer
+        if (!ui->washerLine->text().isEmpty()) // washer
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
+            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->washerLine->text());
             queryOrderDetail.addBindValue(ui->washerHoursLine->text());
             queryOrderDetail.addBindValue("Мойщик");
             queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Мойщик");
-            queryOrderDetail.exec();
-        }
-        else if (ui->washerLine->text().isEmpty() && washerFlag == false)
-        {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue("Мойщик");
+            queryOrderDetail.addBindValue(employeeId);
             queryOrderDetail.exec();
         }
     }
 
     else if (queryCheckEmployee.value(0) == 0) // if not, add him
     {
-        if (!ui->mechanicLine->text().isEmpty() && mechanicFlag == true)
+        if (!ui->mechanicLine->text().isEmpty()) // mechanic
         {
-            queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue(employeeId);
-            queryOrderDetail.addBindValue(ui->mechanicLine->text());
-            queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
-            queryOrderDetail.addBindValue("Механик");
-            queryOrderDetail.exec();
+            QSqlQuery queryCheckEmployee(orderDetailDB);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanicLine->text() + "')");
+            queryCheckEmployee.exec();
+            queryCheckEmployee.next();
+
+            if (queryCheckEmployee.value(0) != 0) // сheck whether employee exists
+                ui->techLabel->setVisible(false);
+            else
+            {
+                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.addBindValue(orderId);
+                queryOrderDetail.addBindValue(employeeId);
+                queryOrderDetail.addBindValue(ui->mechanicLine->text());
+                queryOrderDetail.addBindValue(mechanicHourPayment);
+                queryOrderDetail.addBindValue("Механик");
+                queryOrderDetail.exec();
+            }
         }
 
-        if (!ui->mechanic2Line->text().isEmpty() && mechanic2Flag == true)
+        if (!ui->mechanic2Line->text().isEmpty()) // mechanic2
         {
-            queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue(ui->mechanic2Line->text());
-            queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
-            queryOrderDetail.addBindValue("Механик_2");
-            queryOrderDetail.exec();
+            QSqlQuery queryCheckEmployee(orderDetailDB);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanic2Line->text() + "')");
+            queryCheckEmployee.exec();
+            queryCheckEmployee.next();
+
+            if (queryCheckEmployee.value(0) != 0)
+                ui->techLabel->setVisible(false);
+            else
+            {
+                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.addBindValue(orderId);
+                queryOrderDetail.addBindValue(employeeId);
+                queryOrderDetail.addBindValue(ui->mechanic2Line->text());
+                queryOrderDetail.addBindValue(mechanic2HourPayment);
+                queryOrderDetail.addBindValue("Механик_2");
+                queryOrderDetail.exec();
+            }
         }
 
-        if (!ui->diagnosticianLine->text().isEmpty() && diagnosticianFlag == true)
+        if (!ui->diagnosticianLine->text().isEmpty()) // diagnostician
         {
-            queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
-            queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
-            queryOrderDetail.addBindValue("Диагност");
-            queryOrderDetail.exec();
+            QSqlQuery queryCheckEmployee(orderDetailDB);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->diagnosticianLine->text() + "')");
+            queryCheckEmployee.exec();
+            queryCheckEmployee.next();
+
+            if (queryCheckEmployee.value(0) != 0)
+                ui->techLabel->setVisible(false);
+            else
+            {
+                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.addBindValue(orderId);
+                queryOrderDetail.addBindValue(employeeId);
+                queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
+                queryOrderDetail.addBindValue(diagnosticianHourPayment);
+                queryOrderDetail.addBindValue("Диагност");
+                queryOrderDetail.exec();
+            }
         }
 
-        if (!ui->electronicsLine->text().isEmpty() && electronicFlag == true)
+        if (!ui->electronicsLine->text().isEmpty()) // electronics
         {
-            queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue(ui->electronicsLine->text());
-            queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
-            queryOrderDetail.addBindValue("Электронщик");
-            queryOrderDetail.exec();
+            QSqlQuery queryCheckEmployee(orderDetailDB);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->electronicsLine->text() + "')");
+            queryCheckEmployee.exec();
+            queryCheckEmployee.next();
+
+            if (queryCheckEmployee.value(0) != 0)
+                ui->techLabel->setVisible(false);
+            else
+            {
+                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.addBindValue(orderId);
+                queryOrderDetail.addBindValue(employeeId);
+                queryOrderDetail.addBindValue(ui->electronicsLine->text());
+                queryOrderDetail.addBindValue(electronicHourPayment);
+                queryOrderDetail.addBindValue("Электронщик");
+                queryOrderDetail.exec();
+            }
         }
 
-        if (!ui->locksmithLine->text().isEmpty() && locksmithFlag == true)
+        if (!ui->locksmithLine->text().isEmpty()) // locksmith
         {
-            queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue(ui->locksmithLine->text());
-            queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
-            queryOrderDetail.addBindValue("Слесарь");
-            queryOrderDetail.exec();
+            QSqlQuery queryCheckEmployee(orderDetailDB);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->locksmithLine->text() + "')");
+            queryCheckEmployee.exec();
+            queryCheckEmployee.next();
+
+            if (queryCheckEmployee.value(0) != 0)
+                ui->techLabel->setVisible(false);
+            else
+            {
+                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.addBindValue(orderId);
+                queryOrderDetail.addBindValue(employeeId);
+                queryOrderDetail.addBindValue(ui->locksmithLine->text());
+                queryOrderDetail.addBindValue(locksmithHourPayment);
+                queryOrderDetail.addBindValue("Слесарь");
+                queryOrderDetail.exec();
+            }
         }
 
-        if (!ui->washerLine->text().isEmpty() && washerFlag == true)
+        if (!ui->washerLine->text().isEmpty()) // washer
         {
-            queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-            queryOrderDetail.addBindValue(orderId);
-            queryOrderDetail.addBindValue(ui->washerLine->text());
-            queryOrderDetail.addBindValue(ui->washerHoursLine->text());
-            queryOrderDetail.addBindValue("Мойщик");
-            queryOrderDetail.exec();
+            QSqlQuery queryCheckEmployee(orderDetailDB);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->washerLine->text() + "')");
+            queryCheckEmployee.exec();
+            queryCheckEmployee.next();
+
+            if (queryCheckEmployee.value(0) != 0)
+                ui->techLabel->setVisible(false);
+            else
+            {
+                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.addBindValue(orderId);
+                queryOrderDetail.addBindValue(employeeId);
+                queryOrderDetail.addBindValue(ui->washerLine->text());
+                queryOrderDetail.addBindValue(washerHourPayment);
+                queryOrderDetail.addBindValue("Мойщик");
+                queryOrderDetail.exec();
+            }
         }
     }
 }
@@ -583,19 +604,6 @@ void ViewUpdateOrder::setValues(const QString &id)
             ui->washerHoursLine->setText(queryEmployee.value(1).toString());
         }
     }
-
-    if (ui->mechanicLine->text().isEmpty())
-        mechanicFlag = true;
-    if (ui->mechanic2Line->text().isEmpty())
-        mechanic2Flag = true;
-    if (ui->diagnosticianLine->text().isEmpty())
-        diagnosticianFlag = true;
-    if (ui->electronicsLine->text().isEmpty())
-        electronicFlag = true;
-    if (ui->locksmithLine->text().isEmpty())
-        locksmithFlag = true;
-    if (ui->washerLine->text().isEmpty())
-        washerFlag = true;
 }
 
 void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
@@ -665,172 +673,62 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
     queryOrders.addBindValue(orderId);
     queryOrders.exec();
 
-    //int id = queryOrders.lastInsertId().toInt();
+    // Simultaneous update of employees work hours
+    QSqlQuery queryOrderDetail(orderDetailDB);
 
-//    // Simultaneous insertion into detailed order table
-//    QSqlQuery queryOrderDetail(orderDetailDB);
+    if (!ui->mechanicLine->text().isEmpty()) //mechanic
+    {
+        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
+        queryOrderDetail.addBindValue(ui->mechanicLine->text());
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.exec();
+    }
 
-//    if (!ui->mechanicLine->text().isEmpty() && mechanicFlag == false) //mechanic
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(ui->mechanicLine->text());
-//        queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
-//        queryOrderDetail.addBindValue("Механик");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Механик");
-//        queryOrderDetail.exec();
-//    }
-//    else if (!ui->mechanicLine->text().isEmpty() && mechanicFlag == true)
-//    {
-//        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue(ui->mechanicLine->text());
-//        queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
-//        queryOrderDetail.addBindValue("Механик");
-//        queryOrderDetail.exec();
-//    }
-//    else if (ui->mechanicLine->text().isEmpty() && mechanicFlag == false)
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Механик");
-//        queryOrderDetail.exec();
-//    }
+    if (!ui->mechanic2Line->text().isEmpty()) //mechanic_2
+    {
+        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
+        queryOrderDetail.addBindValue(ui->mechanic2Line->text());
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.exec();
+    }
 
-//    if (!ui->mechanic2Line->text().isEmpty() && mechanic2Flag == false) //mechanic_2
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(ui->mechanic2Line->text());
-//        queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
-//        queryOrderDetail.addBindValue("Механик_2");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Механик_2");
-//        queryOrderDetail.exec();
-//    }
-//    else if (!ui->mechanic2Line->text().isEmpty() && mechanic2Flag == true)
-//    {
-//        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue(ui->mechanic2Line->text());
-//        queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
-//        queryOrderDetail.addBindValue("Механик_2");
-//        queryOrderDetail.exec();
-//    }
-//    else if (ui->mechanic2Line->text().isEmpty() && mechanic2Flag == false)
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Механик_2");
-//        queryOrderDetail.exec();
-//    }
+    if (!ui->diagnosticianLine->text().isEmpty()) //diagnostician
+    {
+        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
+        queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.exec();
+    }
 
-//    if (!ui->diagnosticianLine->text().isEmpty() && diagnosticianFlag == false) //diagnostician
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
-//        queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
-//        queryOrderDetail.addBindValue("Диагност");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Диагност");
-//        queryOrderDetail.exec();
-//    }
-//    else if (!ui->diagnosticianLine->text().isEmpty() && diagnosticianFlag == true)
-//    {
-//        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
-//        queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
-//        queryOrderDetail.addBindValue("Диагност");
-//        queryOrderDetail.exec();
-//    }
-//    else if (ui->diagnosticianLine->text().isEmpty() && diagnosticianFlag == false)
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Диагност");
-//        queryOrderDetail.exec();
-//    }
+    if (!ui->electronicsLine->text().isEmpty()) //electronic
+    {
+        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
+        queryOrderDetail.addBindValue(ui->electronicsLine->text());
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.exec();
+    }
 
-//    if (!ui->electronicsLine->text().isEmpty() && electronicFlag == false) //electronic
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(ui->electronicsLine->text());
-//        queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
-//        queryOrderDetail.addBindValue("Электронщик");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Электронщик");
-//        queryOrderDetail.exec();
-//    }
-//    else if (!ui->electronicsLine->text().isEmpty() && electronicFlag == true)
-//    {
-//        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue(ui->electronicsLine->text());
-//        queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
-//        queryOrderDetail.addBindValue("Электронщик");
-//        queryOrderDetail.exec();
-//    }
-//    else if (ui->electronicsLine->text().isEmpty() && electronicFlag == false)
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Электронщик");
-//        queryOrderDetail.exec();
-//    }
+    if (!ui->locksmithLine->text().isEmpty()) //locksmith
+    {
+        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
+        queryOrderDetail.addBindValue(ui->locksmithLine->text());
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.exec();
+    }
 
-//    if (!ui->locksmithLine->text().isEmpty() && locksmithFlag == false) //locksmith
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(ui->locksmithLine->text());
-//        queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
-//        queryOrderDetail.addBindValue("Слесарь");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Слесарь");
-//        queryOrderDetail.exec();
-//    }
-//    else if (!ui->locksmithLine->text().isEmpty() && locksmithFlag == true)
-//    {
-//        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue(ui->locksmithLine->text());
-//        queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
-//        queryOrderDetail.addBindValue("Слесарь");
-//        queryOrderDetail.exec();
-//    }
-//    else if (ui->locksmithLine->text().isEmpty() && locksmithFlag == false)
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Слесарь");
-//        queryOrderDetail.exec();
-//    }
-
-//    if (!ui->washerLine->text().isEmpty() && washerFlag == false) //washer
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(ui->washerLine->text());
-//        queryOrderDetail.addBindValue(ui->washerHoursLine->text());
-//        queryOrderDetail.addBindValue("Мойщик");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Мойщик");
-//        queryOrderDetail.exec();
-//    }
-//    else if (!ui->washerLine->text().isEmpty() && washerFlag == true)
-//    {
-//        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?)");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue(ui->washerLine->text());
-//        queryOrderDetail.addBindValue(ui->washerHoursLine->text());
-//        queryOrderDetail.addBindValue("Мойщик");
-//        queryOrderDetail.exec();
-//    }
-//    else if (ui->washerLine->text().isEmpty() && washerFlag == false)
-//    {
-//        queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = NULL, employee_work_hours = NULL, employee_position = NULL WHERE id_order = ? AND employee_position = ?");
-//        queryOrderDetail.addBindValue(orderId);
-//        queryOrderDetail.addBindValue("Мойщик");
-//        queryOrderDetail.exec();
-//    }
+    if (!ui->washerLine->text().isEmpty()) //washer
+    {
+        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.addBindValue(ui->washerHoursLine->text());
+        queryOrderDetail.addBindValue(ui->washerLine->text());
+        queryOrderDetail.addBindValue(orderId);
+        queryOrderDetail.exec();
+    }
 
     // Simultaneous insertion into client table
     QSqlQuery query(clientsDB);
@@ -868,6 +766,63 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
     float electronicOverallPayment = 0;
     float locksmithOverallPayment = 0;
     float washerOverAllPayment = 0;
+
+    // get employee hour payment in case if employee is not changed during order update
+    QSqlQuery queryCheckEmployeePayment(employeesDB);
+
+    if ((!ui->mechanicLine->text().isEmpty()) && (mechanicHourPayment == 0))
+    {
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanicLine->text() + "'");
+        queryCheckEmployeePayment.exec();
+        queryCheckEmployeePayment.next();
+
+        mechanicHourPayment = queryCheckEmployeePayment.value(0).toInt();
+    }
+
+    if ((!ui->mechanic2Line->text().isEmpty()) && (mechanic2HourPayment == 0))
+    {
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanic2Line->text() + "'");
+        queryCheckEmployeePayment.exec();
+        queryCheckEmployeePayment.next();
+
+        mechanic2HourPayment = queryCheckEmployeePayment.value(0).toInt();
+    }
+
+    if ((!ui->diagnosticianLine->text().isEmpty()) && (diagnosticianHourPayment == 0))
+    {
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->diagnosticianLine->text() + "'");
+        queryCheckEmployeePayment.exec();
+        queryCheckEmployeePayment.next();
+
+        diagnosticianHourPayment = queryCheckEmployeePayment.value(0).toInt();
+    }
+
+    if ((!ui->electronicsLine->text().isEmpty()) && (electronicHourPayment == 0))
+    {
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->electronicsLine->text() + "'");
+        queryCheckEmployeePayment.exec();
+        queryCheckEmployeePayment.next();
+
+        electronicHourPayment = queryCheckEmployeePayment.value(0).toInt();
+    }
+
+    if ((!ui->locksmithLine->text().isEmpty()) && (locksmithHourPayment == 0))
+    {
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->locksmithLine->text() + "'");
+        queryCheckEmployeePayment.exec();
+        queryCheckEmployeePayment.next();
+
+        locksmithHourPayment = queryCheckEmployeePayment.value(0).toInt();
+    }
+
+    if ((!ui->washerLine->text().isEmpty()) && (washerHourPayment == 0))
+    {
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->washerLine->text() + "'");
+        queryCheckEmployeePayment.exec();
+        queryCheckEmployeePayment.next();
+
+        washerHourPayment = queryCheckEmployeePayment.value(0).toInt();
+    }
 
     if (!ui->mechanicLine->text().isEmpty() && ui->mechanicHoursLine->text().isEmpty())
         mechanicOverallPayment = mechanicHourPayment * 1;
@@ -932,9 +887,6 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     // cost update
     QString orderTotalDiscountCostDB = QString("%1").arg(orderTotalDiscountCost, 0, 'f', 2);
-
-    qDebug()<<orderTotalDiscountCostDB;
-    qDebug() << sparePartsCost;
 
     queryOrders.prepare("UPDATE OrdersHistory SET price = ? WHERE id_order = ?");
     queryOrders.addBindValue(orderTotalDiscountCostDB);
@@ -1073,5 +1025,32 @@ void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
     ui->worksList->setEnabled(true);
     ui->feedback->setReadOnly(false);
     ui->receptionLine->setReadOnly(false);
+    ui->deleteOrderButton->setEnabled(true);
     ui->saveUpdatedInfo->setEnabled(true);
+}
+
+void ViewUpdateOrder::on_deleteOrderButton_clicked()
+{
+    QSqlQuery queryRemoveOrderModel(ordersDB);
+
+    int msgBox = QMessageBox::information(this, tr("Предупреждение"), tr("Вы уверены, что хотите удалить заказ?"), QMessageBox::Ok, QMessageBox::Cancel);
+
+    switch (msgBox)
+    {
+    case QMessageBox::Ok:
+
+        queryRemoveOrderModel.prepare("DELETE FROM OrdersHistory WHERE id_order = ?");
+        queryRemoveOrderModel.addBindValue(orderId);
+        queryRemoveOrderModel.exec();
+
+        QDialog::close();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("Заказ успешно удален!"), QMessageBox::Ok);
+        break;
+    case QMessageBox::Cancel:
+        return;
+        break;
+    default:
+        break;
+    }
 }

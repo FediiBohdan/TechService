@@ -167,7 +167,6 @@ void AddOrder::loadSparePartsTable()
     ui->availableSparePartsTable->setModel(queryAvailableSparePartsModel);
 
     ui->availableSparePartsTable->setColumnHidden(0, true);
-    ui->availableSparePartsTable->setColumnHidden(2, true);
 
     ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -464,10 +463,11 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->mechanicLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(mechanicId);
         queryOrderDetail.addBindValue(ui->mechanicLine->text());
+        queryOrderDetail.addBindValue(mechanicHourPayment);
         queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
         queryOrderDetail.addBindValue("Механик");
         queryOrderDetail.exec();
@@ -475,10 +475,11 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->mechanic2Line->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(mechanic2Id);
         queryOrderDetail.addBindValue(ui->mechanic2Line->text());
+        queryOrderDetail.addBindValue(mechanic2HourPayment);
         queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
         queryOrderDetail.addBindValue("Механик_2");
         queryOrderDetail.exec();
@@ -486,10 +487,11 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->diagnosticianLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(diagnosticianId);
         queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
+        queryOrderDetail.addBindValue(diagnosticianHourPayment);
         queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
         queryOrderDetail.addBindValue("Диагност");
         queryOrderDetail.exec();
@@ -497,10 +499,11 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->electronicsLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(electronicId);
         queryOrderDetail.addBindValue(ui->electronicsLine->text());
+        queryOrderDetail.addBindValue(electronicHourPayment);
         queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
         queryOrderDetail.addBindValue("Электронщик");
         queryOrderDetail.exec();
@@ -508,10 +511,11 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->locksmithLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(locksmithId);
         queryOrderDetail.addBindValue(ui->locksmithLine->text());
+        queryOrderDetail.addBindValue(locksmithHourPayment);
         queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
         queryOrderDetail.addBindValue("Слесарь");
         queryOrderDetail.exec();
@@ -519,10 +523,11 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->washerLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(washerId);
         queryOrderDetail.addBindValue(ui->washerLine->text());
+        queryOrderDetail.addBindValue(washerHourPayment);
         queryOrderDetail.addBindValue(ui->washerHoursLine->text());
         queryOrderDetail.addBindValue("Мойщик");
         queryOrderDetail.exec();

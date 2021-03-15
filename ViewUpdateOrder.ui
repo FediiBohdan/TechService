@@ -940,7 +940,7 @@ QMessageBox {
        </property>
        <property name="maximumSize">
         <size>
-         <width>845</width>
+         <width>850</width>
          <height>16777215</height>
         </size>
        </property>
@@ -1092,7 +1092,7 @@ QMessageBox {
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>303</width>
                <height>20</height>
               </size>
              </property>
@@ -1108,7 +1108,7 @@ QMessageBox {
           </property>
           <property name="maximumSize">
            <size>
-            <width>585</width>
+            <width>530</width>
             <height>16777215</height>
            </size>
           </property>
@@ -1160,6 +1160,12 @@ QHeaderView::section {
          <widget class="QTableView" name="usedSparePartsTableView">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>310</width>
+            <height>16777215</height>
+           </size>
           </property>
           <property name="styleSheet">
            <string notr="true">QTableView {
@@ -1307,22 +1313,22 @@ QHeaderView::section {
           </property>
           <layout class="QGridLayout" name="gridLayout_17">
            <property name="leftMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="topMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="rightMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="horizontalSpacing">
             <number>2</number>
            </property>
            <property name="verticalSpacing">
-            <number>1</number>
+            <number>4</number>
            </property>
            <item row="3" column="1">
             <widget class="QPushButton" name="clearDiagnosticianButton">
@@ -1500,22 +1506,22 @@ QPushButton:pressed {
           </property>
           <layout class="QGridLayout" name="gridLayout_19">
            <property name="leftMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="topMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="rightMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="horizontalSpacing">
             <number>2</number>
            </property>
            <property name="verticalSpacing">
-            <number>1</number>
+            <number>4</number>
            </property>
            <item row="1" column="0" colspan="2">
             <widget class="QLineEdit" name="locksmithLine">
@@ -1768,22 +1774,22 @@ QPushButton:pressed {
           </property>
           <layout class="QGridLayout" name="gridLayout_16">
            <property name="leftMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="topMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="rightMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="horizontalSpacing">
             <number>2</number>
            </property>
            <property name="verticalSpacing">
-            <number>1</number>
+            <number>4</number>
            </property>
            <item row="2" column="0" colspan="3">
             <widget class="QLineEdit" name="mechanicLine">
@@ -1964,22 +1970,22 @@ QPushButton:pressed {
           </property>
           <layout class="QGridLayout" name="gridLayout_18">
            <property name="leftMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="topMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="rightMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="horizontalSpacing">
             <number>2</number>
            </property>
            <property name="verticalSpacing">
-            <number>1</number>
+            <number>4</number>
            </property>
            <item row="1" column="0" colspan="2">
             <widget class="QLineEdit" name="electronicsLine">
@@ -2136,199 +2142,6 @@ QPushButton:pressed {
           </layout>
          </widget>
         </item>
-        <item row="7" column="1" rowspan="2" colspan="2">
-         <widget class="QFrame" name="frame_11">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QFrame {
-	background-color: white;
-}</string>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_20">
-           <property name="leftMargin">
-            <number>2</number>
-           </property>
-           <property name="topMargin">
-            <number>2</number>
-           </property>
-           <property name="rightMargin">
-            <number>2</number>
-           </property>
-           <property name="bottomMargin">
-            <number>2</number>
-           </property>
-           <property name="horizontalSpacing">
-            <number>2</number>
-           </property>
-           <property name="verticalSpacing">
-            <number>1</number>
-           </property>
-           <item row="1" column="0" colspan="2">
-            <widget class="QLineEdit" name="washerLine">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="focusPolicy">
-              <enum>Qt::NoFocus</enum>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="label_22">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel {
-	background-color: transparent;
-	border: 0px;
-}</string>
-             </property>
-             <property name="text">
-              <string>Мойщик</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QPushButton" name="clearWasherButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>25</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>25</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Вернуть работника</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QPushButton {
-	background-color: #dbdcf7;
-	border: 1px solid #999999;
-	border-radius: 2px;
-}
-
-QPushButton:hover {
-	background-color: #d5d6f0;
-	border: 1px solid #acacac;
-}
-
-QPushButton:pressed {
-	background-color: #cbcde6;
-	border: 2px solid #999999;
-}</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="images.qrc">
-               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
-             </property>
-             <property name="iconSize">
-              <size>
-               <width>25</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="autoDefault">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLineEdit" name="washerHoursLine">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <pointsize>10</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QLabel" name="label_27">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QLabel {
-	background-color: transparent;
-	border: 0px;
-}</string>
-             </property>
-             <property name="text">
-              <string>Нормо-часы</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
         <item row="3" column="1" colspan="2">
          <widget class="QFrame" name="frame_12">
           <property name="minimumSize">
@@ -2350,22 +2163,22 @@ QPushButton:pressed {
           </property>
           <layout class="QGridLayout" name="gridLayout_21">
            <property name="leftMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="topMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="rightMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
+            <number>4</number>
            </property>
            <property name="horizontalSpacing">
             <number>2</number>
            </property>
            <property name="verticalSpacing">
-            <number>1</number>
+            <number>4</number>
            </property>
            <item row="3" column="0">
             <widget class="QLineEdit" name="mechanic2HoursLine">
@@ -2519,6 +2332,199 @@ QPushButton:pressed {
              </property>
              <property name="readOnly">
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="7" column="1" rowspan="3" colspan="2">
+         <widget class="QFrame" name="frame_11">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QFrame {
+	background-color: white;
+}</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_20">
+           <property name="leftMargin">
+            <number>4</number>
+           </property>
+           <property name="topMargin">
+            <number>4</number>
+           </property>
+           <property name="rightMargin">
+            <number>4</number>
+           </property>
+           <property name="bottomMargin">
+            <number>4</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <property name="verticalSpacing">
+            <number>4</number>
+           </property>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLineEdit" name="washerLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="label_22">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Мойщик</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QPushButton" name="clearWasherButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Вернуть работника</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+	border-radius: 2px;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="images.qrc">
+               <normaloff>:/images/returnEmployee.png</normaloff>:/images/returnEmployee.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="washerHoursLine">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLabel" name="label_27">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+	background-color: transparent;
+	border: 0px;
+}</string>
+             </property>
+             <property name="text">
+              <string>Нормо-часы</string>
              </property>
             </widget>
            </item>
@@ -2683,60 +2689,7 @@ QPushButton:pressed {
    </item>
    <item row="3" column="0" colspan="3">
     <layout class="QGridLayout" name="gridLayout_7">
-     <item row="1" column="0" rowspan="5">
-      <widget class="QTextEdit" name="feedback">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QTextEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="placeholderText">
-        <string>Текст отзыва</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" rowspan="2" colspan="2">
-      <widget class="QLabel" name="label_31">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Дата / время приема</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Отзыв клиента</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
+     <item row="4" column="3">
       <widget class="QPushButton" name="saveUpdatedInfo">
        <property name="enabled">
         <bool>false</bool>
@@ -2793,7 +2746,60 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="3" column="1" colspan="2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Отзыв клиента</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="3">
+      <widget class="QLabel" name="label_31">
+       <property name="font">
+        <font>
+         <pointsize>9</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Дата / время приема</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" rowspan="4">
+      <widget class="QTextEdit" name="feedback">
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QTextEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string>Текст отзыва</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" colspan="3">
       <widget class="QLineEdit" name="receptionLine">
        <property name="minimumSize">
         <size>
@@ -2819,18 +2825,56 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="4" column="1" colspan="2">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
+     <item row="4" column="2">
+      <widget class="QPushButton" name="deleteOrderButton">
+       <property name="enabled">
+        <bool>false</bool>
        </property>
-       <property name="sizeHint" stdset="0">
+       <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>40</width>
          <height>40</height>
         </size>
        </property>
-      </spacer>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Удалить заказ</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="images.qrc">
+         <normaloff>:/images/clearList.png</normaloff>:/images/clearList.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -2923,7 +2967,6 @@ QPushButton:pressed {
   <tabstop>clearWasherButton</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
-  <tabstop>receptionLine</tabstop>
   <tabstop>saveUpdatedInfo</tabstop>
  </tabstops>
  <resources>
