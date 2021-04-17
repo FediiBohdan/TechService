@@ -12,12 +12,6 @@ AddOrder::AddOrder(QWidget *parent) :
 
     QDialog::showMaximized();
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
-    ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    ordersHistoryDB.open();
-
     connect(ui->openMapButton, &QAbstractButton::clicked, this, &AddOrder::openMap);
     connect(ui->availableSparePartsTable, &QAbstractItemView::clicked, this, &AddOrder::updateUsedSparePartsListTable);
     connect(ui->usedSparePartsTableView, &QAbstractItemView::clicked, this, &AddOrder::removeUsedSparePartsTable);
@@ -125,9 +119,9 @@ void AddOrder::on_addSparePartsButton_clicked()
     if (error)
         return;
 
-    QSqlQuery queryOrders(ordersHistoryDB);
+    QSqlQuery queryOrders(ordersHistoryTable);
 
-    queryOrders.prepare("INSERT INTO OrdersHistory (client, contacts, auto_brand) VALUES(?, ?, ?)");
+    queryOrders.prepare("INSERT INTO orders_history (client, contacts, auto_brand) VALUES(?, ?, ?)");
     queryOrders.addBindValue(ui->clientLine->text());
     queryOrders.addBindValue(ui->contactLine->text());
     queryOrders.addBindValue(ui->brandLine->text());
@@ -146,7 +140,7 @@ void AddOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_spare_part, spare_part_name, quantity_in_stock, auto_compatibility, original, price FROM SparePartsCatalogue ";
+    QString queryString = "SELECT id_spare_part, spare_part_name, quantity_in_stock, auto_compatibility, original, price FROM spare_parts_catalogue ";
 
     QString searchString;
 
@@ -181,7 +175,7 @@ void AddOrder::loadUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM OrderSpareParts "
+    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM order_spare_parts "
                           "WHERE id_order = '" + s_orderId + "'";
 
     queryGetUsedSparePartsModel->setQuery(queryString);
@@ -209,15 +203,15 @@ void AddOrder::loadUsedSparePartsTable()
 // choosing needed spare parts for the order + amount check
 void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
 {
-    QSqlQuery queryUsedSparePartsModel(sparePartsDB);
+    QSqlQuery queryUsedSparePartsModel(sparePartsTableDB);
 
     QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString sparePartName = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
     QString sparePartPrice = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 5), Qt::EditRole).toString();
 
-    QSqlQuery queryCheckAmount(sparePartsDB);
+    QSqlQuery queryCheckAmount(sparePartsTableDB);
 
-    queryCheckAmount.prepare("SELECT quantity_in_stock FROM SparePartsCatalogue WHERE (id_spare_part = '" + sparePartId + "' AND quantity_in_stock = 0)");
+    queryCheckAmount.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE (id_spare_part = '" + sparePartId + "' AND quantity_in_stock = 0)");
     queryCheckAmount.exec();
 
     if (queryCheckAmount.first() == 1)
@@ -227,7 +221,7 @@ void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     }
 
     // insertion spare parts by order to OrderSpareParts table
-    queryUsedSparePartsModel.prepare("INSERT INTO OrderSpareParts (id_order, id_spare_part, order_spare_part, order_spare_part_price) VALUES(?, ?, ?, ?)");
+    queryUsedSparePartsModel.prepare("INSERT INTO order_spare_parts (id_order, id_spare_part, order_spare_part, order_spare_part_price) VALUES(?, ?, ?, ?)");
     queryUsedSparePartsModel.addBindValue(orderId);
     queryUsedSparePartsModel.addBindValue(sparePartId);
     queryUsedSparePartsModel.addBindValue(sparePartName);
@@ -237,9 +231,9 @@ void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     // spare part is removed from available spare parts list
     int sparePartsAmount = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 2), Qt::EditRole).toInt();
 
-    QSqlQuery querySpareParts(sparePartsDB);
+    QSqlQuery querySpareParts(sparePartsTableDB);
 
-    querySpareParts.prepare("UPDATE SparePartsCatalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
+    querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount - 1);
     querySpareParts.addBindValue(sparePartId);
     querySpareParts.exec();
@@ -254,26 +248,26 @@ void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
     QString orderSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString returnSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 2), Qt::EditRole).toString();
 
-    QSqlQuery queryRemoveUsedSparePartsModel(sparePartsDB);
+    QSqlQuery queryRemoveUsedSparePartsModel(sparePartsTableDB);
 
-    queryRemoveUsedSparePartsModel.prepare("DELETE FROM OrderSpareParts WHERE id_order_spare_part = ?");
+    queryRemoveUsedSparePartsModel.prepare("DELETE FROM order_spare_parts WHERE id_order_spare_part = ?");
     queryRemoveUsedSparePartsModel.addBindValue(orderSparePartId);
     queryRemoveUsedSparePartsModel.exec();
 
     // spare part is returned to available spare parts list
     // firstly check the amount of returning spare part
-    QSqlQuery query(sparePartsDB);
+    QSqlQuery query(sparePartsTableDB);
 
-    query.prepare("SELECT quantity_in_stock FROM SparePartsCatalogue WHERE id_spare_part = " + returnSparePartId);
+    query.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE id_spare_part = " + returnSparePartId);
     query.exec();
     query.next();
 
     int sparePartsAmount = query.value(0).toInt();
 
     // then increase its amount in available spare parts
-    QSqlQuery querySpareParts(sparePartsDB);
+    QSqlQuery querySpareParts(sparePartsTableDB);
 
-    querySpareParts.prepare("UPDATE SparePartsCatalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
+    querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount + 1);
     querySpareParts.addBindValue(returnSparePartId);
     querySpareParts.exec();
@@ -306,7 +300,7 @@ void AddOrder::loadEmployeesTable()
 {
     queryEmployeesModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_employee, employee_FML_name, employee_position, hour_payment FROM EmployeesTable WHERE service_address = '" + ui->serviceComboBox->currentText() + "'";
+    QString queryString = "SELECT id_employee, employee_fml_name, employee_position, hour_payment FROM employees_table WHERE service_address = '" + ui->serviceComboBox->currentText() + "'";
 
     queryEmployeesModel->setQuery(queryString);
 
@@ -389,7 +383,7 @@ void AddOrder::setDateAndTime()
 void AddOrder::on_createOrderButton_clicked()
 {
     // Insertion into order table
-    QSqlQuery queryOrders(ordersHistoryDB);
+    QSqlQuery queryOrders(ordersHistoryTable);
 
     QString client = ui->clientLine->text();
     QString date = ui->dateLine->text();
@@ -431,8 +425,8 @@ void AddOrder::on_createOrderButton_clicked()
 
     contacts.replace(", ", "\n");
 
-    queryOrders.prepare("UPDATE OrdersHistory SET client_type = ?, client = ?, creation_date = ?, creation_time = ?, reception_date = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, "
-                "mileage = ?, manufacture_year = ?, VIN_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, order_status = ?, works_list = ?, feedback = ? "
+    queryOrders.prepare("UPDATE orders_history SET client_type = ?, client = ?, creation_date = ?, creation_time = ?, reception_date = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, "
+                "mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, order_status = ?, works_list = ?, feedback = ? "
                 "WHERE id_order = ?");
 
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
@@ -459,11 +453,11 @@ void AddOrder::on_createOrderButton_clicked()
     //int id = queryOrders.lastInsertId().toInt();
 
     // Simultaneous insertion into detailed order table
-    QSqlQuery queryOrderDetail(orderDetailDB);
+    QSqlQuery queryOrderDetail(orderDetailTable);
 
     if (!ui->mechanicLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(mechanicId);
         queryOrderDetail.addBindValue(ui->mechanicLine->text());
@@ -475,7 +469,7 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->mechanic2Line->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(mechanic2Id);
         queryOrderDetail.addBindValue(ui->mechanic2Line->text());
@@ -487,7 +481,7 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->diagnosticianLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(diagnosticianId);
         queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
@@ -499,7 +493,7 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->electronicsLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(electronicId);
         queryOrderDetail.addBindValue(ui->electronicsLine->text());
@@ -511,7 +505,7 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->locksmithLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(locksmithId);
         queryOrderDetail.addBindValue(ui->locksmithLine->text());
@@ -523,7 +517,7 @@ void AddOrder::on_createOrderButton_clicked()
 
     if (!ui->washerLine->text().isEmpty())
     {
-        queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
+        queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_work_hours, employee_position) VALUES(?, ?, ?, ?, ?, ?)");
         queryOrderDetail.addBindValue(orderId);
         queryOrderDetail.addBindValue(washerId);
         queryOrderDetail.addBindValue(ui->washerLine->text());
@@ -534,8 +528,8 @@ void AddOrder::on_createOrderButton_clicked()
     }
 
     // Simultaneous insertion into client table
-    QSqlQuery query(clientsDB);
-    query.prepare("SELECT EXISTS (SELECT client_FML_name, contacts FROM ClientsTable WHERE client_FML_name = '" + ui->clientLine->text() + "' AND contacts LIKE '%" + ui->contactLine->text() + "%')");
+    QSqlQuery query(clientsTable);
+    query.prepare("SELECT EXISTS (SELECT client_fml_name, contacts FROM clients_table WHERE client_fml_name = '" + ui->clientLine->text() + "' AND contacts LIKE '%" + ui->contactLine->text() + "%')");
     query.exec();
     query.next();
 
@@ -543,10 +537,10 @@ void AddOrder::on_createOrderButton_clicked()
         ui->techLabel->setHidden(true);
     else if (query.value(0) == 0)
     {
-        QSqlQuery queryClients(clientsDB);
+        QSqlQuery queryClients(clientsTable);
 
-        queryClients.prepare("INSERT INTO ClientsTable (id_order, client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, "
-            "manufacture_year, VIN_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        queryClients.prepare("INSERT INTO clients_table (id_order, client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, "
+            "manufacture_year, vin_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         queryClients.addBindValue(orderId);
         queryClients.addBindValue(ui->clientTypeComboBox->currentText());
@@ -602,10 +596,10 @@ void AddOrder::on_createOrderButton_clicked()
         washerOverAllPayment = washerHourPayment * ui->washerHoursLine->text().toFloat();
 
     // calculate spare parts cost
-    QSqlQuery querySparePartsCost(sparePartsDB);
+    QSqlQuery querySparePartsCost(sparePartsTableDB);
 
     int sparePartsCost = 0;
-    querySparePartsCost.prepare("SELECT SUM(order_spare_part_price) FROM OrderSpareParts WHERE id_order = " + s_orderId);
+    querySparePartsCost.prepare("SELECT SUM(order_spare_part_price) FROM order_spare_parts WHERE id_order = " + s_orderId);
     querySparePartsCost.exec();
     if (querySparePartsCost.next())
             sparePartsCost = querySparePartsCost.value(0).toInt();
@@ -636,7 +630,7 @@ void AddOrder::on_createOrderButton_clicked()
     // cost update
     QString orderTotalDiscountCostDB = QString("%1").arg(orderTotalDiscountCost, 0, 'f', 2);
 
-    queryOrders.prepare("UPDATE OrdersHistory SET price = ? WHERE id_order = ?");
+    queryOrders.prepare("UPDATE orders_history SET price = ? WHERE id_order = ?");
     queryOrders.addBindValue(orderTotalDiscountCostDB);
     queryOrders.addBindValue(orderId);
     queryOrders.exec();

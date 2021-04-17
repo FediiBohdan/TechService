@@ -1,44 +1,43 @@
-#ifndef ANALYTICSDIALOG_H
-#define ANALYTICSDIALOG_H
+//#ifndef ANALYTICSDIALOG_H
+//#define ANALYTICSDIALOG_H
 
-// Widget used to display charts
-#include <QtCharts/QChartView>
-// Adds categories to the charts axes
-#include <QtCharts/QBarCategoryAxis>
-// Used to create a line chart
-#include <QtCharts/QLineSeries>
-// Used to change names on axis
-#include <QtCharts/QCategoryAxis>
+//// Widget used to display charts
+//#include <QtCharts/QChartView>
+//// Adds categories to the charts axes
+//#include <QtCharts/QBarCategoryAxis>
+//// Used to create a line chart
+//#include <QtCharts/QLineSeries>
+//// Used to change names on axis
+//#include <QtCharts/QCategoryAxis>
 
-#include <QDialog>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QDir>
+//#include <QDialog>
+//#include <QSqlDatabase>
+//#include <QSqlQueryModel>
 
-namespace Ui {
-class AnalyticsDialog;
-}
+//namespace Ui {
+//class AnalyticsDialog;
+//}
 
-class AnalyticsDialog : public QDialog
-{
-    Q_OBJECT
+//class AnalyticsDialog : public QDialog
+//{
+//    Q_OBJECT
 
-public:
-    explicit AnalyticsDialog(QWidget *parent = nullptr);
-    ~AnalyticsDialog();
+//public:
+//    explicit AnalyticsDialog(QWidget *parent = nullptr);
+//    ~AnalyticsDialog();
 
-private:
-    Ui::AnalyticsDialog *ui;
+//private:
+//    Ui::AnalyticsDialog *ui;
 
 
-    QSqlDatabase analiticsDB;
+//    QSqlDatabase analiticsDB;
 
-private slots:
-    void employeeWorksChart();
-    void profitChart();
-    void fulfilledOrdersChart();
-    void mostPopularAutosChart();
-    void testChart();
-};
+//private slots:
+//    void employeeWorksChart();
+//    void profitChart();
+//    void fulfilledOrdersChart();
+//    void mostPopularAutosChart();
+//    void testChart();
+//};
 
-#endif // ANALYTICSDIALOG_H
+//#endif // ANALYTICSDIALOG_H

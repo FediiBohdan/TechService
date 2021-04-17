@@ -35,12 +35,6 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
     timer->start(1000);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    listTasksDB = QSqlDatabase::addDatabase("QSQLITE");
-    listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    listTasksDB.open();
-
     connect(ui->updateButton, &QAbstractButton::clicked, this, &StartWindow::updateTasksList);
 
     loadTasksList();
@@ -92,7 +86,7 @@ void StartWindow::loadTasksList()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_to_do_list, content FROM TasksTable";
+    QString queryString = "SELECT id_to_do_list, content FROM tasks_table";
 
     queryModel->setQuery(queryString, listTasksTable);
 
@@ -137,7 +131,7 @@ QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)
 
     queryModelCheckBox = new QSqlQueryModel(this);
 
-    QString queryStringCheckBox = "SELECT is_fulfilled FROM TasksTable";
+    QString queryStringCheckBox = "SELECT is_fulfilled FROM tasks_table";
 
     queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
 
@@ -167,13 +161,13 @@ void StartWindow::checkBoxStateChanged()
     QString id = sender()->property("id").value<QString>();
     QCheckBox *checkBox = sender()->property("checkBox").value<QCheckBox*>();
 
-    QSqlQuery query(listTasksDB);
+    QSqlQuery query(listTasksTable);
 
     if (!checkBox->isChecked())
     {
         checkBox->setChecked(true);
 
-        query.prepare("UPDATE TasksTable SET is_fulfilled = 1 WHERE id_to_do_list = ?");
+        query.prepare("UPDATE tasks_table SET is_fulfilled = 1 WHERE id_to_do_list = ?");
         query.addBindValue(id);
         query.exec();
     }
@@ -181,7 +175,7 @@ void StartWindow::checkBoxStateChanged()
     {
         checkBox->setChecked(false);
 
-        query.prepare("UPDATE TasksTable SET is_fulfilled = 0 WHERE id_to_do_list = ?");
+        query.prepare("UPDATE tasks_table SET is_fulfilled = 0 WHERE id_to_do_list = ?");
         query.addBindValue(id);
         query.exec();
     }

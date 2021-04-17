@@ -3,16 +3,13 @@
 
 #include <ListSpareParts.h>
 
-#include <QDialog>
 #include <QDebug>
-#include <QDate>
-#include <QTime>
+#include <QDialog>
+#include <QPointer>
+#include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDir>
 
 class ListSparePart;
 
@@ -36,8 +33,7 @@ private slots:
 private:
     Ui::AddSparePart *ui;
 
-    QSqlDatabase sparePart = QSqlDatabase::database("SparePartsCatalogue");
-    QSqlDatabase sparePartsDB;
+    QSqlDatabase sparePartsTable;
     QPointer<QSqlQueryModel> queryModel;
 
     ListSparePart *listSpareParts;

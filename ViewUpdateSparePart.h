@@ -5,8 +5,6 @@
 
 #include <QDialog>
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QMessageBox>
 
 namespace Ui {
 class ViewUpdateSparePart;
@@ -35,7 +33,7 @@ private slots:
 private:
     Ui::ViewUpdateSparePart *ui;
 
-    QSqlDatabase sparePartsDB;
+    QSqlDatabase sparePartsTable;
 
     QString sparePartId;
 

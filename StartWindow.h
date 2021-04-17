@@ -1,33 +1,29 @@
 #ifndef STARTWINDOW_H
 #define STARTWINDOW_H
 
-#include "ListSpareParts.h"
 #include "AddOrder.h"
-#include "ListEmployees.h"
-#include "SettingsWindow.h"
+#include "ListTasks.h"
 #include "ListOrders.h"
 #include "ListClients.h"
-#include "ListTasks.h"
+#include "ListEmployees.h"
+#include "SettingsWindow.h"
+#include "ListSpareParts.h"
 
-#include <QDialog>
-#include <QDesktopServices>
 #include <QUrl>
 #include <QTime>
 #include <QDate>
 #include <QTimer>
 #include <QDebug>
-#include <QElapsedTimer>
-#include <QApplication>
-#include <QTranslator>
-#include <QListView>
-#include <QStringListModel>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
+#include <QDialog>
 #include <QPointer>
 #include <QSqlQuery>
 #include <QCheckBox>
-#include <QHBoxLayout>
-#include <QDir>
+#include <QTranslator>
+#include <QSqlDatabase>
+#include <QApplication>
+#include <QElapsedTimer>
+#include <QSqlQueryModel>
+#include <QDesktopServices>
 
 class ListSparePart;
 class AddOrder;
@@ -52,17 +48,15 @@ public:
 private:
     Ui::StartWindow *ui;
 
-    ListSparePart *sparePartsTable;
     AddOrder *addOrder;
-    ListEmployees *listEmployees;
-    SettingsWindow *settingsWindow;
+    ListTasks *listTasks;
     ListOrders *listOrders;
     ListClients *listClients;
-    ListTasks *listTasks;
+    ListEmployees *listEmployees;
+    SettingsWindow *settingsWindow;
+    ListSparePart *sparePartsTable;
 
-    QSqlDatabase listTasksTable = QSqlDatabase::database("TasksTable");
-
-    QSqlDatabase listTasksDB;
+    QSqlDatabase listTasksTable;
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryModelCheckBox;
 
@@ -79,22 +73,22 @@ public slots:
 
 private slots:
     void showTime();
-    void loadTasksList();
-    void checkBoxStateChanged();
+    void loadTasksList();    
     void updateTasksList();
+    void checkBoxStateChanged();
 
-    void on_catalogueButton_clicked();
-    void on_telegramButton_clicked();
-    void on_instagramButton_clicked();
-    void on_facebookButton_clicked();
+    void on_staffButton_clicked();
     void on_viberButton_clicked();
-    void on_youtubeButton_clicked();
-    void on_orderFormationButton_clicked();
     void on_clientsButton_clicked();
     void on_desktopButton_clicked();
-    void on_staffButton_clicked();
+    void on_youtubeButton_clicked();
     void on_todolistButton_clicked();
     void on_settingsButton_clicked();
+    void on_telegramButton_clicked();
+    void on_facebookButton_clicked();
+    void on_catalogueButton_clicked();
+    void on_instagramButton_clicked();
+    void on_orderFormationButton_clicked();
 };
 
 #endif // STARTWINDOW_H

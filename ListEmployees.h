@@ -4,17 +4,15 @@
 #include "AddEmployee.h"
 #include "ViewUpdateEmployee.h"
 
-#include <QDialog>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QPointer>
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QDebug>
-#include <QLabel>
 #include <QFile>
+#include <QLabel>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
 #include <QTextStream>
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QSqlQueryModel>
 
 class ViewUpdateEmployee;
 class AddEmployee;
@@ -27,6 +25,10 @@ class ListEmployees : public QDialog
 {
     Q_OBJECT
 
+public:
+    explicit ListEmployees(QWidget *parent = nullptr);
+    ~ListEmployees();
+
 private slots:
     void loadTable();
     void saveAsCSV(QString fileName);
@@ -36,17 +38,10 @@ private slots:
     void on_updateButton_clicked();
     void on_csvExportButton_clicked();
 
-public:
-    explicit ListEmployees(QWidget *parent = nullptr);
-    ~ListEmployees();
-
 private:
     Ui::ListEmployees *ui;
 
-    QSqlDatabase employeesTable = QSqlDatabase::database("EmployeesTable");
-    QSqlDatabase employeesDB;
     QPointer<QSqlQueryModel> queryModel;
-    QPointer<QSqlQueryModel> queryModelLabel;
 
     AddEmployee *addEmployee;
     ViewUpdateEmployee *viewUpdateEmployees;

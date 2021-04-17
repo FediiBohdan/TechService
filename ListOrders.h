@@ -4,17 +4,15 @@
 #include "AddOrder.h"
 #include "ViewUpdateOrder.h"
 
-#include <QDialog>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QPointer>
-#include <QStandardItemModel>
-#include <QStandardItem>
-#include <QDebug>
-#include <QCheckBox>
 #include <QFile>
+#include <QLabel>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
 #include <QTextStream>
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QSqlQueryModel>
 
 class AddOrder;
 class ViewUpdateOrder;
@@ -45,9 +43,7 @@ private slots:
 private:
     Ui::ListOrders *ui;
 
-    QSqlDatabase ordersHistoryTable = QSqlDatabase::database("OrdersHistory");
-
-    QSqlDatabase ordersHistoryDB;
+    QSqlDatabase ordersHistoryTable;
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryModelCheckBox;
 

@@ -31,10 +31,10 @@ void ViewUpdateEmployee::setValues(const QString &id)
 {
     employeeId = id;
 
-    QSqlQuery query(employeesDB);
+    QSqlQuery query(employeesTable);
 
-    query.prepare("SELECT DISTINCT employee_FML_name, employee_position, hour_payment, service_address "
-        "FROM EmployeesTable WHERE id_employee = " + employeeId);
+    query.prepare("SELECT DISTINCT employee_fml_name, employee_position, hour_payment, service_address "
+        "FROM employees_table WHERE id_employee = " + employeeId);
 
     query.exec();
     query.next();
@@ -47,20 +47,20 @@ void ViewUpdateEmployee::setValues(const QString &id)
 
 void ViewUpdateEmployee::on_saveUpdatedInfo_clicked()
 {
-    QSqlQuery query(employeesDB);
+    QSqlQuery query(employeesTable);
 
     QString employeeFMLname = ui->workerFMLname->text();
     QString employeePosition = ui->workerPosition->text();
     QString hourlyPayment = ui->hourlyPayment->text();
     QString serviceNumber = ui->serviceNumber->text();
 
-    if (employeeFMLname.isEmpty() || employeePosition.isEmpty() || hourlyPayment.isEmpty() || serviceNumber.isEmpty())
+    if ((employeeFMLname.isEmpty()) || (employeePosition.isEmpty()) || (hourlyPayment.isEmpty()) || (serviceNumber.isEmpty()))
     {
         ui->errorLabel->show();
         return;
     }
 
-    query.prepare("UPDATE EmployeesTable SET employee_FML_name = ?, employee_position = ?, hour_payment = ?, service_address = ? WHERE id_employee = ?");
+    query.prepare("UPDATE employees_table SET employee_fml_name = ?, employee_position = ?, hour_payment = ?, service_address = ? WHERE id_employee = ?");
 
     query.addBindValue(employeeFMLname);
     query.addBindValue(employeePosition);

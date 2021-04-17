@@ -4,15 +4,16 @@
 #include "AddTask.h"
 #include "ViewUpdateTask.h"
 
-#include <QDialog>
-#include <QMessageBox>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDebug>
-#include <QCheckBox>
+#include <QFile>
 #include <QLabel>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
+#include <QCheckBox>
+#include <QTextStream>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QSqlQueryModel>
 
 class AddTask;
 class ViewUpdateTask;
@@ -35,18 +36,16 @@ public slots:
 private:
     Ui::ListTasks *ui;
 
-    QSqlDatabase listTasksTable = QSqlDatabase::database("TasksTable");
-
-    QSqlDatabase listTasksDB;
-    QPointer<QSqlQueryModel> queryModel;
-    QPointer<QSqlQueryModel> queryModelCheckBox;
+    QSqlDatabase listTasksTable;
+    QPointer<QSqlQueryModel> queryModel;    
     QPointer<QSqlQueryModel> queryModelLabel;
+    QPointer<QSqlQueryModel> queryModelCheckBox;
 
     AddTask *addTask;
     ViewUpdateTask *viewUpdateTask;
 
-    QWidget *addCheckBoxCompleted(int rowIndex);
     QWidget *addWidgetContent(int rowIndex);
+    QWidget *addCheckBoxCompleted(int rowIndex);
 
 private slots:
     void loadTable();

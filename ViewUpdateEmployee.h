@@ -35,7 +35,7 @@ private slots:
 private:
     Ui::ViewUpdateEmployee *ui;
 
-    QSqlDatabase employeesDB;
+    QSqlDatabase employeesTable;
 
     QString employeeId;
 

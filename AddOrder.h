@@ -5,18 +5,17 @@
 #include "ListSpareParts.h"
 #include "ListOrders.h"
 
-#include <QDialog>
-#include <QQmlApplicationEngine>
-#include <QDebug>
 #include <QDate>
 #include <QTime>
+#include <QLabel>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
+#include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDir>
-#include <QLabel>
+#include <QQmlApplicationEngine>
 
 class StartWindow;
 class ListSparePart;
@@ -43,25 +42,20 @@ private:
 
     ListSparePart *sparePartsTable;
 
-    QSqlDatabase listOrdersTable = QSqlDatabase::database("OrdersHistory");
-    QSqlDatabase listSparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
-    QSqlDatabase orderDetailTable = QSqlDatabase::database("OrderDetailTable");
-
-    QSqlDatabase clientsDB;
-    QSqlDatabase sparePartsDB;
-    QSqlDatabase orderDetailDB;
-    QSqlDatabase ordersHistoryDB;
-    QSqlDatabase ordersHistoryDB1;
+    QSqlDatabase clientsTable;
+    QSqlDatabase orderDetailTable;
+    QSqlDatabase sparePartsTableDB;
+    QSqlDatabase ordersHistoryTable;
 
     QPointer<QSqlQueryModel> queryModel;
-    QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
-    QPointer<QSqlQueryModel> queryGetUsedSparePartsModel;
-    QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
-    QPointer<QSqlQueryModel> queryUsedSparePartsModel;
-    QPointer<QSqlQueryModel> queryRemoveUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
     QPointer<QSqlQueryModel> queryEmployeesHoursModel;
+    QPointer<QSqlQueryModel> queryUsedSparePartsModel;
+    QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
+    QPointer<QSqlQueryModel> queryGetUsedSparePartsModel;
+    QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
+    QPointer<QSqlQueryModel> queryRemoveUsedSparePartsModel;
 
     ListOrders *listOrders;
 
@@ -90,16 +84,16 @@ private:
 private slots:
     void openMap();
     void setDateAndTime();
-    void loadSparePartsTable();    
     void loadEmployeesTable();
-    void loadUsedSparePartsTable();
-    void updateSparePartsTable();
+    void loadSparePartsTable();    
     void updateEmployeesTable();
+    void updateSparePartsTable();    
+    void loadUsedSparePartsTable();
     void updateUsedSparePartsTable();
-    void updateAvailableSparePartsTable();
-    void updateUsedSparePartsListTable(const QModelIndex &index);
-    void removeUsedSparePartsTable(const QModelIndex &index);
+    void updateAvailableSparePartsTable();    
     void setOrderEmployees(const QModelIndex &index);
+    void removeUsedSparePartsTable(const QModelIndex &index);
+    void updateUsedSparePartsListTable(const QModelIndex &index);
 
     void closeEvent(QCloseEvent *);
 

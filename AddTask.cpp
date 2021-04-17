@@ -7,12 +7,6 @@ AddTask::AddTask(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    listTasksDB = QSqlDatabase::addDatabase("QSQLITE");
-    listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    listTasksDB.open();
-
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
@@ -45,13 +39,13 @@ void AddTask::setDateAndTime()
 
 void AddTask::on_createTaskButton_clicked()
 {
-    QSqlQuery queryTasks(listTasksDB);
+    QSqlQuery queryTasks(listTasksTable);
 
     QString time = ui->timeLine->text();
     QString date = ui->dateLine->text();
     QString content = ui->contentLine->toPlainText();
 
-    if (time.isEmpty() || date.isEmpty() || content.isEmpty())
+    if ((time.isEmpty()) || (date.isEmpty()) || (content.isEmpty()))
     {
         ui->errorLabel->setStyleSheet("color: red");
         return;
@@ -61,7 +55,7 @@ void AddTask::on_createTaskButton_clicked()
 
     QString isFulfilled = "0";
 
-    queryTasks.prepare("INSERT INTO TasksTable (time, date, content, is_fulfilled) "
+    queryTasks.prepare("INSERT INTO tasks_table (time, date, content, is_fulfilled) "
         "VALUES(?, ?, ?, ?)");
 
     queryTasks.addBindValue(time);

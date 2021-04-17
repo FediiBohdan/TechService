@@ -27,14 +27,14 @@ void ViewUpdateSparePart::closeEvent(QCloseEvent *)
     listSpareParts->setAttribute(Qt::WA_DeleteOnClose);
 }
 
-void ViewUpdateSparePart::setValues(const QString& id)
+void ViewUpdateSparePart::setValues(const QString &id)
 {
     sparePartId = id;
 
-    QSqlQuery query(sparePartsDB);
+    QSqlQuery query(sparePartsTable);
 
     query.prepare("SELECT DISTINCT spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price "
-        "FROM SparePartsCatalogue WHERE id_spare_part = " + sparePartId);
+        "FROM spare_parts_catalogue WHERE id_spare_part = " + sparePartId);
 
     query.exec();
     query.next();
@@ -51,7 +51,7 @@ void ViewUpdateSparePart::setValues(const QString& id)
 
 void ViewUpdateSparePart::on_saveUpdatedInfo_clicked()
 {
-    QSqlQuery querySpareParts(sparePartsDB);
+    QSqlQuery querySpareParts(sparePartsTable);
 
     QString sparePartName = ui->sparePartNameLine->text();
     QString manufacturer = ui->manufacturerLine->text();
@@ -60,8 +60,8 @@ void ViewUpdateSparePart::on_saveUpdatedInfo_clicked()
     QString isOriginal = ui->isOriginalLine->text();
     QString price = ui->priceLine->text();
 
-    if (sparePartName.isEmpty() || manufacturer.isEmpty() || quantityInStock.isEmpty() || autoCompatibility.isEmpty() ||
-            isOriginal.isEmpty() || price.isEmpty())
+    if ((sparePartName.isEmpty()) || (manufacturer.isEmpty()) || (quantityInStock.isEmpty()) || (autoCompatibility.isEmpty()) ||
+            (isOriginal.isEmpty()) || (price.isEmpty()))
     {
         ui->errorLabel->show();
         return;
@@ -69,7 +69,7 @@ void ViewUpdateSparePart::on_saveUpdatedInfo_clicked()
 
     autoCompatibility.replace(", ", "\n");
 
-    querySpareParts.prepare("UPDATE SparePartsCatalogue SET spare_part_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
+    querySpareParts.prepare("UPDATE spare_parts_catalogue SET spare_part_name = ?, manufacturer = ?, quantity_in_stock = ?, auto_compatibility = ?, original = ?, price = ? "
         "WHERE id_spare_part = ?");
 
     querySpareParts.addBindValue(sparePartName);

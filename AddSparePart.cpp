@@ -10,12 +10,6 @@ AddSparePart::AddSparePart(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    sparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
-    sparePartsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    sparePartsDB.open();
-
     ui->errorLabel->hide();
 }
 
@@ -35,7 +29,7 @@ void AddSparePart::closeEvent(QCloseEvent *)
 
 void AddSparePart::on_createSparePartButton_clicked()
 {
-    QSqlQuery queryOrders(sparePartsDB);
+    QSqlQuery queryOrders(sparePartsTable);
 
     QString sparePartName = ui->sparePartNameLine->text();
     QString manufacturer = ui->manufacturerLine->text();
@@ -44,8 +38,8 @@ void AddSparePart::on_createSparePartButton_clicked()
     QString isOriginal = ui->isOriginalLine->text();
     QString price = ui->priceLine->text();
 
-    if (sparePartName.isEmpty() || manufacturer.isEmpty() || quantityInStock.isEmpty() || autoCompatibility.isEmpty() ||
-            isOriginal.isEmpty() || price.isEmpty())
+    if ((sparePartName.isEmpty()) || (manufacturer.isEmpty()) || (quantityInStock.isEmpty()) || (autoCompatibility.isEmpty()) ||
+            (isOriginal.isEmpty()) || (price.isEmpty()))
     {
         ui->errorLabel->show();
         return;
@@ -53,7 +47,7 @@ void AddSparePart::on_createSparePartButton_clicked()
 
     autoCompatibility.replace(", ", "\n");
 
-    queryOrders.prepare("INSERT INTO SparePartsCatalogue (spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
+    queryOrders.prepare("INSERT INTO spare_parts_catalogue (spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
         "VALUES(?, ?, ?, ?, ?, ?)");
 
     queryOrders.addBindValue(sparePartName);

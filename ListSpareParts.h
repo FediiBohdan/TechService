@@ -5,16 +5,15 @@
 #include "AddSparePart.h"
 #include "ViewUpdateSparePart.h"
 
-#include <QDialog>
-#include <QMessageBox>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDebug>
 #include <QFile>
+#include <QLabel>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
 #include <QTextStream>
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QSqlQueryModel>
 
 class StartWindow;
 class AddSparePart;
@@ -35,12 +34,10 @@ public:
 private:
     Ui::ListSparePart *ui;
 
-    QSqlDatabase listSpareParts = QSqlDatabase::database("SparePartsCatalogue");
-    QSqlDatabase listSparePartsDB;
     QPointer<QSqlQueryModel> queryModel;
 
-    AddSparePart *addSparePart;
     StartWindow *startWindow;
+    AddSparePart *addSparePart;
     ViewUpdateSparePart *viewUpdateSparePart;
 
     QString autoModel;

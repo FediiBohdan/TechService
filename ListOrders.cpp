@@ -17,12 +17,6 @@ ListOrders::ListOrders(QWidget *parent) :
 
     QDialog::showMaximized();
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    ordersHistoryDB = QSqlDatabase::addDatabase("QSQLITE");
-    ordersHistoryDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    ordersHistoryDB.open();
-
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListOrders::showOrderInfo);
 
     searchFlag = false;
@@ -41,7 +35,7 @@ void ListOrders::loadTable()
 
     QString queryString;
     queryString = "SELECT id_order, order_status, creation_date, reception_date, client_type, client, contacts, auto_brand, auto_model, mileage, "
-        "auto_license_plate, manufacture_year, VIN_number, service_address, price FROM OrdersHistory ";
+        "auto_license_plate, manufacture_year, vin_number, service_address, price FROM orders_history ";
 
     QString searchString;
 
@@ -92,9 +86,9 @@ QWidget* ListOrders::addCheckBoxCompleted(int rowIndex)
 
     queryModelCheckBox = new QSqlQueryModel(this);
 
-    QString queryStringCheckBox = "SELECT is_ready FROM OrdersHistory";
+    QString queryStringCheckBox = "SELECT is_ready FROM orders_history";
 
-    queryModelCheckBox->setQuery(queryStringCheckBox, ordersHistoryTable);
+    queryModelCheckBox->setQuery(queryStringCheckBox);
 
     QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(rowIndex, 0), Qt::EditRole).toString();
 
@@ -125,7 +119,7 @@ void ListOrders::checkBoxStateChanged()
     {
         checkBox->setChecked(true);
 
-        query.prepare("UPDATE OrdersHistory SET is_ready = 1 WHERE id_order = ?");
+        query.prepare("UPDATE orders_history SET is_ready = 1 WHERE id_order = ?");
         query.addBindValue(id);
         query.exec();
     }
@@ -133,7 +127,7 @@ void ListOrders::checkBoxStateChanged()
     {
         checkBox->setChecked(false);
 
-        query.prepare("UPDATE OrdersHistory SET is_ready = 0 WHERE id_order = ?");
+        query.prepare("UPDATE orders_history SET is_ready = 0 WHERE id_order = ?");
         query.addBindValue(id);
         query.exec();
     }

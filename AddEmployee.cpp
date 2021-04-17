@@ -10,12 +10,6 @@ AddEmployee::AddEmployee(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    employeeDB = QSqlDatabase::addDatabase("QSQLITE");
-    employeeDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    employeeDB.open();
-
     ui->serviceAddress->addItems(QStringList() << "Среднефонтанская, 30А (Приморский р-н)" << "Платонова, 56 (Малиновский р-н)" << "Архитекторская, 28 (Киевский р-н)");
 
     ui->errorLabel->hide();
@@ -37,7 +31,7 @@ void AddEmployee::closeEvent(QCloseEvent *)
 
 void AddEmployee::on_saveWorkerButton_clicked()
 {
-    QSqlQuery query(employeeDB);
+    QSqlQuery query(employeeTable);
 
     QString employeeFMLname = ui->workerFMLname->text();
     QString employeePosition = ui->workerPosition->text();
@@ -50,7 +44,7 @@ void AddEmployee::on_saveWorkerButton_clicked()
         return;
     }
 
-    query.prepare("INSERT INTO EmployeesTable (employee_FML_name, employee_position, hour_payment, service_address)"
+    query.prepare("INSERT INTO employees_table (employee_fml_name, employee_position, hour_payment, service_address)"
         "VALUES(?, ?, ?, ?)");
 
     query.addBindValue(employeeFMLname);

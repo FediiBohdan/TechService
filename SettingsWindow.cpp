@@ -18,6 +18,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     if (registerLanguage.isEmpty())
        ui->languageSelection->setCurrentIndex(0);
 
+    QByteArray byte_password = global::getSettingsValue("passwordDB", "settings").toByteArray();
+    QString password = QString(QByteArray::fromBase64(byte_password));
+    ui->hostName->setText(global::getSettingsValue("hostName", "settings").toString());
+    ui->dbName->setText(global::getSettingsValue("databaseName", "settings").toString());
+    ui->userName->setText(global::getSettingsValue("userNameDB", "settings").toString());
+    ui->dbPassword->setText(password);
+    //ui->port->setText(global::getSettingsValue("port_1", "settings").toString());
+
     loadSettings();
     setUserInfo();
 }
@@ -93,8 +101,22 @@ void SettingsWindow::saveSettings()
 void SettingsWindow::on_saveSettingsButton_clicked()
 {
     saveUserData();
+    setSettingsDb();
 
-    QDialog::close();
+    if (!m_db.isOpen())
+    {
+        setSettingsDb();
+
+        QMessageBox::information(this, tr("Предупреждение"), tr("Невозможно подключиться к базам данных!"), QMessageBox::Ok);
+
+        QDialog::close();
+    }
+    else if (!m_db.isOpen())
+    {
+        openDb();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("Подключение успешно создано!"), QMessageBox::Ok);
+    }
 
     QMessageBox::information(this, tr("Уведомление"), tr("Настройки успешно сохранены!"), QMessageBox::Ok);
 }
@@ -113,4 +135,30 @@ void SettingsWindow::saveUserData()
     QString userFSname = userFirstName.append(" " + userSecondName);
 
     emit userData(userFSname, userPosition);
+}
+
+void SettingsWindow::setSettingsDb()
+{
+    global::setSettingsValue("hostName", ui->hostName->text(), "settings");
+    global::setSettingsValue("databaseName", ui->dbName->text(), "settings");
+    global::setSettingsValue("userNameDB", ui->userName->text(), "settings");
+    QByteArray password_1;
+    password_1.append(ui->dbPassword->text().toLatin1());
+    global::setSettingsValue("passwordDB", password_1.toBase64(), "settings");
+    //global::setSettingsValue("port_1", ui->port_1->text(), "settings");
+}
+
+void SettingsWindow::setDatabases(const QSqlDatabase& db)
+{
+    m_db = db;
+}
+
+void SettingsWindow::openDb()
+{
+    m_db.setHostName(ui->hostName->text());
+    m_db.setDatabaseName(ui->dbName->text());
+    m_db.setUserName(ui->userName->text());
+    m_db.setPassword(ui->dbPassword->text());
+    m_db.setPort(3306);
+    m_db.open();
 }

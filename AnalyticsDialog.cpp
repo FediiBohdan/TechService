@@ -1,254 +1,248 @@
-#include "AnalyticsDialog.h"
-#include "ui_AnalyticsDialog.h"
+//#include "AnalyticsDialog.h"
+//#include "ui_AnalyticsDialog.h"
 
-// Define the scope for your variables and functions
-QT_CHARTS_USE_NAMESPACE
+//// Define the scope for your variables and functions
+//QT_CHARTS_USE_NAMESPACE
 
-AnalyticsDialog::AnalyticsDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AnalyticsDialog)
-{
-    ui->setupUi(this);
+//AnalyticsDialog::AnalyticsDialog(QWidget *parent) :
+//    QDialog(parent),
+//    ui(new Ui::AnalyticsDialog)
+//{
+//    ui->setupUi(this);
 
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
+//    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+//    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
+//    employeeWorksChart();
+//    mostPopularAutosChart();
+//    fulfilledOrdersChart();
+//    profitChart();
+//    testChart();
+//}
 
-    analiticsDB = QSqlDatabase::addDatabase("QSQLITE");
-    analiticsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    analiticsDB.open();
+//AnalyticsDialog::~AnalyticsDialog()
+//{
+//    delete ui;
+//}
 
-    employeeWorksChart();
-    mostPopularAutosChart();
-    fulfilledOrdersChart();
-    profitChart();
-    testChart();
-}
+//void AnalyticsDialog::employeeWorksChart()
+//{
+//    QLineSeries *lineseries = new QLineSeries();
+//    lineseries->append(QPoint(0, 4));
+//    lineseries->append(QPoint(1, 15));
+//    lineseries->append(QPoint(2, 20));
+//    lineseries->append(QPoint(3, 4));
+//    lineseries->append(QPoint(4, 12));
+//    lineseries->append(QPoint(5, 17));
 
-AnalyticsDialog::~AnalyticsDialog()
-{
-    delete ui;
-}
+//    QChart *chart = new QChart();
+//    chart->legend()->hide();
+//    chart->addSeries(lineseries);
+//    chart->setAnimationOptions(QChart::AllAnimations);
 
-void AnalyticsDialog::employeeWorksChart()
-{
-    QLineSeries *lineseries = new QLineSeries();
-    lineseries->append(QPoint(0, 4));
-    lineseries->append(QPoint(1, 15));
-    lineseries->append(QPoint(2, 20));
-    lineseries->append(QPoint(3, 4));
-    lineseries->append(QPoint(4, 12));
-    lineseries->append(QPoint(5, 17));
+//    QFont font;
+//    font.setPixelSize(16);
+//    chart->setTitle("1");
+//    chart->setTitleFont(font);
+//    chart->setTitleBrush(QBrush(Qt::black));
 
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(lineseries);
-    chart->setAnimationOptions(QChart::AllAnimations);
+//    QPen pen(Qt::black);
+//    pen.setWidth(3);
+//    lineseries->setPen(pen);
 
-    QFont font;
-    font.setPixelSize(16);
-    chart->setTitle("1");
-    chart->setTitleFont(font);
-    chart->setTitleBrush(QBrush(Qt::black));
+//    QStringList categories;
+//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
+//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+//    axisX->append(categories);
+//    chart->addAxis(axisX, Qt::AlignBottom);
+//    lineseries->attachAxis(axisX);
+//    axisX->setRange(QString("1994"), QString("1999"));
 
-    QPen pen(Qt::black);
-    pen.setWidth(3);
-    lineseries->setPen(pen);
+//    QValueAxis *axisY = new QValueAxis();
+//    chart->addAxis(axisY, Qt::AlignLeft);
+//    lineseries->attachAxis(axisY);
+//    axisY->setRange(0, 20);
 
-    QStringList categories;
-    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    lineseries->attachAxis(axisX);
-    axisX->setRange(QString("1994"), QString("1999"));
+//    QChartView *chartView = new QChartView(chart);
+//    chartView->setRenderHint(QPainter::Antialiasing);
 
-    QValueAxis *axisY = new QValueAxis();
-    chart->addAxis(axisY, Qt::AlignLeft);
-    lineseries->attachAxis(axisY);
-    axisY->setRange(0, 20);
+//    ui->verticalWidget->setMinimumHeight(451);
+//    ui->verticalLayout->addWidget(chartView);
+//}
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+//void AnalyticsDialog::mostPopularAutosChart()
+//{
+//    QLineSeries *lineseries = new QLineSeries();
+//    lineseries->append(QPoint(0, 4));
+//    lineseries->append(QPoint(1, 15));
+//    lineseries->append(QPoint(2, 20));
+//    lineseries->append(QPoint(3, 4));
+//    lineseries->append(QPoint(4, 12));
+//    lineseries->append(QPoint(5, 17));
 
-    ui->verticalWidget->setMinimumHeight(451);
-    ui->verticalLayout->addWidget(chartView);
-}
+//    QChart *chart = new QChart();
+//    chart->legend()->hide();
+//    chart->addSeries(lineseries);
+//    chart->setAnimationOptions(QChart::AllAnimations);
 
-void AnalyticsDialog::mostPopularAutosChart()
-{
-    QLineSeries *lineseries = new QLineSeries();
-    lineseries->append(QPoint(0, 4));
-    lineseries->append(QPoint(1, 15));
-    lineseries->append(QPoint(2, 20));
-    lineseries->append(QPoint(3, 4));
-    lineseries->append(QPoint(4, 12));
-    lineseries->append(QPoint(5, 17));
+//    QFont font;
+//    font.setPixelSize(16);
+//    chart->setTitle("2");
+//    chart->setTitleFont(font);
+//    chart->setTitleBrush(QBrush(Qt::black));
 
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(lineseries);
-    chart->setAnimationOptions(QChart::AllAnimations);
+//    QPen pen(Qt::black);
+//    pen.setWidth(3);
+//    lineseries->setPen(pen);
 
-    QFont font;
-    font.setPixelSize(16);
-    chart->setTitle("2");
-    chart->setTitleFont(font);
-    chart->setTitleBrush(QBrush(Qt::black));
+//    QStringList categories;
+//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
+//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+//    axisX->append(categories);
+//    chart->addAxis(axisX, Qt::AlignBottom);
+//    lineseries->attachAxis(axisX);
+//    axisX->setRange(QString("1994"), QString("1999"));
 
-    QPen pen(Qt::black);
-    pen.setWidth(3);
-    lineseries->setPen(pen);
+//    QValueAxis *axisY = new QValueAxis();
+//    chart->addAxis(axisY, Qt::AlignLeft);
+//    lineseries->attachAxis(axisY);
+//    axisY->setRange(0, 20);
 
-    QStringList categories;
-    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    lineseries->attachAxis(axisX);
-    axisX->setRange(QString("1994"), QString("1999"));
+//    QChartView *chartView = new QChartView(chart);
+//    chartView->setRenderHint(QPainter::Antialiasing);
 
-    QValueAxis *axisY = new QValueAxis();
-    chart->addAxis(axisY, Qt::AlignLeft);
-    lineseries->attachAxis(axisY);
-    axisY->setRange(0, 20);
+//    ui->verticalLayout2->addWidget(chartView);
+//}
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+//void AnalyticsDialog::fulfilledOrdersChart()
+//{
+//    QLineSeries *lineseries = new QLineSeries();
+//    lineseries->append(QPoint(0, 4));
+//    lineseries->append(QPoint(1, 15));
+//    lineseries->append(QPoint(2, 20));
+//    lineseries->append(QPoint(3, 4));
+//    lineseries->append(QPoint(4, 12));
+//    lineseries->append(QPoint(5, 17));
 
-    ui->verticalLayout2->addWidget(chartView);
-}
+//    QChart *chart = new QChart();
+//    chart->legend()->hide();
+//    chart->addSeries(lineseries);
+//    chart->setAnimationOptions(QChart::AllAnimations);
 
-void AnalyticsDialog::fulfilledOrdersChart()
-{
-    QLineSeries *lineseries = new QLineSeries();
-    lineseries->append(QPoint(0, 4));
-    lineseries->append(QPoint(1, 15));
-    lineseries->append(QPoint(2, 20));
-    lineseries->append(QPoint(3, 4));
-    lineseries->append(QPoint(4, 12));
-    lineseries->append(QPoint(5, 17));
+//    QFont font;
+//    font.setPixelSize(16);
+//    chart->setTitle("3");
+//    chart->setTitleFont(font);
+//    chart->setTitleBrush(QBrush(Qt::black));
 
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(lineseries);
-    chart->setAnimationOptions(QChart::AllAnimations);
+//    QPen pen(Qt::black);
+//    pen.setWidth(3);
+//    lineseries->setPen(pen);
 
-    QFont font;
-    font.setPixelSize(16);
-    chart->setTitle("3");
-    chart->setTitleFont(font);
-    chart->setTitleBrush(QBrush(Qt::black));
+//    QStringList categories;
+//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
+//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+//    axisX->append(categories);
+//    chart->addAxis(axisX, Qt::AlignBottom);
+//    lineseries->attachAxis(axisX);
+//    axisX->setRange(QString("1994"), QString("1999"));
 
-    QPen pen(Qt::black);
-    pen.setWidth(3);
-    lineseries->setPen(pen);
+//    QValueAxis *axisY = new QValueAxis();
+//    chart->addAxis(axisY, Qt::AlignLeft);
+//    lineseries->attachAxis(axisY);
+//    axisY->setRange(0, 20);
 
-    QStringList categories;
-    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    lineseries->attachAxis(axisX);
-    axisX->setRange(QString("1994"), QString("1999"));
+//    QChartView *chartView = new QChartView(chart);
+//    chartView->setRenderHint(QPainter::Antialiasing);
 
-    QValueAxis *axisY = new QValueAxis();
-    chart->addAxis(axisY, Qt::AlignLeft);
-    lineseries->attachAxis(axisY);
-    axisY->setRange(0, 20);
+//    ui->verticalLayout3->addWidget(chartView);
+//}
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+//void AnalyticsDialog::profitChart()
+//{
+//    QLineSeries *lineseries = new QLineSeries();
+//    lineseries->append(QPoint(0, 4));
+//    lineseries->append(QPoint(1, 15));
+//    lineseries->append(QPoint(2, 20));
+//    lineseries->append(QPoint(3, 4));
+//    lineseries->append(QPoint(4, 12));
+//    lineseries->append(QPoint(5, 17));
 
-    ui->verticalLayout3->addWidget(chartView);
-}
+//    QChart *chart = new QChart();
+//    chart->legend()->hide();
+//    chart->addSeries(lineseries);
+//    chart->setAnimationOptions(QChart::AllAnimations);
 
-void AnalyticsDialog::profitChart()
-{
-    QLineSeries *lineseries = new QLineSeries();
-    lineseries->append(QPoint(0, 4));
-    lineseries->append(QPoint(1, 15));
-    lineseries->append(QPoint(2, 20));
-    lineseries->append(QPoint(3, 4));
-    lineseries->append(QPoint(4, 12));
-    lineseries->append(QPoint(5, 17));
+//    QFont font;
+//    font.setPixelSize(16);
+//    chart->setTitle("4");
+//    chart->setTitleFont(font);
+//    chart->setTitleBrush(QBrush(Qt::black));
 
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(lineseries);
-    chart->setAnimationOptions(QChart::AllAnimations);
+//    QPen pen(Qt::black);
+//    pen.setWidth(3);
+//    lineseries->setPen(pen);
 
-    QFont font;
-    font.setPixelSize(16);
-    chart->setTitle("4");
-    chart->setTitleFont(font);
-    chart->setTitleBrush(QBrush(Qt::black));
+//    QStringList categories;
+//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
+//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+//    axisX->append(categories);
+//    chart->addAxis(axisX, Qt::AlignBottom);
+//    lineseries->attachAxis(axisX);
+//    axisX->setRange(QString("1994"), QString("1999"));
 
-    QPen pen(Qt::black);
-    pen.setWidth(3);
-    lineseries->setPen(pen);
+//    QValueAxis *axisY = new QValueAxis();
+//    chart->addAxis(axisY, Qt::AlignLeft);
+//    lineseries->attachAxis(axisY);
+//    axisY->setRange(0, 20);
 
-    QStringList categories;
-    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    lineseries->attachAxis(axisX);
-    axisX->setRange(QString("1994"), QString("1999"));
+//    QChartView *chartView = new QChartView(chart);
+//    chartView->setRenderHint(QPainter::Antialiasing);
 
-    QValueAxis *axisY = new QValueAxis();
-    chart->addAxis(axisY, Qt::AlignLeft);
-    lineseries->attachAxis(axisY);
-    axisY->setRange(0, 20);
+//    ui->verticalLayout4->addWidget(chartView);
+//}
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+//void AnalyticsDialog::testChart()
+//{
+//    QLineSeries *lineseries = new QLineSeries();
+//    lineseries->append(QPoint(0, 4));
+//    lineseries->append(QPoint(1, 15));
+//    lineseries->append(QPoint(2, 20));
+//    lineseries->append(QPoint(3, 4));
+//    lineseries->append(QPoint(4, 12));
+//    lineseries->append(QPoint(5, 17));
 
-    ui->verticalLayout4->addWidget(chartView);
-}
+//    QChart *chart = new QChart();
+//    chart->legend()->hide();
+//    chart->addSeries(lineseries);
+//    chart->setAnimationOptions(QChart::AllAnimations);
 
-void AnalyticsDialog::testChart()
-{
-    QLineSeries *lineseries = new QLineSeries();
-    lineseries->append(QPoint(0, 4));
-    lineseries->append(QPoint(1, 15));
-    lineseries->append(QPoint(2, 20));
-    lineseries->append(QPoint(3, 4));
-    lineseries->append(QPoint(4, 12));
-    lineseries->append(QPoint(5, 17));
+//    QFont font;
+//    font.setPixelSize(16);
+//    chart->setTitle("5");
+//    chart->setTitleFont(font);
+//    chart->setTitleBrush(QBrush(Qt::black));
 
-    QChart *chart = new QChart();
-    chart->legend()->hide();
-    chart->addSeries(lineseries);
-    chart->setAnimationOptions(QChart::AllAnimations);
+//    QPen pen(Qt::black);
+//    pen.setWidth(3);
+//    lineseries->setPen(pen);
 
-    QFont font;
-    font.setPixelSize(16);
-    chart->setTitle("5");
-    chart->setTitleFont(font);
-    chart->setTitleBrush(QBrush(Qt::black));
+//    QStringList categories;
+//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
+//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+//    axisX->append(categories);
+//    chart->addAxis(axisX, Qt::AlignBottom);
+//    lineseries->attachAxis(axisX);
+//    axisX->setRange(QString("1994"), QString("1999"));
 
-    QPen pen(Qt::black);
-    pen.setWidth(3);
-    lineseries->setPen(pen);
+//    QValueAxis *axisY = new QValueAxis();
+//    chart->addAxis(axisY, Qt::AlignLeft);
+//    lineseries->attachAxis(axisY);
+//    axisY->setRange(0, 20);
 
-    QStringList categories;
-    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    lineseries->attachAxis(axisX);
-    axisX->setRange(QString("1994"), QString("1999"));
+//    QChartView *chartView = new QChartView(chart);
+//    chartView->setRenderHint(QPainter::Antialiasing);
 
-    QValueAxis *axisY = new QValueAxis();
-    chart->addAxis(axisY, Qt::AlignLeft);
-    lineseries->attachAxis(axisY);
-    axisY->setRange(0, 20);
-
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-
-    ui->verticalLayout5->addWidget(chartView);
-}
+//    ui->verticalLayout5->addWidget(chartView);
+//}
 

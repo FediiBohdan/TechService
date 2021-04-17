@@ -53,7 +53,7 @@ void ViewUpdateOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_spare_part, spare_part_name, quantity_in_stock, auto_compatibility, original, price FROM SparePartsCatalogue ";
+    QString queryString = "SELECT id_spare_part, spare_part_name, quantity_in_stock, auto_compatibility, original, price FROM spare_parts_catalogue ";
 
     QString searchString;
 
@@ -89,7 +89,7 @@ void ViewUpdateOrder::loadUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM OrderSpareParts "
+    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM order_spare_parts "
                           "WHERE id_order = '" + orderId + "'";
 
     queryGetUsedSparePartsModel->setQuery(queryString);
@@ -117,15 +117,15 @@ void ViewUpdateOrder::loadUsedSparePartsTable()
 // choosing needed spare parts for the order + amount check
 void ViewUpdateOrder::updateUsedSparePartsListTable(const QModelIndex &index)
 {
-    QSqlQuery queryUsedSparePartsModel(sparePartsDB);
+    QSqlQuery queryUsedSparePartsModel(sparePartsTable);
 
     QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString sparePartName = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
     QString sparePartPrice = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 5), Qt::EditRole).toString();
 
-    QSqlQuery queryCheckAmount(sparePartsDB);
+    QSqlQuery queryCheckAmount(sparePartsTable);
 
-    queryCheckAmount.prepare("SELECT quantity_in_stock FROM SparePartsCatalogue WHERE (id_spare_part = '" + sparePartId + "' AND quantity_in_stock = 0)");
+    queryCheckAmount.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE (id_spare_part = '" + sparePartId + "' AND quantity_in_stock = 0)");
     queryCheckAmount.exec();
 
     if (queryCheckAmount.first() == 1)
@@ -135,7 +135,7 @@ void ViewUpdateOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     }
 
     // insertion spare parts by order to OrderSpareParts table
-    queryUsedSparePartsModel.prepare("INSERT INTO OrderSpareParts (id_order, id_spare_part, order_spare_part, order_spare_part_price) VALUES(?, ?, ?, ?)");
+    queryUsedSparePartsModel.prepare("INSERT INTO order_spare_parts (id_order, id_spare_part, order_spare_part, order_spare_part_price) VALUES(?, ?, ?, ?)");
     queryUsedSparePartsModel.addBindValue(orderId);
     queryUsedSparePartsModel.addBindValue(sparePartId);
     queryUsedSparePartsModel.addBindValue(sparePartName);
@@ -145,9 +145,9 @@ void ViewUpdateOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     // spare part is removed from available spare parts list
     int sparePartsAmount = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 2), Qt::EditRole).toInt();
 
-    QSqlQuery querySpareParts(sparePartsDB);
+    QSqlQuery querySpareParts(sparePartsTable);
 
-    querySpareParts.prepare("UPDATE SparePartsCatalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
+    querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount - 1);
     querySpareParts.addBindValue(sparePartId);
     querySpareParts.exec();
@@ -162,26 +162,26 @@ void ViewUpdateOrder::removeUsedSparePartsTable(const QModelIndex &index)
     QString orderSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString returnSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 2), Qt::EditRole).toString();
 
-    QSqlQuery queryRemoveUsedSparePartsModel(sparePartsDB);
+    QSqlQuery queryRemoveUsedSparePartsModel(sparePartsTable);
 
-    queryRemoveUsedSparePartsModel.prepare("DELETE FROM OrderSpareParts WHERE id_order_spare_part = ?");
+    queryRemoveUsedSparePartsModel.prepare("DELETE FROM order_spare_parts WHERE id_order_spare_part = ?");
     queryRemoveUsedSparePartsModel.addBindValue(orderSparePartId);
     queryRemoveUsedSparePartsModel.exec();
 
     // spare part is returned to available spare parts list
     // firstly check the amount of returning spare part
-    QSqlQuery query(sparePartsDB);
+    QSqlQuery query(sparePartsTable);
 
-    query.prepare("SELECT quantity_in_stock FROM SparePartsCatalogue WHERE id_spare_part = " + returnSparePartId);
+    query.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE id_spare_part = " + returnSparePartId);
     query.exec();
     query.next();
 
     int sparePartsAmount = query.value(0).toInt();
 
     // then increase its amount in available spare parts
-    QSqlQuery querySpareParts(sparePartsDB);
+    QSqlQuery querySpareParts(sparePartsTable);
 
-    querySpareParts.prepare("UPDATE SparePartsCatalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
+    querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount + 1);
     querySpareParts.addBindValue(returnSparePartId);
     querySpareParts.exec();
@@ -207,7 +207,7 @@ void ViewUpdateOrder::loadEmployeesTable()
 {
     queryEmployeesModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_employee, employee_FML_name, employee_position, hour_payment FROM EmployeesTable WHERE service_address = '" + ui->serviceComboBox->currentText() + "'";
+    QString queryString = "SELECT id_employee, employee_fml_name, employee_position, hour_payment FROM employees_table WHERE service_address = '" + ui->serviceComboBox->currentText() + "'";
 
     queryEmployeesModel->setQuery(queryString);
 
@@ -273,9 +273,9 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
     }
 
     // Simultaneous insertion into detailed order table
-    QSqlQuery queryOrderDetail(orderDetailDB);
-    QSqlQuery queryCheckEmployee(orderDetailDB);
-    queryCheckEmployee.prepare("SELECT EXISTS (SELECT id_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND id_employee = '" + employeeId + "')");
+    QSqlQuery queryOrderDetail(orderDetailTable);
+    QSqlQuery queryCheckEmployee(orderDetailTable);
+    queryCheckEmployee.prepare("SELECT EXISTS (SELECT id_employee FROM order_detail_table WHERE id_order = '" + orderId + "' AND id_employee = '" + employeeId + "')");
     queryCheckEmployee.exec();
     queryCheckEmployee.next();
 
@@ -283,7 +283,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
     {
         if (!ui->mechanicLine->text().isEmpty()) //mechanic
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.prepare("UPDATE order_detail_table SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->mechanicLine->text());
             queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
             queryOrderDetail.addBindValue("Механик");
@@ -294,7 +294,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->mechanic2Line->text().isEmpty()) //mechanic_2
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.prepare("UPDATE order_detail_table SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->mechanic2Line->text());
             queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
             queryOrderDetail.addBindValue("Механик_2");
@@ -305,7 +305,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->diagnosticianLine->text().isEmpty()) //diagnostician
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.prepare("UPDATE order_detail_table SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
             queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
             queryOrderDetail.addBindValue("Диагност");
@@ -316,7 +316,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->electronicsLine->text().isEmpty()) //electronics
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.prepare("UPDATE order_detail_table SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->electronicsLine->text());
             queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
             queryOrderDetail.addBindValue("Электронщик");
@@ -327,7 +327,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->locksmithLine->text().isEmpty()) // locksmith
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.prepare("UPDATE order_detail_table SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->locksmithLine->text());
             queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
             queryOrderDetail.addBindValue("Слесарь");
@@ -338,7 +338,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->washerLine->text().isEmpty()) // washer
         {
-            queryOrderDetail.prepare("UPDATE OrderDetailTable SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
+            queryOrderDetail.prepare("UPDATE order_detail_table SET order_employee = ?, employee_work_hours = ?, employee_position = ? WHERE id_order = ? AND id_employee = ?");
             queryOrderDetail.addBindValue(ui->washerLine->text());
             queryOrderDetail.addBindValue(ui->washerHoursLine->text());
             queryOrderDetail.addBindValue("Мойщик");
@@ -352,8 +352,8 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
     {
         if (!ui->mechanicLine->text().isEmpty()) // mechanic
         {
-            QSqlQuery queryCheckEmployee(orderDetailDB);
-            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanicLine->text() + "')");
+            QSqlQuery queryCheckEmployee(orderDetailTable);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanicLine->text() + "')");
             queryCheckEmployee.exec();
             queryCheckEmployee.next();
 
@@ -361,7 +361,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
                 ui->techLabel->setVisible(false);
             else
             {
-                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
                 queryOrderDetail.addBindValue(orderId);
                 queryOrderDetail.addBindValue(employeeId);
                 queryOrderDetail.addBindValue(ui->mechanicLine->text());
@@ -373,8 +373,8 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->mechanic2Line->text().isEmpty()) // mechanic2
         {
-            QSqlQuery queryCheckEmployee(orderDetailDB);
-            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanic2Line->text() + "')");
+            QSqlQuery queryCheckEmployee(orderDetailTable);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanic2Line->text() + "')");
             queryCheckEmployee.exec();
             queryCheckEmployee.next();
 
@@ -382,7 +382,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
                 ui->techLabel->setVisible(false);
             else
             {
-                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
                 queryOrderDetail.addBindValue(orderId);
                 queryOrderDetail.addBindValue(employeeId);
                 queryOrderDetail.addBindValue(ui->mechanic2Line->text());
@@ -394,8 +394,8 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->diagnosticianLine->text().isEmpty()) // diagnostician
         {
-            QSqlQuery queryCheckEmployee(orderDetailDB);
-            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->diagnosticianLine->text() + "')");
+            QSqlQuery queryCheckEmployee(orderDetailTable);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->diagnosticianLine->text() + "')");
             queryCheckEmployee.exec();
             queryCheckEmployee.next();
 
@@ -403,7 +403,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
                 ui->techLabel->setVisible(false);
             else
             {
-                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
                 queryOrderDetail.addBindValue(orderId);
                 queryOrderDetail.addBindValue(employeeId);
                 queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
@@ -415,8 +415,8 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->electronicsLine->text().isEmpty()) // electronics
         {
-            QSqlQuery queryCheckEmployee(orderDetailDB);
-            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->electronicsLine->text() + "')");
+            QSqlQuery queryCheckEmployee(orderDetailTable);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->electronicsLine->text() + "')");
             queryCheckEmployee.exec();
             queryCheckEmployee.next();
 
@@ -424,7 +424,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
                 ui->techLabel->setVisible(false);
             else
             {
-                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
                 queryOrderDetail.addBindValue(orderId);
                 queryOrderDetail.addBindValue(employeeId);
                 queryOrderDetail.addBindValue(ui->electronicsLine->text());
@@ -436,8 +436,8 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->locksmithLine->text().isEmpty()) // locksmith
         {
-            QSqlQuery queryCheckEmployee(orderDetailDB);
-            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->locksmithLine->text() + "')");
+            QSqlQuery queryCheckEmployee(orderDetailTable);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->locksmithLine->text() + "')");
             queryCheckEmployee.exec();
             queryCheckEmployee.next();
 
@@ -445,7 +445,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
                 ui->techLabel->setVisible(false);
             else
             {
-                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
                 queryOrderDetail.addBindValue(orderId);
                 queryOrderDetail.addBindValue(employeeId);
                 queryOrderDetail.addBindValue(ui->locksmithLine->text());
@@ -457,8 +457,8 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 
         if (!ui->washerLine->text().isEmpty()) // washer
         {
-            QSqlQuery queryCheckEmployee(orderDetailDB);
-            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->washerLine->text() + "')");
+            QSqlQuery queryCheckEmployee(orderDetailTable);
+            queryCheckEmployee.prepare("SELECT EXISTS (SELECT order_employee FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->washerLine->text() + "')");
             queryCheckEmployee.exec();
             queryCheckEmployee.next();
 
@@ -466,7 +466,7 @@ void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
                 ui->techLabel->setVisible(false);
             else
             {
-                queryOrderDetail.prepare("INSERT INTO OrderDetailTable (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
+                queryOrderDetail.prepare("INSERT INTO order_detail_table (id_order, id_employee, order_employee, employee_hour_payment, employee_position) VALUES(?, ?, ?, ?, ?)");
                 queryOrderDetail.addBindValue(orderId);
                 queryOrderDetail.addBindValue(employeeId);
                 queryOrderDetail.addBindValue(ui->washerLine->text());
@@ -499,11 +499,11 @@ void ViewUpdateOrder::setValues(const QString &id)
 
     loadUsedSparePartsTable();
 
-    QSqlQuery query(ordersDB);
+    QSqlQuery query(ordersTable);
 
     query.prepare("SELECT DISTINCT client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, mileage, manufacture_year, "
-                  "VIN_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback "
-                  "FROM OrdersHistory WHERE id_order = " + orderId);
+                  "vin_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback "
+                  "FROM orders_history WHERE id_order = " + orderId);
     query.exec();
     query.next();
 
@@ -559,9 +559,9 @@ void ViewUpdateOrder::setValues(const QString &id)
     ui->worksList->setText(query.value(16).toString());
     ui->feedback->setText(query.value(17).toString());
 
-    QSqlQuery queryEmployee(orderDetailDB);
+    QSqlQuery queryEmployee(orderDetailTable);
 
-    queryEmployee.prepare("SELECT order_employee, employee_work_hours, employee_position FROM OrderDetailTable WHERE id_order = " + orderId);
+    queryEmployee.prepare("SELECT order_employee, employee_work_hours, employee_position FROM order_detail_table WHERE id_order = " + orderId);
     queryEmployee.exec();
 
     while (queryEmployee.next())
@@ -608,7 +608,7 @@ void ViewUpdateOrder::setValues(const QString &id)
 
 void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 {
-    QSqlQuery queryOrders(ordersDB);
+    QSqlQuery queryOrders(ordersTable);
 
     QString client = ui->clientLine->text();
     QString date = ui->dateLine->text();
@@ -648,8 +648,8 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
     if (error)
         return;
 
-    queryOrders.prepare("UPDATE OrdersHistory SET client_type = ?, client = ?, updating_date = ?,  updating_time = ?, reception_date = ?, contacts = ?, email = ?, "
-        "auto_brand = ?, auto_model = ?, mileage = ?, manufacture_year = ?, VIN_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, "
+    queryOrders.prepare("UPDATE orders_history SET client_type = ?, client = ?, updating_date = ?,  updating_time = ?, reception_date = ?, contacts = ?, email = ?, "
+        "auto_brand = ?, auto_model = ?, mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, "
         "order_status = ?, works_list = ?, feedback = ? WHERE id_order = ?");
 
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
@@ -674,11 +674,11 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
     queryOrders.exec();
 
     // Simultaneous update of employees work hours
-    QSqlQuery queryOrderDetail(orderDetailDB);
+    QSqlQuery queryOrderDetail(orderDetailTable);
 
     if (!ui->mechanicLine->text().isEmpty()) //mechanic
     {
-        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.prepare("UPDATE order_detail_table SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
         queryOrderDetail.addBindValue(ui->mechanicHoursLine->text());
         queryOrderDetail.addBindValue(ui->mechanicLine->text());
         queryOrderDetail.addBindValue(orderId);
@@ -687,7 +687,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if (!ui->mechanic2Line->text().isEmpty()) //mechanic_2
     {
-        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.prepare("UPDATE order_detail_table SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
         queryOrderDetail.addBindValue(ui->mechanic2HoursLine->text());
         queryOrderDetail.addBindValue(ui->mechanic2Line->text());
         queryOrderDetail.addBindValue(orderId);
@@ -696,7 +696,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if (!ui->diagnosticianLine->text().isEmpty()) //diagnostician
     {
-        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.prepare("UPDATE order_detail_table SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
         queryOrderDetail.addBindValue(ui->diagnosticianHoursLine->text());
         queryOrderDetail.addBindValue(ui->diagnosticianLine->text());
         queryOrderDetail.addBindValue(orderId);
@@ -705,7 +705,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if (!ui->electronicsLine->text().isEmpty()) //electronic
     {
-        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.prepare("UPDATE order_detail_table SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
         queryOrderDetail.addBindValue(ui->electronicsHoursLine->text());
         queryOrderDetail.addBindValue(ui->electronicsLine->text());
         queryOrderDetail.addBindValue(orderId);
@@ -714,7 +714,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if (!ui->locksmithLine->text().isEmpty()) //locksmith
     {
-        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.prepare("UPDATE order_detail_table SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
         queryOrderDetail.addBindValue(ui->locksmithHoursLine->text());
         queryOrderDetail.addBindValue(ui->locksmithLine->text());
         queryOrderDetail.addBindValue(orderId);
@@ -723,7 +723,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if (!ui->washerLine->text().isEmpty()) //washer
     {
-        queryOrderDetail.prepare("UPDATE OrderDetailTable SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
+        queryOrderDetail.prepare("UPDATE order_detail_table SET employee_work_hours = ? WHERE order_employee = ? AND id_order = ?");
         queryOrderDetail.addBindValue(ui->washerHoursLine->text());
         queryOrderDetail.addBindValue(ui->washerLine->text());
         queryOrderDetail.addBindValue(orderId);
@@ -731,8 +731,8 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
     }
 
     // Simultaneous insertion into client table
-    QSqlQuery query(clientsDB);
-    query.prepare("SELECT EXISTS (SELECT client_FML_name, contacts FROM ClientsTable WHERE client_FML_name = '" + ui->clientLine->text() + "' AND contacts LIKE '%" + ui->contactLine->text() + "%')");
+    QSqlQuery query(clientsTable);
+    query.prepare("SELECT EXISTS (SELECT client_fml_name, contacts FROM clients_table WHERE client_fml_name = '" + ui->clientLine->text() + "' AND contacts LIKE '%" + ui->contactLine->text() + "%')");
     query.exec();
     query.next();
 
@@ -740,10 +740,10 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
         ui->techLabel->setHidden(true);
     else if (query.value(0) == 0)
     {
-        QSqlQuery queryClients(clientsDB);
+        QSqlQuery queryClients(clientsTable);
 
-        queryClients.prepare("UPDATE ClientsTable SET client_type = ?, client_FML_name = ?, contacts = ?, auto_brand = ?, auto_model = ?, mileage = ?, auto_license_plate = ?, "
-            "manufacture_year = ?, VIN_number = ? WHERE id_order = ?");
+        queryClients.prepare("UPDATE clients_table SET client_type = ?, client_fml_name = ?, contacts = ?, auto_brand = ?, auto_model = ?, mileage = ?, auto_license_plate = ?, "
+            "manufacture_year = ?, vin_number = ? WHERE id_order = ?");
 
         queryClients.addBindValue(ui->clientTypeComboBox->currentText());
         queryClients.addBindValue(client);
@@ -768,11 +768,11 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
     float washerOverAllPayment = 0;
 
     // get employee hour payment in case if employee is not changed during order update
-    QSqlQuery queryCheckEmployeePayment(employeesDB);
+    QSqlQuery queryCheckEmployeePayment(employeesTable);
 
     if ((!ui->mechanicLine->text().isEmpty()) && (mechanicHourPayment == 0))
     {
-        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanicLine->text() + "'");
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanicLine->text() + "'");
         queryCheckEmployeePayment.exec();
         queryCheckEmployeePayment.next();
 
@@ -781,7 +781,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if ((!ui->mechanic2Line->text().isEmpty()) && (mechanic2HourPayment == 0))
     {
-        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanic2Line->text() + "'");
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->mechanic2Line->text() + "'");
         queryCheckEmployeePayment.exec();
         queryCheckEmployeePayment.next();
 
@@ -790,7 +790,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if ((!ui->diagnosticianLine->text().isEmpty()) && (diagnosticianHourPayment == 0))
     {
-        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->diagnosticianLine->text() + "'");
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->diagnosticianLine->text() + "'");
         queryCheckEmployeePayment.exec();
         queryCheckEmployeePayment.next();
 
@@ -799,7 +799,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if ((!ui->electronicsLine->text().isEmpty()) && (electronicHourPayment == 0))
     {
-        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->electronicsLine->text() + "'");
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->electronicsLine->text() + "'");
         queryCheckEmployeePayment.exec();
         queryCheckEmployeePayment.next();
 
@@ -808,7 +808,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if ((!ui->locksmithLine->text().isEmpty()) && (locksmithHourPayment == 0))
     {
-        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->locksmithLine->text() + "'");
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->locksmithLine->text() + "'");
         queryCheckEmployeePayment.exec();
         queryCheckEmployeePayment.next();
 
@@ -817,7 +817,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 
     if ((!ui->washerLine->text().isEmpty()) && (washerHourPayment == 0))
     {
-        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM OrderDetailTable WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->washerLine->text() + "'");
+        queryCheckEmployeePayment.prepare("SELECT employee_hour_payment FROM order_detail_table WHERE id_order = '" + orderId + "' AND order_employee = '" + ui->washerLine->text() + "'");
         queryCheckEmployeePayment.exec();
         queryCheckEmployeePayment.next();
 
@@ -855,10 +855,10 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
         washerOverAllPayment = washerHourPayment * ui->washerHoursLine->text().toFloat();
 
     // calculate spare parts cost
-    QSqlQuery querySparePartsCost(sparePartsDB);
+    QSqlQuery querySparePartsCost(sparePartsTable);
 
     int sparePartsCost = 0;
-    querySparePartsCost.prepare("SELECT SUM(order_spare_part_price) FROM OrderSpareParts WHERE id_order = " + orderId);
+    querySparePartsCost.prepare("SELECT SUM(order_spare_part_price) FROM order_spare_parts WHERE id_order = " + orderId);
     querySparePartsCost.exec();
     if (querySparePartsCost.next())
             sparePartsCost = querySparePartsCost.value(0).toInt();
@@ -888,7 +888,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
     // cost update
     QString orderTotalDiscountCostDB = QString("%1").arg(orderTotalDiscountCost, 0, 'f', 2);
 
-    queryOrders.prepare("UPDATE OrdersHistory SET price = ? WHERE id_order = ?");
+    queryOrders.prepare("UPDATE orders_history SET price = ? WHERE id_order = ?");
     queryOrders.addBindValue(orderTotalDiscountCostDB);
     queryOrders.addBindValue(orderId);
     queryOrders.exec();
@@ -914,9 +914,9 @@ void ViewUpdateOrder::updateSparePartsTable()
 
 void ViewUpdateOrder::on_clearMechanicButton_clicked()
 {
-    QSqlQuery queryRemoveEmployeeModel(employeesDB);
+    QSqlQuery queryRemoveEmployeeModel(employeesTable);
 
-    queryRemoveEmployeeModel.prepare("DELETE FROM OrderDetailTable WHERE id_order = ? AND order_employee = ?");
+    queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->mechanicLine->text());
     queryRemoveEmployeeModel.exec();
@@ -927,9 +927,9 @@ void ViewUpdateOrder::on_clearMechanicButton_clicked()
 
 void ViewUpdateOrder::on_clearMechanic2Button_clicked()
 {
-    QSqlQuery queryRemoveEmployeeModel(employeesDB);
+    QSqlQuery queryRemoveEmployeeModel(employeesTable);
 
-    queryRemoveEmployeeModel.prepare("DELETE FROM OrderDetailTable WHERE id_order = ? AND order_employee = ?");
+    queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->mechanic2Line->text());
     queryRemoveEmployeeModel.exec();
@@ -940,9 +940,9 @@ void ViewUpdateOrder::on_clearMechanic2Button_clicked()
 
 void ViewUpdateOrder::on_clearDiagnosticianButton_clicked()
 {
-    QSqlQuery queryRemoveEmployeeModel(employeesDB);
+    QSqlQuery queryRemoveEmployeeModel(employeesTable);
 
-    queryRemoveEmployeeModel.prepare("DELETE FROM OrderDetailTable WHERE id_order = ? AND order_employee = ?");
+    queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->diagnosticianLine->text());
     queryRemoveEmployeeModel.exec();
@@ -953,9 +953,9 @@ void ViewUpdateOrder::on_clearDiagnosticianButton_clicked()
 
 void ViewUpdateOrder::on_clearElectronicButton_clicked()
 {
-    QSqlQuery queryRemoveEmployeeModel(employeesDB);
+    QSqlQuery queryRemoveEmployeeModel(employeesTable);
 
-    queryRemoveEmployeeModel.prepare("DELETE FROM OrderDetailTable WHERE id_order = ? AND order_employee = ?");
+    queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->electronicsLine->text());
     queryRemoveEmployeeModel.exec();
@@ -966,9 +966,9 @@ void ViewUpdateOrder::on_clearElectronicButton_clicked()
 
 void ViewUpdateOrder::on_clearLocksmithButton_clicked()
 {
-    QSqlQuery queryRemoveEmployeeModel(employeesDB);
+    QSqlQuery queryRemoveEmployeeModel(employeesTable);
 
-    queryRemoveEmployeeModel.prepare("DELETE FROM OrderDetailTable WHERE id_order = ? AND order_employee = ?");
+    queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->locksmithLine->text());
     queryRemoveEmployeeModel.exec();
@@ -979,9 +979,9 @@ void ViewUpdateOrder::on_clearLocksmithButton_clicked()
 
 void ViewUpdateOrder::on_clearWasherButton_clicked()
 {
-    QSqlQuery queryRemoveEmployeeModel(employeesDB);
+    QSqlQuery queryRemoveEmployeeModel(employeesTable);
 
-    queryRemoveEmployeeModel.prepare("DELETE FROM OrderDetailTable WHERE id_order = ? AND order_employee = ?");
+    queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->washerLine->text());
     queryRemoveEmployeeModel.exec();
@@ -1031,7 +1031,7 @@ void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
 
 void ViewUpdateOrder::on_deleteOrderButton_clicked()
 {
-    QSqlQuery queryRemoveOrderModel(ordersDB);
+    QSqlQuery queryRemoveOrderModel(ordersTable);
 
     int msgBox = QMessageBox::information(this, tr("Предупреждение"), tr("Вы уверены, что хотите удалить заказ?"), QMessageBox::Ok, QMessageBox::Cancel);
 
@@ -1039,7 +1039,7 @@ void ViewUpdateOrder::on_deleteOrderButton_clicked()
     {
     case QMessageBox::Ok:
 
-        queryRemoveOrderModel.prepare("DELETE FROM OrdersHistory WHERE id_order = ?");
+        queryRemoveOrderModel.prepare("DELETE FROM orders_history WHERE id_order = ?");
         queryRemoveOrderModel.addBindValue(orderId);
         queryRemoveOrderModel.exec();
 

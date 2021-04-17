@@ -17,12 +17,6 @@ ListClients::ListClients(QWidget *parent) :
 
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    clientsDB = QSqlDatabase::addDatabase("QSQLITE");
-    clientsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    clientsDB.open();
-
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListClients::showClientInfo);
 
     ui->searchComboBox->addItems(QStringList() << tr("Поиск по имени") << tr("Поиск по номеру"));
@@ -41,15 +35,15 @@ void ListClients::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_client, client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
-                          "VIN_number FROM ClientsTable ";
+    QString queryString = "SELECT id_client, client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
+                          "vin_number FROM clients_table ";
 
     QString searchString;
 
-    if (searchFlag && ui->searchComboBox->currentIndex() == 0)
-        searchString.append("WHERE client_FML_name LIKE '%" + ui->clientSearch->text() + "%' GROUP BY id_client ORDER BY client_FML_name ASC");
-    else if (searchFlag && ui->searchComboBox->currentIndex() == 1)
-        searchString.append("WHERE contacts LIKE '%" + ui->clientSearch->text() + "%' GROUP BY id_client ORDER BY client_FML_name ASC");
+    if ((searchFlag) && (ui->searchComboBox->currentIndex() == 0))
+        searchString.append("WHERE client_fml_name LIKE '%" + ui->clientSearch->text() + "%' GROUP BY id_client ORDER BY client_fml_name ASC");
+    else if ((searchFlag) && (ui->searchComboBox->currentIndex() == 1))
+        searchString.append("WHERE contacts LIKE '%" + ui->clientSearch->text() + "%' GROUP BY id_client ORDER BY client_fml_name ASC");
 
     queryString.append(searchString);
 
@@ -69,7 +63,7 @@ void ListClients::loadTable()
 
     ui->tableView->setModel(queryModel);
 
-    ui->tableView->setColumnHidden(0, true);
+    ui->tableView->setColumnHidden(0, true);  
 
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();

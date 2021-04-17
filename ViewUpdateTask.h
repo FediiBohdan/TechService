@@ -35,7 +35,7 @@ private slots:
 private:
     Ui::ViewUpdateTask *ui;
 
-    QSqlDatabase listTasksDB;
+    QSqlDatabase listTasksTable;
     QString taskId;
 
     ListTasks *listTasks;

@@ -1,13 +1,6 @@
 #include "ListEmployees.h"
 #include "ui_ListEmployees.h"
 
-#include <QMessageBox>
-#include <QSqlQueryModel>
-#include <QSqlQuery>
-#include <QDebug>
-#include <QAbstractItemView>
-#include <QTableWidgetItem>
-
 ListEmployees::ListEmployees(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ListEmployees)
@@ -24,12 +17,6 @@ ListEmployees::ListEmployees(QWidget *parent) :
 
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    employeesDB = QSqlDatabase::addDatabase("QSQLITE");
-    employeesDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    employeesDB.open();
-
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListEmployees::showEmployeeInfo);
 
     loadTable();
@@ -44,9 +31,9 @@ void ListEmployees::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_employee, employee_FML_name, employee_position, hour_payment, service_address FROM EmployeesTable";
+    QString queryString = "SELECT id_employee, employee_FML_name, employee_position, hour_payment, service_address FROM employees_table";
 
-    queryModel->setQuery(queryString, employeesTable);
+    queryModel->setQuery(queryString);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->setHeaderData(1, Qt::Horizontal, tr("ФИО работников"));
@@ -58,8 +45,8 @@ void ListEmployees::loadTable()
 
     ui->tableView->setColumnHidden(0, true);
 
-    ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
+    ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
 }
 
 void ListEmployees::on_addWorkerButton_clicked()

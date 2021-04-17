@@ -3,14 +3,13 @@
 
 #include "ListEmployees.h"
 
+#include <QDebug>
 #include <QDialog>
+#include <QPointer>
+#include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDebug>
-#include <QDir>
 
 class ListEmployees;
 
@@ -34,8 +33,7 @@ private slots:
 private:
     Ui::AddEmployee *ui;
 
-    QSqlDatabase listEmployeesTable = QSqlDatabase::database("EmployeesTable");
-    QSqlDatabase employeeDB;
+    QSqlDatabase employeeTable;
     QPointer<QSqlQueryModel> queryModel;
 
     ListEmployees *listEmployees;

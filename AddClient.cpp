@@ -10,12 +10,6 @@ AddClient::AddClient(QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    clientsDB = QSqlDatabase::addDatabase("QSQLITE");
-    clientsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    clientsDB.open();
-
     ui->autoErrorLabel->setStyleSheet("color: transparent");
     ui->contactsErrorLabel->setStyleSheet("color: transparent");
     ui->nameErrorLabel->setStyleSheet("color: transparent");
@@ -39,7 +33,7 @@ void AddClient::closeEvent(QCloseEvent *)
 
 void AddClient::on_saveClientButton_clicked()
 {
-    QSqlQuery query(clientsDB);
+    QSqlQuery query(clientsTable);
 
     QString clientFMLname = ui->clientFMLnameLine->text();
     QString clientContacts = ui->contactsLine->text();
@@ -73,7 +67,7 @@ void AddClient::on_saveClientButton_clicked()
 
     clientContacts.replace(", ", "\n");
 
-    query.prepare("INSERT INTO ClientsTable (client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, VIN_Number)"
+    query.prepare("INSERT INTO clients_table (client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, vin_number)"
         "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     query.addBindValue(ui->clientTypeComboBox->currentText());
@@ -86,7 +80,7 @@ void AddClient::on_saveClientButton_clicked()
     query.addBindValue(ui->autoLicensePlateLine->text());
     query.addBindValue(ui->manufactureYearLine->text());
     query.addBindValue(ui->VINnumberLine->text());
-    query.exec();
+    qDebug()<<query.exec();
 
     QDialog::close();
 

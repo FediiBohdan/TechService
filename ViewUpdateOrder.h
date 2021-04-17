@@ -3,16 +3,12 @@
 
 #include "ListOrders.h"
 
-#include <QDir>
 #include <QDate>
 #include <QTime>
 #include <QDebug>
 #include <QLabel>
 #include <QDialog>
 #include <QPointer>
-#include <QSqlQuery>
-#include <QMessageBox>
-#include <QSqlDatabase>
 #include <QSqlQueryModel>
 
 class ListOrders;
@@ -66,16 +62,12 @@ private:
 
     ListOrders *listOrders;
 
-    QSqlDatabase listOrdersTable = QSqlDatabase::database("OrdersHistory");
-    QSqlDatabase orderDetailTable = QSqlDatabase::database("OrderDetailTable");
-    QSqlDatabase listSparePartsTable = QSqlDatabase::database("SparePartsCatalogue");
-
-    QSqlDatabase ordersDB;
-    QSqlDatabase clientsDB;
-    QSqlDatabase employeesDB;
-    QSqlDatabase sparePartsDB;
-    QSqlDatabase orderDetailDB;
-    QSqlDatabase ordersHistoryDB;
+    QSqlDatabase ordersTable;
+    QSqlDatabase clientsTable;
+    QSqlDatabase employeesTable;
+    QSqlDatabase sparePartsTable;
+    QSqlDatabase orderDetailTable;
+    QSqlDatabase ordersHistoryTable;
 
     QPointer<QSqlQueryModel> queryModel;
     QPointer<QSqlQueryModel> queryModelLabel;

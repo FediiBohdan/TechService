@@ -14,12 +14,6 @@ ListSparePart::ListSparePart(QWidget *parent) :
 
     //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &ListSparePart::closeWindow);
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    listSparePartsDB = QSqlDatabase::addDatabase("QSQLITE");
-    listSparePartsDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    listSparePartsDB.open();
-
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListSparePart::showSparePartInfo);
 
     searchFlag = false;
@@ -39,7 +33,7 @@ void ListSparePart::loadTable()
 
     QString queryString;
     queryString = "SELECT id_spare_part, spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, "
-        "price FROM SparePartsCatalogue ";
+        "price FROM spare_parts_catalogue ";
 
     QString searchString;
 
@@ -114,7 +108,7 @@ void ListSparePart::on_csvExportButton_clicked()
 
 void ListSparePart::closeWindow()
 {
-    close();
+    QDialog::close();
 }
 
 void ListSparePart::on_addSparePartButton_clicked()

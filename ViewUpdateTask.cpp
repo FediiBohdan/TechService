@@ -31,10 +31,10 @@ void ViewUpdateTask::setValues(const QString &id)
 {
     taskId = id;
 
-    QSqlQuery query(listTasksDB);
+    QSqlQuery query(listTasksTable);
 
     query.prepare("SELECT DISTINCT time, date, content, is_fulfilled "
-        "FROM TasksTable WHERE id_to_do_list = " + taskId);
+        "FROM tasks_table WHERE id_to_do_list = " + taskId);
 
     query.exec();
     query.next();
@@ -53,13 +53,13 @@ void ViewUpdateTask::setValues(const QString &id)
 
 void ViewUpdateTask::on_saveUpdatedInfo_clicked()
 {
-    QSqlQuery queryTasks(listTasksDB);
+    QSqlQuery queryTasks(listTasksTable);
 
     QString time = ui->timeLine->text();
     QString date = ui->dateLine->text();
     QString content = ui->contentLine->toPlainText();
 
-    if (time.isEmpty() || date.isEmpty() || content.isEmpty())
+    if ((time.isEmpty()) || (date.isEmpty()) || (content.isEmpty()))
     {
         ui->errorLabel->setStyleSheet("color: red");
         return;
@@ -74,7 +74,7 @@ void ViewUpdateTask::on_saveUpdatedInfo_clicked()
     else
         isFulfilled = "0";
 
-    queryTasks.prepare("UPDATE TasksTable SET time = ?, date = ?, content = ?, is_fulfilled = ? WHERE id_to_do_list = ?");
+    queryTasks.prepare("UPDATE tasks_table SET time = ?, date = ?, content = ?, is_fulfilled = ? WHERE id_to_do_list = ?");
 
     queryTasks.addBindValue(time);
     queryTasks.addBindValue(date);

@@ -3,16 +3,15 @@
 
 #include "ListTasks.h"
 
-#include <QDialog>
-#include <QDebug>
 #include <QDate>
 #include <QTime>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
+#include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDir>
 
 class ListTasks;
 
@@ -38,8 +37,7 @@ private slots:
 private:
     Ui::AddTask *ui;
 
-    QSqlDatabase listTasks = QSqlDatabase::database("TasksTable");
-    QSqlDatabase listTasksDB;
+    QSqlDatabase listTasksTable;
     QPointer<QSqlQueryModel> queryModel;
 
     ListTasks *listTasksDialog;

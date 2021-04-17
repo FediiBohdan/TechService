@@ -7,7 +7,6 @@ QT += gui
 QT += network
 QT += widgets
 QT += sql
-QT += charts
 
 VERSION = 1.0.0.0
 

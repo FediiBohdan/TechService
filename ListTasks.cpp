@@ -14,12 +14,6 @@ ListTasks::ListTasks(QWidget *parent) :
 
     QDialog::showNormal();
 
-    QDir tempDirDB = QDir::currentPath(); tempDirDB.cdUp(); QString dirDB = tempDirDB.path();
-
-    listTasksDB = QSqlDatabase::addDatabase("QSQLITE");
-    listTasksDB.setDatabaseName(dirDB + "\\CRM_AutoService\\ServiceStationDB.db");
-    listTasksDB.open();
-
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListTasks::showTaskInfo);
 
     loadTable();
@@ -34,9 +28,9 @@ void ListTasks::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_to_do_list, time, date FROM TasksTable";
+    QString queryString = "SELECT id_to_do_list, time, date FROM tasks_table";
 
-    queryModel->setQuery(queryString, listTasksTable);
+    queryModel->setQuery(queryString);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->setHeaderData(1, Qt::Horizontal, tr("Время"));
@@ -56,9 +50,9 @@ void ListTasks::loadTable()
         ui->tableView->setIndexWidget(queryModel->index(rowIndex, 4), addCheckBoxCompleted(rowIndex));
     }
 
-    ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
-    ui->tableView->resizeColumnsToContents();
     ui->tableView->resizeRowsToContents();
+    ui->tableView->resizeColumnsToContents();
+    ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
 }
 
 QWidget* ListTasks::addWidgetContent(int rowIndex)
@@ -71,15 +65,15 @@ QWidget* ListTasks::addWidgetContent(int rowIndex)
 
     queryModelLabel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT content FROM TasksTable";
+    QString queryString = "SELECT content FROM tasks_table";
 
     queryModelLabel->setQuery(queryString, listTasksTable);
 
     QString taskContent = queryModelLabel->data(queryModelLabel->index(rowIndex, 0), Qt::EditRole).toString();
 
+    taskContentLabel->setWordWrap(true);
     taskContentLabel->setText(taskContent);
     taskContentLabel->setOpenExternalLinks(true);
-    taskContentLabel->setWordWrap(true);
 
     return widget;
 }
@@ -94,7 +88,7 @@ QWidget* ListTasks::addCheckBoxCompleted(int rowIndex)
 
     queryModelCheckBox = new QSqlQueryModel(this);
 
-    QString queryStringCheckBox = "SELECT is_fulfilled FROM TasksTable";
+    QString queryStringCheckBox = "SELECT is_fulfilled FROM tasks_table";
 
     queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
 
@@ -121,13 +115,13 @@ void ListTasks::checkBoxStateChanged()
     QString id = sender()->property("id").value<QString>();
     QCheckBox *checkBox = sender()->property("checkBox").value<QCheckBox*>();
 
-    QSqlQuery query(listTasksDB);
+    QSqlQuery query(listTasksTable);
 
     if (!checkBox->isChecked())
     {
         checkBox->setChecked(true);
 
-        query.prepare("UPDATE TasksTable SET is_fulfilled = 1 WHERE id_to_do_list = ?");
+        query.prepare("UPDATE tasks_table SET is_fulfilled = 1 WHERE id_to_do_list = ?");
         query.addBindValue(id);
         query.exec();
     }
@@ -135,7 +129,7 @@ void ListTasks::checkBoxStateChanged()
     {
         checkBox->setChecked(false);
 
-        query.prepare("UPDATE TasksTable SET is_fulfilled = 0 WHERE id_to_do_list = ?");
+        query.prepare("UPDATE tasks_table SET is_fulfilled = 0 WHERE id_to_do_list = ?");
         query.addBindValue(id);
         query.exec();
     }

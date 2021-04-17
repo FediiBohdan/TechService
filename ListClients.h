@@ -4,18 +4,15 @@
 #include "AddClient.h"
 #include "ViewUpdateClient.h"
 
-#include <QDialog>
-#include <QMessageBox>
-#include <QSqlDatabase>
-#include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDebug>
-#include <QDir>
-#include <QLabel>
 #include <QFile>
+#include <QLabel>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
 #include <QTextStream>
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QSqlQueryModel>
 
 class ViewUpdateClient;
 class AddClient;
@@ -45,14 +42,12 @@ private slots:
 private:
     Ui::ListClients *ui;
 
-    AddClient *addClient;
-    ViewUpdateClient *viewUpdateClient;
+    QPointer<QSqlQueryModel> queryModel;
 
     bool searchFlag;
 
-    QSqlDatabase clientsTable = QSqlDatabase::database("ClientsTable");
-    QSqlDatabase clientsDB;
-    QPointer<QSqlQueryModel> queryModel;
+    AddClient *addClient;
+    ViewUpdateClient *viewUpdateClient;
 };
 
 #endif // LISTCLIENTS_H

@@ -3,14 +3,13 @@
 
 #include "ListClients.h"
 
+#include <QDebug>
 #include <QDialog>
+#include <QPointer>
+#include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
-#include <QPointer>
-#include <QSqlQuery>
-#include <QDebug>
-#include <QDir>
 
 class ListClients;
 
@@ -36,8 +35,7 @@ private:
 
     ListClients *listClients;
 
-    QSqlDatabase listClientsTable = QSqlDatabase::database("ClientsTable");
-    QSqlDatabase clientsDB;
+    QSqlDatabase clientsTable;
     QPointer<QSqlQueryModel> queryModel;
 };
 

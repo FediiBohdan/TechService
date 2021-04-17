@@ -2,6 +2,7 @@
 #include "StartWindow.h"
 #include "Global.h"
 
+#include <QSqlDatabase>
 #include <QApplication>
 #include <QTranslator>
 #include <QMessageBox>
@@ -9,6 +10,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QDir>
+#include <QSqlError>
 
 int main(int argc, char *argv[])
 {
@@ -49,9 +51,32 @@ int main(int argc, char *argv[])
         app.installTranslator(&translator);
     }
 
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    QByteArray byte_password = global::getSettingsValue("passwordDB", "settings").toByteArray();
+    QString password = QString(QByteArray::fromBase64(byte_password));
+
+    db.setHostName(global::getSettingsValue("hostName", "settings").toString());
+    db.setDatabaseName(global::getSettingsValue("databaseName", "settings").toString());
+    db.setUserName(global::getSettingsValue("userNameDB", "settings").toString());
+    db.setPassword(password);
+    db.setPort(3306);
+    qDebug()<<db.open();
+
+    if (!db.isOpen())
+    {
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.setText(QObject::tr("Невозможно подключиться к базам данных!"));
+        msgBox.exec();
+
+        SettingsWindow *settingsWindow = new SettingsWindow;
+        settingsWindow->setDatabases(db);
+        settingsWindow->exec();
+        settingsWindow->setAttribute(Qt::WA_DeleteOnClose);
+    }
+
     StartWindow startWindow;
     startWindow.show();
 
     return app.exec();
 }
-

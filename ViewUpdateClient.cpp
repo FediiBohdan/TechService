@@ -68,8 +68,8 @@ void ViewUpdateClient::on_saveUpdatedInfo_clicked()
 
     clientContacts.replace(", ", "\n");
 
-    query.prepare("UPDATE ClientsTable SET client_type = ?, client_FML_name = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, mileage = ?, auto_license_plate = ?, manufacture_year = ?, "
-        "VIN_number = ? WHERE id_client = ?");
+    query.prepare("UPDATE clients_table SET client_type = ?, client_fml_name = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, mileage = ?, auto_license_plate = ?, manufacture_year = ?, "
+        "vin_number = ? WHERE id_client = ?");
 
     query.addBindValue(ui->clientTypeComboBox->currentText());
     query.addBindValue(clientFMLname);
@@ -95,8 +95,8 @@ void ViewUpdateClient::setValues(const QString &id)
 
     QSqlQuery query(clientsDB);
 
-    query.prepare("SELECT DISTINCT client_type, client_FML_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
-        "VIN_number FROM ClientsTable WHERE id_client = " + clientId);
+    query.prepare("SELECT DISTINCT client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
+        "vin_number FROM clients_table WHERE id_client = " + clientId);
     query.exec();
     query.next();
 
@@ -126,7 +126,7 @@ void ViewUpdateClient::loadOrderHistoryTable()
     queryModel = new QSqlQueryModel(this);
 
     QString queryString = "SELECT id_order, order_status, creation_date, client_type, client, auto_brand, auto_model, "
-        "service_address, price FROM OrdersHistory WHERE client = '" + ui->clientFMLname->text() + "' AND contacts LIKE '%" + ui->contacts->text() +"%'";
+        "service_address, price FROM orders_history WHERE client = '" + ui->clientFMLname->text() + "' AND contacts LIKE '%" + ui->contacts->text() +"%'";
 
     queryModel->setQuery(queryString);
 
