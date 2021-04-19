@@ -26,6 +26,7 @@ public slots:
 
 private slots:
     void on_saveUpdatedInfo_clicked();
+    void on_deleteSparePartButton_clicked();
     void on_updateSparePartInfoButton_clicked();
 
     void closeEvent(QCloseEvent *);

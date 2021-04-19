@@ -544,6 +544,7 @@ QPushButton:pressed {
   <tabstop>autoModelLine</tabstop>
   <tabstop>manufactureYearLine</tabstop>
   <tabstop>autoLicensePlateLine</tabstop>
+  <tabstop>mileageLine</tabstop>
   <tabstop>VINnumberLine</tabstop>
   <tabstop>saveClientButton</tabstop>
  </tabstops>

@@ -121,8 +121,11 @@ void AddOrder::on_addSparePartsButton_clicked()
 
     QSqlQuery queryOrders(ordersHistoryTable);
 
-    queryOrders.prepare("INSERT INTO orders_history (client, contacts, auto_brand) VALUES(?, ?, ?)");
+    queryOrders.prepare("INSERT INTO orders_history (client_type, client, creation_date, creation_time, contacts, auto_brand) VALUES(?, ?, ?, ?, ?, ?)");
+    queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(ui->clientLine->text());
+    queryOrders.addBindValue(ui->dateLine->text());
+    queryOrders.addBindValue(ui->timeLine->text());
     queryOrders.addBindValue(ui->contactLine->text());
     queryOrders.addBindValue(ui->brandLine->text());
     queryOrders.exec();

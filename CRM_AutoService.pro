@@ -30,13 +30,16 @@ SOURCES += main.cpp \
     ListOrders.cpp \
     ListSpareParts.cpp \
     ListTasks.cpp \
+    Notification.cpp \
+    NotificationOrder.cpp \
     SettingsWindow.cpp \
     StartWindow.cpp \
     ViewUpdateClient.cpp \
     ViewUpdateEmployee.cpp \
     ViewUpdateOrder.cpp \
     ViewUpdateSparePart.cpp \
-    ViewUpdateTask.cpp
+    ViewUpdateTask.cpp \
+    notificationsparepart.cpp
 
 FORMS += \
     AddClient.ui \
@@ -71,13 +74,16 @@ HEADERS += \
     ListOrders.h \
     ListSpareParts.h \
     ListTasks.h \
+    Notification.h \
+    NotificationOrder.h \
     SettingsWindow.h \
     StartWindow.h \
     ViewUpdateClient.h \
     ViewUpdateEmployee.h \
     ViewUpdateOrder.h \
     ViewUpdateSparePart.h \
-    ViewUpdateTask.h
+    ViewUpdateTask.h \
+    notificationsparepart.h
 
 RESOURCES += qml.qrc \
     images.qrc \

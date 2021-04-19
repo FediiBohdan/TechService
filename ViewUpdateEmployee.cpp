@@ -81,5 +81,32 @@ void ViewUpdateEmployee::on_updateEmployeeInfoButton_clicked()
     ui->workerPosition->setReadOnly(false);
     ui->serviceNumber->setReadOnly(false);
     ui->hourlyPayment->setReadOnly(false);
+    ui->deleteEmployeeButton->setEnabled(true);
     ui->saveUpdatedInfo->setEnabled(true);
+}
+
+void ViewUpdateEmployee::on_deleteEmployeeButton_clicked()
+{
+    QSqlQuery queryRemoveEmployee(employeesTable);
+
+    int msgBox = QMessageBox::information(this, tr("Предупреждение"), tr("Вы уверены, что хотите удалить сотрудника?"), QMessageBox::Ok, QMessageBox::Cancel);
+
+    switch (msgBox)
+    {
+    case QMessageBox::Ok:
+
+        queryRemoveEmployee.prepare("DELETE FROM employees_table WHERE id_employee = ?");
+        queryRemoveEmployee.addBindValue(employeeId);
+        queryRemoveEmployee.exec();
+
+        QDialog::close();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("Сотрудник успешно удален!"), QMessageBox::Ok);
+        break;
+    case QMessageBox::Cancel:
+        return;
+        break;
+    default:
+        break;
+    }
 }

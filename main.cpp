@@ -52,15 +52,15 @@ int main(int argc, char *argv[])
     }
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    QByteArray byte_password = global::getSettingsValue("passwordDB", "settings").toByteArray();
-    QString password = QString(QByteArray::fromBase64(byte_password));
+    QByteArray bytePassword = global::getSettingsValue("passwordDB", "settings").toByteArray();
+    QString password = QString(QByteArray::fromBase64(bytePassword));
 
     db.setHostName(global::getSettingsValue("hostName", "settings").toString());
     db.setDatabaseName(global::getSettingsValue("databaseName", "settings").toString());
     db.setUserName(global::getSettingsValue("userNameDB", "settings").toString());
     db.setPassword(password);
     db.setPort(3306);
-    qDebug()<<db.open();
+    db.open();
 
     if (!db.isOpen())
     {
@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
         msgBox.exec();
 
         SettingsWindow *settingsWindow = new SettingsWindow;
-        settingsWindow->setDatabases(db);
         settingsWindow->exec();
         settingsWindow->setAttribute(Qt::WA_DeleteOnClose);
     }

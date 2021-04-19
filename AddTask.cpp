@@ -41,6 +41,8 @@ void AddTask::on_createTaskButton_clicked()
 {
     QSqlQuery queryTasks(listTasksTable);
 
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+
     QString time = ui->timeLine->text();
     QString date = ui->dateLine->text();
     QString content = ui->contentLine->toPlainText();
@@ -55,16 +57,22 @@ void AddTask::on_createTaskButton_clicked()
 
     QString isFulfilled = "0";
 
-    queryTasks.prepare("INSERT INTO tasks_table (time, date, content, is_fulfilled) "
-        "VALUES(?, ?, ?, ?)");
+    if (!userLogin.isEmpty())
+    {
+        queryTasks.prepare("INSERT INTO tasks_table (time, date, content, is_fulfilled, user) "
+            "VALUES(?, ?, ?, ?, ?)");
 
-    queryTasks.addBindValue(time);
-    queryTasks.addBindValue(date);
-    queryTasks.addBindValue(content);
-    queryTasks.addBindValue(isFulfilled);
-    queryTasks.exec();
+        queryTasks.addBindValue(time);
+        queryTasks.addBindValue(date);
+        queryTasks.addBindValue(content);
+        queryTasks.addBindValue(isFulfilled);
+        queryTasks.addBindValue(userLogin);
+        queryTasks.exec();
 
-    QDialog::close();
+        QDialog::close();
 
-    QMessageBox::information(this, tr("Уведомление"), tr("Задание успешно создано!"), QMessageBox::Ok);
+        QMessageBox::information(this, tr("Уведомление"), tr("Задание успешно создано!"), QMessageBox::Ok);
+    }
+    else
+        QMessageBox::information(this, tr("Предупреждение"), tr("Пользователь не зарегистрирован!"), QMessageBox::Ok);
 }

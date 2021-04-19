@@ -95,5 +95,32 @@ void ViewUpdateSparePart::on_updateSparePartInfoButton_clicked()
     ui->autoCompatibilityLine->setReadOnly(false);
     ui->isOriginalLine->setReadOnly(false);
     ui->priceLine->setReadOnly(false);
+    ui->deleteSparePartButton->setEnabled(true);
     ui->saveUpdatedInfo->setEnabled(true);
+}
+
+void ViewUpdateSparePart::on_deleteSparePartButton_clicked()
+{
+    QSqlQuery queryRemoveSparePart(sparePartsTable);
+
+    int msgBox = QMessageBox::information(this, tr("Предупреждение"), tr("Вы уверены, что хотите удалить запчасть?"), QMessageBox::Ok, QMessageBox::Cancel);
+
+    switch (msgBox)
+    {
+    case QMessageBox::Ok:
+
+        queryRemoveSparePart.prepare("DELETE FROM spare_parts_catalogue WHERE id_spare_part = ?");
+        queryRemoveSparePart.addBindValue(sparePartId);
+        queryRemoveSparePart.exec();
+
+        QDialog::close();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("Запчасть успешно удалена!"), QMessageBox::Ok);
+        break;
+    case QMessageBox::Cancel:
+        return;
+        break;
+    default:
+        break;
+    }
 }

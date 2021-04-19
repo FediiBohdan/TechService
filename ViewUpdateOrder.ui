@@ -2654,6 +2654,9 @@ QPushButton:pressed {
         </item>
         <item row="1" column="0">
          <widget class="QTextEdit" name="worksList">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="maximumSize">
            <size>
             <width>324</width>
@@ -2893,6 +2896,9 @@ QPushButton:pressed {
    </item>
    <item row="0" column="0">
     <widget class="QPushButton" name="updateOrderInfoButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="minimumSize">
       <size>
        <width>40</width>
@@ -2939,6 +2945,7 @@ QPushButton:pressed {
   </layout>
  </widget>
  <tabstops>
+  <tabstop>updateOrderInfoButton</tabstop>
   <tabstop>clientTypeComboBox</tabstop>
   <tabstop>clientLine</tabstop>
   <tabstop>contactLine</tabstop>
@@ -2953,6 +2960,7 @@ QPushButton:pressed {
   <tabstop>discountsComboBox</tabstop>
   <tabstop>orderStatusComboBox</tabstop>
   <tabstop>sparePartsSearch</tabstop>
+  <tabstop>usedSparePartsTableView</tabstop>
   <tabstop>mechanicHoursLine</tabstop>
   <tabstop>clearMechanicButton</tabstop>
   <tabstop>mechanic2HoursLine</tabstop>
@@ -2967,7 +2975,9 @@ QPushButton:pressed {
   <tabstop>clearWasherButton</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
+  <tabstop>receptionLine</tabstop>
   <tabstop>saveUpdatedInfo</tabstop>
+  <tabstop>deleteOrderButton</tabstop>
  </tabstops>
  <resources>
   <include location="images.qrc"/>

@@ -18,14 +18,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     if (registerLanguage.isEmpty())
        ui->languageSelection->setCurrentIndex(0);
 
-    QByteArray byte_password = global::getSettingsValue("passwordDB", "settings").toByteArray();
-    QString password = QString(QByteArray::fromBase64(byte_password));
-    ui->hostName->setText(global::getSettingsValue("hostName", "settings").toString());
-    ui->dbName->setText(global::getSettingsValue("databaseName", "settings").toString());
-    ui->userName->setText(global::getSettingsValue("userNameDB", "settings").toString());
-    ui->dbPassword->setText(password);
-    //ui->port->setText(global::getSettingsValue("port_1", "settings").toString());
-
     loadSettings();
     setUserInfo();
 }
@@ -41,12 +33,16 @@ void SettingsWindow::changeEvent(QEvent *event)
         ui->retranslateUi(this);
 }
 
+//sets user settings to window fields
 void SettingsWindow::setUserInfo()
 {
     QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
     QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
     QString registerUserThirdName = global::getSettingsValue("userThirdName", "settings").toString();
     QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
+    QString registerUserLogin = global::getSettingsValue("userLogin", "settings").toString();
+    QByteArray byteUserPassword = global::getSettingsValue("userPassword", "settings").toByteArray();
+    QString userPassword = QString(QByteArray::fromBase64(byteUserPassword));
 
     if (!registerUserFirstName.isEmpty())
         ui->userFirstName->setText(registerUserFirstName);
@@ -59,6 +55,12 @@ void SettingsWindow::setUserInfo()
 
     if (!registerUserPosition.isEmpty())
         ui->userPosition->setText(registerUserPosition);
+
+    if (!registerUserLogin.isEmpty())
+        ui->userLogin->setText(registerUserLogin);
+
+    if (!userPassword.isEmpty())
+        ui->userPassword->setText(userPassword);
 }
 
 void SettingsWindow::setLanguage()
@@ -88,9 +90,17 @@ void SettingsWindow::setLanguage()
     saveSettings();
 }
 
+//sets DB settings to window fields
 void SettingsWindow::loadSettings()
 {
     ui->languageSelection->setCurrentText(global::getSettingsValue("language", "settings").toString());
+
+    QByteArray bytePassword = global::getSettingsValue("passwordDB", "settings").toByteArray();
+    QString password = QString(QByteArray::fromBase64(bytePassword));
+    ui->hostName->setText(global::getSettingsValue("hostName", "settings").toString());
+    ui->dbName->setText(global::getSettingsValue("databaseName", "settings").toString());
+    ui->userName->setText(global::getSettingsValue("userNameDB", "settings").toString());
+    ui->dbPassword->setText(password);
 }
 
 void SettingsWindow::saveSettings()
@@ -101,36 +111,46 @@ void SettingsWindow::saveSettings()
 void SettingsWindow::on_saveSettingsButton_clicked()
 {
     saveUserData();
-    setSettingsDb();
 
-    if (!m_db.isOpen())
-    {
+    if (!db.isOpen())
         setSettingsDb();
 
-        QMessageBox::information(this, tr("Предупреждение"), tr("Невозможно подключиться к базам данных!"), QMessageBox::Ok);
+    QDialog::close();
 
-        QDialog::close();
-    }
-    else if (!m_db.isOpen())
-    {
-        openDb();
-
-        QMessageBox::information(this, tr("Уведомление"), tr("Подключение успешно создано!"), QMessageBox::Ok);
-    }
-
-    QMessageBox::information(this, tr("Уведомление"), tr("Настройки успешно сохранены!"), QMessageBox::Ok);
+    if (userError == true)
+        QMessageBox::information(this, tr("Уведомление"), tr("Такого пользователя не существует!\nДругие настройки успешно сохранены!"), QMessageBox::Ok);
+    else
+        QMessageBox::information(this, tr("Уведомление"), tr("Настройки успешно сохранены!"), QMessageBox::Ok);
 }
 
+/**
+ * checks whether the user exists then saves user settings to register
+ * and passes params to StartWindow
+ */
 void SettingsWindow::saveUserData()
 {
     QString userFirstName = ui->userFirstName->text();
     QString userSecondName = ui->userSecondName->text();
     QString userPosition = ui->userPosition->text();
 
+    global::setSettingsValue("userLogin", ui->userLogin->text(), "settings");
+    QByteArray userPassword;
+    userPassword.append(ui->userPassword->text().toLatin1());
+    global::setSettingsValue("userPassword", userPassword.toBase64(), "settings");
     global::setSettingsValue("userFirstName", userFirstName, "settings");
     global::setSettingsValue("userSecondName", userSecondName, "settings");
     global::setSettingsValue("userThirdName", ui->userThirdName->text(), "settings");
     global::setSettingsValue("userPosition", userPosition, "settings");
+
+    QSqlQuery queryCheckUser(db);
+
+    queryCheckUser.prepare("SELECT user_login, user_password FROM users_table WHERE (user_login = '" + ui->userLogin->text() + "' AND user_password = '" + ui->userPassword->text() + "')");
+    queryCheckUser.exec();
+
+    if (queryCheckUser.first() == 0)
+        userError = true;
+    else
+        userError = false;
 
     QString userFSname = userFirstName.append(" " + userSecondName);
 
@@ -142,23 +162,19 @@ void SettingsWindow::setSettingsDb()
     global::setSettingsValue("hostName", ui->hostName->text(), "settings");
     global::setSettingsValue("databaseName", ui->dbName->text(), "settings");
     global::setSettingsValue("userNameDB", ui->userName->text(), "settings");
-    QByteArray password_1;
-    password_1.append(ui->dbPassword->text().toLatin1());
-    global::setSettingsValue("passwordDB", password_1.toBase64(), "settings");
-    //global::setSettingsValue("port_1", ui->port_1->text(), "settings");
-}
+    QByteArray password;
+    password.append(ui->dbPassword->text().toLatin1());
+    global::setSettingsValue("passwordDB", password.toBase64(), "settings");
 
-void SettingsWindow::setDatabases(const QSqlDatabase& db)
-{
-    m_db = db;
+    openDb();
 }
 
 void SettingsWindow::openDb()
 {
-    m_db.setHostName(ui->hostName->text());
-    m_db.setDatabaseName(ui->dbName->text());
-    m_db.setUserName(ui->userName->text());
-    m_db.setPassword(ui->dbPassword->text());
-    m_db.setPort(3306);
-    m_db.open();
+    db.setHostName(ui->hostName->text());
+    db.setDatabaseName(ui->dbName->text());
+    db.setUserName(ui->userName->text());
+    db.setPassword(ui->dbPassword->text());
+    db.setPort(3306);
+    db.open();
 }

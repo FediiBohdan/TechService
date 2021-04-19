@@ -31,17 +31,18 @@ public slots:
 private slots:
     void closeEvent(QCloseEvent *);
 
+    void loadUserSettings();
     void loadOrderHistoryTable();
+
     void on_saveUpdatedInfo_clicked();
-
-    void on_updateInfoButton_clicked();
-
+    void on_updateInfoButton_clicked();    
+    void on_deleteClientButton_clicked();
     void on_createOrderByClientButton_clicked();
 
 private:
     Ui::ViewUpdateClient *ui;
 
-    QSqlDatabase clientsDB;
+    QSqlDatabase clientsTable;
     QPointer<QSqlQueryModel> queryModel;
 
     AddOrder *addOrder;

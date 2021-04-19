@@ -48,6 +48,9 @@ border-radius: 7px;
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="2">
        <widget class="QPushButton" name="orderCreationButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>40</width>
@@ -197,6 +200,9 @@ QPushButton:pressed {
       </item>
       <item row="0" column="3">
        <widget class="QPushButton" name="csvExportButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>40</width>

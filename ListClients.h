@@ -31,13 +31,14 @@ public:
 
 private slots:
     void loadTable();
+    void loadUserSettings();
     void saveAsCSV(QString fileName);
     void showClientInfo(const QModelIndex &index);
 
-    void on_addClientButton_clicked();
-    void on_clientSearch_returnPressed();
     void on_updateButton_clicked();
     void on_csvExportButton_clicked();
+    void on_addClientButton_clicked();
+    void on_clientSearch_returnPressed();
 
 private:
     Ui::ListClients *ui;

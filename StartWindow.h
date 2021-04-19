@@ -75,6 +75,7 @@ private slots:
     void showTime();
     void loadTasksList();    
     void updateTasksList();
+    void loadUserSettings();
     void checkBoxStateChanged();
 
     void on_staffButton_clicked();

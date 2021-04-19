@@ -33,6 +33,7 @@ public slots:
 
 private slots:
     void setDateAndTime();    
+    void loadUserSettings();
     void loadEmployeesTable();
     void loadSparePartsTable();
     void updateEmployeesTable();
@@ -73,12 +74,9 @@ private:
     QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
     QPointer<QSqlQueryModel> queryEmployeesHoursModel;
-    QPointer<QSqlQueryModel> queryRemoveEmployeeModel;
-    QPointer<QSqlQueryModel> queryUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
     QPointer<QSqlQueryModel> queryGetUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
-    QPointer<QSqlQueryModel> queryRemoveUsedSparePartsModel;
 
     bool searchFlag;
 

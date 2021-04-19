@@ -2845,7 +2845,9 @@ QPushButton:pressed {
   <tabstop>serviceComboBox</tabstop>
   <tabstop>discountsComboBox</tabstop>
   <tabstop>orderStatusComboBox</tabstop>
+  <tabstop>addSparePartsButton</tabstop>
   <tabstop>sparePartsSearch</tabstop>
+  <tabstop>usedSparePartsTableView</tabstop>
   <tabstop>mechanicHoursLine</tabstop>
   <tabstop>clearMechanicButton</tabstop>
   <tabstop>mechanic2HoursLine</tabstop>
@@ -2860,6 +2862,7 @@ QPushButton:pressed {
   <tabstop>clearWasherButton</tabstop>
   <tabstop>worksList</tabstop>
   <tabstop>feedback</tabstop>
+  <tabstop>receptionLine</tabstop>
   <tabstop>openMapButton</tabstop>
   <tabstop>createOrderButton</tabstop>
  </tabstops>

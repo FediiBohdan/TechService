@@ -38,6 +38,7 @@ StartWindow::StartWindow(QWidget *parent) :
     connect(ui->updateButton, &QAbstractButton::clicked, this, &StartWindow::updateTasksList);
 
     loadTasksList();
+    loadUserSettings();
 }
 
 StartWindow::~StartWindow()
@@ -68,6 +69,41 @@ void StartWindow::setUserData(const QString &userFSname, const QString &userPosi
     ui->positionLabel->setText(userPosition);
 }
 
+void StartWindow::loadUserSettings()
+{
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+    int pos = 0;
+
+    QRegularExpression chiefRegexp("^[1][0-9]{3}$");
+    QRegularExpressionValidator chiefValidator(chiefRegexp, this);
+
+    QRegularExpression managerRegexp("^[2][0-9]{3}$");
+    QRegularExpressionValidator managerValidator(managerRegexp, this);
+
+    QRegularExpression techEmployeeRegexp("^[3][0-9]{3}$");
+    QRegularExpressionValidator techEmployeeValidator(techEmployeeRegexp, this);
+
+    if (chiefValidator.validate(userLogin, pos) || managerValidator.validate(userLogin, pos))
+    {
+        ui->updateButton->setEnabled(true);
+        ui->desktopButton->setEnabled(true);
+        ui->orderFormationButton->setEnabled(true);
+        ui->clientsButton->setEnabled(true);
+        ui->staffButton->setEnabled(true);
+        ui->catalogueButton->setEnabled(true);
+        ui->todolistButton->setEnabled(true);
+    }
+    else if (techEmployeeValidator.validate(userLogin, pos))
+    {
+        ui->updateButton->setEnabled(true);
+        ui->desktopButton->setEnabled(true);
+        ui->orderFormationButton->setEnabled(true);
+        ui->clientsButton->setEnabled(true);
+        ui->catalogueButton->setEnabled(true);
+        ui->todolistButton->setEnabled(true);
+    }
+}
+
 void StartWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -86,7 +122,9 @@ void StartWindow::loadTasksList()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_to_do_list, content FROM tasks_table";
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+
+    QString queryString = "SELECT id_to_do_list, content FROM tasks_table WHERE user = " + userLogin;
 
     queryModel->setQuery(queryString, listTasksTable);
 
@@ -123,6 +161,8 @@ void StartWindow::loadTasksList()
 
 QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)
 {
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
     QCheckBox *checkBox = new QCheckBox(widget);
@@ -131,7 +171,7 @@ QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)
 
     queryModelCheckBox = new QSqlQueryModel(this);
 
-    QString queryStringCheckBox = "SELECT is_fulfilled FROM tasks_table";
+    QString queryStringCheckBox = "SELECT is_fulfilled FROM tasks_table WHERE user = " + userLogin;
 
     queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
 

@@ -28,7 +28,9 @@ void ListTasks::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_to_do_list, time, date FROM tasks_table";
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+
+    QString queryString = "SELECT id_to_do_list, time, date, user FROM tasks_table WHERE user = " + userLogin;
 
     queryModel->setQuery(queryString);
 
@@ -39,10 +41,12 @@ void ListTasks::loadTable()
     queryModel->setHeaderData(3, Qt::Horizontal, tr("Содержание"));
     queryModel->insertColumn(4);
     queryModel->setHeaderData(4, Qt::Horizontal, tr("Выполнено"));
+    queryModel->setHeaderData(5, Qt::Horizontal, tr("Пользователь"));
 
     ui->tableView->setModel(queryModel);
 
     ui->tableView->setColumnHidden(0, true);
+    ui->tableView->setColumnHidden(5, true);
 
     for (int rowIndex = 0; rowIndex < ui->tableView->model()->rowCount(); ++rowIndex)
     {
@@ -53,10 +57,13 @@ void ListTasks::loadTable()
     ui->tableView->resizeRowsToContents();
     ui->tableView->resizeColumnsToContents();
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->tableView->setColumnWidth(3, 550);
 }
 
 QWidget* ListTasks::addWidgetContent(int rowIndex)
 {
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
     QLabel *taskContentLabel = new QLabel(widget);
@@ -65,9 +72,9 @@ QWidget* ListTasks::addWidgetContent(int rowIndex)
 
     queryModelLabel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT content FROM tasks_table";
+    QString queryString = "SELECT content FROM tasks_table WHERE user = " + userLogin;
 
-    queryModelLabel->setQuery(queryString, listTasksTable);
+    queryModelLabel->setQuery(queryString);
 
     QString taskContent = queryModelLabel->data(queryModelLabel->index(rowIndex, 0), Qt::EditRole).toString();
 
@@ -80,6 +87,8 @@ QWidget* ListTasks::addWidgetContent(int rowIndex)
 
 QWidget* ListTasks::addCheckBoxCompleted(int rowIndex)
 {
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+
     QWidget *widget = new QWidget(this);
     QHBoxLayout *layout = new QHBoxLayout(widget);
     QCheckBox *checkBox = new QCheckBox(widget);
@@ -88,9 +97,9 @@ QWidget* ListTasks::addCheckBoxCompleted(int rowIndex)
 
     queryModelCheckBox = new QSqlQueryModel(this);
 
-    QString queryStringCheckBox = "SELECT is_fulfilled FROM tasks_table";
+    QString queryStringCheckBox = "SELECT is_fulfilled FROM tasks_table WHERE user = " + userLogin;
 
-    queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
+    queryModelCheckBox->setQuery(queryStringCheckBox);
 
     QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(rowIndex, 0), Qt::EditRole).toString();
 

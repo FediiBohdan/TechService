@@ -93,5 +93,32 @@ void ViewUpdateTask::on_updateTaskButton_clicked()
     ui->updateTaskButton->setEnabled(false);
     ui->checkBox->setCheckable(true);
     ui->contentLine->setReadOnly(false);
+    ui->deleteTaskButton->setEnabled(true);
     ui->saveUpdatedInfo->setEnabled(true);
+}
+
+void ViewUpdateTask::on_deleteTaskButton_clicked()
+{
+    QSqlQuery queryRemoveTask(listTasksTable);
+
+    int msgBox = QMessageBox::information(this, tr("Предупреждение"), tr("Вы уверены, что хотите удалить задание?"), QMessageBox::Ok, QMessageBox::Cancel);
+
+    switch (msgBox)
+    {
+    case QMessageBox::Ok:
+
+        queryRemoveTask.prepare("DELETE FROM tasks_table WHERE id_to_do_list = ?");
+        queryRemoveTask.addBindValue(taskId);
+        queryRemoveTask.exec();
+
+        QDialog::close();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("Задание успешно удалено!"), QMessageBox::Ok);
+        break;
+    case QMessageBox::Cancel:
+        return;
+        break;
+    default:
+        break;
+    }
 }

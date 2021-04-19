@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QDialog>
 #include <QProcess>
+#include <QSqlQuery>
+#include <QValidator>
 #include <QTranslator>
 #include <QMessageBox>
 #include <QApplication>
@@ -22,8 +24,6 @@ class SettingsWindow : public QDialog
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
-
-    void setDatabases(const QSqlDatabase &db);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -42,7 +42,9 @@ private slots:
 private:
     Ui::SettingsWindow *ui;
 
-    QSqlDatabase m_db;
+    QSqlDatabase db;
+
+    bool userError = false;
 
     //QTranslator translator;
 

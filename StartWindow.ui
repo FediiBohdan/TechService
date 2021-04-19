@@ -75,6 +75,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
             <widget class="QPushButton" name="desktopButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>84</width>
@@ -192,6 +195,9 @@ border:none;
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="QPushButton" name="orderFormationButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>84</width>
@@ -214,7 +220,7 @@ border:none;
               <bool>false</bool>
              </property>
              <property name="toolTip">
-              <string>Открыть форму оформления заказа</string>
+              <string>Открыть список заказов</string>
              </property>
              <property name="autoFillBackground">
               <bool>false</bool>
@@ -321,6 +327,9 @@ border: none;
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <widget class="QPushButton" name="clientsButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>84</width>
@@ -337,7 +346,7 @@ border: none;
               <bool>false</bool>
              </property>
              <property name="toolTip">
-              <string>Открыть статистику по СТО</string>
+              <string>Открыть список клиентов</string>
              </property>
              <property name="autoFillBackground">
               <bool>false</bool>
@@ -438,6 +447,9 @@ border: none;
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
             <widget class="QPushButton" name="staffButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>84</width>
@@ -454,7 +466,7 @@ border: none;
               <bool>false</bool>
              </property>
              <property name="toolTip">
-              <string>Открыть статистику по СТО</string>
+              <string>Открыть список сотрудников</string>
              </property>
              <property name="autoFillBackground">
               <bool>false</bool>
@@ -561,6 +573,9 @@ border: none;
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
             <widget class="QPushButton" name="catalogueButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>84</width>
@@ -577,7 +592,7 @@ border: none;
               <bool>false</bool>
              </property>
              <property name="toolTip">
-              <string>Открыть доступные каталоги</string>
+              <string>Открыть список запчастей</string>
              </property>
              <property name="autoFillBackground">
               <bool>false</bool>
@@ -678,6 +693,9 @@ border: none;
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <widget class="QPushButton" name="todolistButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>84</width>
@@ -814,7 +832,7 @@ border: none;
               <bool>false</bool>
              </property>
              <property name="toolTip">
-              <string>Открыть статистику по СТО</string>
+              <string>Открыть настройки</string>
              </property>
              <property name="autoFillBackground">
               <bool>false</bool>
@@ -1259,6 +1277,9 @@ border: none;
            </property>
            <item row="0" column="2">
             <widget class="QPushButton" name="updateButton">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>

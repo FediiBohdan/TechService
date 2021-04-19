@@ -31,14 +31,15 @@ public:
 
 private slots:
     void loadTable();
+    void loadUserSettings();
+    void checkBoxStateChanged();
     void saveAsCSV(QString fileName);
     void showOrderInfo(const QModelIndex &index);
-    void checkBoxStateChanged();
 
-    void on_orderCreationButton_clicked();
-    void on_updateButton_clicked();
-    void on_orderSearch_returnPressed();
+    void on_updateButton_clicked();    
     void on_csvExportButton_clicked();
+    void on_orderSearch_returnPressed();
+    void on_orderCreationButton_clicked();
 
 private:
     Ui::ListOrders *ui;

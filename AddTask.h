@@ -1,6 +1,7 @@
 #ifndef ADDTASK_H
 #define ADDTASK_H
 
+#include "Global.h"
 #include "ListTasks.h"
 
 #include <QDate>

@@ -22,6 +22,7 @@ ListOrders::ListOrders(QWidget *parent) :
     searchFlag = false;
 
     loadTable();
+    loadUserSettings();
 }
 
 ListOrders::~ListOrders()
@@ -74,6 +75,24 @@ void ListOrders::loadTable()
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->tableView->resizeColumnsToContents();
     ui->tableView->resizeRowsToContents();
+}
+
+void ListOrders::loadUserSettings()
+{
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+    int pos = 0;
+
+    QRegularExpression chiefRegexp("^[1][0-9]{3}$");
+    QRegularExpressionValidator chiefValidator(chiefRegexp, this);
+
+    QRegularExpression managerRegexp("^[2][0-9]{3}$");
+    QRegularExpressionValidator managerValidator(managerRegexp, this);
+
+    if (chiefValidator.validate(userLogin, pos) || managerValidator.validate(userLogin, pos))
+    {
+        ui->orderCreationButton->setEnabled(true);
+        ui->csvExportButton->setEnabled(true);
+    }
 }
 
 QWidget* ListOrders::addCheckBoxCompleted(int rowIndex)

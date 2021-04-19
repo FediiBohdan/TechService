@@ -16,6 +16,8 @@ ViewUpdateClient::ViewUpdateClient(QWidget *parent) :
 
     ui->clientTypeComboBox->addItems(QStringList() << tr("Физ. лицо") << tr("Юр. лицо"));
     ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+    loadUserSettings();
 }
 
 ViewUpdateClient::~ViewUpdateClient()
@@ -34,7 +36,7 @@ void ViewUpdateClient::closeEvent(QCloseEvent *)
 
 void ViewUpdateClient::on_saveUpdatedInfo_clicked()
 {
-    QSqlQuery query(clientsDB);
+    QSqlQuery query(clientsTable);
 
     QString clientFMLname = ui->clientFMLname->text();
     QString clientContacts = ui->contacts->text();
@@ -93,7 +95,7 @@ void ViewUpdateClient::setValues(const QString &id)
 {
     clientId = id;
 
-    QSqlQuery query(clientsDB);
+    QSqlQuery query(clientsTable);
 
     query.prepare("SELECT DISTINCT client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
         "vin_number FROM clients_table WHERE id_client = " + clientId);
@@ -149,9 +151,27 @@ void ViewUpdateClient::loadOrderHistoryTable()
     ui->tableView->resizeRowsToContents();
 }
 
+void ViewUpdateClient::loadUserSettings()
+{
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+    int pos = 0;
+
+    QRegularExpression chiefRegexp("^[1][0-9]{3}$");
+    QRegularExpressionValidator chiefValidator(chiefRegexp, this);
+
+    QRegularExpression managerRegexp("^[2][0-9]{3}$");
+    QRegularExpressionValidator managerValidator(managerRegexp, this);
+
+    if (chiefValidator.validate(userLogin, pos) || managerValidator.validate(userLogin, pos))
+    {
+        ui->updateInfoButton->setEnabled(true);
+        ui->createOrderByClientButton->setEnabled(true);
+    }
+}
+
 void ViewUpdateClient::on_updateInfoButton_clicked()
 {
-    ui->updateInfoButton->setEnabled(false);
+    ui->updateInfoButton->setEnabled(false);    
     ui->clientTypeComboBox->setEnabled(true);
     ui->clientFMLname->setReadOnly(false);
     ui->contacts->setReadOnly(false);
@@ -162,6 +182,7 @@ void ViewUpdateClient::on_updateInfoButton_clicked()
     ui->manufactureYear->setReadOnly(false);
     ui->autoLicensePlate->setReadOnly(false);
     ui->VINnumber->setReadOnly(false);
+    ui->deleteClientButton->setEnabled(true);
     ui->saveUpdatedInfo->setEnabled(true);
 }
 
@@ -177,4 +198,30 @@ void ViewUpdateClient::on_createOrderByClientButton_clicked()
     addOrder->setValues(clientName, contacts, autoBrand);
     addOrder->show();
     addOrder->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void ViewUpdateClient::on_deleteClientButton_clicked()
+{
+    QSqlQuery queryRemoveClient(clientsTable);
+
+    int msgBox = QMessageBox::information(this, tr("Предупреждение"), tr("Вы уверены, что хотите удалить клиента?"), QMessageBox::Ok, QMessageBox::Cancel);
+
+    switch (msgBox)
+    {
+    case QMessageBox::Ok:
+
+        queryRemoveClient.prepare("DELETE FROM clients_table WHERE id_client = ?");
+        queryRemoveClient.addBindValue(clientId);
+        queryRemoveClient.exec();
+
+        QDialog::close();
+
+        QMessageBox::information(this, tr("Уведомление"), tr("Клиент успешно удален!"), QMessageBox::Ok);
+        break;
+    case QMessageBox::Cancel:
+        return;
+        break;
+    default:
+        break;
+    }
 }

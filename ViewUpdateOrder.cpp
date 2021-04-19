@@ -31,8 +31,9 @@ ViewUpdateOrder::ViewUpdateOrder(QWidget *parent) :
 
     setDateAndTime();
 
-    loadSparePartsTable();
+    loadUserSettings();
     loadEmployeesTable();
+    loadSparePartsTable();
 }
 
 ViewUpdateOrder::~ViewUpdateOrder()
@@ -990,6 +991,21 @@ void ViewUpdateOrder::on_clearWasherButton_clicked()
     ui->washerHoursLine->setText("");
 }
 
+void ViewUpdateOrder::loadUserSettings()
+{
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+    int pos = 0;
+
+    QRegularExpression chiefRegexp("^[1][0-9]{3}$");
+    QRegularExpressionValidator chiefValidator(chiefRegexp, this);
+
+    QRegularExpression managerRegexp("^[2][0-9]{3}$");
+    QRegularExpressionValidator managerValidator(managerRegexp, this);
+
+    if (chiefValidator.validate(userLogin, pos) || managerValidator.validate(userLogin, pos))
+        ui->updateOrderInfoButton->setEnabled(true);
+}
+
 void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
 {
     ui->updateOrderInfoButton->setEnabled(false);
@@ -1022,7 +1038,7 @@ void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
     ui->clearElectronicButton->setEnabled(true);
     ui->clearLocksmithButton->setEnabled(true);
     ui->clearWasherButton->setEnabled(true);
-    ui->worksList->setEnabled(true);
+    ui->worksList->setReadOnly(false);
     ui->feedback->setReadOnly(false);
     ui->receptionLine->setReadOnly(false);
     ui->deleteOrderButton->setEnabled(true);
@@ -1031,7 +1047,7 @@ void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
 
 void ViewUpdateOrder::on_deleteOrderButton_clicked()
 {
-    QSqlQuery queryRemoveOrderModel(ordersTable);
+    QSqlQuery queryRemoveOrder(ordersTable);
 
     int msgBox = QMessageBox::information(this, tr("Предупреждение"), tr("Вы уверены, что хотите удалить заказ?"), QMessageBox::Ok, QMessageBox::Cancel);
 
@@ -1039,9 +1055,9 @@ void ViewUpdateOrder::on_deleteOrderButton_clicked()
     {
     case QMessageBox::Ok:
 
-        queryRemoveOrderModel.prepare("DELETE FROM orders_history WHERE id_order = ?");
-        queryRemoveOrderModel.addBindValue(orderId);
-        queryRemoveOrderModel.exec();
+        queryRemoveOrder.prepare("DELETE FROM orders_history WHERE id_order = ?");
+        queryRemoveOrder.addBindValue(orderId);
+        queryRemoveOrder.exec();
 
         QDialog::close();
 
