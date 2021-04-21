@@ -112,101 +112,25 @@ QPushButton:pressed {
         <property name="spacing">
          <number>3</number>
         </property>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="userPassword">
+        <item row="5" column="2">
+         <widget class="QComboBox" name="serviceComboBox">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QLineEdit {
+           <string notr="true">QComboBox {
 	border: 1px solid gray;
-    border-radius: 7px;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
     background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-          </property>
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="label_2">
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {
-	border: 0px;
-	background-color: transparent;
-}
-</string>
-          </property>
-          <property name="text">
-           <string>Имя</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {
-	border: 0px;
-	background-color: transparent;
-}
-</string>
-          </property>
-          <property name="text">
-           <string>Фамилия</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLineEdit" name="userLogin">
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
+	padding-left: 6px;
 }</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="font">
-           <font>
-            <pointsize>9</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {
-	border: 0px;
-	background-color: transparent;
-}
-</string>
-          </property>
-          <property name="text">
-           <string>Логин</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
+        <item row="6" column="2">
          <widget class="QLabel" name="label_8">
           <property name="font">
            <font>
@@ -225,7 +149,7 @@ QPushButton:pressed {
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
+        <item row="5" column="1">
          <widget class="QLineEdit" name="userPosition">
           <property name="font">
            <font>
@@ -242,24 +166,7 @@ QPushButton:pressed {
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QLineEdit" name="userFirstName">
-          <property name="font">
-           <font>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="3">
+        <item row="0" column="1" colspan="3">
          <widget class="QFrame" name="frame_2">
           <property name="minimumSize">
            <size>
@@ -327,8 +234,83 @@ QPushButton:pressed {
           </layout>
          </widget>
         </item>
-        <item row="5" column="1">
-         <widget class="QLineEdit" name="userSecondName">
+        <item row="2" column="2">
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	border: 0px;
+	background-color: transparent;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>Фамилия</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLineEdit" name="userFirstName">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QLineEdit" name="userPassword">
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	border: 0px;
+	background-color: transparent;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>Имя</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLineEdit" name="userLogin">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -345,7 +327,7 @@ QPushButton:pressed {
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QLabel" name="label_4">
+         <widget class="QLabel" name="label_7">
           <property name="font">
            <font>
             <pointsize>9</pointsize>
@@ -359,12 +341,12 @@ QPushButton:pressed {
 </string>
           </property>
           <property name="text">
-           <string>Должность</string>
+           <string>Логин</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
-         <widget class="QLineEdit" name="userThirdName">
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="userSecondName">
           <property name="font">
            <font>
             <pointsize>10</pointsize>
@@ -380,7 +362,7 @@ QPushButton:pressed {
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
+        <item row="4" column="2">
          <widget class="QLabel" name="label_3">
           <property name="font">
            <font>
@@ -395,7 +377,26 @@ QPushButton:pressed {
 </string>
           </property>
           <property name="text">
-           <string>Отчество</string>
+           <string>Сервис</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_4">
+          <property name="font">
+           <font>
+            <pointsize>9</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+	border: 0px;
+	background-color: transparent;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>Должность</string>
           </property>
          </widget>
         </item>
@@ -716,10 +717,6 @@ QPushButton:pressed {
   <tabstop>dbPassword</tabstop>
   <tabstop>userLogin</tabstop>
   <tabstop>userPassword</tabstop>
-  <tabstop>userFirstName</tabstop>
-  <tabstop>userSecondName</tabstop>
-  <tabstop>userThirdName</tabstop>
-  <tabstop>userPosition</tabstop>
   <tabstop>saveSettingsButton</tabstop>
  </tabstops>
  <resources>

@@ -260,3 +260,48 @@ void ListSparePart::on_updateButton_clicked()
 
     loadTable();
 }
+
+void ListSparePart::on_notificationCreation_clicked()
+{
+    QVBoxLayout *vLayout = new QVBoxLayout;
+    textEdit = new QTextEdit();
+    vLayout->addWidget(textEdit);
+
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    button = new QPushButton(tr("Сохранить"));
+    hLayout->setAlignment(Qt::AlignRight);
+    hLayout->addWidget(button);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addLayout(vLayout);
+    mainLayout->addLayout(hLayout);
+
+    widget = new QWidget();
+    widget->setLayout(mainLayout);
+    widget->setFixedSize(480, 200);
+    widget->setWindowTitle(tr("Создание заявки"));
+    widget->show();
+
+    connect(button, SIGNAL(released()), this, SLOT(createNotification()));
+}
+
+void ListSparePart::createNotification()
+{
+    QSqlQuery queryNotification(notificationTable);
+
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+    QDate currentDate = QDate::currentDate();
+    QTime currentTime = QTime::currentTime();
+
+    queryNotification.prepare("INSERT INTO order_notification (creator, content, date_creation, time_creation) VALUES(?, ?, ?, ?)");
+
+    queryNotification.addBindValue(userLogin);
+    queryNotification.addBindValue(textEdit->toPlainText());
+    queryNotification.addBindValue(currentDate.toString(Qt::SystemLocaleDate));
+    queryNotification.addBindValue(currentTime.toString(Qt::SystemLocaleDate));
+    queryNotification.exec();
+
+    widget->close();
+
+    QMessageBox::information(widget, tr("Уведомление"), tr("Запчасть успешно добавлена в каталог!"), QMessageBox::Ok);
+}

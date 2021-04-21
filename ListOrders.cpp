@@ -91,7 +91,7 @@ void ListOrders::loadUserSettings()
     if (chiefValidator.validate(userLogin, pos) || managerValidator.validate(userLogin, pos))
     {
         ui->orderCreationButton->setEnabled(true);
-        ui->csvExportButton->setEnabled(true);
+        ui->csvExportButton->setEnabled(true);        
     }
 }
 

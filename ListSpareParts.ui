@@ -25,6 +25,8 @@
 
 QMessageBox {
 	background-color: white;
+	min-width: 320 px;
+	height: 90px;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_14">
@@ -75,7 +77,71 @@ border-radius: 7px;
         </property>
        </widget>
       </item>
-      <item row="0" column="5">
+      <item row="0" column="4">
+       <widget class="QPushButton" name="csvExportButton">
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+	background-color: #dbdcf7;
+	border: 1px solid #999999;
+}
+
+QPushButton:hover {
+	background-color: #d5d6f0;
+	border: 1px solid #acacac;
+}
+
+QPushButton:pressed {
+	background-color: #cbcde6;
+	border: 2px solid #999999;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="images.qrc">
+          <normaloff>:/images/csvExport.png</normaloff>:/images/csvExport.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>33</width>
+          <height>33</height>
+         </size>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="6">
        <widget class="QPushButton" name="updateButton">
         <property name="minimumSize">
          <size>
@@ -165,21 +231,8 @@ QPushButton:pressed {
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="4">
-       <widget class="QPushButton" name="csvExportButton">
+      <item row="0" column="5">
+       <widget class="QPushButton" name="notificationCreation">
         <property name="minimumSize">
          <size>
           <width>40</width>
@@ -191,9 +244,6 @@ QPushButton:pressed {
           <width>40</width>
           <height>40</height>
          </size>
-        </property>
-        <property name="toolTip">
-         <string/>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
@@ -216,16 +266,13 @@ QPushButton:pressed {
         </property>
         <property name="icon">
          <iconset resource="images.qrc">
-          <normaloff>:/images/csvExport.png</normaloff>:/images/csvExport.png</iconset>
+          <normaloff>:/images/notification.png</normaloff>:/images/notification.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>33</width>
-          <height>33</height>
+          <width>35</width>
+          <height>35</height>
          </size>
-        </property>
-        <property name="autoDefault">
-         <bool>false</bool>
         </property>
        </widget>
       </item>

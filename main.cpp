@@ -1,6 +1,9 @@
 #include "AddOrder.h"
 #include "StartWindow.h"
 #include "Global.h"
+#include "INotification.h"
+#include "NotificationOrder.h"
+#include "NotificationSparePart.h"
 
 #include <QSqlDatabase>
 #include <QApplication>
@@ -76,6 +79,10 @@ int main(int argc, char *argv[])
 
     StartWindow startWindow;
     startWindow.show();
+
+    INotification *notification;
+    notification = new NotificationOrder();
+    notification = new NotificationSparePart();
 
     return app.exec();
 }

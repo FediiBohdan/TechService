@@ -18,6 +18,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) :
     if (registerLanguage.isEmpty())
        ui->languageSelection->setCurrentIndex(0);
 
+    ui->serviceComboBox->addItems(QStringList() << "Среднефонтанская, 30А (Приморский р-н)" << "Платонова, 56 (Малиновский р-н)" << "Архитекторская, 28 (Киевский р-н)");
+
     loadSettings();
     setUserInfo();
 }
@@ -38,7 +40,7 @@ void SettingsWindow::setUserInfo()
 {
     QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
     QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
-    QString registerUserThirdName = global::getSettingsValue("userThirdName", "settings").toString();
+    QString registerUserService = global::getSettingsValue("userService", "settings").toString();
     QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
     QString registerUserLogin = global::getSettingsValue("userLogin", "settings").toString();
     QByteArray byteUserPassword = global::getSettingsValue("userPassword", "settings").toByteArray();
@@ -50,8 +52,15 @@ void SettingsWindow::setUserInfo()
     if (!registerUserSecondName.isEmpty())
         ui->userSecondName->setText(registerUserSecondName);
 
-    if (!registerUserThirdName.isEmpty())
-        ui->userThirdName->setText(registerUserThirdName);
+    if (!registerUserService.isEmpty())
+    {
+        if (registerUserService == "Среднефонтанская, 30А (Приморский р-н)")
+            ui->serviceComboBox->setCurrentIndex(0);
+        else if (registerUserService == "Платонова, 56 (Малиновский р-н)")
+            ui->serviceComboBox->setCurrentIndex(1);
+        else if (registerUserService == "Архитекторская, 28 (Киевский р-н)")
+            ui->serviceComboBox->setCurrentIndex(2);
+    }
 
     if (!registerUserPosition.isEmpty())
         ui->userPosition->setText(registerUserPosition);
@@ -133,24 +142,27 @@ void SettingsWindow::saveUserData()
     QString userSecondName = ui->userSecondName->text();
     QString userPosition = ui->userPosition->text();
 
-    global::setSettingsValue("userLogin", ui->userLogin->text(), "settings");
-    QByteArray userPassword;
-    userPassword.append(ui->userPassword->text().toLatin1());
-    global::setSettingsValue("userPassword", userPassword.toBase64(), "settings");
-    global::setSettingsValue("userFirstName", userFirstName, "settings");
-    global::setSettingsValue("userSecondName", userSecondName, "settings");
-    global::setSettingsValue("userThirdName", ui->userThirdName->text(), "settings");
-    global::setSettingsValue("userPosition", userPosition, "settings");
-
     QSqlQuery queryCheckUser(db);
 
     queryCheckUser.prepare("SELECT user_login, user_password FROM users_table WHERE (user_login = '" + ui->userLogin->text() + "' AND user_password = '" + ui->userPassword->text() + "')");
     queryCheckUser.exec();
 
-    if (queryCheckUser.first() == 0)
-        userError = true;
-    else
+    if (queryCheckUser.first() == true)
+    {
         userError = false;
+
+        global::setSettingsValue("userLogin", ui->userLogin->text(), "settings");
+        QByteArray userPassword;
+        userPassword.append(ui->userPassword->text().toLatin1());
+        global::setSettingsValue("userPassword", userPassword.toBase64(), "settings");
+        global::setSettingsValue("userFirstName", userFirstName, "settings");
+        global::setSettingsValue("userSecondName", userSecondName, "settings");
+        global::setSettingsValue("userService", ui->serviceComboBox->currentText(), "settings");
+        global::setSettingsValue("userPosition", userPosition, "settings");
+    }
+
+    else
+        userError = true;
 
     QString userFSname = userFirstName.append(" " + userSecondName);
 

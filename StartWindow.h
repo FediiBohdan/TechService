@@ -25,10 +25,10 @@
 #include <QSqlQueryModel>
 #include <QDesktopServices>
 
-class ListSparePart;
 class AddOrder;
 class ListOrders;
 class ListClients;
+class ListSparePart;
 
 namespace Ui {
 class StartWindow;
@@ -53,8 +53,8 @@ private:
     ListOrders *listOrders;
     ListClients *listClients;
     ListEmployees *listEmployees;
-    SettingsWindow *settingsWindow;
     ListSparePart *sparePartsTable;
+    SettingsWindow *settingsWindow;    
 
     QSqlDatabase listTasksTable;
     QPointer<QSqlQueryModel> queryModel;

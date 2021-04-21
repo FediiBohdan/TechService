@@ -44,5 +44,6 @@
         <file>images/mapMarker.png</file>
         <file>images/noUser.png</file>
         <file>images/addOrderDetails.png</file>
+        <file>images/notification.png</file>
     </qresource>
 </RCC>

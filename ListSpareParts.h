@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QDialog>
 #include <QPointer>
+#include <QTextEdit>
 #include <QTextStream>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -34,8 +35,12 @@ public:
 private:
     Ui::ListSparePart *ui;
 
+    QSqlDatabase notificationTable;
     QPointer<QSqlQueryModel> queryModel;
 
+    QWidget *widget;
+    QTextEdit *textEdit;
+    QPushButton *button;
     StartWindow *startWindow;
     AddSparePart *addSparePart;
     ViewUpdateSparePart *viewUpdateSparePart;
@@ -48,6 +53,7 @@ private:
 private slots:
     void loadTable();
     void saveAsCSV(QString fileName);
+    void createNotification();
     void showSparePartInfo(const QModelIndex &index);
 
     void on_addSparePartButton_clicked();
@@ -65,6 +71,8 @@ private slots:
     void on_isuzuSearchButton_clicked();
     void on_acuraSearchButton_clicked();
     void on_csvExportButton_clicked();
+
+    void on_notificationCreation_clicked();
 
 public slots:
     void closeWindow();

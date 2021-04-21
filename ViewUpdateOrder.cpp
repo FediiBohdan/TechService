@@ -75,7 +75,6 @@ void ViewUpdateOrder::loadSparePartsTable()
     ui->availableSparePartsTable->setModel(queryAvailableSparePartsModel);
 
     ui->availableSparePartsTable->setColumnHidden(0, true);
-    ui->availableSparePartsTable->setColumnHidden(2, true);
 
     ui->availableSparePartsTable->horizontalHeader()->setDefaultSectionSize(maximumWidth());
     ui->availableSparePartsTable->setSelectionBehavior(QAbstractItemView::SelectRows);

@@ -25,21 +25,21 @@ SOURCES += main.cpp \
     AddTask.cpp \
     AnalyticsDialog.cpp \
     Global.cpp \
+    INotification.cpp \
     ListClients.cpp \
     ListEmployees.cpp \
     ListOrders.cpp \
     ListSpareParts.cpp \
     ListTasks.cpp \
-    Notification.cpp \
     NotificationOrder.cpp \
+    NotificationSparePart.cpp \
     SettingsWindow.cpp \
     StartWindow.cpp \
     ViewUpdateClient.cpp \
     ViewUpdateEmployee.cpp \
     ViewUpdateOrder.cpp \
     ViewUpdateSparePart.cpp \
-    ViewUpdateTask.cpp \
-    notificationsparepart.cpp
+    ViewUpdateTask.cpp
 
 FORMS += \
     AddClient.ui \
@@ -69,21 +69,21 @@ HEADERS += \
     AddTask.h \
     AnalyticsDialog.h \
     Global.h \
+    INotification.h \
     ListClients.h \
     ListEmployees.h \
     ListOrders.h \
     ListSpareParts.h \
     ListTasks.h \
-    Notification.h \
     NotificationOrder.h \
+    NotificationSparePart.h \
     SettingsWindow.h \
     StartWindow.h \
     ViewUpdateClient.h \
     ViewUpdateEmployee.h \
     ViewUpdateOrder.h \
     ViewUpdateSparePart.h \
-    ViewUpdateTask.h \
-    notificationsparepart.h
+    ViewUpdateTask.h
 
 RESOURCES += qml.qrc \
     images.qrc \

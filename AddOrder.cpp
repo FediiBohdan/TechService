@@ -1,6 +1,8 @@
 #include "AddOrder.h"
 #include "ui_AddOrder.h"
 
+#include <QSqlError>
+
 AddOrder::AddOrder(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddOrder)
@@ -121,13 +123,16 @@ void AddOrder::on_addSparePartsButton_clicked()
 
     QSqlQuery queryOrders(ordersHistoryTable);
 
-    queryOrders.prepare("INSERT INTO orders_history (client_type, client, creation_date, creation_time, contacts, auto_brand) VALUES(?, ?, ?, ?, ?, ?)");
+    queryOrders.prepare("INSERT INTO orders_history (client_type, client, creation_date, creation_time, contacts, auto_brand, service_address, discounts, order_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(ui->clientLine->text());
     queryOrders.addBindValue(ui->dateLine->text());
     queryOrders.addBindValue(ui->timeLine->text());
     queryOrders.addBindValue(ui->contactLine->text());
     queryOrders.addBindValue(ui->brandLine->text());
+    queryOrders.addBindValue(ui->serviceComboBox->currentText());
+    queryOrders.addBindValue(ui->discountsComboBox->currentText());
+    queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
     queryOrders.exec();
 
     orderId = queryOrders.lastInsertId().toInt();
@@ -428,30 +433,68 @@ void AddOrder::on_createOrderButton_clicked()
 
     contacts.replace(", ", "\n");
 
-    queryOrders.prepare("UPDATE orders_history SET client_type = ?, client = ?, creation_date = ?, creation_time = ?, reception_date = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, "
-                "mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, order_status = ?, works_list = ?, feedback = ? "
-                "WHERE id_order = ?");
 
-    queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
-    queryOrders.addBindValue(client);
-    queryOrders.addBindValue(date);
-    queryOrders.addBindValue(ui->timeLine->text());
-    queryOrders.addBindValue(ui->receptionLine->text());
-    queryOrders.addBindValue(contacts);
-    queryOrders.addBindValue(ui->emailLine->text());
-    queryOrders.addBindValue(brandModel);
-    queryOrders.addBindValue(ui->modelLine->text());
-    queryOrders.addBindValue(ui->mileageLine->text());
-    queryOrders.addBindValue(ui->yearLine->text());
-    queryOrders.addBindValue(ui->VIN_Line->text());
-    queryOrders.addBindValue(ui->autoLicensePlateLine->text());
-    queryOrders.addBindValue(ui->serviceComboBox->currentText());
-    queryOrders.addBindValue(ui->discountsComboBox->currentText());
-    queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
-    queryOrders.addBindValue(ui->worksList->toPlainText());
-    queryOrders.addBindValue(ui->feedback->toPlainText());
-    queryOrders.addBindValue(s_orderId);
-    queryOrders.exec();
+    QSqlQuery queryCheckIsOrderCreated(ordersHistoryTable);
+
+    queryCheckIsOrderCreated.prepare("SELECT id_order FROM orders_history WHERE id_order = " + s_orderId);
+    queryCheckIsOrderCreated.exec();
+
+    qDebug() << queryCheckIsOrderCreated.first();
+
+    // if spare parts and employees were added, so order is already created - update it
+    if (queryCheckIsOrderCreated.first() == true)
+    {
+        queryOrders.prepare("UPDATE orders_history SET client_type = ?, client = ?, creation_date = ?, creation_time = ?, reception_date = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, "
+                    "mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, order_status = ?, works_list = ?, feedback = ? "
+                    "WHERE id_order = ?");
+
+        queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
+        queryOrders.addBindValue(client);
+        queryOrders.addBindValue(date);
+        queryOrders.addBindValue(ui->timeLine->text());
+        queryOrders.addBindValue(ui->receptionLine->text());
+        queryOrders.addBindValue(contacts);
+        queryOrders.addBindValue(ui->emailLine->text());
+        queryOrders.addBindValue(brandModel);
+        queryOrders.addBindValue(ui->modelLine->text());
+        queryOrders.addBindValue(ui->mileageLine->text());
+        queryOrders.addBindValue(ui->yearLine->text());
+        queryOrders.addBindValue(ui->VIN_Line->text());
+        queryOrders.addBindValue(ui->autoLicensePlateLine->text());
+        queryOrders.addBindValue(ui->serviceComboBox->currentText());
+        queryOrders.addBindValue(ui->discountsComboBox->currentText());
+        queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
+        queryOrders.addBindValue(ui->worksList->toPlainText());
+        queryOrders.addBindValue(ui->feedback->toPlainText());
+        queryOrders.addBindValue(s_orderId);
+        queryOrders.exec();
+    }
+    // if spare parts and employees were not added, so order was not created - create it
+    else if (queryCheckIsOrderCreated.first() == false)
+    {
+        queryOrders.prepare("INSERT INTO orders_history (client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, "
+            "mileage, manufacture_year, vin_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
+        queryOrders.addBindValue(client);
+        queryOrders.addBindValue(date);
+        queryOrders.addBindValue(ui->timeLine->text());
+        queryOrders.addBindValue(ui->receptionLine->text());
+        queryOrders.addBindValue(contacts);
+        queryOrders.addBindValue(ui->emailLine->text());
+        queryOrders.addBindValue(brandModel);
+        queryOrders.addBindValue(ui->modelLine->text());
+        queryOrders.addBindValue(ui->mileageLine->text());
+        queryOrders.addBindValue(ui->yearLine->text());
+        queryOrders.addBindValue(ui->VIN_Line->text());
+        queryOrders.addBindValue(ui->autoLicensePlateLine->text());
+        queryOrders.addBindValue(ui->serviceComboBox->currentText());
+        queryOrders.addBindValue(ui->discountsComboBox->currentText());
+        queryOrders.addBindValue(ui->orderStatusComboBox->currentText());
+        queryOrders.addBindValue(ui->worksList->toPlainText());
+        queryOrders.addBindValue(ui->feedback->toPlainText());
+        queryOrders.exec();
+    }
 
     //int id = queryOrders.lastInsertId().toInt();
 
