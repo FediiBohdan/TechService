@@ -25,6 +25,9 @@ ViewUpdateClient::~ViewUpdateClient()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void ViewUpdateClient::closeEvent(QCloseEvent *)
 {
     QDialog::close();
@@ -34,6 +37,9 @@ void ViewUpdateClient::closeEvent(QCloseEvent *)
     listClients->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Checks input information and updates client in DB.
+ */
 void ViewUpdateClient::on_saveUpdatedInfo_clicked()
 {
     QSqlQuery query(clientsTable);
@@ -71,8 +77,7 @@ void ViewUpdateClient::on_saveUpdatedInfo_clicked()
     clientContacts.replace(", ", "\n");
 
     query.prepare("UPDATE clients_table SET client_type = ?, client_fml_name = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, mileage = ?, auto_license_plate = ?, manufacture_year = ?, "
-        "vin_number = ? WHERE id_client = ?");
-
+                  "vin_number = ? WHERE id_client = ?");
     query.addBindValue(ui->clientTypeComboBox->currentText());
     query.addBindValue(clientFMLname);
     query.addBindValue(clientContacts);
@@ -91,6 +96,9 @@ void ViewUpdateClient::on_saveUpdatedInfo_clicked()
     QMessageBox::information(this, tr("Уведомление"), tr("Информация о клиенте успешно обновлена!"), QMessageBox::Ok);
 }
 
+/**
+ * Sets client information to corresponding fields.
+ */
 void ViewUpdateClient::setValues(const QString &id)
 {
     clientId = id;
@@ -98,7 +106,7 @@ void ViewUpdateClient::setValues(const QString &id)
     QSqlQuery query(clientsTable);
 
     query.prepare("SELECT DISTINCT client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
-        "vin_number FROM clients_table WHERE id_client = " + clientId);
+                  "vin_number FROM clients_table WHERE id_client = " + clientId);
     query.exec();
     query.next();
 
@@ -123,12 +131,15 @@ void ViewUpdateClient::setValues(const QString &id)
     loadOrderHistoryTable();
 }
 
+/**
+ * Loads order history list by client to tableView.
+ */
 void ViewUpdateClient::loadOrderHistoryTable()
 {
     queryModel = new QSqlQueryModel(this);
 
     QString queryString = "SELECT id_order, order_status, creation_date, client_type, client, auto_brand, auto_model, "
-        "service_address, price FROM orders_history WHERE client = '" + ui->clientFMLname->text() + "' AND contacts LIKE '%" + ui->contacts->text() +"%'";
+                          "service_address, price FROM orders_history WHERE client = '" + ui->clientFMLname->text() + "' AND contacts LIKE '%" + ui->contacts->text() +"%'";
 
     queryModel->setQuery(queryString);
 
@@ -151,6 +162,9 @@ void ViewUpdateClient::loadOrderHistoryTable()
     ui->tableView->resizeRowsToContents();
 }
 
+/**
+ * Loads user settings from register for access granting.
+ */
 void ViewUpdateClient::loadUserSettings()
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
@@ -169,6 +183,9 @@ void ViewUpdateClient::loadUserSettings()
     }
 }
 
+/**
+ * Allows information update.
+ */
 void ViewUpdateClient::on_updateInfoButton_clicked()
 {
     ui->updateInfoButton->setEnabled(false);    
@@ -186,6 +203,9 @@ void ViewUpdateClient::on_updateInfoButton_clicked()
     ui->saveUpdatedInfo->setEnabled(true);
 }
 
+/**
+ * Opens AddOrder window with input paremeters.
+ */
 void ViewUpdateClient::on_createOrderByClientButton_clicked()
 {
     QDialog::close();
@@ -201,6 +221,9 @@ void ViewUpdateClient::on_createOrderByClientButton_clicked()
     addOrder->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Delets client from DB.
+ */
 void ViewUpdateClient::on_deleteClientButton_clicked()
 {
     QSqlQuery queryRemoveClient(clientsTable);

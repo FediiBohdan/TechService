@@ -715,6 +715,10 @@ QPushButton:pressed {
   <tabstop>dbName</tabstop>
   <tabstop>userName</tabstop>
   <tabstop>dbPassword</tabstop>
+  <tabstop>userSecondName</tabstop>
+  <tabstop>userFirstName</tabstop>
+  <tabstop>userPosition</tabstop>
+  <tabstop>serviceComboBox</tabstop>
   <tabstop>userLogin</tabstop>
   <tabstop>userPassword</tabstop>
   <tabstop>saveSettingsButton</tabstop>

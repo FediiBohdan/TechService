@@ -187,6 +187,9 @@ QPushButton:pressed {
           <height>40</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Экспорт данных</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
 	background-color: #dbdcf7;
@@ -226,7 +229,13 @@ QPushButton:pressed {
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>30</height>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>350</width>
+          <height>16777215</height>
          </size>
         </property>
         <property name="font">
@@ -242,7 +251,7 @@ QPushButton:pressed {
 }</string>
         </property>
         <property name="placeholderText">
-         <string>Поиск</string>
+         <string>Поиск по имени</string>
         </property>
         <property name="clearButtonEnabled">
          <bool>true</bool>

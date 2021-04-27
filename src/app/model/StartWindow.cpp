@@ -1,10 +1,6 @@
 #include "StartWindow.h"
 #include "ui_StartWindow.h"
 
-QElapsedTimer elapsedTimer;
-QTimer *timer = new QTimer();
-auto countdown = QTime(8, 0, 0);
-
 StartWindow::StartWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StartWindow)
@@ -18,26 +14,12 @@ StartWindow::StartWindow(QWidget *parent) :
 
     ui->positionLabel->hide();
 
-    QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
-    QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
-    QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
-
-    if ((ui->positionLabel->isHidden()) && (!registerUserFirstName.isEmpty()))
-    {
-        QString userFSname = registerUserFirstName.append(" " + registerUserSecondName);
-
-        ui->positionLabel->show();
-        ui->nameLabel->setText(userFSname);
-        ui->positionLabel->setText(registerUserPosition);
-    }
-
-    elapsedTimer.start();
-    connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
-    timer->start(1000);
-
     connect(ui->updateButton, &QAbstractButton::clicked, this, &StartWindow::updateTasksList);
+    connect(ui->ordersUpdateButton, &QAbstractButton::clicked, this, &StartWindow::updateOrdersList);
 
     loadTasksList();
+    loadOrdersList();
+    loadPersonalData();
     loadUserSettings();
 }
 
@@ -46,6 +28,9 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
+/**
+ * Sets received parameters and sets new UI translation file.
+ */
 void StartWindow::translateUI(const QString &language)
 {
     if (!translator.isEmpty())
@@ -61,6 +46,18 @@ void StartWindow::translateUI(const QString &language)
     qApp->installTranslator(&translator);
 }
 
+/**
+ * Event on language change.
+ */
+void StartWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+}
+
+/**
+ * Sets new user data from SettingsWindow.
+ */
 void StartWindow::setUserData(const QString &userFSname, const QString &userPosition)
 {
     ui->positionLabel->show();
@@ -69,6 +66,28 @@ void StartWindow::setUserData(const QString &userFSname, const QString &userPosi
     ui->positionLabel->setText(userPosition);
 }
 
+/**
+ * Loads personal data from register.
+ */
+void StartWindow::loadPersonalData()
+{
+    QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
+    QString registerUserSecondName = global::getSettingsValue("userSecondName", "settings").toString();
+    QString registerUserPosition = global::getSettingsValue("userPosition", "settings").toString();
+
+    if ((ui->positionLabel->isHidden()) && (!registerUserFirstName.isEmpty()))
+    {
+        QString userFSname = registerUserFirstName.append(" " + registerUserSecondName);
+
+        ui->positionLabel->show();
+        ui->nameLabel->setText(userFSname);
+        ui->positionLabel->setText(registerUserPosition);
+    }
+}
+
+/**
+ * Loads user settings for granting access.
+ */
 void StartWindow::loadUserSettings()
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
@@ -83,41 +102,43 @@ void StartWindow::loadUserSettings()
     QRegularExpression techEmployeeRegexp("^[3][0-9]{3}$");
     QRegularExpressionValidator techEmployeeValidator(techEmployeeRegexp, this);
 
-    if (chiefValidator.validate(userLogin, pos) || managerValidator.validate(userLogin, pos))
+    if (chiefValidator.validate(userLogin, pos))
     {
-        ui->updateButton->setEnabled(true);
-        ui->desktopButton->setEnabled(true);
-        ui->orderFormationButton->setEnabled(true);
-        ui->clientsButton->setEnabled(true);
         ui->staffButton->setEnabled(true);
-        ui->catalogueButton->setEnabled(true);
+        ui->updateButton->setEnabled(true);
+        ui->clientsButton->setEnabled(true);
         ui->todolistButton->setEnabled(true);
+        ui->catalogueButton->setEnabled(true);
+        ui->analyticsButton->setEnabled(true);
+        ui->ordersUpdateButton->setEnabled(true);
+        ui->orderFormationButton->setEnabled(true);
+    }
+    else if (managerValidator.validate(userLogin, pos))
+    {        
+        ui->staffButton->setEnabled(true);
+        ui->updateButton->setEnabled(true);
+        ui->clientsButton->setEnabled(true);
+        ui->todolistButton->setEnabled(true);
+        ui->catalogueButton->setEnabled(true);        
+        ui->ordersUpdateButton->setEnabled(true);
+        ui->orderFormationButton->setEnabled(true);
     }
     else if (techEmployeeValidator.validate(userLogin, pos))
     {
         ui->updateButton->setEnabled(true);
-        ui->desktopButton->setEnabled(true);
-        ui->orderFormationButton->setEnabled(true);
         ui->clientsButton->setEnabled(true);
-        ui->catalogueButton->setEnabled(true);
         ui->todolistButton->setEnabled(true);
+        ui->catalogueButton->setEnabled(true);
+        ui->ordersUpdateButton->setEnabled(true);
+        ui->orderFormationButton->setEnabled(true);
     }
+
+    updateTasksList();
 }
 
-void StartWindow::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::LanguageChange)
-        ui->retranslateUi(this);
-}
-
-void StartWindow::showTime()
-{
-    auto elapsed = elapsedTimer.elapsed();
-    auto counter = countdown.addMSecs(-elapsed);
-    QString timestr = counter.toString("hh:mm:ss");
-    ui->lcdNumber->display(timestr);
-}
-
+/**
+ * Loads task list to viewTable.
+ */
 void StartWindow::loadTasksList()
 {
     queryModel = new QSqlQueryModel(this);
@@ -126,7 +147,7 @@ void StartWindow::loadTasksList()
 
     QString queryString = "SELECT id_to_do_list, content FROM tasks_table WHERE user = " + userLogin;
 
-    queryModel->setQuery(queryString, listTasksTable);
+    queryModel->setQuery(queryString);
 
     queryModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryModel->insertColumn(1);
@@ -138,7 +159,7 @@ void StartWindow::loadTasksList()
     ui->completedTasksTableView->setColumnHidden(0, true);
     ui->completedTasksTableView->verticalHeader()->hide();
     ui->completedTasksTableView->setColumnWidth(1, 95);
-    ui->completedTasksTableView->setColumnWidth(2, 287);
+    ui->completedTasksTableView->setColumnWidth(2, 290);
     ui->completedTasksTableView->horizontalHeader()->setSectionsClickable(false);
 
     // tableView with not completed tasks
@@ -146,7 +167,7 @@ void StartWindow::loadTasksList()
     ui->notCompletedTasksTableView->setColumnHidden(0, true);
     ui->notCompletedTasksTableView->verticalHeader()->hide();
     ui->notCompletedTasksTableView->setColumnWidth(1, 95);
-    ui->notCompletedTasksTableView->setColumnWidth(2, 288);
+    ui->notCompletedTasksTableView->setColumnWidth(2, 290);
     ui->notCompletedTasksTableView->horizontalHeader()->setSectionsClickable(false);
 
     for (int rowIndex = 0; rowIndex < ui->completedTasksTableView->model()->rowCount(); ++rowIndex)
@@ -159,7 +180,11 @@ void StartWindow::loadTasksList()
     ui->notCompletedTasksTableView->resizeRowsToContents();
 }
 
-QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)
+/**
+ * Adds checkBox widget to tableView.
+ * It determines whether the task is completed or not.
+ */
+QWidget *StartWindow::addCheckBoxCompleted(int rowIndex)
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
 
@@ -173,7 +198,7 @@ QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)
 
     QString queryStringCheckBox = "SELECT is_fulfilled FROM tasks_table WHERE user = " + userLogin;
 
-    queryModelCheckBox->setQuery(queryStringCheckBox, listTasksTable);
+    queryModelCheckBox->setQuery(queryStringCheckBox);
 
     QString isFulfilled = queryModelCheckBox->data(queryModelCheckBox->index(rowIndex, 0), Qt::EditRole).toString();
 
@@ -196,6 +221,9 @@ QWidget* StartWindow::addCheckBoxCompleted(int rowIndex)
     return widget;
 }
 
+/**
+ * Processes checkBox state change.
+ */
 void StartWindow::checkBoxStateChanged()
 {
     QString id = sender()->property("id").value<QString>();
@@ -230,23 +258,112 @@ void StartWindow::updateTasksList()
     loadTasksList();
 }
 
-void StartWindow::on_desktopButton_clicked()
+/**
+ * Loads orders list to tableView.
+ */
+void StartWindow::loadOrdersList()
 {
-    // does not work properly
-//    if (sparePartsTable->isVisible())
-//    {
-//        connect(this, &StartWindow::closeAllWindowsExceptCurrent, sparePartsTable, &ListSparePart::closeWindow);
-//        emit closeAllWindowsExceptCurrent(true);
-//    }
-//    if (addOrder->isVisible())
-//    {
-//        connect(this, &StartWindow::closeAllWindowsExceptCurrent, addOrder, &AddOrder::closeWindow);
-//        emit closeAllWindowsExceptCurrent(true);
-//    }
+    queryOrdersModel = new QSqlQueryModel(this);
 
-    qDebug() << sparePartsTable->isVisible();
+    queryOrdersModel->setQuery("SELECT id_order, client, contacts, auto_brand, auto_model, service_address, creation_date FROM orders_history");
+
+    queryOrdersModel->setHeaderData(0, Qt::Horizontal, tr("id"));
+    queryOrdersModel->insertColumn(1);
+    queryOrdersModel->setHeaderData(1, Qt::Horizontal, tr("Выполнен"));
+    queryOrdersModel->setHeaderData(2, Qt::Horizontal, tr("Клиент"));
+    queryOrdersModel->setHeaderData(3, Qt::Horizontal, tr("Контакты"));
+    queryOrdersModel->setHeaderData(4, Qt::Horizontal, tr("Марка"));
+    queryOrdersModel->setHeaderData(5, Qt::Horizontal, tr("Модель"));
+    queryOrdersModel->setHeaderData(6, Qt::Horizontal, tr("Сервис"));
+    queryOrdersModel->setHeaderData(7, Qt::Horizontal, tr("Дата создания"));
+
+    ui->ordersTableView->setModel(queryOrdersModel);
+    ui->ordersTableView->setColumnHidden(0, true);
+    ui->ordersTableView->verticalHeader()->hide();
+
+    ui->ordersTableView->horizontalHeader()->setSectionsClickable(false);
+
+    for (int rowIndex = 0; rowIndex < ui->ordersTableView->model()->rowCount(); ++rowIndex)
+        ui->ordersTableView->setIndexWidget(queryOrdersModel->index(rowIndex, 1), addCheckBoxOrderCompleted(rowIndex));
+
+    ui->ordersTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->ordersTableView->resizeColumnsToContents();
+    ui->ordersTableView->resizeRowsToContents();
 }
 
+/**
+ * Adds checkBox widget to tableView.
+ * It determines whether the order is completed or not.
+ */
+QWidget *StartWindow::addCheckBoxOrderCompleted(int rowIndex)
+{
+    QWidget *widget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(widget);
+    QCheckBox *checkBox = new QCheckBox(widget);
+
+    layout->addWidget(checkBox, 0, Qt::AlignCenter);
+
+    queryOrdersModelCheckBox = new QSqlQueryModel(this);
+
+    queryOrdersModelCheckBox->setQuery("SELECT is_ready FROM orders_history");
+
+    QString isFulfilled = queryOrdersModelCheckBox->data(queryOrdersModelCheckBox->index(rowIndex, 0), Qt::EditRole).toString();
+
+    if (isFulfilled == "1")
+        checkBox->setChecked(true);
+    else
+        checkBox->setChecked(false);
+
+    connect(checkBox, &QAbstractButton::pressed, this, &StartWindow::checkBoxOrderStateChanged);
+
+    QString id = queryOrdersModel->data(queryOrdersModel->index(rowIndex, 0), Qt::EditRole).toString();
+
+    checkBox->setProperty("checkBox", QVariant::fromValue(checkBox));
+    checkBox->setProperty("id",       QVariant::fromValue(id));
+
+    return widget;
+}
+
+/**
+ * Processes checkBox state change.
+ */
+void StartWindow::checkBoxOrderStateChanged()
+{
+    QString id = sender()->property("id").value<QString>();
+    QCheckBox *checkBox = sender()->property("checkBox").value<QCheckBox*>();
+
+    QSqlQuery query(listOrdersTable);
+
+    if (!checkBox->isChecked())
+    {
+        checkBox->setChecked(true);
+
+        query.prepare("UPDATE orders_history SET is_ready = 1 WHERE id_order = ?");
+        query.addBindValue(id);
+        query.exec();
+    }
+    else if (checkBox->isChecked())
+    {
+        checkBox->setChecked(false);
+
+        query.prepare("UPDATE orders_history SET is_ready = 0 WHERE id_order = ?");
+        query.addBindValue(id);
+        query.exec();
+    }
+
+    updateOrdersList();
+}
+
+void StartWindow::updateOrdersList()
+{
+    queryOrdersModel->setQuery(NULL);
+
+    loadOrdersList();
+}
+
+/**
+ * Opens corresponding windows.
+ */
 void StartWindow::on_orderFormationButton_clicked()
 {
     listOrders = new ListOrders;
@@ -282,15 +399,29 @@ void StartWindow::on_todolistButton_clicked()
     listTasks->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+void StartWindow::on_analyticsButton_clicked()
+{
+    analyticsDialog = new AnalyticsDialog;
+    analyticsDialog->show();
+    analyticsDialog->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+/**
+ * Opens settings window and get signals for processing in slots.
+ */
 void StartWindow::on_settingsButton_clicked()
 {
     settingsWindow = new SettingsWindow;
     settingsWindow->show();
     connect(settingsWindow, &SettingsWindow::userData, this, &StartWindow::setUserData);
     connect(settingsWindow, &SettingsWindow::translate, this, &StartWindow::translateUI);
+    connect(settingsWindow, &SettingsWindow::updateUser, this, &StartWindow::loadUserSettings);
     settingsWindow->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Opens web sites.
+ */
 void StartWindow::on_telegramButton_clicked()
 {
     QString telegramLink = "https://web.telegram.org/";

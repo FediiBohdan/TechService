@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>721</width>
-    <height>178</height>
+    <height>170</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,6 +47,9 @@ QMessageBox {
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Сохранить сотрудника</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {

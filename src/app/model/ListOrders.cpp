@@ -30,14 +30,15 @@ ListOrders::~ListOrders()
     delete ui;
 }
 
+/**
+ * Loads orders list to tableView.
+ */
 void ListOrders::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString;
-    queryString = "SELECT id_order, order_status, creation_date, reception_date, client_type, client, contacts, auto_brand, auto_model, mileage, "
-        "auto_license_plate, manufacture_year, vin_number, service_address, price FROM orders_history ";
-
+    QString queryString = "SELECT id_order, order_status, creation_date, reception_date, client_type, client, contacts, auto_brand, auto_model, mileage, "
+                          "auto_license_plate, manufacture_year, vin_number, service_address, price FROM orders_history ";
     QString searchString;
 
     if (searchFlag)
@@ -77,6 +78,9 @@ void ListOrders::loadTable()
     ui->tableView->resizeRowsToContents();
 }
 
+/**
+ * Loads user settings from register for access granting.
+ */
 void ListOrders::loadUserSettings()
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
@@ -95,6 +99,10 @@ void ListOrders::loadUserSettings()
     }
 }
 
+/**
+ * Adds checkBox widget to tableView.
+ * It determines whether the order is completed or not.
+ */
 QWidget* ListOrders::addCheckBoxCompleted(int rowIndex)
 {
     QWidget *widget = new QWidget(this);
@@ -127,6 +135,9 @@ QWidget* ListOrders::addCheckBoxCompleted(int rowIndex)
     return widget;
 }
 
+/**
+ * Processes checkBox state change.
+ */
 void ListOrders::checkBoxStateChanged()
 {
     QString id = sender()->property("id").value<QString>();
@@ -154,6 +165,9 @@ void ListOrders::checkBoxStateChanged()
     on_updateButton_clicked();
 }
 
+/**
+ * Opens AddOrder window.
+ */
 void ListOrders::on_orderCreationButton_clicked()
 {
     QDialog::close();
@@ -163,6 +177,9 @@ void ListOrders::on_orderCreationButton_clicked()
     addOrder->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Opens ViewUpdateOrder window.
+ */
 void ListOrders::showOrderInfo(const QModelIndex &index)
 {
     QDialog::hide();
@@ -192,6 +209,9 @@ void ListOrders::on_orderSearch_returnPressed()
     on_updateButton_clicked();
 }
 
+/**
+ * Exports orders list in CVS file.
+ */
 void ListOrders::saveAsCSV(QString fileName)
 {
     QFile csvFile (fileName);

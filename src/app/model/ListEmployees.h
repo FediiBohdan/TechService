@@ -34,9 +34,9 @@ private slots:
     void saveAsCSV(QString fileName);
     void showEmployeeInfo(const QModelIndex &index);
 
-    void on_addWorkerButton_clicked();
-    void on_updateButton_clicked();
+    void on_addWorkerButton_clicked();    
     void on_csvExportButton_clicked();
+    void on_updateButton_clicked();
 
 private:
     Ui::ListEmployees *ui;

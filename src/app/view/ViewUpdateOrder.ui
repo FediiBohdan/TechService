@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Редактирование информации о заказе</string>
+   <string>Просмотр и редактирование информации о заказе</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
@@ -2712,6 +2712,9 @@ QPushButton:pressed {
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Сохранить изменения</string>
+       </property>
        <property name="layoutDirection">
         <enum>Qt::RightToLeft</enum>
        </property>
@@ -2846,7 +2849,7 @@ QPushButton:pressed {
         </size>
        </property>
        <property name="toolTip">
-        <string>Удалить заказ</string>
+        <string>Удалить информацию о заказе</string>
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
@@ -2876,6 +2879,9 @@ QPushButton:pressed {
          <width>50</width>
          <height>50</height>
         </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -2911,6 +2917,9 @@ QPushButton:pressed {
        <height>40</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Редактировать информацию</string>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	background-color: #dbdcf7;
@@ -2939,6 +2948,9 @@ QPushButton:pressed {
        <width>32</width>
        <height>32</height>
       </size>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
      </property>
     </widget>
    </item>

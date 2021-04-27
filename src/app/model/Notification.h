@@ -17,8 +17,8 @@ class Notification
 public:
     Notification();
 
-    virtual void drawNotification() = 0;
     virtual void getRegisterInfo() = 0;
+    virtual void drawNotification() = 0;
 };
 
 #endif // NOTIFICATION_H

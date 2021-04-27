@@ -27,6 +27,9 @@ ListEmployees::~ListEmployees()
     delete ui;
 }
 
+/**
+ * Loads employees list to tableView.
+ */
 void ListEmployees::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
@@ -49,6 +52,9 @@ void ListEmployees::loadTable()
     ui->tableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
 }
 
+/**
+ * Opens AddEmployee window.
+ */
 void ListEmployees::on_addWorkerButton_clicked()
 {
     QDialog::close();
@@ -58,6 +64,9 @@ void ListEmployees::on_addWorkerButton_clicked()
     addEmployee->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Opens ViewUpdateEmployee window.
+ */
 void ListEmployees::showEmployeeInfo(const QModelIndex &index)
 {
     QDialog::close();
@@ -77,6 +86,9 @@ void ListEmployees::on_updateButton_clicked()
     loadTable();
 }
 
+/**
+ * Exports clients list in CVS file.
+ */
 void ListEmployees::saveAsCSV(QString fileName)
 {
     QFile csvFile (fileName);

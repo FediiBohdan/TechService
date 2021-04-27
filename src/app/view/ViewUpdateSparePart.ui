@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Редактирование информации о запчасти</string>
+   <string>Просмотр и редактирование информации о запчасти</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
@@ -190,8 +190,8 @@ QMessageBox {
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLineEdit" name="isOriginalLine">
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="autoCompatibilityLine">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -210,23 +210,24 @@ QMessageBox {
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="autoCompatibilityLine">
+     <item row="5" column="0">
+      <widget class="QComboBox" name="isOriginalComboBox">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QLineEdit {
+        <string notr="true">QComboBox {
 	border: 1px solid gray;
-    border-radius: 7px;
+    border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
     background-color: #dbdcf7;
-	padding-left: 3px;
+	padding-left: 6px;
 }</string>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -293,6 +294,9 @@ QPushButton:pressed {
        <width>40</width>
        <height>40</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Сохранить изменения</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
@@ -362,6 +366,9 @@ QPushButton:pressed {
        <height>40</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Удалить информацию о запчасти</string>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	background-color: #dbdcf7;
@@ -391,6 +398,9 @@ QPushButton:pressed {
        <height>50</height>
       </size>
      </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
   </layout>
@@ -401,8 +411,9 @@ QPushButton:pressed {
   <tabstop>manufacturerLine</tabstop>
   <tabstop>quantityInStockLine</tabstop>
   <tabstop>autoCompatibilityLine</tabstop>
-  <tabstop>isOriginalLine</tabstop>
+  <tabstop>isOriginalComboBox</tabstop>
   <tabstop>priceLine</tabstop>
+  <tabstop>deleteSparePartButton</tabstop>
   <tabstop>saveUpdatedInfo</tabstop>
  </tabstops>
  <resources>

@@ -29,13 +29,18 @@ SettingsWindow::~SettingsWindow()
     delete ui;
 }
 
+/**
+ * Event on language change.
+ */
 void SettingsWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
         ui->retranslateUi(this);
 }
 
-//sets user settings to window fields
+/**
+ * Sets user settings to window fields.
+ */
 void SettingsWindow::setUserInfo()
 {
     QString registerUserFirstName = global::getSettingsValue("userFirstName", "settings").toString();
@@ -72,6 +77,9 @@ void SettingsWindow::setUserInfo()
         ui->userPassword->setText(userPassword);
 }
 
+/**
+ * Sets new translation file if UI language was changed.
+ */
 void SettingsWindow::setLanguage()
 {
     QTranslator translator;
@@ -99,7 +107,9 @@ void SettingsWindow::setLanguage()
     saveSettings();
 }
 
-//sets DB settings to window fields
+/**
+ * Sets DB settings to window fields.
+ */
 void SettingsWindow::loadSettings()
 {
     ui->languageSelection->setCurrentText(global::getSettingsValue("language", "settings").toString());
@@ -112,11 +122,17 @@ void SettingsWindow::loadSettings()
     ui->dbPassword->setText(password);
 }
 
+/**
+ * Sets UI language settings to register.
+ */
 void SettingsWindow::saveSettings()
 {
     global::setSettingsValue("language", ui->languageSelection->currentText(), "settings");
 }
 
+/**
+ * Calls saveUserData().
+ */
 void SettingsWindow::on_saveSettingsButton_clicked()
 {
     saveUserData();
@@ -127,14 +143,14 @@ void SettingsWindow::on_saveSettingsButton_clicked()
     QDialog::close();
 
     if (userError == true)
-        QMessageBox::information(this, tr("Уведомление"), tr("Такого пользователя не существует!\nДругие настройки успешно сохранены!"), QMessageBox::Ok);
+        QMessageBox::information(this, tr("Уведомление"), tr("Такого пользователя не существует. Проверьте логин и пароль!\nДругие настройки успешно сохранены!"), QMessageBox::Ok);
     else
         QMessageBox::information(this, tr("Уведомление"), tr("Настройки успешно сохранены!"), QMessageBox::Ok);
 }
 
 /**
- * checks whether the user exists then saves user settings to register
- * and passes params to StartWindow
+ * Checks whether the user exists, then saves user settings to register
+ * and passes parameters to StartWindow.
  */
 void SettingsWindow::saveUserData()
 {
@@ -143,7 +159,6 @@ void SettingsWindow::saveUserData()
     QString userPosition = ui->userPosition->text();
 
     QSqlQuery queryCheckUser(db);
-
     queryCheckUser.prepare("SELECT user_login, user_password FROM users_table WHERE (user_login = '" + ui->userLogin->text() + "' AND user_password = '" + ui->userPassword->text() + "')");
     queryCheckUser.exec();
 
@@ -167,8 +182,13 @@ void SettingsWindow::saveUserData()
     QString userFSname = userFirstName.append(" " + userSecondName);
 
     emit userData(userFSname, userPosition);
+    emit updateUser(true);
 }
 
+/**
+ * If DB is not opened, saves new connection settings
+ * and calls openDb().
+ */
 void SettingsWindow::setSettingsDb()
 {
     global::setSettingsValue("hostName", ui->hostName->text(), "settings");
@@ -181,6 +201,9 @@ void SettingsWindow::setSettingsDb()
     openDb();
 }
 
+/**
+ * Opens db.
+ */
 void SettingsWindow::openDb()
 {
     db.setHostName(ui->hostName->text());

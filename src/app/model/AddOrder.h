@@ -1,9 +1,9 @@
 #ifndef ADDORDER_H
 #define ADDORDER_H
 
+#include "ListOrders.h"
 #include "ListEmployees.h"
 #include "ListSpareParts.h"
-#include "ListOrders.h"
 
 #include <QDate>
 #include <QTime>
@@ -17,9 +17,9 @@
 #include <QSqlQueryModel>
 #include <QQmlApplicationEngine>
 
+class ListOrders;
 class StartWindow;
 class ListSparePart;
-class ListOrders;
 
 namespace Ui {
 class AddOrder;
@@ -34,7 +34,6 @@ public:
     ~AddOrder();
 
 public slots:
-    void closeWindow();
     void setValues(const QString &clientName, const QString &clientContacts, const QString &autoBrand);
 
 private:
@@ -61,25 +60,30 @@ private:
 
     bool searchFlag;
     bool openFlag = true;
+
     QString s_orderId;
+
     int orderId = 0;
-    int mechanicId = 0;
-    int mechanic2Id = 0;
-    int diagnosticianId = 0;
-    int electronicId = 0;
-    int locksmithId = 0;
     int washerId = 0;
+    int mechanicId = 0;
+    int mechanic2Id = 0;    
+    int locksmithId = 0;
+    int electronicId = 0;
+    int diagnosticianId = 0;
+
+    int washerHourPayment = 0;
     int mechanicHourPayment = 0;
     int mechanic2HourPayment = 0;
-    int diagnosticianHourPayment = 0;
-    int electronicHourPayment = 0;
     int locksmithHourPayment = 0;
-    int washerHourPayment = 0;
+    int electronicHourPayment = 0;
+    int diagnosticianHourPayment = 0;
+
+    int couponDiscount = 3; //%
+    int promotionDiscount = 4; //%
+    int regularCustomerDiscount = 6; //%
+    int specialCondidtionsDiscount = 8; //%
+
     int totalEmployeePayment = 0;
-    int couponDiscount = 3;//%
-    int promotionDiscount = 4;//%
-    int specialCondidtionsDiscount = 8;//%
-    int regularCustomerDiscount = 6;//%
 
 private slots:
     void openMap();
@@ -98,14 +102,14 @@ private slots:
     void closeEvent(QCloseEvent *);
 
     void on_createOrderButton_clicked();
-    void on_sparePartsSearch_returnPressed();
+    void on_clearWasherButton_clicked();
+    void on_addSparePartsButton_clicked();
     void on_clearMechanicButton_clicked();
     void on_clearMechanic2Button_clicked();
-    void on_clearDiagnosticianButton_clicked();
-    void on_clearElectronicButton_clicked();
-    void on_clearWasherButton_clicked();
     void on_clearLocksmithButton_clicked();
-    void on_addSparePartsButton_clicked();
+    void on_clearElectronicButton_clicked();
+    void on_sparePartsSearch_returnPressed();
+    void on_clearDiagnosticianButton_clicked();
 };
 
 #endif // ADDORDER_H

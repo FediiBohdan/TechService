@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Редактирование информации о задании</string>
+   <string>Просмотр и редактирование информации о задании</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
@@ -131,6 +131,9 @@ QPushButton:pressed {
            <pointsize>10</pointsize>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">QLineEdit {
 	border: 1px solid gray;
@@ -165,6 +168,9 @@ QPushButton:pressed {
           <font>
            <pointsize>10</pointsize>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">QLineEdit {
@@ -396,6 +402,9 @@ QPushButton:pressed {
          <height>40</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Удалить информацию о задании</string>
+       </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
 	background-color: #dbdcf7;
@@ -425,6 +434,9 @@ QPushButton:pressed {
          <height>50</height>
         </size>
        </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -433,10 +445,9 @@ QPushButton:pressed {
  </widget>
  <tabstops>
   <tabstop>updateTaskButton</tabstop>
-  <tabstop>dateLine</tabstop>
-  <tabstop>timeLine</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>contentLine</tabstop>
+  <tabstop>deleteTaskButton</tabstop>
   <tabstop>saveUpdatedInfo</tabstop>
  </tabstops>
  <resources>

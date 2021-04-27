@@ -30,9 +30,6 @@ public:
     explicit ListTasks(QWidget *parent = nullptr);
     ~ListTasks();
 
-public slots:
-    void closeWindow();
-
 private:
     Ui::ListTasks *ui;
 
@@ -52,8 +49,8 @@ private slots:
     void checkBoxStateChanged();
     void showTaskInfo(const QModelIndex &index);
 
-    void on_addTaskButton_clicked();
     void on_updateButton_clicked();
+    void on_addTaskButton_clicked();
 };
 
 #endif // LISTTASKS_H

@@ -24,6 +24,9 @@ ListTasks::~ListTasks()
     delete ui;
 }
 
+/**
+ * Loads tasks list to tableView.
+ */
 void ListTasks::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
@@ -60,6 +63,9 @@ void ListTasks::loadTable()
     ui->tableView->setColumnWidth(3, 550);
 }
 
+/**
+ * Adds label widget for content dispalying in tableView.
+ */
 QWidget* ListTasks::addWidgetContent(int rowIndex)
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
@@ -85,6 +91,10 @@ QWidget* ListTasks::addWidgetContent(int rowIndex)
     return widget;
 }
 
+/**
+ * Adds checkBox widget to tableView.
+ * It determines whether the task is completed or not.
+ */
 QWidget* ListTasks::addCheckBoxCompleted(int rowIndex)
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
@@ -119,6 +129,9 @@ QWidget* ListTasks::addCheckBoxCompleted(int rowIndex)
     return widget;
 }
 
+/**
+ * Processes checkBox state change.
+ */
 void ListTasks::checkBoxStateChanged()
 {
     QString id = sender()->property("id").value<QString>();
@@ -146,11 +159,9 @@ void ListTasks::checkBoxStateChanged()
     on_updateButton_clicked();
 }
 
-void ListTasks::closeWindow()
-{
-    close();
-}
-
+/**
+ * Opens AddSparePart window.
+ */
 void ListTasks::on_addTaskButton_clicked()
 {
     QDialog::close();
@@ -160,6 +171,9 @@ void ListTasks::on_addTaskButton_clicked()
     addTask->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Opens ViewUpdateSparePart window.
+ */
 void ListTasks::showTaskInfo(const QModelIndex &index)
 {
     QDialog::close();

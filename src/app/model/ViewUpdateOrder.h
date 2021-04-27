@@ -86,13 +86,16 @@ private:
     int mechanicHourPayment = 0;
     int locksmithHourPayment = 0;
     int mechanic2HourPayment = 0;
-    int totalEmployeePayment = 0;
+
     int electronicHourPayment = 0;
     int diagnosticianHourPayment = 0;
-    int couponDiscount = 3;//%
-    int promotionDiscount = 4;//%
-    int regularCustomerDiscount = 6;//%
-    int specialCondidtionsDiscount = 8;//%    
+
+    int couponDiscount = 3; //%
+    int promotionDiscount = 4; //%
+    int regularCustomerDiscount = 6; //%
+    int specialCondidtionsDiscount = 8; //%
+
+    int totalEmployeePayment = 0;
 };
 
 #endif // VIEWUPDATEORDER_H

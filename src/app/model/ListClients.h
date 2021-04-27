@@ -14,8 +14,8 @@
 #include <QMessageBox>
 #include <QSqlQueryModel>
 
-class ViewUpdateClient;
 class AddClient;
+class ViewUpdateClient;
 
 namespace Ui {
 class ListClients;

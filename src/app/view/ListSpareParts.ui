@@ -61,16 +61,26 @@ border-radius: 7px;
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
        <widget class="QLineEdit" name="sparePartSearch">
+        <property name="maximumSize">
+         <size>
+          <width>350</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">QLineEdit {
+    border: 2px solid #dbdcf7;
+    border-radius: 5px;
+    padding: 0 4px;
+}</string>
         </property>
         <property name="placeholderText">
-         <string>Поиск</string>
+         <string>Поиск по названию</string>
         </property>
         <property name="clearButtonEnabled">
          <bool>true</bool>
@@ -92,7 +102,7 @@ border-radius: 7px;
          </size>
         </property>
         <property name="toolTip">
-         <string/>
+         <string>Экспорт данных</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
@@ -245,6 +255,9 @@ QPushButton:pressed {
           <height>40</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Создать уведомление</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
 	background-color: #dbdcf7;
@@ -273,6 +286,9 @@ QPushButton:pressed {
           <width>35</width>
           <height>35</height>
          </size>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -1524,7 +1540,10 @@ QPushButton:default {
  </widget>
  <tabstops>
   <tabstop>sparePartSearch</tabstop>
-  <tabstop>tableView</tabstop>
+  <tabstop>addSparePartButton</tabstop>
+  <tabstop>csvExportButton</tabstop>
+  <tabstop>notificationCreation</tabstop>
+  <tabstop>updateButton</tabstop>
   <tabstop>toyotaSearchButton</tabstop>
   <tabstop>mitsubishiSearchButton</tabstop>
   <tabstop>nissanSearchButton</tabstop>
@@ -1536,9 +1555,7 @@ QPushButton:default {
   <tabstop>infinitiSearchButton</tabstop>
   <tabstop>isuzuSearchButton</tabstop>
   <tabstop>acuraSearchButton</tabstop>
-  <tabstop>addSparePartButton</tabstop>
-  <tabstop>csvExportButton</tabstop>
-  <tabstop>updateButton</tabstop>
+  <tabstop>tableView</tabstop>
  </tabstops>
  <resources>
   <include location="../../images.qrc"/>

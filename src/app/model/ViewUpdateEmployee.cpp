@@ -18,6 +18,9 @@ ViewUpdateEmployee::~ViewUpdateEmployee()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void ViewUpdateEmployee::closeEvent(QCloseEvent *)
 {
     QDialog::close();
@@ -27,15 +30,15 @@ void ViewUpdateEmployee::closeEvent(QCloseEvent *)
     listEmployees->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Sets employee information to corresponding fields.
+ */
 void ViewUpdateEmployee::setValues(const QString &id)
 {
     employeeId = id;
 
     QSqlQuery query(employeesTable);
-
-    query.prepare("SELECT DISTINCT employee_fml_name, employee_position, hour_payment, service_address "
-        "FROM employees_table WHERE id_employee = " + employeeId);
-
+    query.prepare("SELECT DISTINCT employee_fml_name, employee_position, hour_payment, service_address FROM employees_table WHERE id_employee = " + employeeId);
     query.exec();
     query.next();
 
@@ -45,6 +48,9 @@ void ViewUpdateEmployee::setValues(const QString &id)
     ui->serviceNumber->setText(query.value(3).toString());
 }
 
+/**
+ * Checks input information and updates employee in DB.
+ */
 void ViewUpdateEmployee::on_saveUpdatedInfo_clicked()
 {
     QSqlQuery query(employeesTable);
@@ -61,7 +67,6 @@ void ViewUpdateEmployee::on_saveUpdatedInfo_clicked()
     }
 
     query.prepare("UPDATE employees_table SET employee_fml_name = ?, employee_position = ?, hour_payment = ?, service_address = ? WHERE id_employee = ?");
-
     query.addBindValue(employeeFMLname);
     query.addBindValue(employeePosition);
     query.addBindValue(hourlyPayment);
@@ -74,6 +79,9 @@ void ViewUpdateEmployee::on_saveUpdatedInfo_clicked()
     QMessageBox::information(this, tr("Уведомление"), tr("Информация о сотруднике успешно обновлена!"), QMessageBox::Ok);
 }
 
+/**
+ * Allows information update.
+ */
 void ViewUpdateEmployee::on_updateEmployeeInfoButton_clicked()
 {
     ui->updateEmployeeInfoButton->setEnabled(false);
@@ -85,6 +93,9 @@ void ViewUpdateEmployee::on_updateEmployeeInfoButton_clicked()
     ui->saveUpdatedInfo->setEnabled(true);
 }
 
+/**
+ * Delets employee from DB.
+ */
 void ViewUpdateEmployee::on_deleteEmployeeButton_clicked()
 {
     QSqlQuery queryRemoveEmployee(employeesTable);

@@ -12,8 +12,6 @@ ListSparePart::ListSparePart(QWidget *parent) :
 
     QDialog::showMaximized();
 
-    //connect(startWindow, &StartWindow::closeAllWindowsExceptCurrent, this, &ListSparePart::closeWindow);
-
     connect(ui->tableView, &QAbstractItemView::doubleClicked, this, &ListSparePart::showSparePartInfo);
 
     searchFlag = false;
@@ -27,14 +25,14 @@ ListSparePart::~ListSparePart()
     delete ui;
 }
 
+/**
+ * Loads spare parts list to tableView.
+ */
 void ListSparePart::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
-    QString queryString;
-    queryString = "SELECT id_spare_part, spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, "
-        "price FROM spare_parts_catalogue ";
-
+    QString queryString = "SELECT id_spare_part, spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price FROM spare_parts_catalogue ";
     QString searchString;
 
     if (searchFlag)
@@ -67,6 +65,9 @@ void ListSparePart::loadTable()
     ui->tableView->resizeRowsToContents();
 }
 
+/**
+ * Exports spare parts list in CVS file.
+ */
 void ListSparePart::saveAsCSV(QString fileName)
 {
     QFile csvFile (fileName);
@@ -106,11 +107,9 @@ void ListSparePart::on_csvExportButton_clicked()
     saveAsCSV(fileName);
 }
 
-void ListSparePart::closeWindow()
-{
-    QDialog::close();
-}
-
+/**
+ * Opens AddSparePart window.
+ */
 void ListSparePart::on_addSparePartButton_clicked()
 {
     QDialog::close();
@@ -120,6 +119,9 @@ void ListSparePart::on_addSparePartButton_clicked()
     addSparePart->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Opens ViewUpdateSparePart window.
+ */
 void ListSparePart::showSparePartInfo(const QModelIndex &index)
 {
     QDialog::close();
@@ -144,6 +146,9 @@ void ListSparePart::on_sparePartSearch_returnPressed()
     on_updateButton_clicked();
 }
 
+/**
+ * Processes spare part search by car brand.
+ */
 void ListSparePart::on_toyotaSearchButton_clicked()
 {
     autoSearchFlag = true;
@@ -261,6 +266,9 @@ void ListSparePart::on_updateButton_clicked()
     loadTable();
 }
 
+/**
+ * Drawing notification creation window.
+ */
 void ListSparePart::on_notificationCreation_clicked()
 {
     QVBoxLayout *vLayout = new QVBoxLayout;
@@ -285,6 +293,9 @@ void ListSparePart::on_notificationCreation_clicked()
     connect(button, SIGNAL(released()), this, SLOT(createNotification()));
 }
 
+/**
+ * Saves notification in DB.
+ */
 void ListSparePart::createNotification()
 {
     QSqlQuery queryNotification(notificationTable);
@@ -294,7 +305,6 @@ void ListSparePart::createNotification()
     QTime currentTime = QTime::currentTime();
 
     queryNotification.prepare("INSERT INTO order_notification (creator, content, date_creation, time_creation) VALUES(?, ?, ?, ?)");
-
     queryNotification.addBindValue(userLogin);
     queryNotification.addBindValue(textEdit->toPlainText());
     queryNotification.addBindValue(currentDate.toString(Qt::SystemLocaleDate));

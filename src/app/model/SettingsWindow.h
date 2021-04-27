@@ -2,6 +2,7 @@
 #define SETTINGSWINDOW_H
 
 #include "Global.h"
+#include "StartWindow.h"
 
 #include <QDebug>
 #include <QDialog>
@@ -12,6 +13,8 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QSqlDatabase>
+
+class StartWindow;
 
 namespace Ui {
 class SettingsWindow;
@@ -39,7 +42,7 @@ private:
 
     bool userError = false;
 
-    //QTranslator translator;
+    StartWindow *startWindow;
 
 public:
     explicit SettingsWindow(QWidget *parent = nullptr);
@@ -57,6 +60,7 @@ protected:
     void changeEvent(QEvent *event) override;
 
 signals:
+    void updateUser(bool value);
     void translate(const QString &language);
     void userData(const QString &userFSName, const QString &userPosition);
 };

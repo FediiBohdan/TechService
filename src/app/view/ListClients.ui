@@ -55,6 +55,18 @@ border-radius: 7px;
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="1">
        <widget class="QLineEdit" name="clientSearch">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>350</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -65,11 +77,13 @@ border-radius: 7px;
         </property>
         <property name="styleSheet">
          <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
+    border: 2px solid #dbdcf7;
+    border-radius: 5px;
+    padding: 0 4px;
 }</string>
+        </property>
+        <property name="placeholderText">
+         <string>Поиск</string>
         </property>
        </widget>
       </item>
@@ -126,6 +140,12 @@ QPushButton:pressed {
       </item>
       <item row="0" column="0">
        <widget class="QComboBox" name="searchComboBox">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -222,6 +242,9 @@ QPushButton:pressed {
           <width>40</width>
           <height>40</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Экспорт данных</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {

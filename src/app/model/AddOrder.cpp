@@ -47,6 +47,9 @@ AddOrder::~AddOrder()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void AddOrder::closeEvent(QCloseEvent *)
 {
     if (openFlag)
@@ -60,18 +63,18 @@ void AddOrder::closeEvent(QCloseEvent *)
         QDialog::close();
 }
 
+/**
+ * Opens the map with car services markers.
+ */
 void AddOrder::openMap()
 {
     QQmlApplicationEngine *engine = new QQmlApplicationEngine;
     engine->load(QUrl(QStringLiteral("qrc:/mapInteraction.qml")));
 }
 
-void AddOrder::closeWindow()
-{
-    close();
-}
-
-// Gets employee's id from ViewEmployee
+/**
+ * Gets clients information from ViewUpdateClient.
+ */
 void AddOrder::setValues(const QString &clientName, const QString &clientContacts, const QString &autoBrand)
 {
     ui->clientLine->setText(clientName);
@@ -81,6 +84,10 @@ void AddOrder::setValues(const QString &clientName, const QString &clientContact
     openFlag = false;
 }
 
+/**
+ * Check input order information and saves it to DB
+ * This is the minimum, that is needed for order creation.
+ */
 void AddOrder::on_addSparePartsButton_clicked()
 {
     QString client = ui->clientLine->text();
@@ -122,7 +129,6 @@ void AddOrder::on_addSparePartsButton_clicked()
         return;
 
     QSqlQuery queryOrders(ordersHistoryTable);
-
     queryOrders.prepare("INSERT INTO orders_history (client_type, client, creation_date, creation_time, contacts, auto_brand, service_address, discounts, order_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(ui->clientLine->text());
@@ -143,13 +149,14 @@ void AddOrder::on_addSparePartsButton_clicked()
     ui->worksFrame->setEnabled(true);
 }
 
-// loading all spare parts
+/**
+ * Loads all spare parts to tableView.
+ */
 void AddOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
 
     QString queryString = "SELECT id_spare_part, spare_part_name, quantity_in_stock, auto_compatibility, original, price FROM spare_parts_catalogue ";
-
     QString searchString;
 
     if (searchFlag)
@@ -178,13 +185,14 @@ void AddOrder::loadSparePartsTable()
     ui->availableSparePartsTable->resizeRowsToContents();
 }
 
-// shows table with used spare parts
+/**
+ * Shows tableView with used spare parts.
+ */
 void AddOrder::loadUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM order_spare_parts "
-                          "WHERE id_order = '" + s_orderId + "'";
+    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM order_spare_parts WHERE id_order = '" + s_orderId + "'";
 
     queryGetUsedSparePartsModel->setQuery(queryString);
 
@@ -208,17 +216,16 @@ void AddOrder::loadUsedSparePartsTable()
     ui->usedSparePartsTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
 }
 
-// choosing needed spare parts for the order + amount check
+/**
+ * Chooses needed spare parts for the order and check its amount.
+ */
 void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
 {
-    QSqlQuery queryUsedSparePartsModel(sparePartsTableDB);
-
     QString sparePartId = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString sparePartName = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 1), Qt::EditRole).toString();
     QString sparePartPrice = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 5), Qt::EditRole).toString();
 
     QSqlQuery queryCheckAmount(sparePartsTableDB);
-
     queryCheckAmount.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE (id_spare_part = '" + sparePartId + "' AND quantity_in_stock = 0)");
     queryCheckAmount.exec();
 
@@ -228,6 +235,7 @@ void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
         return;
     }
 
+    QSqlQuery queryUsedSparePartsModel(sparePartsTableDB);
     // insertion spare parts by order to OrderSpareParts table
     queryUsedSparePartsModel.prepare("INSERT INTO order_spare_parts (id_order, id_spare_part, order_spare_part, order_spare_part_price) VALUES(?, ?, ?, ?)");
     queryUsedSparePartsModel.addBindValue(orderId);
@@ -240,7 +248,6 @@ void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     int sparePartsAmount = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 2), Qt::EditRole).toInt();
 
     QSqlQuery querySpareParts(sparePartsTableDB);
-
     querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount - 1);
     querySpareParts.addBindValue(sparePartId);
@@ -250,14 +257,15 @@ void AddOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     updateAvailableSparePartsTable();
 }
 
-// removing spare parts from used spare parts table
+/**
+ * Removes spare parts from used spare parts tableView.
+ */
 void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
 {
     QString orderSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString returnSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 2), Qt::EditRole).toString();
 
     QSqlQuery queryRemoveUsedSparePartsModel(sparePartsTableDB);
-
     queryRemoveUsedSparePartsModel.prepare("DELETE FROM order_spare_parts WHERE id_order_spare_part = ?");
     queryRemoveUsedSparePartsModel.addBindValue(orderSparePartId);
     queryRemoveUsedSparePartsModel.exec();
@@ -265,7 +273,6 @@ void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
     // spare part is returned to available spare parts list
     // firstly check the amount of returning spare part
     QSqlQuery query(sparePartsTableDB);
-
     query.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE id_spare_part = " + returnSparePartId);
     query.exec();
     query.next();
@@ -274,7 +281,6 @@ void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
 
     // then increase its amount in available spare parts
     QSqlQuery querySpareParts(sparePartsTableDB);
-
     querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount + 1);
     querySpareParts.addBindValue(returnSparePartId);
@@ -284,6 +290,9 @@ void AddOrder::removeUsedSparePartsTable(const QModelIndex &index)
     updateAvailableSparePartsTable();
 }
 
+/**
+ * Updates employees tableView.
+ */
 void AddOrder::updateEmployeesTable()
 {
     queryEmployeesModel->setQuery(NULL);
@@ -291,6 +300,9 @@ void AddOrder::updateEmployeesTable()
     loadEmployeesTable();
 }
 
+/**
+ * Updates used spare parts tableView.
+ */
 void AddOrder::updateUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel->setQuery(NULL);
@@ -298,12 +310,19 @@ void AddOrder::updateUsedSparePartsTable()
     loadUsedSparePartsTable();
 }
 
+/**
+ * Updates available spare parts tableView.
+ */
 void AddOrder::updateAvailableSparePartsTable()
 {
     queryAvailableSparePartsModel->setQuery(NULL);
+
     loadSparePartsTable();
 }
 
+/**
+ * Loads employees list to tableView.
+ */
 void AddOrder::loadEmployeesTable()
 {
     queryEmployeesModel = new QSqlQueryModel(this);
@@ -329,6 +348,9 @@ void AddOrder::loadEmployeesTable()
     ui->employeesByServiceTable->verticalHeader()->hide();
 }
 
+/**
+ * Sets chosen employee to its line.
+ */
 void AddOrder::setOrderEmployees(const QModelIndex &index)
 {
     QString employeeName = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 1), Qt::EditRole).toString();
@@ -380,6 +402,9 @@ void AddOrder::setOrderEmployees(const QModelIndex &index)
     }
 }
 
+/**
+ * Sets date and time of order creation.
+ */
 void AddOrder::setDateAndTime()
 {
     QDate currentDate = QDate::currentDate();
@@ -388,6 +413,12 @@ void AddOrder::setDateAndTime()
     ui->timeLine->setText(currentTime.toString(Qt::SystemLocaleDate));
 }
 
+/**
+ * Checks extended input information and saves (updates) it to DB.
+ * Saves new client to its table.
+ * Saves employees, who are going to fulfill an order.
+ * Calculates order cost.
+ */
 void AddOrder::on_createOrderButton_clicked()
 {
     // Insertion into order table
@@ -433,21 +464,16 @@ void AddOrder::on_createOrderButton_clicked()
 
     contacts.replace(", ", "\n");
 
-
     QSqlQuery queryCheckIsOrderCreated(ordersHistoryTable);
-
     queryCheckIsOrderCreated.prepare("SELECT id_order FROM orders_history WHERE id_order = " + s_orderId);
     queryCheckIsOrderCreated.exec();
-
-    qDebug() << queryCheckIsOrderCreated.first();
 
     // if spare parts and employees were added, so order is already created - update it
     if (queryCheckIsOrderCreated.first() == true)
     {
         queryOrders.prepare("UPDATE orders_history SET client_type = ?, client = ?, creation_date = ?, creation_time = ?, reception_date = ?, contacts = ?, email = ?, auto_brand = ?, auto_model = ?, "
-                    "mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, order_status = ?, works_list = ?, feedback = ? "
-                    "WHERE id_order = ?");
-
+                            "mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, order_status = ?, works_list = ?, feedback = ? "
+                            "WHERE id_order = ?");
         queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
         queryOrders.addBindValue(client);
         queryOrders.addBindValue(date);
@@ -473,8 +499,7 @@ void AddOrder::on_createOrderButton_clicked()
     else if (queryCheckIsOrderCreated.first() == false)
     {
         queryOrders.prepare("INSERT INTO orders_history (client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, "
-            "mileage, manufacture_year, vin_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+                            "mileage, manufacture_year, vin_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
         queryOrders.addBindValue(client);
         queryOrders.addBindValue(date);
@@ -495,8 +520,6 @@ void AddOrder::on_createOrderButton_clicked()
         queryOrders.addBindValue(ui->feedback->toPlainText());
         queryOrders.exec();
     }
-
-    //int id = queryOrders.lastInsertId().toInt();
 
     // Simultaneous insertion into detailed order table
     QSqlQuery queryOrderDetail(orderDetailTable);
@@ -584,10 +607,8 @@ void AddOrder::on_createOrderButton_clicked()
     else if (query.value(0) == 0)
     {
         QSqlQuery queryClients(clientsTable);
-
         queryClients.prepare("INSERT INTO clients_table (id_order, client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, "
-            "manufacture_year, vin_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+                             "manufacture_year, vin_number) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         queryClients.addBindValue(orderId);
         queryClients.addBindValue(ui->clientTypeComboBox->currentText());
         queryClients.addBindValue(client);
@@ -643,17 +664,15 @@ void AddOrder::on_createOrderButton_clicked()
 
     // calculate spare parts cost
     QSqlQuery querySparePartsCost(sparePartsTableDB);
-
     int sparePartsCost = 0;
     querySparePartsCost.prepare("SELECT SUM(order_spare_part_price) FROM order_spare_parts WHERE id_order = " + s_orderId);
     querySparePartsCost.exec();
     if (querySparePartsCost.next())
-            sparePartsCost = querySparePartsCost.value(0).toInt();
+        sparePartsCost = querySparePartsCost.value(0).toInt();
     querySparePartsCost.finish();
 
     // whole order cost calculation
-    float orderTotalCost = sparePartsCost + mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment
-                         + electronicOverallPayment + locksmithOverallPayment + washerOverAllPayment;
+    float orderTotalCost = sparePartsCost + mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment + electronicOverallPayment + locksmithOverallPayment + washerOverAllPayment;
 
     // disounts calculation
     float orderTotalDiscountCost = 0;
@@ -686,6 +705,9 @@ void AddOrder::on_createOrderButton_clicked()
     QMessageBox::information(this, tr("Уведомление"), tr("Заказ успешно создан!"), QMessageBox::Ok);
 }
 
+/**
+ * Search line processing.
+ */
 void AddOrder::on_sparePartsSearch_returnPressed()
 {
     searchFlag = true;
@@ -700,6 +722,10 @@ void AddOrder::updateSparePartsTable()
     loadSparePartsTable();
 }
 
+/**
+ * Mechanic line clearance processing.
+ * Next processors are the same.
+ */
 void AddOrder::on_clearMechanicButton_clicked()
 {
     ui->mechanicLine->setText("");

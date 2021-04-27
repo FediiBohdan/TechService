@@ -22,6 +22,9 @@ AddClient::~AddClient()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void AddClient::closeEvent(QCloseEvent *)
 {
     QDialog::close();
@@ -31,6 +34,9 @@ void AddClient::closeEvent(QCloseEvent *)
     listClients->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Checks input information and saves new client to DB.
+ */
 void AddClient::on_saveClientButton_clicked()
 {
     QSqlQuery query(clientsTable);
@@ -67,9 +73,8 @@ void AddClient::on_saveClientButton_clicked()
 
     clientContacts.replace(", ", "\n");
 
-    query.prepare("INSERT INTO clients_table (client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, vin_number)"
-        "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+    query.prepare("INSERT INTO clients_table (client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, vin_number) "
+                  "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(ui->clientTypeComboBox->currentText());
     query.addBindValue(clientFMLname);
     query.addBindValue(clientContacts);
@@ -80,7 +85,6 @@ void AddClient::on_saveClientButton_clicked()
     query.addBindValue(ui->autoLicensePlateLine->text());
     query.addBindValue(ui->manufactureYearLine->text());
     query.addBindValue(ui->VINnumberLine->text());
-    qDebug()<<query.exec();
 
     QDialog::close();
 

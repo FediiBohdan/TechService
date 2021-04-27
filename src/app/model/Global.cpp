@@ -11,7 +11,7 @@ void global::setSettingsValue(const QString &key, const QVariant &value, const Q
 }
 
 /**
- * Возвращает настройку из реестра.
+ * Returns settings from register.
  */
 QVariant global::getSettingsValue(const QString &key, const QString &group, const QVariant &defaultValue)
 {
@@ -24,7 +24,7 @@ QVariant global::getSettingsValue(const QString &key, const QString &group, cons
 }
 
 /**
- * Выполняет удаление ключа настройки в реестре.
+ * Removes key settings from register.
  */
 void global::removeSettingsKey(const QString &key, const QString &group)
 {
@@ -37,7 +37,7 @@ void global::removeSettingsKey(const QString &key, const QString &group)
 }
 
 /**
- * Выполняет проверку на наличие ключа настройки в реестре.
+ * Checks key settings existance in register.
  */
 bool global::containsSettingsKey(const QString &key, const QString &group)
 {
@@ -53,7 +53,7 @@ bool global::containsSettingsKey(const QString &key, const QString &group)
 }
 
 /**
- * Возвращает ключи настройки из реестра.
+ * Returns key settings from the register.
  */
 QStringList global::getSettingKeys(const QString &group)
 {

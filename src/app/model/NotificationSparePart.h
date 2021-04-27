@@ -9,17 +9,19 @@ class NotificationSparePart : public QObject, public Notification
 public:
     NotificationSparePart();
 
-    void drawNotification();
     void getRegisterInfo();
+    void drawNotification();
 
     static Notification *Initialize();
 
 private:
     QSqlDatabase db;
+
     QTimer *timer;
-    QString position;
+
     QString creator;
     QString content;
+    QString position;
 
     QPointer<QSqlQueryModel> queryCheckOrderUpdate;
 

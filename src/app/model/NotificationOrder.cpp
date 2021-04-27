@@ -9,17 +9,26 @@ NotificationOrder::NotificationOrder()
     getRegisterInfo();
 }
 
+/**
+ * NotificationOrder implements Notification interface.
+ */
 Notification *NotificationOrder::Initialize()
 {
     NotificationOrder *notificationOrder = new NotificationOrder();
     return notificationOrder;
 }
 
+/**
+ * Loads user service from register.
+ */
 void NotificationOrder::getRegisterInfo()
 {
     service = global::getSettingsValue("userService", "settings").toString();
 }
 
+/**
+ * Checks table by timer wheter was new order created or not.
+ */
 void NotificationOrder::checkTable()
 {
     QSqlQuery queryCheckOrderUpdate(db);
@@ -35,6 +44,9 @@ void NotificationOrder::checkTable()
         drawNotification();
 }
 
+/**
+ * Draws notification is new order was created.
+ */
 void NotificationOrder::drawNotification()
 {
     QMessageBox msgBox;

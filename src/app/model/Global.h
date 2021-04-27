@@ -8,24 +8,19 @@
 #define ORGANIZATION_NAME   "TechService"
 #define APP_VERSION         "1.0.0.0"
 
-extern bool g_ordersDbOpened;
-
-//extern const QString g_personalNumber;
-//extern const QString g_personalNumberName;
-
 namespace global
 {
-    void setSettingsValue(const QString& key, const QVariant& value, const QString& group = "");
+    QStringList getSettingKeys(const QString &group = "");
 
-    QVariant getSettingsValue(const QString& key, const QString& group = "", const QVariant& value = QVariant());
+    QString getExtensionNumber(const QString &group = "");
 
-    void removeSettingsKey(const QString& key, const QString& group = "");
+    void removeSettingsKey(const QString &key, const QString &group = "");
 
-    bool containsSettingsKey(const QString& key, const QString& group = "");
+    bool containsSettingsKey(const QString &key, const QString &group = "");
 
-    QStringList getSettingKeys(const QString& group = "");
+    void setSettingsValue(const QString &key, const QVariant &value, const QString &group = "");
 
-    QString getExtensionNumber(const QString& group = "");
+    QVariant getSettingsValue(const QString &key, const QString &group = "", const QVariant &value = QVariant());
 }
 
 #endif // GLOBAL_H

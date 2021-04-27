@@ -2701,6 +2701,9 @@ QPushButton:pressed {
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
        </property>
+       <property name="toolTip">
+        <string>Открыть карту</string>
+       </property>
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
@@ -2754,6 +2757,9 @@ QPushButton:pressed {
        </property>
        <property name="focusPolicy">
         <enum>Qt::StrongFocus</enum>
+       </property>
+       <property name="toolTip">
+        <string>Сохранить заказ</string>
        </property>
        <property name="layoutDirection">
         <enum>Qt::RightToLeft</enum>

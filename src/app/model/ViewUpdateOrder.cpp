@@ -41,6 +41,9 @@ ViewUpdateOrder::~ViewUpdateOrder()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void ViewUpdateOrder::closeEvent(QCloseEvent *)
 {
     QDialog::close();
@@ -50,6 +53,9 @@ void ViewUpdateOrder::closeEvent(QCloseEvent *)
     listOrders->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Loads spare parts list to tableView.
+ */
 void ViewUpdateOrder::loadSparePartsTable()
 {
     queryAvailableSparePartsModel = new QSqlQueryModel(this);
@@ -84,13 +90,14 @@ void ViewUpdateOrder::loadSparePartsTable()
     ui->availableSparePartsTable->resizeRowsToContents();
 }
 
-// shows table with used spare parts
+/**
+ * Loads used spare parts list to tableView.
+ */
 void ViewUpdateOrder::loadUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel = new QSqlQueryModel(this);
 
-    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM order_spare_parts "
-                          "WHERE id_order = '" + orderId + "'";
+    QString queryString = "SELECT id_order_spare_part, id_order, id_spare_part, order_spare_part, order_spare_part_price FROM order_spare_parts WHERE id_order = '" + orderId + "'";
 
     queryGetUsedSparePartsModel->setQuery(queryString);
 
@@ -114,7 +121,9 @@ void ViewUpdateOrder::loadUsedSparePartsTable()
     ui->usedSparePartsTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
 }
 
-// choosing needed spare parts for the order + amount check
+/**
+ * Chooses needed spare parts for the order and check its amount.
+ */
 void ViewUpdateOrder::updateUsedSparePartsListTable(const QModelIndex &index)
 {
     QSqlQuery queryUsedSparePartsModel(sparePartsTable);
@@ -124,7 +133,6 @@ void ViewUpdateOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     QString sparePartPrice = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 5), Qt::EditRole).toString();
 
     QSqlQuery queryCheckAmount(sparePartsTable);
-
     queryCheckAmount.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE (id_spare_part = '" + sparePartId + "' AND quantity_in_stock = 0)");
     queryCheckAmount.exec();
 
@@ -146,7 +154,6 @@ void ViewUpdateOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     int sparePartsAmount = queryAvailableSparePartsModel->data(queryAvailableSparePartsModel->index(index.row(), 2), Qt::EditRole).toInt();
 
     QSqlQuery querySpareParts(sparePartsTable);
-
     querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount - 1);
     querySpareParts.addBindValue(sparePartId);
@@ -156,14 +163,15 @@ void ViewUpdateOrder::updateUsedSparePartsListTable(const QModelIndex &index)
     updateAvailableSparePartsTable();
 }
 
-// removing spare parts from used spare parts table
+/**
+ * Removes spare parts from used spare parts tableView.
+ */
 void ViewUpdateOrder::removeUsedSparePartsTable(const QModelIndex &index)
 {
     QString orderSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 0), Qt::EditRole).toString();
     QString returnSparePartId = queryGetUsedSparePartsModel->data(queryGetUsedSparePartsModel->index(index.row(), 2), Qt::EditRole).toString();
 
     QSqlQuery queryRemoveUsedSparePartsModel(sparePartsTable);
-
     queryRemoveUsedSparePartsModel.prepare("DELETE FROM order_spare_parts WHERE id_order_spare_part = ?");
     queryRemoveUsedSparePartsModel.addBindValue(orderSparePartId);
     queryRemoveUsedSparePartsModel.exec();
@@ -171,7 +179,6 @@ void ViewUpdateOrder::removeUsedSparePartsTable(const QModelIndex &index)
     // spare part is returned to available spare parts list
     // firstly check the amount of returning spare part
     QSqlQuery query(sparePartsTable);
-
     query.prepare("SELECT quantity_in_stock FROM spare_parts_catalogue WHERE id_spare_part = " + returnSparePartId);
     query.exec();
     query.next();
@@ -180,7 +187,6 @@ void ViewUpdateOrder::removeUsedSparePartsTable(const QModelIndex &index)
 
     // then increase its amount in available spare parts
     QSqlQuery querySpareParts(sparePartsTable);
-
     querySpareParts.prepare("UPDATE spare_parts_catalogue SET quantity_in_stock = ? WHERE id_spare_part = ?");
     querySpareParts.addBindValue(sparePartsAmount + 1);
     querySpareParts.addBindValue(returnSparePartId);
@@ -190,6 +196,9 @@ void ViewUpdateOrder::removeUsedSparePartsTable(const QModelIndex &index)
     updateAvailableSparePartsTable();
 }
 
+/**
+ * Updates used spare parts list to tableView.
+ */
 void ViewUpdateOrder::updateUsedSparePartsTable()
 {
     queryGetUsedSparePartsModel->setQuery(NULL);
@@ -197,12 +206,18 @@ void ViewUpdateOrder::updateUsedSparePartsTable()
     loadUsedSparePartsTable();
 }
 
+/**
+ * Updates available spare parts tableView.
+ */
 void ViewUpdateOrder::updateAvailableSparePartsTable()
 {
     queryAvailableSparePartsModel->setQuery(NULL);
     loadSparePartsTable();
 }
 
+/**
+ * Loads employees list to tableView.
+ */
 void ViewUpdateOrder::loadEmployeesTable()
 {
     queryEmployeesModel = new QSqlQueryModel(this);
@@ -228,6 +243,9 @@ void ViewUpdateOrder::loadEmployeesTable()
     ui->employeesByServiceTable->verticalHeader()->hide();
 }
 
+/**
+ * Sets chosen employee to its line.
+ */
 void ViewUpdateOrder::setOrderEmployees(const QModelIndex &index)
 {
     int employeeId = queryEmployeesModel->data(queryEmployeesModel->index(index.row(), 0), Qt::EditRole).toInt();
@@ -485,6 +503,9 @@ void ViewUpdateOrder::updateEmployeesTable()
     loadEmployeesTable();
 }
 
+/**
+ * Sets date and time of order update.
+ */
 void ViewUpdateOrder::setDateAndTime()
 {
     QDate currentDate = QDate::currentDate();
@@ -493,6 +514,9 @@ void ViewUpdateOrder::setDateAndTime()
     ui->updateTimeLine->setText(currentTime.toString(Qt::SystemLocaleDate));
 }
 
+/**
+ * Sets order information to corresponding fields.
+ */
 void ViewUpdateOrder::setValues(const QString &id)
 {
     orderId = id;
@@ -500,7 +524,6 @@ void ViewUpdateOrder::setValues(const QString &id)
     loadUsedSparePartsTable();
 
     QSqlQuery query(ordersTable);
-
     query.prepare("SELECT DISTINCT client_type, client, creation_date, creation_time, reception_date, contacts, email, auto_brand, auto_model, mileage, manufacture_year, "
                   "vin_number, auto_license_plate, service_address, discounts, order_status, works_list, feedback "
                   "FROM orders_history WHERE id_order = " + orderId);
@@ -560,7 +583,6 @@ void ViewUpdateOrder::setValues(const QString &id)
     ui->feedback->setText(query.value(17).toString());
 
     QSqlQuery queryEmployee(orderDetailTable);
-
     queryEmployee.prepare("SELECT order_employee, employee_work_hours, employee_position FROM order_detail_table WHERE id_order = " + orderId);
     queryEmployee.exec();
 
@@ -606,6 +628,9 @@ void ViewUpdateOrder::setValues(const QString &id)
     }
 }
 
+/**
+ * Checks input information and updates order in DB.
+ */
 void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
 {
     QSqlQuery queryOrders(ordersTable);
@@ -649,9 +674,8 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
         return;
 
     queryOrders.prepare("UPDATE orders_history SET client_type = ?, client = ?, updating_date = ?,  updating_time = ?, reception_date = ?, contacts = ?, email = ?, "
-        "auto_brand = ?, auto_model = ?, mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, "
-        "order_status = ?, works_list = ?, feedback = ? WHERE id_order = ?");
-
+                        "auto_brand = ?, auto_model = ?, mileage = ?, manufacture_year = ?, vin_number = ?, auto_license_plate = ?, service_address = ?, discounts = ?, "
+                        "order_status = ?, works_list = ?, feedback = ? WHERE id_order = ?");
     queryOrders.addBindValue(ui->clientTypeComboBox->currentText());
     queryOrders.addBindValue(client);
     queryOrders.addBindValue(date);
@@ -743,7 +767,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
         QSqlQuery queryClients(clientsTable);
 
         queryClients.prepare("UPDATE clients_table SET client_type = ?, client_fml_name = ?, contacts = ?, auto_brand = ?, auto_model = ?, mileage = ?, auto_license_plate = ?, "
-            "manufacture_year = ?, vin_number = ? WHERE id_order = ?");
+                             "manufacture_year = ?, vin_number = ? WHERE id_order = ?");
 
         queryClients.addBindValue(ui->clientTypeComboBox->currentText());
         queryClients.addBindValue(client);
@@ -864,8 +888,7 @@ void ViewUpdateOrder::on_saveUpdatedInfo_clicked()
             sparePartsCost = querySparePartsCost.value(0).toInt();
     querySparePartsCost.finish();
 
-    float orderTotalCost = sparePartsCost + mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment
-                         + electronicOverallPayment + locksmithOverallPayment + washerOverAllPayment;
+    float orderTotalCost = sparePartsCost + mechanicOverallPayment + mechanic2OverallPayment + diagnosticianOverallPayment + electronicOverallPayment + locksmithOverallPayment + washerOverAllPayment;
 
     // disounts calculation
     float orderTotalDiscountCost = 0;
@@ -912,10 +935,12 @@ void ViewUpdateOrder::updateSparePartsTable()
     loadSparePartsTable();
 }
 
+/**
+ * Removes mechanic from his field.
+ */
 void ViewUpdateOrder::on_clearMechanicButton_clicked()
 {
     QSqlQuery queryRemoveEmployeeModel(employeesTable);
-
     queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->mechanicLine->text());
@@ -928,7 +953,6 @@ void ViewUpdateOrder::on_clearMechanicButton_clicked()
 void ViewUpdateOrder::on_clearMechanic2Button_clicked()
 {
     QSqlQuery queryRemoveEmployeeModel(employeesTable);
-
     queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->mechanic2Line->text());
@@ -941,7 +965,6 @@ void ViewUpdateOrder::on_clearMechanic2Button_clicked()
 void ViewUpdateOrder::on_clearDiagnosticianButton_clicked()
 {
     QSqlQuery queryRemoveEmployeeModel(employeesTable);
-
     queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->diagnosticianLine->text());
@@ -954,7 +977,6 @@ void ViewUpdateOrder::on_clearDiagnosticianButton_clicked()
 void ViewUpdateOrder::on_clearElectronicButton_clicked()
 {
     QSqlQuery queryRemoveEmployeeModel(employeesTable);
-
     queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->electronicsLine->text());
@@ -967,7 +989,6 @@ void ViewUpdateOrder::on_clearElectronicButton_clicked()
 void ViewUpdateOrder::on_clearLocksmithButton_clicked()
 {
     QSqlQuery queryRemoveEmployeeModel(employeesTable);
-
     queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->locksmithLine->text());
@@ -980,7 +1001,6 @@ void ViewUpdateOrder::on_clearLocksmithButton_clicked()
 void ViewUpdateOrder::on_clearWasherButton_clicked()
 {
     QSqlQuery queryRemoveEmployeeModel(employeesTable);
-
     queryRemoveEmployeeModel.prepare("DELETE FROM order_detail_table WHERE id_order = ? AND order_employee = ?");
     queryRemoveEmployeeModel.addBindValue(orderId);
     queryRemoveEmployeeModel.addBindValue(ui->washerLine->text());
@@ -990,6 +1010,9 @@ void ViewUpdateOrder::on_clearWasherButton_clicked()
     ui->washerHoursLine->setText("");
 }
 
+/**
+ * Loads user settings from register for access granting.
+ */
 void ViewUpdateOrder::loadUserSettings()
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
@@ -1005,6 +1028,9 @@ void ViewUpdateOrder::loadUserSettings()
         ui->updateOrderInfoButton->setEnabled(true);
 }
 
+/**
+ * Allows information update.
+ */
 void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
 {
     ui->updateOrderInfoButton->setEnabled(false);
@@ -1044,6 +1070,9 @@ void ViewUpdateOrder::on_updateOrderInfoButton_clicked()
     ui->saveUpdatedInfo->setEnabled(true);
 }
 
+/**
+ * Delets order from DB.
+ */
 void ViewUpdateOrder::on_deleteOrderButton_clicked()
 {
     QSqlQuery queryRemoveOrder(ordersTable);

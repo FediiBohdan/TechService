@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
         app.installTranslator(&translator);
     }
 
+    //db connection settings
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     QByteArray bytePassword = global::getSettingsValue("passwordDB", "settings").toByteArray();
     QString password = QString(QByteArray::fromBase64(bytePassword));
@@ -76,9 +77,9 @@ int main(int argc, char *argv[])
         settingsWindow->setAttribute(Qt::WA_DeleteOnClose);
 
         //singleton
-//        SettingsWindow &settingsWindow = SettingsWindow::getInstance();
-//        settingsWindow.show();
-//        settingsWindow.setAttribute(Qt::WA_DeleteOnClose);
+        //SettingsWindow &settingsWindow = SettingsWindow::getInstance();
+        //settingsWindow.show();
+        //settingsWindow.setAttribute(Qt::WA_DeleteOnClose);
     }
 
     StartWindow startWindow;

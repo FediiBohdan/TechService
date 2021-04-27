@@ -20,6 +20,9 @@ AddTask::~AddTask()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void AddTask::closeEvent(QCloseEvent *)
 {
     QDialog::close();
@@ -29,6 +32,9 @@ void AddTask::closeEvent(QCloseEvent *)
     listTasksDialog->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Sets date and time of task creation.
+ */
 void AddTask::setDateAndTime()
 {
     QDate currentDate = QDate::currentDate();
@@ -37,6 +43,9 @@ void AddTask::setDateAndTime()
     ui->timeLine->setText(currentTime.toString(Qt::SystemLocaleDate));
 }
 
+/**
+ * Checks input information and saves new task to DB.
+ */
 void AddTask::on_createTaskButton_clicked()
 {
     QSqlQuery queryTasks(listTasksTable);
@@ -59,9 +68,7 @@ void AddTask::on_createTaskButton_clicked()
 
     if (!userLogin.isEmpty())
     {
-        queryTasks.prepare("INSERT INTO tasks_table (time, date, content, is_fulfilled, user) "
-            "VALUES(?, ?, ?, ?, ?)");
-
+        queryTasks.prepare("INSERT INTO tasks_table (time, date, content, is_fulfilled, user) VALUES(?, ?, ?, ?, ?)");
         queryTasks.addBindValue(time);
         queryTasks.addBindValue(date);
         queryTasks.addBindValue(content);

@@ -8,11 +8,11 @@
 #include "ListEmployees.h"
 #include "SettingsWindow.h"
 #include "ListSpareParts.h"
+#include "AnalyticsDialog.h"
 
 #include <QUrl>
 #include <QTime>
 #include <QDate>
-#include <QTimer>
 #include <QDebug>
 #include <QDialog>
 #include <QPointer>
@@ -29,6 +29,7 @@ class AddOrder;
 class ListOrders;
 class ListClients;
 class ListSparePart;
+class SettingsWindow;
 
 namespace Ui {
 class StartWindow;
@@ -54,15 +55,20 @@ private:
     ListClients *listClients;
     ListEmployees *listEmployees;
     ListSparePart *sparePartsTable;
-    SettingsWindow *settingsWindow;    
+    SettingsWindow *settingsWindow;
+    AnalyticsDialog *analyticsDialog;
 
     QSqlDatabase listTasksTable;
+    QSqlDatabase listOrdersTable;
     QPointer<QSqlQueryModel> queryModel;
+    QPointer<QSqlQueryModel> queryOrdersModel;
     QPointer<QSqlQueryModel> queryModelCheckBox;
+    QPointer<QSqlQueryModel> queryOrdersModelCheckBox;
 
     QTranslator translator;
 
     QWidget *addCheckBoxCompleted(int rowIndex);
+    QWidget *addCheckBoxOrderCompleted(int rowIndex);
 
 protected:
     void changeEvent(QEvent *event) override;
@@ -72,23 +78,26 @@ public slots:
     void setUserData(const QString &userFSname, const QString &userPosition);
 
 private slots:
-    void showTime();
-    void loadTasksList();    
+    void loadTasksList();
+    void loadOrdersList();
     void updateTasksList();
+    void updateOrdersList();
     void loadUserSettings();
+    void loadPersonalData();
     void checkBoxStateChanged();
+    void checkBoxOrderStateChanged();
 
     void on_staffButton_clicked();
     void on_viberButton_clicked();
     void on_clientsButton_clicked();
-    void on_desktopButton_clicked();
     void on_youtubeButton_clicked();
     void on_todolistButton_clicked();
     void on_settingsButton_clicked();
     void on_telegramButton_clicked();
     void on_facebookButton_clicked();
     void on_catalogueButton_clicked();
-    void on_instagramButton_clicked();
+    void on_instagramButton_clicked();    
+    void on_analyticsButton_clicked();
     void on_orderFormationButton_clicked();
 };
 

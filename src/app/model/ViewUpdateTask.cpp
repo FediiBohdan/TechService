@@ -18,6 +18,9 @@ ViewUpdateTask::~ViewUpdateTask()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void ViewUpdateTask::closeEvent(QCloseEvent *)
 {
     QDialog::close();
@@ -27,15 +30,16 @@ void ViewUpdateTask::closeEvent(QCloseEvent *)
     listTasks->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Sets task information to corresponding fields.
+ */
 void ViewUpdateTask::setValues(const QString &id)
 {
     taskId = id;
 
     QSqlQuery query(listTasksTable);
 
-    query.prepare("SELECT DISTINCT time, date, content, is_fulfilled "
-        "FROM tasks_table WHERE id_to_do_list = " + taskId);
-
+    query.prepare("SELECT DISTINCT time, date, content, is_fulfilled FROM tasks_table WHERE id_to_do_list = " + taskId);
     query.exec();
     query.next();
 
@@ -51,6 +55,9 @@ void ViewUpdateTask::setValues(const QString &id)
         ui->checkBox->setChecked(false);
 }
 
+/**
+ * Checks input information and updates task in DB.
+ */
 void ViewUpdateTask::on_saveUpdatedInfo_clicked()
 {
     QSqlQuery queryTasks(listTasksTable);
@@ -88,6 +95,9 @@ void ViewUpdateTask::on_saveUpdatedInfo_clicked()
     QMessageBox::information(this, tr("Уведомление"), tr("Задание успешно обновлено!"), QMessageBox::Ok);
 }
 
+/**
+ * Allows information update.
+ */
 void ViewUpdateTask::on_updateTaskButton_clicked()
 {
     ui->updateTaskButton->setEnabled(false);
@@ -97,6 +107,9 @@ void ViewUpdateTask::on_updateTaskButton_clicked()
     ui->saveUpdatedInfo->setEnabled(true);
 }
 
+/**
+ * Delets task from DB.
+ */
 void ViewUpdateTask::on_deleteTaskButton_clicked()
 {
     QSqlQuery queryRemoveTask(listTasksTable);

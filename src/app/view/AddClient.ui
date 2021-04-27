@@ -129,6 +129,9 @@ QMessageBox {
        <height>40</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Сохранить клиента</string>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
 	background-color: #dbdcf7;
@@ -149,7 +152,7 @@ QPushButton:pressed {
       <string/>
      </property>
      <property name="icon">
-      <iconset>
+      <iconset resource="../../images.qrc">
        <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
      </property>
      <property name="iconSize">
@@ -548,6 +551,8 @@ QPushButton:pressed {
   <tabstop>VINnumberLine</tabstop>
   <tabstop>saveClientButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../images.qrc"/>
+ </resources>
  <connections/>
 </ui>

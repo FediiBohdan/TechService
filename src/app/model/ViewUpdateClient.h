@@ -1,14 +1,14 @@
 #ifndef VIEWUPDATECLIENT_H
 #define VIEWUPDATECLIENT_H
 
-#include "ListClients.h"
 #include "AddOrder.h"
+#include "ListClients.h"
 
 #include <QDialog>
 #include <QSqlDatabase>
 
-class ListClients;
 class AddOrder;
+class ListClients;
 
 namespace Ui {
 class ViewUpdateClient;
@@ -47,10 +47,9 @@ private:
     QPointer<QSqlQueryModel> queryModel;
 
     AddOrder *addOrder;
+    ListClients *listClients;
 
     QString clientId;
-
-    ListClients *listClients;
 };
 
 #endif // VIEWUPDATECLIENT_H

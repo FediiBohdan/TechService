@@ -1,248 +1,188 @@
-//#include "AnalyticsDialog.h"
-//#include "ui_AnalyticsDialog.h"
+#include "AnalyticsDialog.h"
+#include "ui_AnalyticsDialog.h"
 
-//// Define the scope for your variables and functions
-//QT_CHARTS_USE_NAMESPACE
+AnalyticsDialog::AnalyticsDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::AnalyticsDialog)
+{
+    ui->setupUi(this);
 
-//AnalyticsDialog::AnalyticsDialog(QWidget *parent) :
-//    QDialog(parent),
-//    ui(new Ui::AnalyticsDialog)
-//{
-//    ui->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
 
-//    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-//    setWindowFlags(windowFlags() & Qt::WindowMinimizeButtonHint);
+    connect(ui->showAnalyticsButton, &QAbstractButton::clicked, this, &AnalyticsDialog::profitAnalytics);
+    connect(ui->orderShowAnalyticsButton, &QAbstractButton::clicked, this, &AnalyticsDialog::fulfilledOrdersAnalytics);
 
-//    employeeWorksChart();
-//    mostPopularAutosChart();
-//    fulfilledOrdersChart();
-//    profitChart();
-//    testChart();
-//}
+    QStringList services = {tr("Все"), "Среднефонтанская, 30А (Приморский р-н)", "Платонова, 56 (Малиновский р-н)", "Архитекторская, 28 (Киевский р-н)"};
+    QStringList months = {tr("Январь"), tr("Февраль"), tr("Март"), tr("Апрель"), tr("Май"), tr("Июнь"), tr("Июль"), tr("Август"), tr("Сентябрь"), tr("Октябрь"),
+                          tr("Ноябрь"), tr("Декабрь")};
 
-//AnalyticsDialog::~AnalyticsDialog()
-//{
-//    delete ui;
-//}
+    ui->servicesComboBox->addItems(services);
+    ui->monthsComboBox->addItems(months);
+    ui->orderServicesComboBox->addItems(services);
+    ui->orderMonthsComboBox->addItems(months);
 
-//void AnalyticsDialog::employeeWorksChart()
-//{
-//    QLineSeries *lineseries = new QLineSeries();
-//    lineseries->append(QPoint(0, 4));
-//    lineseries->append(QPoint(1, 15));
-//    lineseries->append(QPoint(2, 20));
-//    lineseries->append(QPoint(3, 4));
-//    lineseries->append(QPoint(4, 12));
-//    lineseries->append(QPoint(5, 17));
+    mostPopularAutosAnalytics();
+    mostPopularSparePartsAnalytics();
+}
 
-//    QChart *chart = new QChart();
-//    chart->legend()->hide();
-//    chart->addSeries(lineseries);
-//    chart->setAnimationOptions(QChart::AllAnimations);
+AnalyticsDialog::~AnalyticsDialog()
+{
+    delete ui;
+}
 
-//    QFont font;
-//    font.setPixelSize(16);
-//    chart->setTitle("1");
-//    chart->setTitleFont(font);
-//    chart->setTitleBrush(QBrush(Qt::black));
+/**
+ * Calculates most popular autos in car services.
+ */
+void AnalyticsDialog::mostPopularAutosAnalytics()
+{
+    queryMostPopularAutosAnalytics = new QSqlQueryModel(this);
 
-//    QPen pen(Qt::black);
-//    pen.setWidth(3);
-//    lineseries->setPen(pen);
+    QString queryString = "SELECT auto_brand, COUNT(*) FROM orders_history GROUP BY auto_brand HAVING COUNT(*) > 1 ORDER BY COUNT(*) DESC";
 
-//    QStringList categories;
-//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-//    axisX->append(categories);
-//    chart->addAxis(axisX, Qt::AlignBottom);
-//    lineseries->attachAxis(axisX);
-//    axisX->setRange(QString("1994"), QString("1999"));
+    queryMostPopularAutosAnalytics->setQuery(queryString);
 
-//    QValueAxis *axisY = new QValueAxis();
-//    chart->addAxis(axisY, Qt::AlignLeft);
-//    lineseries->attachAxis(axisY);
-//    axisY->setRange(0, 20);
+    queryMostPopularAutosAnalytics->setHeaderData(0, Qt::Horizontal, tr("Марка авто"));
+    queryMostPopularAutosAnalytics->setHeaderData(1, Qt::Horizontal, tr("Количество"));
 
-//    QChartView *chartView = new QChartView(chart);
-//    chartView->setRenderHint(QPainter::Antialiasing);
+    ui->mostPopularAutosTableView->setModel(queryMostPopularAutosAnalytics);
 
-//    ui->verticalWidget->setMinimumHeight(451);
-//    ui->verticalLayout->addWidget(chartView);
-//}
+    ui->mostPopularAutosTableView->verticalHeader()->setVisible(false);
+    ui->mostPopularAutosTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->mostPopularAutosTableView->resizeColumnsToContents();
+    ui->mostPopularAutosTableView->resizeRowsToContents();
+}
 
-//void AnalyticsDialog::mostPopularAutosChart()
-//{
-//    QLineSeries *lineseries = new QLineSeries();
-//    lineseries->append(QPoint(0, 4));
-//    lineseries->append(QPoint(1, 15));
-//    lineseries->append(QPoint(2, 20));
-//    lineseries->append(QPoint(3, 4));
-//    lineseries->append(QPoint(4, 12));
-//    lineseries->append(QPoint(5, 17));
+/**
+ * Calculates most used spare parts in car services.
+ */
+void AnalyticsDialog::mostPopularSparePartsAnalytics()
+{
+    querySparePartsAnalytics = new QSqlQueryModel(this);
 
-//    QChart *chart = new QChart();
-//    chart->legend()->hide();
-//    chart->addSeries(lineseries);
-//    chart->setAnimationOptions(QChart::AllAnimations);
+    QString queryString = "SELECT order_spare_part, COUNT(*) FROM order_spare_parts GROUP BY order_spare_part HAVING COUNT(*) > 1 ORDER BY COUNT(*) DESC";
 
-//    QFont font;
-//    font.setPixelSize(16);
-//    chart->setTitle("2");
-//    chart->setTitleFont(font);
-//    chart->setTitleBrush(QBrush(Qt::black));
+    querySparePartsAnalytics->setQuery(queryString);
 
-//    QPen pen(Qt::black);
-//    pen.setWidth(3);
-//    lineseries->setPen(pen);
+    querySparePartsAnalytics->setHeaderData(0, Qt::Horizontal, tr("Название"));
+    querySparePartsAnalytics->setHeaderData(1, Qt::Horizontal, tr("Количество"));
 
-//    QStringList categories;
-//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-//    axisX->append(categories);
-//    chart->addAxis(axisX, Qt::AlignBottom);
-//    lineseries->attachAxis(axisX);
-//    axisX->setRange(QString("1994"), QString("1999"));
+    ui->sparePartsTableView->setModel(querySparePartsAnalytics);
 
-//    QValueAxis *axisY = new QValueAxis();
-//    chart->addAxis(axisY, Qt::AlignLeft);
-//    lineseries->attachAxis(axisY);
-//    axisY->setRange(0, 20);
+    ui->sparePartsTableView->verticalHeader()->setVisible(false);
+    ui->sparePartsTableView->horizontalHeader()->setDefaultSectionSize(maximumWidth());
+    ui->sparePartsTableView->resizeColumnsToContents();
+    ui->sparePartsTableView->resizeRowsToContents();
+}
 
-//    QChartView *chartView = new QChartView(chart);
-//    chartView->setRenderHint(QPainter::Antialiasing);
+/**
+ * Calculates number of fulfilled orders in car services.
+ */
+void AnalyticsDialog::fulfilledOrdersAnalytics()
+{
+    QSqlQuery queryFulfilledOrdersAnalytics(analyticsTable);
 
-//    ui->verticalLayout2->addWidget(chartView);
-//}
+    QString year = ui->ordersYearLine->text();
 
-//void AnalyticsDialog::fulfilledOrdersChart()
-//{
-//    QLineSeries *lineseries = new QLineSeries();
-//    lineseries->append(QPoint(0, 4));
-//    lineseries->append(QPoint(1, 15));
-//    lineseries->append(QPoint(2, 20));
-//    lineseries->append(QPoint(3, 4));
-//    lineseries->append(QPoint(4, 12));
-//    lineseries->append(QPoint(5, 17));
+    QString month = "0";
+    if (ui->orderMonthsComboBox->currentIndex() == 0)
+        month = "01";
+    else if (ui->orderMonthsComboBox->currentIndex() == 1)
+        month = "02";
+    else if (ui->orderMonthsComboBox->currentIndex() == 2)
+        month = "03";
+    else if (ui->orderMonthsComboBox->currentIndex() == 3)
+        month = "04";
+    else if (ui->orderMonthsComboBox->currentIndex() == 4)
+        month = "05";
+    else if (ui->orderMonthsComboBox->currentIndex() == 5)
+        month = "06";
+    else if (ui->orderMonthsComboBox->currentIndex() == 6)
+        month = "07";
+    else if (ui->orderMonthsComboBox->currentIndex() == 7)
+        month = "08";
+    else if (ui->orderMonthsComboBox->currentIndex() == 8)
+        month = "09";
+    else if (ui->orderMonthsComboBox->currentIndex() == 9)
+        month = "10";
+    else if (ui->orderMonthsComboBox->currentIndex() == 10)
+        month = "11";
+    else if (ui->orderMonthsComboBox->currentIndex() == 11)
+        month = "12";
 
-//    QChart *chart = new QChart();
-//    chart->legend()->hide();
-//    chart->addSeries(lineseries);
-//    chart->setAnimationOptions(QChart::AllAnimations);
+    QString query = "SELECT creation_date, COUNT(is_ready) FROM orders_history WHERE is_ready = 1 AND creation_date LIKE'%" + (month + "." + year) + "%'";
+    QString queryService;
 
-//    QFont font;
-//    font.setPixelSize(16);
-//    chart->setTitle("3");
-//    chart->setTitleFont(font);
-//    chart->setTitleBrush(QBrush(Qt::black));
+    if ((ui->orderServicesComboBox->currentIndex() == 1) || (ui->orderServicesComboBox->currentIndex() == 2) || (ui->orderServicesComboBox->currentIndex() == 3))
+        queryService.append(" AND service_address = '" + ui->orderServicesComboBox->currentText() + "'");
 
-//    QPen pen(Qt::black);
-//    pen.setWidth(3);
-//    lineseries->setPen(pen);
+    query.append(queryService);
+    queryFulfilledOrdersAnalytics.prepare(query);
+    queryFulfilledOrdersAnalytics.exec();
 
-//    QStringList categories;
-//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-//    axisX->append(categories);
-//    chart->addAxis(axisX, Qt::AlignBottom);
-//    lineseries->attachAxis(axisX);
-//    axisX->setRange(QString("1994"), QString("1999"));
+    if (queryFulfilledOrdersAnalytics.first() == true)
+    {
+        QString fulfilledOrderAmount = queryFulfilledOrdersAnalytics.value(1).toString();
 
-//    QValueAxis *axisY = new QValueAxis();
-//    chart->addAxis(axisY, Qt::AlignLeft);
-//    lineseries->attachAxis(axisY);
-//    axisY->setRange(0, 20);
+        ui->ordersAmountLine->setText(fulfilledOrderAmount);
+    }
+    else
+        ui->ordersAmountLine->setText("0");
+}
 
-//    QChartView *chartView = new QChartView(chart);
-//    chartView->setRenderHint(QPainter::Antialiasing);
+/**
+ * Calculates profit by car services.
+ */
+void AnalyticsDialog::profitAnalytics()
+{
+    QSqlQuery queryProfitAnalytics(analyticsTable);
 
-//    ui->verticalLayout3->addWidget(chartView);
-//}
+    QString year = ui->yearLine->text();
 
-//void AnalyticsDialog::profitChart()
-//{
-//    QLineSeries *lineseries = new QLineSeries();
-//    lineseries->append(QPoint(0, 4));
-//    lineseries->append(QPoint(1, 15));
-//    lineseries->append(QPoint(2, 20));
-//    lineseries->append(QPoint(3, 4));
-//    lineseries->append(QPoint(4, 12));
-//    lineseries->append(QPoint(5, 17));
+    QString month = "0";
+    if (ui->monthsComboBox->currentIndex() == 0)
+        month = "01";
+    else if (ui->monthsComboBox->currentIndex() == 1)
+        month = "02";
+    else if (ui->monthsComboBox->currentIndex() == 2)
+        month = "03";
+    else if (ui->monthsComboBox->currentIndex() == 3)
+        month = "04";
+    else if (ui->monthsComboBox->currentIndex() == 4)
+        month = "05";
+    else if (ui->monthsComboBox->currentIndex() == 5)
+        month = "06";
+    else if (ui->monthsComboBox->currentIndex() == 6)
+        month = "07";
+    else if (ui->monthsComboBox->currentIndex() == 7)
+        month = "08";
+    else if (ui->monthsComboBox->currentIndex() == 8)
+        month = "09";
+    else if (ui->monthsComboBox->currentIndex() == 9)
+        month = "10";
+    else if (ui->monthsComboBox->currentIndex() == 10)
+        month = "11";
+    else if (ui->monthsComboBox->currentIndex() == 11)
+        month = "12";
 
-//    QChart *chart = new QChart();
-//    chart->legend()->hide();
-//    chart->addSeries(lineseries);
-//    chart->setAnimationOptions(QChart::AllAnimations);
+    QString query = "SELECT creation_date, SUM(price) FROM orders_history WHERE creation_date LIKE'%" + (month + "." + year) + "%'";
+    QString queryService;
 
-//    QFont font;
-//    font.setPixelSize(16);
-//    chart->setTitle("4");
-//    chart->setTitleFont(font);
-//    chart->setTitleBrush(QBrush(Qt::black));
+    if ((ui->servicesComboBox->currentIndex() == 1) || (ui->servicesComboBox->currentIndex() == 2) || (ui->servicesComboBox->currentIndex() == 3))
+        queryService.append(" AND service_address = '" + ui->servicesComboBox->currentText() + "'");
 
-//    QPen pen(Qt::black);
-//    pen.setWidth(3);
-//    lineseries->setPen(pen);
+    query.append(queryService);
+    queryProfitAnalytics.prepare(query);
+    queryProfitAnalytics.exec();
 
-//    QStringList categories;
-//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-//    axisX->append(categories);
-//    chart->addAxis(axisX, Qt::AlignBottom);
-//    lineseries->attachAxis(axisX);
-//    axisX->setRange(QString("1994"), QString("1999"));
+    if (queryProfitAnalytics.first() == true)
+    {
+        float fullProfit = queryProfitAnalytics.value(1).toFloat();
+        float netProfit = (fullProfit * 15) / 100;
+        QString netProfitFinal = QString("%1").arg(netProfit, 0, 'f', 2);
 
-//    QValueAxis *axisY = new QValueAxis();
-//    chart->addAxis(axisY, Qt::AlignLeft);
-//    lineseries->attachAxis(axisY);
-//    axisY->setRange(0, 20);
-
-//    QChartView *chartView = new QChartView(chart);
-//    chartView->setRenderHint(QPainter::Antialiasing);
-
-//    ui->verticalLayout4->addWidget(chartView);
-//}
-
-//void AnalyticsDialog::testChart()
-//{
-//    QLineSeries *lineseries = new QLineSeries();
-//    lineseries->append(QPoint(0, 4));
-//    lineseries->append(QPoint(1, 15));
-//    lineseries->append(QPoint(2, 20));
-//    lineseries->append(QPoint(3, 4));
-//    lineseries->append(QPoint(4, 12));
-//    lineseries->append(QPoint(5, 17));
-
-//    QChart *chart = new QChart();
-//    chart->legend()->hide();
-//    chart->addSeries(lineseries);
-//    chart->setAnimationOptions(QChart::AllAnimations);
-
-//    QFont font;
-//    font.setPixelSize(16);
-//    chart->setTitle("5");
-//    chart->setTitleFont(font);
-//    chart->setTitleBrush(QBrush(Qt::black));
-
-//    QPen pen(Qt::black);
-//    pen.setWidth(3);
-//    lineseries->setPen(pen);
-
-//    QStringList categories;
-//    categories << "1994" << "1995" << "1996" << "1997" << "1998" << "1999";
-//    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-//    axisX->append(categories);
-//    chart->addAxis(axisX, Qt::AlignBottom);
-//    lineseries->attachAxis(axisX);
-//    axisX->setRange(QString("1994"), QString("1999"));
-
-//    QValueAxis *axisY = new QValueAxis();
-//    chart->addAxis(axisY, Qt::AlignLeft);
-//    lineseries->attachAxis(axisY);
-//    axisY->setRange(0, 20);
-
-//    QChartView *chartView = new QChartView(chart);
-//    chartView->setRenderHint(QPainter::Antialiasing);
-
-//    ui->verticalLayout5->addWidget(chartView);
-//}
-
+        ui->profitLine->setText(netProfitFinal);
+    }
+    else
+        ui->profitLine->setText("0.00");
+}

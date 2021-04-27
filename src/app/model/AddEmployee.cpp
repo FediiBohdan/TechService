@@ -20,6 +20,9 @@ AddEmployee::~AddEmployee()
     delete ui;
 }
 
+/**
+ * Event on window close.
+ */
 void AddEmployee::closeEvent(QCloseEvent *)
 {
     QDialog::close();
@@ -29,6 +32,9 @@ void AddEmployee::closeEvent(QCloseEvent *)
     listEmployees->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Checks input information and saves new employee to DB.
+ */
 void AddEmployee::on_saveWorkerButton_clicked()
 {
     QSqlQuery query(employeeTable);
@@ -44,9 +50,7 @@ void AddEmployee::on_saveWorkerButton_clicked()
         return;
     }
 
-    query.prepare("INSERT INTO employees_table (employee_fml_name, employee_position, hour_payment, service_address)"
-        "VALUES(?, ?, ?, ?)");
-
+    query.prepare("INSERT INTO employees_table (employee_fml_name, employee_position, hour_payment, service_address) VALUES(?, ?, ?, ?)");
     query.addBindValue(employeeFMLname);
     query.addBindValue(employeePosition);
     query.addBindValue(hourlyPayment);

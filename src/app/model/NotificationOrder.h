@@ -10,17 +10,18 @@ class NotificationOrder : public QObject, public Notification
 public:
     NotificationOrder();
 
-    void drawNotification();
     void getRegisterInfo();
+    void drawNotification();    
 
     static Notification *Initialize();
 
 private:
     QSqlDatabase db;
-    QTimer *timer;
-    QString service;
 
+    QTimer *timer;
     ListOrders *listOrders;
+
+    QString service;    
 
 private slots:
     void checkTable();

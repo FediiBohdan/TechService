@@ -9,17 +9,26 @@ NotificationSparePart::NotificationSparePart()
     getRegisterInfo();
 }
 
+/**
+ * NotificationOrder implements Notification interface.
+ */
 Notification *NotificationSparePart::Initialize()
 {
     NotificationSparePart *notificationOrder = new NotificationSparePart();
     return notificationOrder;
 }
 
+/**
+ * Loads user position from register.
+ */
 void NotificationSparePart::getRegisterInfo()
 {
     position = global::getSettingsValue("userPosition", "settings").toString();
 }
 
+/**
+ * Checks table by timer wheter was new notification created or not.
+ */
 void NotificationSparePart::checkTable()
 {
     QSqlQuery queryCheckOrderUpdate(db);
@@ -40,6 +49,9 @@ void NotificationSparePart::checkTable()
     }
 }
 
+/**
+ * Draws notification is new notification was created.
+ */
 void NotificationSparePart::drawNotification()
 {
     QMessageBox msgBox;

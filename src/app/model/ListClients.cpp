@@ -32,13 +32,15 @@ ListClients::~ListClients()
     delete ui;
 }
 
+/**
+ * Loads client list to tableView.
+ */
 void ListClients::loadTable()
 {
     queryModel = new QSqlQueryModel(this);
 
     QString queryString = "SELECT id_client, client_type, client_fml_name, contacts, email, auto_brand, auto_model, mileage, auto_license_plate, manufacture_year, "
                           "vin_number FROM clients_table ";
-
     QString searchString;
 
     if ((searchFlag) && (ui->searchComboBox->currentIndex() == 0))
@@ -71,6 +73,9 @@ void ListClients::loadTable()
     ui->tableView->resizeRowsToContents();
 }
 
+/**
+ * Loads user settings from register for access granting.
+ */
 void ListClients::loadUserSettings()
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
@@ -89,6 +94,9 @@ void ListClients::loadUserSettings()
     }
 }
 
+/**
+ * Opens AddClient window.
+ */
 void ListClients::on_addClientButton_clicked()
 {
     QDialog::close();
@@ -98,6 +106,9 @@ void ListClients::on_addClientButton_clicked()
     addClient->setAttribute(Qt::WA_DeleteOnClose);
 }
 
+/**
+ * Opens ViewUpdateClient window.
+ */
 void ListClients::showClientInfo(const QModelIndex &index)
 {
     QDialog::close();
@@ -127,6 +138,9 @@ void ListClients::on_updateButton_clicked()
     loadTable();
 }
 
+/**
+ * Exports clients list in CVS file.
+ */
 void ListClients::saveAsCSV(QString fileName)
 {
     QFile csvFile(fileName);

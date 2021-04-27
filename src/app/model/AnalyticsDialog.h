@@ -1,43 +1,39 @@
-//#ifndef ANALYTICSDIALOG_H
-//#define ANALYTICSDIALOG_H
+#ifndef ANALYTICSDIALOG_H
+#define ANALYTICSDIALOG_H
 
-//// Widget used to display charts
-//#include <QtCharts/QChartView>
-//// Adds categories to the charts axes
-//#include <QtCharts/QBarCategoryAxis>
-//// Used to create a line chart
-//#include <QtCharts/QLineSeries>
-//// Used to change names on axis
-//#include <QtCharts/QCategoryAxis>
+#include <QDate>
+#include <QDebug>
+#include <QDialog>
+#include <QPointer>
+#include <QSqlQuery>
+#include <QSqlDatabase>
+#include <QSqlQueryModel>
 
-//#include <QDialog>
-//#include <QSqlDatabase>
-//#include <QSqlQueryModel>
+namespace Ui {
+class AnalyticsDialog;
+}
 
-//namespace Ui {
-//class AnalyticsDialog;
-//}
+class AnalyticsDialog : public QDialog
+{
+    Q_OBJECT
 
-//class AnalyticsDialog : public QDialog
-//{
-//    Q_OBJECT
+public:
+    explicit AnalyticsDialog(QWidget *parent = nullptr);
+    ~AnalyticsDialog();
 
-//public:
-//    explicit AnalyticsDialog(QWidget *parent = nullptr);
-//    ~AnalyticsDialog();
+private:
+    Ui::AnalyticsDialog *ui;
 
-//private:
-//    Ui::AnalyticsDialog *ui;
+    QSqlDatabase analyticsTable;
 
+    QPointer<QSqlQueryModel> querySparePartsAnalytics;
+    QPointer<QSqlQueryModel> queryMostPopularAutosAnalytics;
 
-//    QSqlDatabase analiticsDB;
+private slots:
+    void profitAnalytics();    
+    void fulfilledOrdersAnalytics();
+    void mostPopularAutosAnalytics();
+    void mostPopularSparePartsAnalytics();    
+};
 
-//private slots:
-//    void employeeWorksChart();
-//    void profitChart();
-//    void fulfilledOrdersChart();
-//    void mostPopularAutosChart();
-//    void testChart();
-//};
-
-//#endif // ANALYTICSDIALOG_H
+#endif // ANALYTICSDIALOG_H
