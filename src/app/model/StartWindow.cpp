@@ -91,6 +91,7 @@ void StartWindow::loadPersonalData()
 void StartWindow::loadUserSettings()
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+    QString userPassword = global::getSettingsValue("userPassword", "settings").toString();
     int pos = 0;
 
     QRegularExpression chiefRegexp("^[1][0-9]{3}$");
@@ -102,35 +103,66 @@ void StartWindow::loadUserSettings()
     QRegularExpression techEmployeeRegexp("^[3][0-9]{3}$");
     QRegularExpressionValidator techEmployeeValidator(techEmployeeRegexp, this);
 
-    if (chiefValidator.validate(userLogin, pos))
+    if (chiefValidator.validate(userLogin, pos) == QValidator::Acceptable)
     {
         ui->staffButton->setEnabled(true);
         ui->updateButton->setEnabled(true);
         ui->clientsButton->setEnabled(true);
         ui->todolistButton->setEnabled(true);
+        ui->ordersTableView->setEnabled(true);
         ui->catalogueButton->setEnabled(true);
         ui->analyticsButton->setEnabled(true);
         ui->ordersUpdateButton->setEnabled(true);
         ui->orderFormationButton->setEnabled(true);
     }
-    else if (managerValidator.validate(userLogin, pos))
+    else if (managerValidator.validate(userLogin, pos) == QValidator::Acceptable)
     {        
         ui->staffButton->setEnabled(true);
         ui->updateButton->setEnabled(true);
         ui->clientsButton->setEnabled(true);
         ui->todolistButton->setEnabled(true);
-        ui->catalogueButton->setEnabled(true);        
+        ui->catalogueButton->setEnabled(true);
+        ui->ordersTableView->setEnabled(true);
+        ui->analyticsButton->setEnabled(false);
         ui->ordersUpdateButton->setEnabled(true);
         ui->orderFormationButton->setEnabled(true);
     }
-    else if (techEmployeeValidator.validate(userLogin, pos))
+    else if (techEmployeeValidator.validate(userLogin, pos) == QValidator::Acceptable)
     {
         ui->updateButton->setEnabled(true);
+        ui->staffButton->setEnabled(false);
         ui->clientsButton->setEnabled(true);
         ui->todolistButton->setEnabled(true);
         ui->catalogueButton->setEnabled(true);
+        ui->ordersTableView->setEnabled(true);
+        ui->analyticsButton->setEnabled(false);
         ui->ordersUpdateButton->setEnabled(true);
         ui->orderFormationButton->setEnabled(true);
+    }
+    else
+    {
+        ui->staffButton->setEnabled(false);
+        ui->updateButton->setEnabled(false);
+        ui->clientsButton->setEnabled(false);
+        ui->todolistButton->setEnabled(false);
+        ui->catalogueButton->setEnabled(false);
+        ui->analyticsButton->setEnabled(false);
+        ui->ordersTableView->setEnabled(false);
+        ui->ordersUpdateButton->setEnabled(false);
+        ui->orderFormationButton->setEnabled(false);
+    }
+
+    if (!userLogin.isEmpty() && !userPassword.isEmpty())
+    {
+        QPixmap pixmap(":/images/loggedUser.png");
+        ui->accountLogIn->setIcon(pixmap);
+    }
+    else
+    {
+        QPixmap pixmap(":/images/noUser.png");
+        ui->accountLogIn->setIcon(pixmap);
+        ui->nameLabel->setText(tr("Войдите в аккаунт!"));
+        ui->positionLabel->hide();
     }
 
     updateTasksList();
@@ -263,9 +295,24 @@ void StartWindow::updateTasksList()
  */
 void StartWindow::loadOrdersList()
 {
+    QString registerUserService = global::getSettingsValue("userService", "settings").toString();
+    QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
+
+    QRegularExpression chiefRegexp("^[1][0-9]{3}$");
+    QRegularExpressionValidator chiefValidator(chiefRegexp, this);
+    int pos = 0;
+
     queryOrdersModel = new QSqlQueryModel(this);
 
-    queryOrdersModel->setQuery("SELECT id_order, client, contacts, auto_brand, auto_model, service_address, creation_date FROM orders_history");
+    QString queryString = "SELECT id_order, client, contacts, auto_brand, auto_model, service_address, creation_date FROM orders_history ";
+    QString searchString;
+
+    if (!(chiefValidator.validate(userLogin, pos) == QValidator::Acceptable))
+        searchString.append("WHERE service_address LIKE '%" + registerUserService + "%'");
+
+    queryString.append(searchString);
+
+    queryOrdersModel->setQuery(queryString);
 
     queryOrdersModel->setHeaderData(0, Qt::Horizontal, tr("id"));
     queryOrdersModel->insertColumn(1);
@@ -416,6 +463,7 @@ void StartWindow::on_settingsButton_clicked()
     connect(settingsWindow, &SettingsWindow::userData, this, &StartWindow::setUserData);
     connect(settingsWindow, &SettingsWindow::translate, this, &StartWindow::translateUI);
     connect(settingsWindow, &SettingsWindow::updateUser, this, &StartWindow::loadUserSettings);
+    connect(settingsWindow, &SettingsWindow::updateUser, this, &StartWindow::loadOrdersList);
     settingsWindow->setAttribute(Qt::WA_DeleteOnClose);
 }
 

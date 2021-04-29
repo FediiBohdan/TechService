@@ -138,14 +138,16 @@ void SettingsWindow::on_saveSettingsButton_clicked()
     saveUserData();
 
     if (!db.isOpen())
-        setSettingsDb();
-
-    QDialog::close();
+        setSettingsDb();   
 
     if (userError == true)
         QMessageBox::information(this, tr("Уведомление"), tr("Такого пользователя не существует. Проверьте логин и пароль!\nДругие настройки успешно сохранены!"), QMessageBox::Ok);
     else
+    {
+        QDialog::close();
+
         QMessageBox::information(this, tr("Уведомление"), tr("Настройки успешно сохранены!"), QMessageBox::Ok);
+    }
 }
 
 /**
@@ -163,21 +165,22 @@ void SettingsWindow::saveUserData()
     queryCheckUser.exec();
 
     if (queryCheckUser.first() == true)
-    {
         userError = false;
-
-        global::setSettingsValue("userLogin", ui->userLogin->text(), "settings");
-        QByteArray userPassword;
-        userPassword.append(ui->userPassword->text().toLatin1());
-        global::setSettingsValue("userPassword", userPassword.toBase64(), "settings");
-        global::setSettingsValue("userFirstName", userFirstName, "settings");
-        global::setSettingsValue("userSecondName", userSecondName, "settings");
-        global::setSettingsValue("userService", ui->serviceComboBox->currentText(), "settings");
-        global::setSettingsValue("userPosition", userPosition, "settings");
+    else
+    {
+        userError = true;
+        ui->userLogin->setText(NULL);
+        ui->userPassword->setText(NULL);
     }
 
-    else
-        userError = true;
+    global::setSettingsValue("userLogin", ui->userLogin->text(), "settings");
+    QByteArray userPassword;
+    userPassword.append(ui->userPassword->text().toLatin1());
+    global::setSettingsValue("userPassword", userPassword.toBase64(), "settings");
+    global::setSettingsValue("userFirstName", userFirstName, "settings");
+    global::setSettingsValue("userSecondName", userSecondName, "settings");
+    global::setSettingsValue("userService", ui->serviceComboBox->currentText(), "settings");
+    global::setSettingsValue("userPosition", userPosition, "settings");
 
     QString userFSname = userFirstName.append(" " + userSecondName);
 

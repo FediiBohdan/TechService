@@ -45,5 +45,6 @@
         <file>images/noUser.png</file>
         <file>images/addOrderDetails.png</file>
         <file>images/notification.png</file>
+        <file>images/loggedUser.png</file>
     </qresource>
 </RCC>
