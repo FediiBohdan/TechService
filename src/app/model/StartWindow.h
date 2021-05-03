@@ -1,7 +1,6 @@
 #ifndef STARTWINDOW_H
 #define STARTWINDOW_H
 
-#include "AddOrder.h"
 #include "ListTasks.h"
 #include "ListOrders.h"
 #include "ListClients.h"
@@ -25,7 +24,6 @@
 #include <QSqlQueryModel>
 #include <QDesktopServices>
 
-class AddOrder;
 class ListOrders;
 class ListClients;
 class ListSparePart;
@@ -49,7 +47,6 @@ public:
 private:
     Ui::StartWindow *ui;
 
-    AddOrder *addOrder;
     ListTasks *listTasks;
     ListOrders *listOrders;
     ListClients *listClients;

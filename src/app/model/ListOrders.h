@@ -2,6 +2,7 @@
 #define LISTORDERS_H
 
 #include "AddOrder.h"
+#include "StartWindow.h"
 #include "ViewUpdateOrder.h"
 
 #include <QFile>
@@ -15,6 +16,7 @@
 #include <QSqlQueryModel>
 
 class AddOrder;
+class StartWindow;
 class ViewUpdateOrder;
 
 namespace Ui {

@@ -93,3 +93,9 @@ RESOURCES += src/qml.qrc \
     src/translations.qrc
 
 CODECFORSRC = UTF-8
+
+DISTFILES += \
+    installer/config/config.xml \
+    installer/config/controller.qs \
+    installer/packages/org.qtproject.ifw.example/meta/installscript.qs \
+    installer/packages/org.qtproject.ifw.example/meta/package.xml

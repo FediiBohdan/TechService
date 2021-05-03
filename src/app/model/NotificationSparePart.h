@@ -1,6 +1,8 @@
 #ifndef NOTIFICATIONSPAREPART_H
 #define NOTIFICATIONSPAREPART_H
 
+#include <QSqlQueryModel>
+
 #include "Notification.h"
 
 class NotificationSparePart : public QObject, public Notification

@@ -9,7 +9,6 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
-#include <QSqlQueryModel>
 
 class ListClients;
 
@@ -36,7 +35,6 @@ private:
     ListClients *listClients;
 
     QSqlDatabase clientsTable;
-    QPointer<QSqlQueryModel> queryModel;
 };
 
 #endif // ADDCLIENT_H

@@ -9,7 +9,6 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
-#include <QSqlQueryModel>
 
 class ListEmployees;
 
@@ -34,7 +33,6 @@ private:
     Ui::AddEmployee *ui;
 
     QSqlDatabase employeeTable;
-    QPointer<QSqlQueryModel> queryModel;
 
     ListEmployees *listEmployees;
 };

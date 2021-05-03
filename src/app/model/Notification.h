@@ -10,7 +10,6 @@
 #include <QtWidgets>
 #include <QSqlQuery>
 #include <QSqlDatabase>
-#include <QSqlQueryModel>
 
 class Notification
 {

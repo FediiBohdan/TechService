@@ -91,7 +91,7 @@ void ListEmployees::on_updateButton_clicked()
  */
 void ListEmployees::saveAsCSV(QString fileName)
 {
-    QFile csvFile (fileName);
+    QFile csvFile(fileName);
 
     if (csvFile.open(QIODevice::WriteOnly))
     {

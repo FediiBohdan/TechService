@@ -9,10 +9,10 @@ Window
     visibility: "Maximized"
     title: qsTr("Карта СТО")
 
-    property variant locationCenter: QtPositioning.coordinate(46.4353855, 30.7063799)
-    property variant location1: QtPositioning.coordinate(46.455239, 30.7380335)
-    property variant location2: QtPositioning.coordinate(46.4475251, 30.6862126)
-    property variant location3: QtPositioning.coordinate(46.3849525, 30.7251305)
+    property var locationCenter: QtPositioning.coordinate(46.4353855, 30.7063799)
+    property var location1: QtPositioning.coordinate(46.455239, 30.7380335)
+    property var location2: QtPositioning.coordinate(46.4475251, 30.6862126)
+    property var location3: QtPositioning.coordinate(46.3849525, 30.7251305)
 
     Map
     {
@@ -30,38 +30,38 @@ Window
 
         MapQuickItem
         {
-                anchorPoint.x: image.width
-                anchorPoint.y: image.height
-                coordinate: location1
-                sourceItem: Image
-                {
-                    id: image
-                    source: "qrc:/images/mapMarker.png"
-                }
+            anchorPoint.x: image.width
+            anchorPoint.y: image.height
+            coordinate: location1
+            sourceItem: Image
+            {
+                id: image
+                source: "qrc:/images/mapMarker.png"
+            }
         }
 
         MapQuickItem
         {
-                anchorPoint.x: image2.width
-                anchorPoint.y: image2.height
-                coordinate: location2
-                sourceItem: Image
-                {
-                    id: image2
-                    source: "qrc:/images/mapMarker.png"
-                }
+            anchorPoint.x: image2.width
+            anchorPoint.y: image2.height
+            coordinate: location2
+            sourceItem: Image
+            {
+                id: image2
+                source: "qrc:/images/mapMarker.png"
+            }
         }
 
         MapQuickItem
         {
-                anchorPoint.x: image3.width
-                anchorPoint.y: image3.height
-                coordinate: location3
-                sourceItem: Image
-                {
-                    id: image3
-                    source: "qrc:/images/mapMarker.png"
-                }
+            anchorPoint.x: image3.width
+            anchorPoint.y: image3.height
+            coordinate: location3
+            sourceItem: Image
+            {
+                id: image3
+                source: "qrc:/images/mapMarker.png"
+            }
         }
     }
 }

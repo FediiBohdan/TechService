@@ -70,11 +70,7 @@ private:
     QSqlDatabase orderDetailTable;
     QSqlDatabase ordersHistoryTable;
 
-    QPointer<QSqlQueryModel> queryModel;
-    QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
-    QPointer<QSqlQueryModel> queryEmployeesHoursModel;
-    QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
     QPointer<QSqlQueryModel> queryGetUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
 

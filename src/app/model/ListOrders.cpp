@@ -214,7 +214,7 @@ void ListOrders::on_orderSearch_returnPressed()
  */
 void ListOrders::saveAsCSV(QString fileName)
 {
-    QFile csvFile (fileName);
+    QFile csvFile(fileName);
 
     if (csvFile.open(QIODevice::WriteOnly))
     {

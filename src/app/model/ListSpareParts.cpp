@@ -70,7 +70,7 @@ void ListSparePart::loadTable()
  */
 void ListSparePart::saveAsCSV(QString fileName)
 {
-    QFile csvFile (fileName);
+    QFile csvFile(fileName);
 
     if (csvFile.open(QIODevice::WriteOnly))
     {

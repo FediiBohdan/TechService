@@ -66,7 +66,7 @@ void ListTasks::loadTable()
 /**
  * Adds label widget for content dispalying in tableView.
  */
-QWidget* ListTasks::addWidgetContent(int rowIndex)
+QWidget *ListTasks::addWidgetContent(int rowIndex)
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
 
@@ -95,7 +95,7 @@ QWidget* ListTasks::addWidgetContent(int rowIndex)
  * Adds checkBox widget to tableView.
  * It determines whether the task is completed or not.
  */
-QWidget* ListTasks::addCheckBoxCompleted(int rowIndex)
+QWidget *ListTasks::addCheckBoxCompleted(int rowIndex)
 {
     QString userLogin = global::getSettingsValue("userLogin", "settings").toString();
 

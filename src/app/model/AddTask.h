@@ -12,7 +12,6 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
-#include <QSqlQueryModel>
 
 class ListTasks;
 
@@ -39,7 +38,6 @@ private:
     Ui::AddTask *ui;
 
     QSqlDatabase listTasksTable;
-    QPointer<QSqlQueryModel> queryModel;
 
     ListTasks *listTasksDialog;
 };

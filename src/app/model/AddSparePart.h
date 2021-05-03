@@ -9,7 +9,6 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QSqlDatabase>
-#include <QSqlQueryModel>
 
 class ListSparePart;
 
@@ -34,7 +33,6 @@ private:
     Ui::AddSparePart *ui;
 
     QSqlDatabase sparePartsTable;
-    QPointer<QSqlQueryModel> queryModel;
 
     ListSparePart *listSpareParts;
 };

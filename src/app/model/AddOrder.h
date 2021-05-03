@@ -46,12 +46,8 @@ private:
     QSqlDatabase sparePartsTableDB;
     QSqlDatabase ordersHistoryTable;
 
-    QPointer<QSqlQueryModel> queryModel;
-    QPointer<QSqlQueryModel> queryModelLabel;
     QPointer<QSqlQueryModel> queryEmployeesModel;
-    QPointer<QSqlQueryModel> queryEmployeesHoursModel;
     QPointer<QSqlQueryModel> queryUsedSparePartsModel;
-    QPointer<QSqlQueryModel> queryUpdateSparePartsModel;
     QPointer<QSqlQueryModel> queryGetUsedSparePartsModel;
     QPointer<QSqlQueryModel> queryAvailableSparePartsModel;
     QPointer<QSqlQueryModel> queryRemoveUsedSparePartsModel;

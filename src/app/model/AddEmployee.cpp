@@ -44,7 +44,7 @@ void AddEmployee::on_saveWorkerButton_clicked()
     QString hourlyPayment = ui->hourlyPayment->text();
     QString serviceAddress = ui->serviceAddress->currentText();
 
-    if (employeeFMLname.isEmpty() || employeePosition.isEmpty() || hourlyPayment.isEmpty())
+    if ((employeeFMLname.isEmpty()) || (employeePosition.isEmpty()) || (hourlyPayment.isEmpty()))
     {
         ui->errorLabel->show();
         return;

@@ -1,8 +1,8 @@
 #ifndef ListSpareParts_H
 #define ListSpareParts_H
 
-#include "StartWindow.h"
 #include "AddSparePart.h"
+#include "StartWindow.h"
 #include "ViewUpdateSparePart.h"
 
 #include <QFile>
@@ -41,7 +41,6 @@ private:
     QWidget *widget;
     QTextEdit *textEdit;
     QPushButton *button;
-    StartWindow *startWindow;
     AddSparePart *addSparePart;
     ViewUpdateSparePart *viewUpdateSparePart;
 

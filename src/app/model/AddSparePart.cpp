@@ -36,7 +36,7 @@ void AddSparePart::closeEvent(QCloseEvent *)
  */
 void AddSparePart::on_createSparePartButton_clicked()
 {
-    QSqlQuery queryOrders(sparePartsTable);
+    QSqlQuery query(sparePartsTable);
 
     QString sparePartName = ui->sparePartNameLine->text();
     QString manufacturer = ui->manufacturerLine->text();
@@ -53,15 +53,15 @@ void AddSparePart::on_createSparePartButton_clicked()
 
     autoCompatibility.replace(", ", "\n");
 
-    queryOrders.prepare("INSERT INTO spare_parts_catalogue (spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
-                        "VALUES(?, ?, ?, ?, ?, ?)");
-    queryOrders.addBindValue(sparePartName);
-    queryOrders.addBindValue(manufacturer);
-    queryOrders.addBindValue(quantityInStock);
-    queryOrders.addBindValue(autoCompatibility);
-    queryOrders.addBindValue(isOriginal);
-    queryOrders.addBindValue(price);
-    queryOrders.exec();
+    query.prepare("INSERT INTO spare_parts_catalogue (spare_part_name, manufacturer, quantity_in_stock, auto_compatibility, original, price) "
+                  "VALUES(?, ?, ?, ?, ?, ?)");
+    query.addBindValue(sparePartName);
+    query.addBindValue(manufacturer);
+    query.addBindValue(quantityInStock);
+    query.addBindValue(autoCompatibility);
+    query.addBindValue(isOriginal);
+    query.addBindValue(price);
+    query.exec();
 
     QDialog::close();
 

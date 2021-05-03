@@ -111,9 +111,9 @@ void ViewUpdateClient::setValues(const QString &id)
     query.next();
 
     QString clientType = query.value(0).toString();
-    if (clientType == "Физ. лицо" || clientType == "Фіз. особа" || clientType == "Private")
+    if ((clientType == "Физ. лицо") || (clientType == "Фіз. особа") || (clientType == "Private"))
         ui->clientTypeComboBox->setCurrentIndex(0);
-    else if (clientType == "Юр. лицо" || clientType == "Юр. особа" || clientType == "Organization")
+    else if ((clientType == "Юр. лицо") || (clientType == "Юр. особа") || (clientType == "Organization"))
         ui->clientTypeComboBox->setCurrentIndex(1);
 
     ui->clientFMLname->setText(query.value(1).toString());
@@ -176,7 +176,7 @@ void ViewUpdateClient::loadUserSettings()
     QRegularExpression managerRegexp("^[2][0-9]{3}$");
     QRegularExpressionValidator managerValidator(managerRegexp, this);
 
-    if (chiefValidator.validate(userLogin, pos) || managerValidator.validate(userLogin, pos))
+    if ((chiefValidator.validate(userLogin, pos)) || (managerValidator.validate(userLogin, pos)))
     {
         ui->updateInfoButton->setEnabled(true);
         ui->createOrderByClientButton->setEnabled(true);
