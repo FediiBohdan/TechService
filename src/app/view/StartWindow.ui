@@ -219,6 +219,9 @@ QHeaderView::section {
           <property name="verticalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
           </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
           <property name="gridStyle">
            <enum>Qt::SolidLine</enum>
           </property>
@@ -254,6 +257,9 @@ QHeaderView::section {
            <enum>QAbstractItemView::NoSelection</enum>
           </property>
           <property name="verticalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <property name="horizontalScrollMode">
            <enum>QAbstractItemView::ScrollPerPixel</enum>
           </property>
          </widget>
@@ -1831,6 +1837,12 @@ QHeaderView::section {
         </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::NoSelection</enum>
+        </property>
+        <property name="verticalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
+        </property>
+        <property name="horizontalScrollMode">
+         <enum>QAbstractItemView::ScrollPerPixel</enum>
         </property>
        </widget>
       </item>

@@ -270,13 +270,14 @@ void ListSparePart::on_updateButton_clicked()
  * Drawing notification creation window.
  */
 void ListSparePart::on_notificationCreation_clicked()
-{
+{    
     QVBoxLayout *vLayout = new QVBoxLayout;
     textEdit = new QTextEdit();
     vLayout->addWidget(textEdit);
 
     QHBoxLayout *hLayout = new QHBoxLayout;
     button = new QPushButton(tr("Сохранить"));
+    button->setStyleSheet("font-size: 10pt;");
     hLayout->setAlignment(Qt::AlignRight);
     hLayout->addWidget(button);
 

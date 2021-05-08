@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>496</width>
-    <height>445</height>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -285,6 +285,9 @@ QPushButton:pressed {
 	padding-left: 3px;
 }</string>
           </property>
+          <property name="maxLength">
+           <number>10</number>
+          </property>
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
           </property>
@@ -323,6 +326,9 @@ QPushButton:pressed {
     background-color: #dbdcf7;
 	padding-left: 3px;
 }</string>
+          </property>
+          <property name="maxLength">
+           <number>4</number>
           </property>
          </widget>
         </item>

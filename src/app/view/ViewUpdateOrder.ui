@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1428</width>
-    <height>1010</height>
+    <height>1077</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -578,12 +578,6 @@ QMessageBox {
            <height>0</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
          <property name="font">
           <font>
            <pointsize>10</pointsize>
@@ -659,12 +653,6 @@ QMessageBox {
            <height>0</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
-          </size>
-         </property>
          <property name="font">
           <font>
            <pointsize>10</pointsize>
@@ -701,12 +689,6 @@ QMessageBox {
           <size>
            <width>0</width>
            <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>20</height>
           </size>
          </property>
          <property name="font">
@@ -1242,56 +1224,6 @@ QHeaderView::section {
         <property name="spacing">
          <number>2</number>
         </property>
-        <item row="2" column="0" rowspan="8">
-         <widget class="QTableView" name="employeesByServiceTable">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>370</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>390</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::NoFocus</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTableView {
-	background-color: white;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	border-bottom-left-radius: 6px;
-	border-bottom-right-radius: 6px;
-	selection-color: black; 
-	selection-background-color: #f2e7ff;
-}
-
-QHeaderView {
-	border-radius: 0px;
-	background-color: #f5f5f5;
-	font-size: 9pt;
-	border: 0px;
-}
-
-QHeaderView::section {
-	background-color: white;
-}</string>
-          </property>
-          <property name="verticalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-          <property name="horizontalScrollMode">
-           <enum>QAbstractItemView::ScrollPerPixel</enum>
-          </property>
-         </widget>
-        </item>
         <item row="4" column="1" colspan="2">
          <widget class="QFrame" name="frame_8">
           <property name="minimumSize">
@@ -2338,7 +2270,7 @@ QPushButton:pressed {
           </layout>
          </widget>
         </item>
-        <item row="7" column="1" rowspan="3" colspan="2">
+        <item row="7" column="1" colspan="2">
          <widget class="QFrame" name="frame_11">
           <property name="minimumSize">
            <size>
@@ -2529,6 +2461,56 @@ QPushButton:pressed {
             </widget>
            </item>
           </layout>
+         </widget>
+        </item>
+        <item row="2" column="0" rowspan="6">
+         <widget class="QTableView" name="employeesByServiceTable">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>370</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>390</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTableView {
+	background-color: white;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	selection-color: black; 
+	selection-background-color: #f2e7ff;
+}
+
+QHeaderView {
+	border-radius: 0px;
+	background-color: #f5f5f5;
+	font-size: 9pt;
+	border: 0px;
+}
+
+QHeaderView::section {
+	background-color: white;
+}</string>
+          </property>
+          <property name="verticalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
          </widget>
         </item>
        </layout>
@@ -2781,7 +2763,7 @@ QPushButton:pressed {
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>16777215</height>
+         <height>70</height>
         </size>
        </property>
        <property name="font">
@@ -2802,32 +2784,6 @@ QPushButton:pressed {
        </property>
        <property name="placeholderText">
         <string>Текст отзыва</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" colspan="3">
-      <widget class="QLineEdit" name="receptionLine">
-       <property name="minimumSize">
-        <size>
-         <width>160</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-	border: 1px solid gray;
-    border-radius: 7px;
-    background-color: #dbdcf7;
-	padding-left: 3px;
-}</string>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -2882,6 +2838,32 @@ QPushButton:pressed {
        </property>
        <property name="autoDefault">
         <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" rowspan="3" colspan="3">
+      <widget class="QLineEdit" name="receptionLine">
+       <property name="minimumSize">
+        <size>
+         <width>160</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+	border: 1px solid gray;
+    border-radius: 7px;
+    background-color: #dbdcf7;
+	padding-left: 3px;
+}</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

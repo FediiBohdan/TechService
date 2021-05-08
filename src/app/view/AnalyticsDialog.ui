@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>737</width>
+    <width>764</width>
     <height>689</height>
    </rect>
   </property>
@@ -198,7 +198,7 @@
          <widget class="QLineEdit" name="yearLine">
           <property name="maximumSize">
            <size>
-            <width>40</width>
+            <width>60</width>
             <height>16777215</height>
            </size>
           </property>
@@ -223,13 +223,13 @@
        <widget class="QPushButton" name="showAnalyticsButton">
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>0</width>
           <height>25</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>16777215</height>
          </size>
         </property>
@@ -508,7 +508,7 @@ QPushButton:pressed {
          <widget class="QLineEdit" name="ordersYearLine">
           <property name="maximumSize">
            <size>
-            <width>40</width>
+            <width>60</width>
             <height>16777215</height>
            </size>
           </property>
@@ -539,7 +539,7 @@ QPushButton:pressed {
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>16777215</height>
          </size>
         </property>
