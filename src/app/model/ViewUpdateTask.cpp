@@ -101,7 +101,7 @@ void ViewUpdateTask::on_saveUpdatedInfo_clicked()
 void ViewUpdateTask::on_updateTaskButton_clicked()
 {
     ui->updateTaskButton->setEnabled(false);
-    ui->checkBox->setCheckable(true);
+    ui->checkBox->setEnabled(true);
     ui->contentLine->setReadOnly(false);
     ui->deleteTaskButton->setEnabled(true);
     ui->saveUpdatedInfo->setEnabled(true);
